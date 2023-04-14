@@ -10,16 +10,17 @@
   #small-Container {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 80%;
     height: 100%;
-    padding: 0 20px;
+    padding: 0px 40px;
+    background-color: aqua;
   }
   
   #logo-section {
     display: flex;
     align-items: center;
-    width: 25%;
+    width: 30%;
   }
   
   #logo-section img {
@@ -33,29 +34,46 @@
   }
   
   #search-section input {
-    width: 100%;
+    width: 95%;
     padding: 10px;
+    border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 18px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   }
-  
+  #search-section #search-icon
+  {
+    width: 5%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    align-content: center;
+  }
+  #search-section #search-icon:hover
+  {
+    background-color: aqua;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: 0.4s;
+    cursor: pointer;
+  }
   #small-menu {
-    width: 25%;
+    width: 20%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    background-color: #9b9b9b;
   }
   
   #small-menu i {
-    margin: 0 10px;
-    font-size: 18px;
+    margin: 0 15px;
+    font-size: 22px;
     color: #9b9b9b;
   }
   
   #small-menu i:hover {
     cursor: pointer;
     color: #000000;
+    transition: 0.4s;
   }
   
   /* Responsive styling */

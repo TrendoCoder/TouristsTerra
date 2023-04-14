@@ -1,0 +1,17 @@
+#big-container
+{
+    width: 80%;
+    padding: 0 20px;
+}
+#sideBar
+{
+    width: 30%;
+}
+#feed-section
+{
+    width: 50%;
+}
+#featured-ad
+{
+    width: 20%;
+}
