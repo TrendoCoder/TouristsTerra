@@ -3,10 +3,11 @@ import "./navBar.css";
 function navBar() {
   return (
     <div>
+    <center>
       <div id="big-Container">
         <div id="small-Container">
           <div id="logo-section">
-            <img src="" alt="logo" />
+            {/* <img src="" alt="logo" /> */}
             <h3>TouristsTerra</h3>
           </div>
           <div id="search-section">
@@ -23,6 +24,7 @@ function navBar() {
           </div>
         </div>
       </div>
+      </center>
     </div>
   );
 }

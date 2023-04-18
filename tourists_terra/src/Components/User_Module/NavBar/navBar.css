@@ -14,13 +14,12 @@
     width: 80%;
     height: 100%;
     padding: 0px 40px;
-    background-color: aqua;
   }
   
   #logo-section {
     display: flex;
     align-items: center;
-    width: 30%;
+    width: 20%;
   }
   
   #logo-section img {
@@ -28,13 +27,13 @@
   }
   
   #search-section {
-    width: 50%;
+    width: 60%;
     display: flex;
     align-items: center;
   }
   
   #search-section input {
-    width: 95%;
+    width: 90%;
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -43,7 +42,7 @@
   }
   #search-section #search-icon
   {
-    width: 5%;
+    width: 10%;
     padding: 10px;
     border-radius: 5px;
     font-size: 20px;
@@ -51,9 +50,8 @@
   }
   #search-section #search-icon:hover
   {
-    background-color: aqua;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     transition: 0.4s;
+    color: pink;
     cursor: pointer;
   }
   #small-menu {
@@ -61,7 +59,6 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    background-color: #9b9b9b;
   }
   
   #small-menu i {
