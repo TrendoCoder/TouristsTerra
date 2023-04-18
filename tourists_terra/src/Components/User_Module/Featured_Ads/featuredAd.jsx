@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const featuredAd = () => {
-  return (
-    <div></div>
-  )
-}
+const FeaturedAd = () => {
+  return <div></div>;
+};
 
-export default featuredAd
+export default FeaturedAd;
