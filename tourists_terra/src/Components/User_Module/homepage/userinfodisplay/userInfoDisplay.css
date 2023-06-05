@@ -1,0 +1,60 @@
+#big-container-userInfo
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#big-container-userInfo #profile-pic
+{
+    margin-top: 15px;
+    width: 80px;
+    height: 80px;
+
+}
+#big-container-userInfo #profile-pic img
+{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50px;
+}
+#big-container-userInfo #profile-name
+{
+    margin-top: -15px;
+    font-size: 20px;
+    color: white;
+}
+#big-container-userInfo #profile-bio
+{
+    margin-top: -20px;
+    width: 70%;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    margin-bottom: 15px;
+}
+#user-f-detail
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    color: white;
+    margin-bottom: 10px;
+}
+#big-container-userInfo #edit-profilee
+{
+    border-bottom: 1px solid white;
+}
+#big-container-userInfo #edit-profilee a
+{
+ 
+    color: white;
+    cursor: pointer;  
+}
+#big-container-userInfo #edit-profilee a i
+{
+    font-size: 12px;
+}

@@ -1,0 +1,18 @@
+#big-container-f-ads {
+    width: 90%;
+    height: 30%;
+    position: fixed;
+    border-radius: 10px;
+  }
+  
+  #big-container-f-ads img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: fit;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px #888888;
+  }
+  #big-container-f-ads img:hover
+  {
+    cursor: pointer;
+  }

@@ -2,9 +2,11 @@
 
 #big-Container {
     width: 100%;
-    height: 80px;
+    height: auto;
     background-color: #ffffff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
   }
   
   #small-Container {
@@ -20,6 +22,7 @@
     display: flex;
     align-items: center;
     width: 20%;
+    color: #0F4157;
   }
   
   #logo-section img {
@@ -38,7 +41,7 @@
     border: none;
     border-radius: 5px;
     font-size: 18px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
   }
   #search-section #search-icon
   {
@@ -47,6 +50,7 @@
     border-radius: 5px;
     font-size: 20px;
     align-content: center;
+    color: #0F4157;
   }
   #search-section #search-icon:hover
   {
@@ -64,12 +68,12 @@
   #small-menu i {
     margin: 0 15px;
     font-size: 22px;
-    color: #9b9b9b;
+    color: #0F4157;
   }
   
   #small-menu i:hover {
     cursor: pointer;
-    color: #000000;
+    color: #01b3ff;
     transition: 0.4s;
   }
   
