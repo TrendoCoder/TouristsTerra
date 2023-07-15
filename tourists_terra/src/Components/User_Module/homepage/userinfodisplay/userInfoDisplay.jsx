@@ -1,6 +1,6 @@
 import React from "react";
 import "./userInfoDisplay.css";
-import pic from "../images/profile.jpeg";
+import pic from "../../../../images/profile.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 const UserInfoDisplay = () => {
   return (

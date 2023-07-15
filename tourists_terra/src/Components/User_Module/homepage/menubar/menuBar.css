@@ -2,7 +2,7 @@
     width: 100%;
     background-color: #0F4157;
     height: 40px;
-    position: fixed;
+    position: relative;
     top: 60px;
 }
 #container

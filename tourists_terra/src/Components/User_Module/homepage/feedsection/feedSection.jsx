@@ -1,7 +1,7 @@
 import React from "react";
 import "./feedSection.css";
-import pic from "../images/profile2.jpeg";
-import pic2 from "../images/nature.jpg";
+import pic from "../../../../images/profile2.jpeg";
+import pic2 from "../../../../images/nature.jpg";
 const FeedSection = () => {
   return (
     <div id="big-container-feed">

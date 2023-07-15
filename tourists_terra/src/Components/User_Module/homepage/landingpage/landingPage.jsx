@@ -1,17 +1,18 @@
 import React from "react";
 import Sidebar from "../sidebar/sideBar";
 import UploadSection from "../uploadsection/uploadSection";
-import FeedSection from "../Feed_Section/feedSection";
+import FeedSection from "../feedsection/feedSection";
 import RightBar from "../rightbar/rightBar";
 import "./landingPage.css";
 import MenuBar from "../menubar/menuBar";
-const landingPage = () => {
-  return (
-    <div id="full-container">
-      <div id="menu-container">
-        <MenuBar />
+const LandingPage = () => {
+  return (<>
+
+    <div id="menu-container" style={{position:"fixed",top:"0",left:"0",zIndex:'10000'}} >
+        <MenuBar/>
       </div>
-      <div id="big-container-landing">
+    <div id="full-container" style={{marginTop:"100px"}}>
+      <div id="big-container-landing" >
         <div id="sideBar-landing">
           <Sidebar />
         </div>
@@ -28,7 +29,8 @@ const landingPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
-export default landingPage;
+export default LandingPage;

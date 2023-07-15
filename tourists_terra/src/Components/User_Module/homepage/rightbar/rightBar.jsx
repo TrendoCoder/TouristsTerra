@@ -1,7 +1,7 @@
 import React from 'react'
 import './rightBar.css'
-import pic from '../images/profile2.jpeg'
-import FeaturedAd from '../homepage/Featured_Ads/featuredAd'
+// import pic from '../../../../images/profile2.jpeg'
+import FeaturedAd from '../featuredad/featuredAd'
 const RightBar = () => {
   return (
     <div id="rightbar">

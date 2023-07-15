@@ -1,6 +1,6 @@
 import React from "react";
 import "./uploadSection.css";
-import pic from "../images/profile.jpeg";
+import pic from "../../../../images/profile.jpeg";
 const UploadSection = () => {
   return (
     <div id="big-container-upload">
@@ -14,15 +14,21 @@ const UploadSection = () => {
             <hr id="hr" />
             <div id="upload-button">
               <div>
-                <button><i class="fa-solid fa-image"></i> Photo</button>
+                <button>
+                  <i class="fa-solid fa-image"></i> Photo
+                </button>
               </div>
               <div>
-                <button><i class="fa-solid fa-video"></i> Video</button>
+                <button>
+                  <i class="fa-solid fa-video"></i> Video
+                </button>
               </div>
               <div>
-                <button><i class="fa-solid fa-tag"></i> Tag</button>
+                <button>
+                  <i class="fa-solid fa-tag"></i> Tag
+                </button>
               </div>
-              
+
               <div>
                 <button>Share</button>
               </div>
