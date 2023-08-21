@@ -6,9 +6,12 @@ import AccomoFilter from '../accomofiltersection/accomofilter'
 import AccomoList from '../accomolist/accomolist'
 import Footer from '../footer/footer'
 import { Link } from 'react-router-dom'
+import NavBar from '../../homepage/navbar/navBar'
 const AccommodationHome = () => {
   return (
-    <div id='accomo-ad-big-container'>
+    <>
+    <NavBar/>
+ <div id='accomo-ad-big-container'>
     <div id='accomo-ad-container'>
     <AccommodationAdSection/>
     <div id='opacity-ad'>
@@ -34,6 +37,8 @@ const AccommodationHome = () => {
     <Footer/>
     </div>
     </div>
+    </>
+   
   )
 }
 

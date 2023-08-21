@@ -1,0 +1,154 @@
+#login-container{
+    width: 100%;
+    height: 100vh;
+}
+#login-container-lite{
+    padding: 20px 60px;
+}
+#tile-container
+{
+    width: 30%;
+    color: #0E4157;
+}
+
+#login-main-container{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    
+}
+#login-info{
+    flex: 3;
+   
+}
+#login-info-head
+{
+    font-weight: 800;
+    font-size: 32px;
+}
+#login-info-title{
+    font-weight: 450;
+    font-size: 24px;
+}
+#already-account{
+    font-size: 16px;
+}
+
+#image{
+    flex: 5;
+}
+#image div{
+    width: 400px;
+    height: 100%;
+}
+#image div img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#login-form-container{
+    flex: 5;
+    box-shadow: 1px 2px 10px 5px rgb(116, 116, 116);
+}
+#login-form{
+    padding: 10px 15px;
+    display: flex;
+    justify-content: center;
+}
+#login-form form{
+    width: 70%;
+}
+#login-form h3{
+    font-size: 28px;
+}
+#input-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(221, 221, 221);
+    padding: 15px 20px;
+    border-radius: 5px;
+}
+#login-form #input-div input{
+    width: 90%;
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+}
+#login-form input:focus{
+    transition: 0.1s ease;
+    border-bottom: 2px solid  #0E4157 ;
+    border-top: 2px solid  #0E4157 ;
+    outline: none;
+}
+#login-form a{
+    color: black;
+}
+#login-form #login-button{
+    width: 100%;
+    height: 30px;
+    margin-top: 20px;
+    background-color: #0E4157;
+    border: none;
+    color: white;
+    font-weight: 700;
+    opacity: 0.6;
+    border-radius: 5px;
+}
+#login-form #login-button:hover{
+
+    background-color: #0E4157;
+    transition: 0.4s ease;
+    cursor: pointer;
+    opacity: 1;
+}
+
+@media screen and (max-width: 888px) {
+    #login-info{
+        flex: 6;
+    }
+    #image{
+        flex: 0;
+        display: none;
+    }
+    #login-form-container{
+        flex: 6;
+    }
+}
+@media screen and (max-width: 653px) {
+    #login-container-lite{
+        padding: 0px 20px;
+    }
+    #login-main-container{
+        width: 100%;
+        height: 550px;
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    #login-info{
+        flex: 12;
+    }
+    #tile-container
+    {
+        width: 70%;
+    }
+    
+    #login-main-container{
+        margin-top: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    #login-info{
+        flex: 12;
+    }
+    #login-form-container{
+        flex: 12;
+    }
+    #login-form form{
+        width: 100%;
+    }
+}

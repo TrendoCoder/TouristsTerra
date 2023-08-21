@@ -6,9 +6,13 @@ import TransportAdBaneer from "../transportadbaneer/transportadbaneer";
 import Footer from "../../accommodationpage/footer/footer";
 import TransportList from "../transportlist/transportlist";
 import { Link } from "react-router-dom";
+import NavBar from "../../homepage/navbar/navBar";
+import MainNavBar from "../../forms/mainnavbar/mainnavbar";
 const TransportHomePage = () => {
   return (
-    <div id="trans-ad-big-container">
+<>
+<MainNavBar/>
+<div id="trans-ad-big-container">
       <div id="trans-ad-container">
         <TransportAdBaneer />
         <div id="opacity-ad">
@@ -34,6 +38,7 @@ const TransportHomePage = () => {
         <Footer />
       </div>
     </div>
+</>
   );
 };
 

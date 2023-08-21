@@ -1,0 +1,127 @@
+#main-container-nav{
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0px 0px 15px 1px rgba(128, 128, 128, 0.233);
+}
+#main-container-nav-lite{
+    width: 85%;
+    padding: 0px 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+}
+#container-title-nav{
+    width: 15%;
+}
+#title-nav{
+    font-weight: 600 ;
+    font-size: 24px;
+    cursor: pointer;
+}
+#container-menu{
+    width: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#menu-option-container{
+    transition: 0.4s ease;
+    width: 20%;
+}
+#menu-option-container a, #container-personal-menu a{
+    color: black;
+    text-decoration: none;
+}
+#menu-option-container:hover, #container-personal-menu:hover{
+    transition: 0.4s ease;
+    cursor: pointer;
+    font-size: 20px;
+}
+.active{
+    font-size: 20px;
+    border-bottom: 2px solid darkcyan;
+}
+
+#menu-option{
+    font-weight: 500;
+    text-align: center;
+}
+#drop-down{
+    width: 18%;
+    color: black;
+    position: relative;
+    cursor: pointer;
+}
+#drop-down:hover{
+    transition: 0.4s ease;
+    cursor: pointer;
+    font-size: 20px;
+}
+#drop-down-list{
+position: absolute;
+top: 30px;
+list-style-type: none;
+font-size: 16px;
+margin-top: 30px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+}
+#list{
+color: black;
+margin-bottom: 15px;
+width: 100%;
+text-align: center;
+}
+#list:hover{
+    color: darkcyan;
+    transition: 0.2s;
+    font-size: 17px;
+}
+#container-personal{
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#container-personal-menu{
+    transition: 0.4s ease;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#container-personal-menu #profile{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#container-personal-menu i{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    position: relative;
+}
+#container-personal-menu #msg{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: crimson;
+    position: absolute;
+    top: -18px;
+    right: -20%;
+}
+#container-personal-menu #notification{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: crimson;
+    position: absolute;
+    top: -18px;
+    right: -10%;
+}

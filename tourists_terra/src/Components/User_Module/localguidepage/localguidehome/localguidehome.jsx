@@ -6,9 +6,12 @@ import LocalGuideFilterSection from "../localguidefiltersection/localguidefilter
 import LocalGuideaList from "../localguidealist/localguidealist";
 import Footer from "../../accommodationpage/footer/footer";
 import { Link } from "react-router-dom";
+import NavBar from "../../homepage/navbar/navBar"
 const LocalGuideHome = () => {
   return (
-    <div id="localguide-ad-big-container">
+   <>
+   <NavBar/>
+     <div id="localguide-ad-big-container">
       <div id="localguide-ad-container">
         <LocalGuideAdSection />
         <div id="opacity-ad">
@@ -35,6 +38,7 @@ const LocalGuideHome = () => {
         <Footer />
       </div>
     </div>
+   </>
   );
 };
 
