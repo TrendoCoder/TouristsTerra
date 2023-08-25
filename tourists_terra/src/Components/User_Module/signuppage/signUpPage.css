@@ -3,7 +3,7 @@
     height: 100vh;
 }
 #signup-container-lite{
-    padding: 20px 60px;
+    padding: 10px 60px;
 }
 #signup-tile-container
 {
@@ -72,7 +72,7 @@
     background-color: rgb(221, 221, 221);
     padding: 15px 20px;
     border-radius: 5px;
-    margin-top: 10px;
+    margin-bottom: 10px;
 }
 #signup-form #signup-input-div input{
     width: 90%;

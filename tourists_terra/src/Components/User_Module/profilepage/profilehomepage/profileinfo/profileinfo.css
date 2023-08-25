@@ -1,0 +1,133 @@
+#p-main-container{
+    width: 100%;
+    padding: 40px 0px;
+}
+#p-main-container-lite{
+    background-image: url("./../../../../../images/nature.jpg");
+    width: 100%;
+    height: 300px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#p-main-container-lite-opacity{
+    background-color: rgba(0, 0, 0, 0.486);
+    height: 100%;
+}
+#p-alignments{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    width: 90%;
+    height: 340px;
+    padding: 0px 10px;
+    margin: auto;
+    color: white;
+}
+#p-img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0px 0px 15px 1px #0F4157;
+    padding: 2px;
+}
+#p-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+#p-detail{
+    width: 60%;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 30px;
+}
+#p-name{
+    font-size: 24px;
+    font-weight: 600;
+}
+#p-loca{
+    display: flex;
+    font-weight: 450;
+}
+#p-loca div{
+    margin-right: 10px;
+}
+#p-row{
+    width: 40%;
+    background-color: white;
+    border-radius: 25px;
+    display: flex;
+}
+#p-row-left{
+    width: 50%;
+    padding: 05px 0px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    background-color: #0F4157;
+    text-align: center;
+}
+#p-row-right{
+    width: 50%;
+    padding: 05px 0px;
+    text-align: center;
+    color: black;
+}
+#followers-detail{
+    width: 30%;
+    height: 130px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    text-align: center;
+    padding: 10px 20px;
+    float: right;
+
+}
+#followers-detail span{
+    font-weight: 500;
+    text-align: center;
+}
+#p-following,#p-followers{
+    padding: 0px 10px;
+}
+#p-pics{
+    padding: 0px 30px;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+@media screen and (max-width:900px) {
+    #p-detail{
+        width: 50%;
+    }
+    #p-row{
+        width: 70%;
+    }
+}
+@media screen and (max-width:600px){
+    #p-alignments{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+    }
+    #p-img{
+        width: 100px;
+        height: 100px;
+        margin-top: 15px;
+        align-items: center;
+    }
+    #p-detail{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 0px;
+    }
+}

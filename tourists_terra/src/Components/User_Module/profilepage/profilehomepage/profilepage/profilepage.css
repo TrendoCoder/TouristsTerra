@@ -1,0 +1,14 @@
+#mainn-container{
+    width: 80%;
+    padding: 20px 80px;
+    display: flex;
+    justify-content: space-between;
+
+}
+#profilesidebar-div{
+    width: 30%;
+}
+#profile-main-div{
+    margin-left: 20px;
+    width: 70%;
+}

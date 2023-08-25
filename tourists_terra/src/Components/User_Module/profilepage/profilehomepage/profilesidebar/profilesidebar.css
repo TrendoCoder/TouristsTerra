@@ -1,0 +1,53 @@
+#leftbar-main-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#leftbar-info-container{
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+border: 1px solid rgba(0, 0, 0, 0.25);
+border-radius: 5px;
+}
+#leftbar-options{
+    width: 100%;
+    height: 30px;
+    padding:5px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#leftbar-options span{
+    width: 15px;
+    margin-right: 10px;
+    color: black;
+    border-radius: 50%; 
+    padding: 4px 4px;
+    text-align: center; 
+    background-color: rgba(0, 0, 0, 0.24);
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#leftbar-options:hover{
+    transition: 0.3s;
+    background-color: #0F4157;
+    cursor: pointer;
+}
+#leftbar-options:hover a, #leftbar-options:hover span{
+    color: white;
+}
+#leftbar-options a{
+    margin-left: 20px;
+    color: rgba(0, 0, 0, 0.808);
+}
+.active-opt{
+    border-left: 2px solid #0F4157;
+    color: #0F4157;
+    font-weight: 700;
+}

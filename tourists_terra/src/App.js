@@ -5,7 +5,6 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import NavBar from "./Components/User_Module/homepage/navbar/navBar";
 import LandingPage from "./Components/User_Module/homepage/landingpage/landingPage";
 import AccommodationHome from "./Components/User_Module/accommodationpage/accommodationhome/accommodationhome";
 import TransportHomePage from "./Components/User_Module/transportpage/transporthomepage/transporthomepage";
@@ -13,6 +12,7 @@ import LocalGuideHome from "./Components/User_Module/localguidepage/localguideho
 import SignUpPage from "./Components/User_Module/signuppage/signUpPage";
 import LoginUser from "./Components/User_Module/loginpage/loginUser";
 import BookingTransportForm from "./Components/User_Module/forms/bookingtransportform/bookingtransportform";
+import ProfilePage from "./Components/User_Module/profilepage/profilehomepage/profilepage/profilepage";
 function App() {
   return (
     <div>
@@ -27,6 +27,7 @@ function App() {
             <Route path="sign-up" element={<SignUpPage/>}></Route>
             <Route path="login-user" element={<LoginUser/>}></Route>
             <Route path="booking-transport-form" element={<BookingTransportForm/>}></Route>
+            <Route path="profile-page" element={<ProfilePage/>}></Route>
           </Routes>
         </div>
       </Router>
