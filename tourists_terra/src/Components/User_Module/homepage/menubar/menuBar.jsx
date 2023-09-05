@@ -36,7 +36,7 @@ const MenuBar = (props) => {
           </Link>
         </div>
         <div id="ind-div">
-          <Link to="/">
+          <Link to="/blog-home-page">
             <h4>Blogs</h4>
           </Link>
         </div>

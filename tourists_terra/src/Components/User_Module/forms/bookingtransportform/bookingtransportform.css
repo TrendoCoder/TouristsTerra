@@ -29,7 +29,7 @@
     font-size: 26px;
     font-weight: 600;
     margin-top: 20px;
-    
+    color: #0F4157;
     margin-bottom: 20px;
 }
 #inputs-row{
@@ -54,7 +54,7 @@
     background-color: white;
     padding: 15px 15px;
     border-radius: 5px;
-    border-bottom: 2px solid darkcyan;
+    border-bottom: 2px solid #0F4157;
 
 }
 
@@ -62,7 +62,7 @@
     border: none;
     width: 100%;
     margin-left: 10px;
-    font-size: 20px;
+    font-size: 16px;
 }
 #form-inputs #inputs input::placeholder{
     font-size: 16px;
@@ -78,13 +78,13 @@
 }
 
 #check-terms a{
-    color: darkcyan;
+    color: #0F4157;
 }
 
 #input-row button{
     padding: 15px 40px;
     border: none;
-    background-color: darkcyan;
+    background-color: #0F4157;
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -117,7 +117,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid darkcyan;
+    border-bottom: 1px solid #0F4157;
     font-size: 18px;
     padding: 10px 30px;
 }
@@ -135,7 +135,7 @@
 #book-btn button{
     padding: 20px 60px;
     border: none;
-    background-color: darkcyan;
+    background-color: #0F4157;
     opacity: 0.5;
     color: white;
     font-size: 20px;
@@ -143,7 +143,7 @@
     border-radius: 5px;
 }
 #book-btn button:hover{
-    background-color: darkcyan;
+    background-color: #0F4157;
     opacity: 1;
     transition: 0.3s;
 }
@@ -154,6 +154,7 @@
     background-color: #F6F6F6;
     padding: 15px 20px;
     margin-left: 80px;
+    color: rgb(85, 85, 85)
 }
 #left-container #img{
     width: 100%;
@@ -194,7 +195,7 @@
     width: 90%;
     margin: auto;
     margin-top: 10px;
-    border: 1px solid darkcyan;
+    border: 1px solid #0F4157;
 }
 #t-name{
     padding: 10px 20px;
@@ -283,7 +284,7 @@
         background-color: white;
         padding: 15px 15px;
         border-radius: 5px;
-        border-bottom: 2px solid darkcyan;
+        border-bottom: 2px solid #0F4157;
     
     }
     
@@ -313,7 +314,7 @@
     #input-row button{
         padding: 15px 40px;
         border: none;
-        background-color: darkcyan;
+        background-color: #0F4157;
         color: white;
         font-size: 16px;
         cursor: pointer;
@@ -346,7 +347,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid darkcyan;
+        border-bottom: 1px solid #0F4157;
         font-size: 18px;
         padding: 10px 30px;
     }
@@ -364,7 +365,7 @@
     #book-btn button{
         padding: 20px 60px;
         border: none;
-        background-color: darkcyan;
+        background-color: #0F4157;
         opacity: 0.5;
         color: white;
         font-size: 20px;
@@ -372,7 +373,7 @@
         border-radius: 5px;
     }
     #book-btn button:hover{
-        background-color: darkcyan;
+        background-color: #0F4157;
         opacity: 1;
         transition: 0.3s;
     }

@@ -21,7 +21,7 @@ const LandingPage = () => {
           <div>
             <UploadSection />
           </div>
-          <div>
+          <div style={{marginLeft:"20px"}}>
             <FeedSection />
           </div>
         </div>

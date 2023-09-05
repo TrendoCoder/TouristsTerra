@@ -4,14 +4,14 @@ import pic from "../../../../images/profile.jpeg";
 const UploadSection = () => {
   return (
     <div id="big-container-upload">
-      <div id="p-img">
+      <div id="up-img">
         <div>
           <img src={pic} alt="" />
         </div>
         <div id="express-somthing">
           <form action="">
             <input placeholder="Express Your Thoughts?"></input>
-            <hr id="hr" />
+            <hr id="hr1" />
             <div id="upload-button">
               <div>
                 <button>

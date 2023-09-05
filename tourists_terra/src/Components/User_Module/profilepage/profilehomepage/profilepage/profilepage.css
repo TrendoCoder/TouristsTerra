@@ -1,14 +1,23 @@
 #mainn-container{
-    width: 80%;
+    width: 85%;
     padding: 20px 80px;
+    margin: auto;
     display: flex;
     justify-content: space-between;
-
 }
 #profilesidebar-div{
     width: 30%;
 }
 #profile-main-div{
-    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 70%;
+}
+#profile-main-div #mini-nav{
+    width: 85%;
+}
+#profile-main-div #p-feed{
+    width: 80%;
 }
