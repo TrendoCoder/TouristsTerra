@@ -13,8 +13,6 @@ const BecomeABlogger = () => {
     city: "",
     experience: "",
     language: "",
-  };
-  const initialBankValues = {
     accountTitle:"",
     accountNumber:"",
     bankName:"",
@@ -22,9 +20,6 @@ const BecomeABlogger = () => {
   };
   const [formValuesCustomer, setFormValuesCustomer] = useState(
     initialValuesCustomer
-  );
-  const[bankValuesCustomer, setBankValuesCustomer] = useState(
-    initialBankValues
   );
   const [formErrorsCustomer, setFormErrorsCustomer] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -34,10 +29,10 @@ const BecomeABlogger = () => {
     const { name, value } = e.target;
     setFormValuesCustomer({ ...formValuesCustomer, [name]: value });
   };
+
   const onSubmitCust = (e) => {
     e.preventDefault();
     setFormErrorsCustomer(validate(formValuesCustomer));
-    setBankValuesCustomer(validate(bankValuesCustomer));
     setIsSubmit(true);
   };
 
@@ -51,12 +46,6 @@ const BecomeABlogger = () => {
       console.log(formValuesCustomer);
     }
   }, [formErrorsCustomer]);
-
-  useEffect(()=>{
-    if(Object.keys() === 0 && isSubmit){
-        console.log(bankValuesCustomer);
-    }
-  },[bankValuesCustomer]);
 
   const validate = (values) => {
     const errors = {};
@@ -98,6 +87,18 @@ const BecomeABlogger = () => {
     }
     if(!values.language){
       errors.language = "Language is required";
+    }
+    if(!values.accountNumber){
+      errors.accountNumber = "Acc Number is required";
+    }
+    if(!values.accountTitle){
+      errors.accountTitle = "Acc Title is required";
+    }
+    if(!values.bankName){
+      errors.bankName = "Bank Name is required";
+    }
+    if(!values.branchCode){
+      errors.branchCode = "Branch code is required";
     }
     return errors;
   };
@@ -282,11 +283,11 @@ const BecomeABlogger = () => {
                   name="accountTitle"
                   id=""
                   placeholder=""
-                  value={bankValuesCustomer.accountTitle}
+                  value={formValuesCustomer.accountTitle}
                   onChange={handleChangeCust}
                 />
               </div>
-              <p className="error">{formErrorsCustomer.experience}</p>
+              <p className="error">{formErrorsCustomer.accountTitle}</p>
             </div>
 
             <div id="form-inputs" style={{ width: "90%" }}>
@@ -297,11 +298,11 @@ const BecomeABlogger = () => {
                   name="accountNumber"
                   id=""
                   placeholder=""
-                  value={bankValuesCustomer.accountNumber}
+                  value={formValuesCustomer.accountNumber}
                   onChange={handleChangeCust}
                 />
               </div>
-              <p className="error">{formErrorsCustomer.experience}</p>
+              <p className="error">{formErrorsCustomer.accountNumber}</p>
             </div>
 
             <div id="form-inputs" style={{ width: "90%" }}>
@@ -312,11 +313,11 @@ const BecomeABlogger = () => {
                   name="bankName"
                   id=""
                   placeholder=""
-                  value={bankValuesCustomer.bankName}
+                  value={formValuesCustomer.bankName}
                   onChange={handleChangeCust}
                 />
               </div>
-              <p className="error">{formErrorsCustomer.experience}</p>
+              <p className="error">{formErrorsCustomer.bankName}</p>
             </div>
 
             <div id="form-inputs" style={{ width: "90%" }}>
@@ -327,11 +328,11 @@ const BecomeABlogger = () => {
                   name="branchCode"
                   id=""
                   placeholder=""
-                  value={bankValuesCustomer.branchCode}
+                  value={formValuesCustomer.branchCode}
                   onChange={handleChangeCust}
                 />
               </div>
-              <p className="error">{formErrorsCustomer.experience}</p>
+              <p className="error">{formErrorsCustomer.branchCode}</p>
             </div>
           </div>
         </div>
