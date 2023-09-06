@@ -15,6 +15,7 @@ import LoginUser from "./Components/User_Module/loginpage/loginUser";
 import BookingTransportForm from "./Components/User_Module/forms/bookingtransportform/bookingtransportform";
 import ProfilePage from "./Components/User_Module/profilepage/profilehomepage/profilepage/profilepage";
 import BecomeABlogger from "./Components/User_Module/blogpage/becomeablogger/becomeablogger";
+import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpost";
 function App() {
   return (
     <div>
@@ -26,7 +27,10 @@ function App() {
             <Route path="accommodation" element={<AccommodationHome />}></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
             <Route path="localguide" element={<LocalGuideHome/>} ></Route>
-            <Route path="blog-home-page" element={<BlogHomePage/>}></Route>
+            <Route path="blog-home-page" element={<BlogHomePage/>}>
+  
+            </Route>
+            <Route path="add-blog-post" element={<AddBlogPost/>}></Route>
             <Route path="become-a-blogger" element={<BecomeABlogger/>}></Route><Route/>
             <Route path="sign-up" element={<SignUpPage/>}></Route>
             <Route path="login-user" element={<LoginUser/>}></Route>

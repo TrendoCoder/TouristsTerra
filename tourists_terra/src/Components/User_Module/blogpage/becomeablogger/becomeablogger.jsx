@@ -14,9 +14,17 @@ const BecomeABlogger = () => {
     experience: "",
     language: "",
   };
-  const initialBankValues = {};
+  const initialBankValues = {
+    accountTitle:"",
+    accountNumber:"",
+    bankName:"",
+    branchCode:"",
+  };
   const [formValuesCustomer, setFormValuesCustomer] = useState(
     initialValuesCustomer
+  );
+  const[bankValuesCustomer, setBankValuesCustomer] = useState(
+    initialBankValues
   );
   const [formErrorsCustomer, setFormErrorsCustomer] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -29,6 +37,7 @@ const BecomeABlogger = () => {
   const onSubmitCust = (e) => {
     e.preventDefault();
     setFormErrorsCustomer(validate(formValuesCustomer));
+    setBankValuesCustomer(validate(bankValuesCustomer));
     setIsSubmit(true);
   };
 
@@ -42,6 +51,12 @@ const BecomeABlogger = () => {
       console.log(formValuesCustomer);
     }
   }, [formErrorsCustomer]);
+
+  useEffect(()=>{
+    if(Object.keys() === 0 && isSubmit){
+        console.log(bankValuesCustomer);
+    }
+  },[bankValuesCustomer]);
 
   const validate = (values) => {
     const errors = {};
@@ -78,8 +93,11 @@ const BecomeABlogger = () => {
     if (!values.state) {
       errors.state = "State is required";
     }
-    if (!values.zipCode) {
-      errors.zipCode = "Zipcode is required";
+    if (!values.experience) {
+      errors.experience = "Experience is required";
+    }
+    if(!values.language){
+      errors.language = "Language is required";
     }
     return errors;
   };
@@ -261,10 +279,10 @@ const BecomeABlogger = () => {
               <div id="inputs" style={{ padding: "10px 10px" }}>
                 <input
                   type="text"
-                  name="experience"
+                  name="accountTitle"
                   id=""
                   placeholder=""
-                  value={formValuesCustomer.experience}
+                  value={bankValuesCustomer.accountTitle}
                   onChange={handleChangeCust}
                 />
               </div>
@@ -276,10 +294,10 @@ const BecomeABlogger = () => {
               <div id="inputs" style={{ padding: "10px 10px" }}>
                 <input
                   type="text"
-                  name="experience"
+                  name="accountNumber"
                   id=""
                   placeholder=""
-                  value={formValuesCustomer.experience}
+                  value={bankValuesCustomer.accountNumber}
                   onChange={handleChangeCust}
                 />
               </div>
@@ -291,10 +309,10 @@ const BecomeABlogger = () => {
               <div id="inputs" style={{ padding: "10px 10px" }}>
                 <input
                   type="text"
-                  name="experience"
+                  name="bankName"
                   id=""
                   placeholder=""
-                  value={formValuesCustomer.experience}
+                  value={bankValuesCustomer.bankName}
                   onChange={handleChangeCust}
                 />
               </div>
@@ -306,10 +324,10 @@ const BecomeABlogger = () => {
               <div id="inputs" style={{ padding: "10px 10px" }}>
                 <input
                   type="text"
-                  name="experience"
+                  name="branchCode"
                   id=""
                   placeholder=""
-                  value={formValuesCustomer.experience}
+                  value={bankValuesCustomer.branchCode}
                   onChange={handleChangeCust}
                 />
               </div>
