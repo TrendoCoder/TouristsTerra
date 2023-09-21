@@ -1,2 +1,0 @@
-# TouristsTerra
-Social Touring app 

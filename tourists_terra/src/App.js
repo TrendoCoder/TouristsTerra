@@ -16,6 +16,7 @@ import BookingTransportForm from "./Components/User_Module/forms/bookingtranspor
 import ProfilePage from "./Components/User_Module/profilepage/profilehomepage/profilepage/profilepage";
 import BecomeABlogger from "./Components/User_Module/blogpage/becomeablogger/becomeablogger";
 import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpost";
+import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepage/explorehomepage";
 function App() {
   return (
     <div>
@@ -36,6 +37,7 @@ function App() {
             <Route path="login-user" element={<LoginUser/>}></Route>
             <Route path="booking-transport-form" element={<BookingTransportForm/>}></Route>
             <Route path="profile-page" element={<ProfilePage/>}></Route>
+            <Route path="explore-home-page" element={<ExploreHomepage/>}></Route>
 
           </Routes>
         </div>

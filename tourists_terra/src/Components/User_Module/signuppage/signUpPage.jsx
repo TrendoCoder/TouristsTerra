@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./signUpPage.css";
 import LoginImg from "../../../images/login-img.jpg";
+import axios from "axios"
 const SignUpPage = () => {
   const onChange = () => {};
-  const [name, setName] = useState();
+  const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [contact, setContact] = useState();
   const [password, setPassword] = useState();
@@ -14,8 +15,8 @@ const SignUpPage = () => {
   const [recaptchCompleted, isRecaptchCompleted] = useState("false");
 
   const handleNameChange = (e) => {
-    const newName = e.target.value.slice(0, 30);
-    setName(newName);
+    const userName = e.target.value.slice(0, 30);
+    setUserName(userName);
   };
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -64,18 +65,19 @@ const SignUpPage = () => {
                     <i class="fa-solid fa-envelope"></i>
                     <input
                       type="email"
-                      name=""
+                      name="email"
                       id=""
                       placeholder="Enter Email"
                       onChange={handleEmailChange}
                       value={email}
+                      required
                     />
                   </div>
                   <div id="signup-input-div">
                     <i class="fa-solid fa-lock"></i>
                     <input
                       type="text"
-                      name=""
+                      name="name"
                       id=""
                       placeholder="Create User Name"
                       onChange={handleNameChange}
