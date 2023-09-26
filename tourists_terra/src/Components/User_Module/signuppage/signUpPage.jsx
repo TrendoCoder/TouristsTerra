@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./signUpPage.css";
 import LoginImg from "../../../images/login-img.jpg";
-import axios from "axios"
+import axios from "axios";
 const SignUpPage = () => {
   const onChange = () => {};
   const [userName, setUserName] = useState();
@@ -77,18 +77,18 @@ const SignUpPage = () => {
                     <i class="fa-solid fa-lock"></i>
                     <input
                       type="text"
-                      name="name"
+                      name="userName"
                       id=""
                       placeholder="Create User Name"
                       onChange={handleNameChange}
-                      value={name}
+                      value={userName}
                     />
                   </div>
                   <div id="signup-input-div">
                     <i class="fa-solid fa-phone"></i>
                     <input
                       type="number"
-                      name=""
+                      name="contact"
                       id=""
                       placeholder="Contact"
                       onChange={handleContactChange}
@@ -99,7 +99,7 @@ const SignUpPage = () => {
                     <i class="fa-solid fa-lock"></i>
                     <input
                       type="password"
-                      name=""
+                      name="password"
                       id=""
                       placeholder="Password"
                       onChange={handlePasswordChange}
@@ -110,7 +110,7 @@ const SignUpPage = () => {
                     <i class="fa-solid fa-lock"></i>
                     <input
                       type="password"
-                      name=""
+                      name="confirmPassword"
                       id=""
                       placeholder="Confirm Password"
                       onChange={handleConfirmPasswordChange}
@@ -129,7 +129,38 @@ const SignUpPage = () => {
                       <Link>Privacy Policies</Link>{" "}
                     </span>
                   </div>
-                  <button id="signup-button">Sign Up</button>
+                  <button
+                    id="signup-button"
+                    type="submit"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      axios
+                        .post(
+                          "http://localhost:3001/api/users/signup",
+                          {
+                            email: email,
+                            userName: userName,
+                            contact: contact,
+                            password: password,
+                            confirmPassword: confirmPassword,
+                          },
+                          {
+                            headers: {
+                              "Content-type": "application/json",
+                            },
+                          }
+                        )
+                        .then((res) => {
+                          localStorage.setItem(
+                            "token",
+                            JSON.stringify(res.data.token)
+                          );
+                          alert("Successfully Account Created");
+                        });
+                    }}
+                  >
+                    Sign Up
+                  </button>
                   <span style={{ textAlign: "center" }}>
                     <a href="/login-user">Already have an account?</a>
                   </span>

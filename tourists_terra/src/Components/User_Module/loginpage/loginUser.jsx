@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./loginUser.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import LoginImg from "../../../images/login-img.jpg";
+
 const LoginUser = () => {
+  const naviagte = useNavigate();
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -13,6 +18,26 @@ const LoginUser = () => {
     const pass = e.target.value;
     setPassword(pass);
   };
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/api/users/login", {
+        email: email,
+        password: password,
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+      .then((token) => {
+        localStorage.setItem("token", JSON.stringify(token.data));
+        naviagte("/");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      });
+  }
   return (
     <div id="login-container">
       <div id="login-container-lite">
@@ -37,17 +62,16 @@ const LoginUser = () => {
           </div>
           <div id="login-form-container">
             <div id="login-form">
-              <form action="">
+              <form onSubmit={handleSubmit}>
                 <h3>Login</h3>
                 <div id="input-div">
                   <i class="fa-solid fa-user"></i>
                   <input
                     type="email"
-                    name=""
-                    id=""
                     placeholder="Enter Email"
                     onChange={handleEmail}
                     value={email}
+                    required
                   />
                 </div>
                 <br />
@@ -55,17 +79,18 @@ const LoginUser = () => {
                   <i class="fa-solid fa-lock"></i>
                   <input
                     type="password"
-                    name=""
-                    id=""
                     placeholder="Enter Password"
                     onChange={handlePassword}
                     value={password}
+                    required
                   />
                 </div>
                 <br />
                 <a href="">Forgot Password?</a>
                 <br />
-                <button id="login-button">Login</button>
+                <button id="login-button" type="submit">
+                  Login
+                </button>
               </form>
             </div>
           </div>
