@@ -1,0 +1,95 @@
+/* editprofilepage.css */
+
+#edit-profile-main-container {
+    padding: 20px 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5; /* Background color for the entire page */
+  }
+  
+  #edit-profile-container {
+    width: 90%;
+    max-width: 600px; /* Adjust the width as needed */
+    padding: 20px;
+    margin: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  #edit-profile-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #0E4157; /* Heading color */
+  }
+  
+  #u-profile-image {
+    position: relative;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+  
+  #u-profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    margin-bottom: 40px;
+  }
+  
+  #u-profile-image input[type="file"] {
+    display: none;
+  }
+  
+  #u-profile-image label {
+    position: absolute;
+    width: 30%;
+    bottom: 0;
+    background-color: #0E4157; /* Button background color */
+    color: white; /* Button text color */
+    padding: 10px;
+    cursor: pointer;
+    border-radius:5px;
+  }
+  
+  #input-group {
+    margin-bottom: 15px;
+  }
+  
+  #input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444; /* Label color */
+  }
+  
+  #input-group input[type="text"],
+  #input-group input[type="number"] {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  #save-btn {
+    background-color: #0E4150; /* Button background color */
+    color: white; /* Button text color */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  #save-btn:hover {
+    background-color: #0E4157; /* Button background color on hover */
+  }
+  

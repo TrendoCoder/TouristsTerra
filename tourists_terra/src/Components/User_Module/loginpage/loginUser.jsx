@@ -7,8 +7,8 @@ import LoginImg from "../../../images/login-img.jpg";
 const LoginUser = () => {
   const naviagte = useNavigate();
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleEmail = (e) => {
     const user = e.target.value;
@@ -18,26 +18,28 @@ const LoginUser = () => {
     const pass = e.target.value;
     setPassword(pass);
   };
+
   function handleSubmit(e) {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/api/users/login", {
-        email: email,
-        password: password,
-        headers: {
-          "Content-type": "application/json",
-        },
-      })
+      .post(
+        "http://localhost:3001/api/users/login",
+        { email: email, password: password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((token) => {
         localStorage.setItem("token", JSON.stringify(token.data));
+        console.log(token.data);
         naviagte("/");
         window.location.reload();
       })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
-      });
+      .catch((err) => alert(err));
   }
+
   return (
     <div id="login-container">
       <div id="login-container-lite">

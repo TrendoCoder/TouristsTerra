@@ -4,6 +4,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 import "./signUpPage.css";
 import LoginImg from "../../../images/login-img.jpg";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const SignUpPage = () => {
   const onChange = () => {};
   const [userName, setUserName] = useState();
@@ -13,6 +15,7 @@ const SignUpPage = () => {
   const [confirmPassword, setConfirmPassword] = useState();
   const [checkPolicy, setCheckPolicy] = useState(false);
   const [recaptchCompleted, isRecaptchCompleted] = useState("false");
+  const navigate = useNavigate();
 
   const handleNameChange = (e) => {
     const userName = e.target.value.slice(0, 30);
@@ -134,6 +137,7 @@ const SignUpPage = () => {
                     type="submit"
                     onClick={(e) => {
                       e.preventDefault();
+                  
                       axios
                         .post(
                           "http://localhost:3001/api/users/signup",
@@ -156,7 +160,8 @@ const SignUpPage = () => {
                             JSON.stringify(res.data.token)
                           );
                           alert("Successfully Account Created");
-                        });
+                          navigate("/login-user");
+                        }).catch(err=>alert(err));
                     }}
                   >
                     Sign Up

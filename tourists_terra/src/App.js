@@ -14,6 +14,7 @@ import SignUpPage from "./Components/User_Module/signuppage/signUpPage";
 import LoginUser from "./Components/User_Module/loginpage/loginUser";
 import BookingTransportForm from "./Components/User_Module/forms/bookingtransportform/bookingtransportform";
 import ProfilePage from "./Components/User_Module/profilepage/profilehomepage/profilepage/profilepage";
+import EditProfilePage from "./Components/User_Module/profilepage/editprofilepage/editprofilepage";
 import BecomeABlogger from "./Components/User_Module/blogpage/becomeablogger/becomeablogger";
 import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpost";
 import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepage/explorehomepage";
@@ -37,6 +38,7 @@ function App() {
             <Route path="login-user" element={<LoginUser/>}></Route>
             <Route path="booking-transport-form" element={<BookingTransportForm/>}></Route>
             <Route path="profile-page" element={<ProfilePage/>}></Route>
+            <Route path="edit-profile-page" element={<EditProfilePage/>}></Route>
             <Route path="explore-home-page" element={<ExploreHomepage/>}></Route>
 
           </Routes>
