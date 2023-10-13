@@ -4,13 +4,17 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+const morgan = require("morgan");
+const dotenv = require("dotenv");
+const helmet = require("helmet");
 
 var indexRouter = require("./src/routes/index");
 var usersRouter = require("./src/routes/api/users");
+var postsRouter = require("./src/routes/api/posts");
+dotenv.config();
 
 // var config = require("config");
 var cors = require("cors");
-
 var app = express();
 
 // view engine setup
@@ -20,13 +24,16 @@ app.set("view engine", "jade");
 app.use(logger("dev"));
 app.use(cors());
 app.use(express.json());
+app.use(helmet());
+app.use(morgan("common"));
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/api/users", usersRouter);
-
+app.use("/api/post",postsRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

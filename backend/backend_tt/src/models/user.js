@@ -6,15 +6,34 @@ const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 
-var userSchema = mongoose.Schema({
-  email: String,
-  userName: String,
-  contact: Number,
-  password: String,
-  confirmPassword: String,
-  image: String,
-  about: String,
-});
+var userSchema = mongoose.Schema(
+  {
+    email: String,
+    userName: String,
+    contact: Number,
+    password: String,
+    confirmPassword: String,
+    userProfilePicture: { type: String, default: "" },
+    userCoverPicture: { type: String, default: "" },
+    followers: {
+      type: Array,
+      default: [],
+    },
+    following: {
+      type: Array,
+      default: [],
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    about: String,
+    city: String,
+    country: String,
+  },
+
+  { timestamps: true }
+);
 
 userSchema.methods.generateHashedPassword = async function () {
   let salt = await bcrypt.genSalt(10);
