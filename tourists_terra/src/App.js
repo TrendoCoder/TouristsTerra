@@ -18,6 +18,7 @@ import EditProfilePage from "./Components/User_Module/profilepage/editprofilepag
 import BecomeABlogger from "./Components/User_Module/blogpage/becomeablogger/becomeablogger";
 import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpost";
 import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepage/explorehomepage";
+import EditUserProfile from "./Components/User_Module/profilepage/edituserprofile/edituserprofile";
 function App() {
   return (
     <div>
@@ -40,6 +41,7 @@ function App() {
             <Route path="profile-page" element={<ProfilePage/>}></Route>
             <Route path="edit-profile-page" element={<EditProfilePage/>}></Route>
             <Route path="explore-home-page" element={<ExploreHomepage/>}></Route>
+            <Route path="edit-user-profile" element={<EditUserProfile/>}></Route>
 
           </Routes>
         </div>
