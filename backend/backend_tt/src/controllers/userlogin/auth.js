@@ -11,7 +11,8 @@ const register = async (req, res, next) => {
       email: req.body.email,
       password: hash,
     });
-    await newUser.save(), res.status(200).send("User has been created ");
+    await newUser.save();
+    res.status(200).send("User has been created ");
   } catch (err) {
     next(err);
   }
@@ -31,7 +32,7 @@ const login = async (req, res, next) => {
     );
     if (!isPasswordCorrect)
      return next(createError(400, "Wrong password or Username!"));
-    const token = jwt.sign({id:user._id, isAdmin: user.isAdmin}, "jwtPrivateey");
+    const token = jwt.sign({id:user._id, isAdmin: user.isAdmin}, "jwtPrivateKey");
     const {password, isAdmin, ...otherDetails} = user._doc;
     res.cookie("access_token",token,{
         httpOnly:true,
