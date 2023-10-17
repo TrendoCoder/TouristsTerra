@@ -1,20 +1,21 @@
 const express = require("express");
-let router = express.Router();
+const { verifyAdmin } = require("../../../utils/verifytoken");
+const { createRoom, updateRoom, deleteRoom, getRoom, getAllRoom } = require("../../../controllers/hotel/room");
+const router = express.Router();
 
-//Create
- router.post("/", (req,res)=>{
-    try{
+// Create
+router.post("/:hotelId",verifyAdmin, createRoom);
 
-    }catch(err){
+// Update
+router.put("/:id",verifyAdmin, updateRoom);
 
-    }
- })
-//Update
+// Delete
+router.delete("/:id/:hotelId",verifyAdmin, deleteRoom);
 
-//Delete
+// Get
+router.get("/:id", getRoom);
 
-//Get
-
-//Get All
+// Get All
+router.get("/", getAllRoom);
 
 module.exports = router;

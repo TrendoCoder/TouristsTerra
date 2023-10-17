@@ -15,12 +15,23 @@ const verifyToken = (req, res, next) => {
 module.exports.verifyToken = verifyToken;
 
 const verifyUser = (req, res, next) => {
-  verifyToken(req, res, () => {
+  verifyToken(req, res, next, () => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
       next();
     } else {
-      if (err) return next(createError(403, "You are not "));
+    return next(createError(403, "You are not Authorized"));
     }
   });
 };
 module.exports.verifyUser = verifyUser;
+
+const verifyAdmin = (req, res, next) => {
+    verifyToken(req, res, next, () => {
+      if (req.user.isAdmin) {
+        next();
+      } else {
+      return next(createError(403, "You are not Authorized"));
+      }
+    });
+  };
+  module.exports.verifyAdmin = verifyAdmin;
