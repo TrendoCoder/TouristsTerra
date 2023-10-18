@@ -39,8 +39,8 @@ app.use("/", indexRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
-app.use("/api/auth",authRouter);
-app.use("/api/user",userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 
 // catch 404 and forward to error handler
 
@@ -61,10 +61,13 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/touristsTerra", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://tourist-terra:7dtd1nISHV6sNcvg@cluster0.cnvxp3w.mongodb.net/tourist_terra",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => console.log("Connected to MongoDb"))
   .catch((error) => console.log(error.message));
 module.exports = app;
