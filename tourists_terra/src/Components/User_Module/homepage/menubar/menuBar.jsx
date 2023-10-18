@@ -31,7 +31,7 @@ const MenuBar = (props) => {
           </Link>
         </div>
         <div id="ind-div">
-          <Link to="/">
+          <Link to="/shop-home-page">
             <h4>Shop</h4>
           </Link>
         </div>

@@ -10,7 +10,7 @@ const FeedSection = () => {
       try {
         const res = await axios.get(
           "http://localhost:3001/api/post/timeline/650df10bcdd4ff8def7cfccf"
-        ); // Replace with your user ID
+        ); 
         setPosts(res.data);
       } catch (error) {
         console.error("Error fetching posts:", error);

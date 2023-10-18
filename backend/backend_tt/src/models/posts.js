@@ -15,13 +15,12 @@ const postSchema = new mongoose.Schema(
         timestamps:true
     },
 
-    function validatePost(data){
-        const schema = Joi.object({
-            desc: Joi.string().min(0).max(500),
-        });
-        return schema.validate(data,{abortEarly: false});
-    }
 );
-
+function validatePost(data){
+    const schema = Joi.object({
+        desc: Joi.string().min(0).max(500),
+    });
+    return schema.validate(data,{abortEarly: false});
+};
 module.exports = mongoose.model("Posts",postSchema);
 module.exports.validatePost = this.validatePost;

@@ -18,29 +18,42 @@ import EditProfilePage from "./Components/User_Module/profilepage/editprofilepag
 import BecomeABlogger from "./Components/User_Module/blogpage/becomeablogger/becomeablogger";
 import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpost";
 import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepage/explorehomepage";
+import EditUserProfile from "./Components/User_Module/profilepage/edituserprofile/edituserprofile";
+import ShopHomePage from "./Components/User_Module/shoppage/shophomepage/shophomepage";
 function App() {
   return (
     <div>
       <Router>
-
         <div>
           <Routes>
             <Route path="/" element={<LandingPage />}></Route>
             <Route path="accommodation" element={<AccommodationHome />}></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
-            <Route path="localguide" element={<LocalGuideHome/>} ></Route>
-            <Route path="blog-home-page" element={<BlogHomePage/>}>
-  
-            </Route>
-            <Route path="add-blog-post" element={<AddBlogPost/>}></Route>
-            <Route path="become-a-blogger" element={<BecomeABlogger/>}></Route><Route/>
-            <Route path="sign-up" element={<SignUpPage/>}></Route>
-            <Route path="login-user" element={<LoginUser/>}></Route>
-            <Route path="booking-transport-form" element={<BookingTransportForm/>}></Route>
-            <Route path="profile-page" element={<ProfilePage/>}></Route>
-            <Route path="edit-profile-page" element={<EditProfilePage/>}></Route>
-            <Route path="explore-home-page" element={<ExploreHomepage/>}></Route>
-
+            <Route path="localguide" element={<LocalGuideHome />}></Route>
+            <Route path="blog-home-page" element={<BlogHomePage />}></Route>
+            <Route path="add-blog-post" element={<AddBlogPost />}></Route>
+            <Route path="become-a-blogger" element={<BecomeABlogger />}></Route>
+            <Route />
+            <Route path="sign-up" element={<SignUpPage />}></Route>
+            <Route path="login-user" element={<LoginUser />}></Route>
+            <Route
+              path="booking-transport-form"
+              element={<BookingTransportForm />}
+            ></Route>
+            <Route path="profile-page" element={<ProfilePage />}></Route>
+            <Route
+              path="edit-profile-page"
+              element={<EditProfilePage />}
+            ></Route>
+            <Route
+              path="explore-home-page"
+              element={<ExploreHomepage />}
+            ></Route>
+            <Route
+              path="edit-user-profile"
+              element={<EditUserProfile />}
+            ></Route>
+            <Route path="shop-home-page" element={<ShopHomePage />}></Route>
           </Routes>
         </div>
       </Router>

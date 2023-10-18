@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 const EditProfilePage = () => {
   const [userProfileImage, setUserProfileImage] = useState();
-  const [userName, setuserName] = useState();
+  const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [contact, setContact] = useState();
   const [about, setAbout] = useState();
@@ -16,7 +16,7 @@ const EditProfilePage = () => {
     setUserProfileImage(e.target.files[0]);
   };
   const handleSetUserName = (e) => {
-    setuserName(e.target.value);
+    setUserName(e.target.value);
   };
   const handleSetEmail = (e) => {
     setEmail(e.target.value);
@@ -63,7 +63,7 @@ const EditProfilePage = () => {
         <h2>Tourist's Terra</h2>
 
         <div id="u-profile-image">
-          <img src={userProfileImage} alt="Profile Image" />
+          <img src={userProfileImage} alt="Profile Image"/>
           <input
             type="file"
             name="userProfileImage"
@@ -78,7 +78,7 @@ const EditProfilePage = () => {
         <form action="/user" method="POST" id="edit-profile-form">
           <div id="input-group">
             <label htmlFor="name">Your Name:</label>
-            <input type="text" id="name" name="userName" />
+            <input type="text" id="name" name="userName" onChange={handleSetUserName} />
           </div>
 
           <div id="input-group">
