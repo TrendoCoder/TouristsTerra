@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
 } from "react-router-dom";
 import LandingPage from "./Components/User_Module/homepage/landingpage/landingPage";
 import AccommodationHome from "./Components/User_Module/accommodationpage/accommodationhome/accommodationhome";
