@@ -20,15 +20,12 @@ import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpo
 import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepage/explorehomepage";
 import EditUserProfile from "./Components/User_Module/profilepage/edituserprofile/edituserprofile";
 import ShopHomePage from "./Components/User_Module/shoppage/shophomepage/shophomepage";
-<<<<<<< Updated upstream
 import AccomodationListPage from "./Components/User_Module/accommodationpage/accomodationlistpage/accomodationlistpage";
-=======
 import FeaturedBlogs from "./Components/User_Module/blogpage/featuredblogs/featuredblogs";
 import RecentBlogs from "./Components/User_Module/blogpage/recentblogs/recentblogs";
 import MyBlogs from "./Components/User_Module/blogpage/myblogs/myblogs";
 import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost";
 
->>>>>>> Stashed changes
 function App() {
   return (
     <div>
