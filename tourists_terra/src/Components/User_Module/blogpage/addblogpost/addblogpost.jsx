@@ -3,9 +3,10 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "react-quill/dist/quill.snow.css"; // Import Quill's CSS
 import BlogMenu from "../blogmenu/blogmenu";
-import NavBar from '../../homepage/navbar/navBar';
+import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
 import ReactQuill from "react-quill";
+import { Navigate, useNavigate } from "react-router";
 
 const AddBlogPost = () => {
   const initialValues = {
@@ -15,6 +16,7 @@ const AddBlogPost = () => {
     description: "",
   };
 
+  const navigate = useNavigate();
   const validationSchema = Yup.object().shape({
     title: Yup.string().max(32).required("Title is required"),
     category: Yup.string().required("Select Category"),
@@ -30,9 +32,13 @@ const AddBlogPost = () => {
     }
   };
 
+  const handlePost = () => {
+    navigate("/my-blogs");
+  };
+
   return (
     <div>
-    <NavBar/>
+      <NavBar />
       <BlogMenu />
       <div className="max-w-lg lg:mx-auto mx-auto">
         <div className="py-2 px-1 rounded-md bg-white">
@@ -103,7 +109,10 @@ const AddBlogPost = () => {
                   />
                 </div>
                 <div className="flex flex-col items-start md:col-span-2">
-                  <label htmlFor="file" className="text-gray-900 text-lg float-left block font-normal">
+                  <label
+                    htmlFor="file"
+                    className="text-gray-900 text-lg float-left block font-normal"
+                  >
                     Select picture from device (JPEG, JPG, PNG):
                   </label>
                   <Field
@@ -120,7 +129,10 @@ const AddBlogPost = () => {
                   />
                 </div>
                 <div className="flex flex-col items-start md:col-span-2">
-                  <label htmlFor="description" className="text-gray-900 text-lg">
+                  <label
+                    htmlFor="description"
+                    className="text-gray-900 text-lg"
+                  >
                     Enter Blog here *
                   </label>
                   <div className="w-full">
@@ -134,7 +146,9 @@ const AddBlogPost = () => {
                   <button
                     type="submit"
                     className="py-3 text-base font-medium rounded text-white bg-blue-800 w-full hover:bg-blue-700 transition duration-300"
-                  >Post Blog
+                    onClick={handlePost}
+                  >
+                    Post Blog
                   </button>
                 </div>
               </div>
@@ -157,6 +171,5 @@ const RichTextEditor = ({ field, form }) => {
     />
   );
 };
-
 
 export default AddBlogPost;
