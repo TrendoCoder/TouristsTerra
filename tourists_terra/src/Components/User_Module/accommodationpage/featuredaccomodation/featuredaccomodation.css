@@ -1,0 +1,27 @@
+#featured-acc{
+    width:100%;
+    max-width: 1024px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    z-index: 1;
+}
+#featured-acc-item{
+position: relative;
+ color: white;
+ border-radius: 10px;
+}
+#featured-acc-item img{
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    height: 250px;
+}
+#featured-acc-tile{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}

@@ -1,0 +1,33 @@
+#p-list-acc{
+    width:100%;
+    max-width: 1024px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    z-index: 1;
+}
+#p-list-acc-item{
+flex: 1;
+ border-radius: 10px;
+}
+#p-list-acc-item img{
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    height: 200px;
+    border-radius: 10px;
+}
+#p-list-acc-tile{
+    transition: 0.5s;
+    line-height: 0.4;
+}
+#p-list-acc-tile h1{
+    font-size: 18px;
+}
+#p-list-acc-tile h2{
+    font-size: 14px;
+    font-weight: 500;
+}

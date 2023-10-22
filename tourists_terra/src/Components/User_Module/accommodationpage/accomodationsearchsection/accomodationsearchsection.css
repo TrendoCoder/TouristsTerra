@@ -1,0 +1,79 @@
+#acc-search-section{
+    height: 30px;
+    margin: auto;
+    margin-top: 40px;
+    background-color: white;
+    border: 3px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+    padding: 10px 0px;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 1024px;
+    position: relative;
+    z-index: 2;
+}
+#acc-search-section-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#acc-search-section-item span{
+    color: gray;
+    cursor: pointer;
+}
+#acc-search-icons{
+    color: gray;
+}
+#acc-search-section-input{
+    border: none;
+    outline: none;
+}
+#acc-search-section-btn{
+    background-color: #0F4157;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    transition: 0.4s;
+    cursor: pointer;
+}
+.acc-date{
+    position: absolute;
+    top: 50px;
+    color: black;
+}
+#acc-options{
+position: absolute;
+top: 50px;
+background-color: white;
+color: grey;
+border-radius: 5px;
+box-shadow: 0px 0px 10px -5px black;
+}
+
+#acc-options-items{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+#acc-counter-div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: black;
+}
+
+#acc-option-counter{
+    width: 30px;
+    height: 30px;
+    border: 1px solid #0F4157;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 5px;
+} 
+#acc-option-counter:disabled{
+cursor: not-allowed;
+}

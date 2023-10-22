@@ -7,6 +7,9 @@ import AccomoList from '../accomolist/accomolist'
 import Footer from '../footer/footer'
 import { Link } from 'react-router-dom'
 import NavBar from '../../homepage/navbar/navBar'
+import AccomodationSearchSection from '../accomodationsearchsection/accomodationsearchsection'
+import FeaturedAccomodation from '../featuredaccomodation/featuredaccomodation'
+import PropertyList from '../propertylist/propertylist'
 const AccommodationHome = () => {
   return (
     <>
@@ -24,13 +27,19 @@ const AccommodationHome = () => {
     </div>
     <br />
     <br />
+    <AccomodationSearchSection/>
     <div id='main-container-accomo'>
-    <div id='container-filter-accomo'>
+    <FeaturedAccomodation/>
+
+    <h2>Browse by Property Type</h2>
+    <PropertyList/>
+    <h1>Homes guest love</h1>
+    {/* <div id='container-filter-accomo'>
     <AccomoFilter/>
     </div>
     <div id='container-accomo-cards'>
 <AccomoList/>
-    </div>
+    </div> */}
 
     </div>
     <div>

@@ -20,6 +20,7 @@ import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpo
 import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepage/explorehomepage";
 import EditUserProfile from "./Components/User_Module/profilepage/edituserprofile/edituserprofile";
 import ShopHomePage from "./Components/User_Module/shoppage/shophomepage/shophomepage";
+import AccomodationListPage from "./Components/User_Module/accommodationpage/accomodationlistpage/accomodationlistpage";
 function App() {
   return (
     <div>
@@ -28,6 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />}></Route>
             <Route path="accommodation" element={<AccommodationHome />}></Route>
+            <Route path="accomodation-list" element={<AccomodationListPage/>}></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
             <Route path="localguide" element={<LocalGuideHome />}></Route>
             <Route path="blog-home-page" element={<BlogHomePage />}></Route>

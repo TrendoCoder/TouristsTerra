@@ -27,8 +27,10 @@
   #main-container-accomo
   {
     width: 100%;
+    max-width: 1024px;
+    margin: auto;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
   }
   #main-container-accomo #container-filter-accomo
   {
