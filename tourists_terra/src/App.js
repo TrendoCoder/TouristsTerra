@@ -20,7 +20,15 @@ import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpo
 import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepage/explorehomepage";
 import EditUserProfile from "./Components/User_Module/profilepage/edituserprofile/edituserprofile";
 import ShopHomePage from "./Components/User_Module/shoppage/shophomepage/shophomepage";
+<<<<<<< Updated upstream
 import AccomodationListPage from "./Components/User_Module/accommodationpage/accomodationlistpage/accomodationlistpage";
+=======
+import FeaturedBlogs from "./Components/User_Module/blogpage/featuredblogs/featuredblogs";
+import RecentBlogs from "./Components/User_Module/blogpage/recentblogs/recentblogs";
+import MyBlogs from "./Components/User_Module/blogpage/myblogs/myblogs";
+import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost";
+
+>>>>>>> Stashed changes
 function App() {
   return (
     <div>
@@ -35,6 +43,10 @@ function App() {
             <Route path="blog-home-page" element={<BlogHomePage />}></Route>
             <Route path="add-blog-post" element={<AddBlogPost />}></Route>
             <Route path="become-a-blogger" element={<BecomeABlogger />}></Route>
+            <Route path="featured-blogs" element={<FeaturedBlogs/>}></Route>
+            <Route path="recent-blogs" element={<RecentBlogs/>}></Route>
+            <Route path="my-blogs" element={<MyBlogs/>}> </Route>
+            <Route path="single-post" element={<SinglePost/>}> </Route>
             <Route />
             <Route path="sign-up" element={<SignUpPage />}></Route>
             <Route path="login-user" element={<LoginUser />}></Route>

@@ -9,9 +9,8 @@ const BlogMenu = () => {
             <div id="blog-menu-opt">
                 <Link to="/">Feed</Link>
             </div>
-            <div id="blog-menu-opt"><Link to="/">Recent Blogs</Link></div>
-            <div id="blog-menu-opt"><Link to="/">Trending</Link></div>
-            <div id="blog-menu-opt"><Link to="/">Categories</Link></div>
+            <div id="blog-menu-opt"><Link to="/featured-blogs">Featured Blogs</Link></div>
+            <div id="blog-menu-opt"><Link to="/recent-blogs">Recent Blogs</Link></div>
             </div>
         <div id="blog-menu-right-container">
         <div id="blog-menu-opt-right"><Link to="/become-a-blogger">Become a Blogger?</Link></div>

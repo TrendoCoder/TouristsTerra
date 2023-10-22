@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./becomeablogger.css";
 import { Link } from "react-router-dom";
 import BlogMenu from "../blogmenu/blogmenu";
+import NavBar from '../../homepage/navbar/navBar';
 import Footer from "../../accommodationpage/footer/footer";
 const BecomeABlogger = () => {
   const initialValuesCustomer = {
@@ -104,6 +105,7 @@ const BecomeABlogger = () => {
   };
   return (
     <>
+    <NavBar/>
       <BlogMenu />
       <div id="big-main-container">
         <div id="main-container">
