@@ -1,5 +1,5 @@
-#acc-search-section{
-    height: 30px;
+#acc-search-section-container{
+    height: 60px;
     margin: auto;
     margin-top: 40px;
     background-color: white;
@@ -33,12 +33,13 @@
 #acc-search-section-btn{
     background-color: #0F4157;
     color: white;
-    padding: 10px 15px;
+    padding: 5px 15px;
     border: none;
+    border-radius: 5px;
     transition: 0.4s;
     cursor: pointer;
 }
-.acc-date{
+.acc-datee{
     position: absolute;
     top: 50px;
     color: black;

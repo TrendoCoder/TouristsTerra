@@ -41,7 +41,7 @@ const AccomodationSearchSection = () => {
 
   return (
     <div>
-      <div id="acc-search-section">
+      <div id="acc-search-section-container">
         <div id="acc-search-section-item">
           <i class="fa-solid fa-bed" id="acc-search-icons"></i>
           <input
@@ -65,7 +65,7 @@ const AccomodationSearchSection = () => {
               moveRangeOnFirstSelection={false}
               ranges={date}
               minDate={new Date()}
-              className="acc-date"
+              className="acc-datee"
             />
           )}
         </div>
