@@ -14,7 +14,7 @@ position: relative;
  color: white;
  border-radius: 10px;
 }
-#featured-acc-item img{
+#featured-acc-item>img{
     width: 100%;
     object-fit: cover;
     overflow: hidden;
@@ -24,4 +24,5 @@ position: relative;
     position: absolute;
     bottom: 20px;
     left: 20px;
+    font-weight: bold;
 }

@@ -13,7 +13,7 @@
 flex: 1;
  border-radius: 10px;
 }
-#p-list-acc-item img{
+#p-list-acc-item>img{
     width: 100%;
     object-fit: cover;
     overflow: hidden;
@@ -22,12 +22,13 @@ flex: 1;
 }
 #p-list-acc-tile{
     transition: 0.5s;
-    line-height: 0.4;
+    line-height: 1;
 }
-#p-list-acc-tile h1{
+#p-list-acc-tile>h1{
     font-size: 18px;
+    font-weight: bold;
 }
-#p-list-acc-tile h2{
+#p-list-acc-tile>h2{
     font-size: 14px;
     font-weight: 500;
 }
