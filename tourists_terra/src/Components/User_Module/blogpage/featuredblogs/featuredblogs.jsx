@@ -5,12 +5,12 @@ import blogPosts from './BlogPostData';
 import hotel from "../../../../images/hotel.jpeg";
 import Footer from "../../accommodationpage/footer/footer";
 
-
 const FeaturedBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 8;
   const [selectedCategory, setSelectedCategory] = useState(null);
   const categories = [
+    'All', 
     'hotel',
     'restaurant',
     'attraction points',
@@ -20,7 +20,7 @@ const FeaturedBlogs = () => {
   ];
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
+    setSelectedCategory(category === 'All' ? null : category);
   };
 
   const filteredBlogPosts = selectedCategory
@@ -54,7 +54,7 @@ const FeaturedBlogs = () => {
       <NavBar />
       <BlogMenu />
 
-      <div className="inline-flex rounded-md shadow-sm m-6">
+          <div className="inline-flex rounded-md shadow-sm m-6">
         {categories.map((item) => (
           <button
             key={item}

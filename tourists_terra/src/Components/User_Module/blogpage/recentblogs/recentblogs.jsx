@@ -5,7 +5,6 @@ import blogPosts from './BlogPostData';
 import hotel from '../../../../images/foods.jfif';
 import Footer from '../../accommodationpage/footer/footer';
 
-
 const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp);
   return date.toLocaleDateString(); // You can customize the date format as needed
@@ -16,6 +15,7 @@ const RecentBlogs = () => {
   const postsPerPage = 8;
   const [selectedCategory, setSelectedCategory] = useState(null);
   const categories = [
+    'All', 
     'hotel',
     'restaurant',
     'attraction points',
@@ -25,7 +25,7 @@ const RecentBlogs = () => {
   ];
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
+    setSelectedCategory(category === 'All' ? null : category);
   };
 
   const filteredBlogPosts = selectedCategory
@@ -59,6 +59,7 @@ const RecentBlogs = () => {
       <NavBar />
       <BlogMenu />
 
+     
       <div className="inline-flex rounded-md shadow-sm m-6">
         {categories.map((item) => (
           <button

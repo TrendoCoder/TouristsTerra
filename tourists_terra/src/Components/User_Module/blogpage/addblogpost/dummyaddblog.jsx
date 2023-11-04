@@ -1,33 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 
 const AddBlogPost = () => {
   const validationSchema = yup.object().shape({
     title: yup.string().required("Title is required").max(32),
     category: yup.string().required("Select Category"),
-    image: yup
-      .mixed()
-      .test("fileSize", "Image file is too large", (value) => {
-        if (value) {
-          return value.size <= 1048576; // 1MB
-        }
-        return true;
-      })
-      .test("fileType", "Unsupported file format", (value) => {
-        if (value) {
-          return (
-            value.type === "image/jpeg" ||
-            value.type === "image/jpg" ||
-            value.type === "image/png"
-          );
-        }
-        return true;
-      }),
     description: yup.string().required("Description is required").min(1),
   });
 
@@ -51,7 +33,6 @@ const AddBlogPost = () => {
     handleBlur,
     handleChange,
     handleSubmit,
-    setFieldValue, // Added setFieldValue to handle file input
     errors,
     touched,
     resetForm,
@@ -59,11 +40,11 @@ const AddBlogPost = () => {
     initialValues: {
       title: "",
       category: "",
-      image: null,
+      file: "",
       description: "",
     },
     validationSchema,
-    onSubmit,
+    onSubmit, // Refer to the onSubmit function declared above
   });
 
   const handlePost = () => {
@@ -72,7 +53,7 @@ const AddBlogPost = () => {
       values.category === "" ||
       values.description === ""
     ) {
-      alert("Please fill all required fields");
+      alert("Please fill in all required fields");
     } else {
       onSubmit(values);
     }
@@ -123,49 +104,34 @@ const AddBlogPost = () => {
                     Select Category of Blog
                   </option>
                   <option className="text-black" value="hotel">
-                  Hotel
-                </option>
-                <option className="text-black" value="restaurant">
-                    Restaurant
+                    Hotel
                   </option>
-                  <option className="text-black" value="food">
-                    Food
-                  </option>
-                  <option className="text-black" value="attraction_points">
-                    Attraction Points
-                  </option>
-                  <option className="text-black" value="self_blog">
-                    Self Blog
-                  </option>
-                  <option className="text-black" value="others">
-                    Others
-                  </option>
+                  <option className="text-black" value="restaurant">
+                      Restaurant
+                    </option>
+                    <option className="text-black" value="food">
+                      Food
+                    </option>
+                    <option className="text-black" value="attraction_points">
+                      Attraction Points
+                    </option>
+                    <option className="text-black" value="self_blog">
+                      Self Blog
+                    </option>
+                    <option className="text-black" value="others">
+                      Others
+                    </option>
                 </select>
                 {errors.category && touched.category && (
                   <div className="text-red-500 text-sm">{errors.category}</div>
                 )}
               </div>
+              
               <div className="flex flex-col items-start md:col-span-2">
                 <label
-                  htmlFor="image"
-                  className="text-gray-900 text-lg float-left block font-normal"
+                  htmlFor="description"
+                  className="text-gray-900 text-lg"
                 >
-                  Select an image from your device (JPEG, JPG, PNG):
-                </label>
-                <input
-                  type="file"
-                  id="image"
-                  name="image"
-                  accept=".jpeg, .jpg, .png"
-                  onChange={(event) => setFieldValue("image", event.currentTarget.files[0])} // Set image field value
-                  className="w-full bg-gray-100 border-b border-black rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
-                />
-                {errors.image && touched.image && (
-                  <div className="text-red-500 text-sm">{errors.image}</div>
-                )}
-              </div>
-              <div className="flex flex-col items-start md:col-span-2">
-                <label htmlFor="description" className="text-gray-900 text-lg">
                   Enter Blog here *
                 </label>
                 <textarea
