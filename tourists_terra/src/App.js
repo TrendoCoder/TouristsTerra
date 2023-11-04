@@ -20,6 +20,7 @@ import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepag
 import EditUserProfile from "./Components/User_Module/profilepage/edituserprofile/edituserprofile";
 import ShopHomePage from "./Components/User_Module/shoppage/shophomepage/shophomepage";
 import AccomodationListPage from "./Components/User_Module/accommodationpage/accomodationlistpage/accomodationlistpage";
+import AccomodationDetail from "./Components/User_Module/accommodationpage/accomodationdetail/accomodationdetail";
 import FeaturedBlogs from "./Components/User_Module/blogpage/featuredblogs/featuredblogs";
 import RecentBlogs from "./Components/User_Module/blogpage/recentblogs/recentblogs";
 import MyBlogs from "./Components/User_Module/blogpage/myblogs/myblogs";
@@ -34,6 +35,7 @@ function App() {
             <Route path="/" element={<LandingPage />}></Route>
             <Route path="accommodation" element={<AccommodationHome />}></Route>
             <Route path="accomodation-list" element={<AccomodationListPage/>}></Route>
+            <Route path="accomodation-detail" element={<AccomodationDetail/>}></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
             <Route path="localguide" element={<LocalGuideHome />}></Route>
             <Route path="blog-home-page" element={<BlogHomePage />}></Route>
