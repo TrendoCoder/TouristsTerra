@@ -8,6 +8,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import SearchedAccomodationItems from "../searchedaccomodationitems/searchedaccomodationitems";
 import NavBar from "../../homepage/navbar/navBar";
 import MenuBar from "../../homepage/menubar/menuBar";
+import useFetch from "../../../../Hooks/usefetch";
 
 const AccomodationListPage = () => {
   const location = useLocation();
@@ -16,6 +17,7 @@ const AccomodationListPage = () => {
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
 
+  const {data, loading, error, reFetch} = useFetch(`http://localhost:3001/api/hotels/?city=${destination}`)
   return (
     <>
     <NavBar/>
@@ -86,12 +88,17 @@ const AccomodationListPage = () => {
           <button id="alp-search-btn">Search</button>
         </div>
         <div id="atp-result">
-           <SearchedAccomodationItems/>
-           <SearchedAccomodationItems/>
-           <SearchedAccomodationItems/>
-           <SearchedAccomodationItems/>
-           <SearchedAccomodationItems/>
-           <SearchedAccomodationItems/>
+        {
+          loading?"Loading please wait":<>
+          {
+            data.map(item =>{
+              <SearchedAccomodationItems item={item} key={item._id}/>
+            })
+          }
+          
+          </>
+        }
+           
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import "./searchedaccomodationitems.css"
 import pic from "../../../../images/h_ad1.jfif"
-const SearchedAccomodationItems = () => {
+const SearchedAccomodationItems = ({item}) => {
   return (
     <div id='si-container'>
     <img src={pic} alt="" />
