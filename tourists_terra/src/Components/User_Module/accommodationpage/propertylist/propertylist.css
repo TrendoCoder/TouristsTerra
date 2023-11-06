@@ -12,6 +12,7 @@
 #p-list-acc-item{
 flex: 1;
  border-radius: 10px;
+ cursor: pointer;
 }
 #p-list-acc-item>img{
     width: 100%;
@@ -22,13 +23,14 @@ flex: 1;
 }
 #p-list-acc-tile{
     transition: 0.5s;
-    line-height: 1;
+    line-height: 1.1;
 }
 #p-list-acc-tile>h1{
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: capitalize;
 }
 #p-list-acc-tile>h2{
     font-size: 14px;
-    font-weight: 500;
+    
 }

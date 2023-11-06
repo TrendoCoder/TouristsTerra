@@ -8,6 +8,8 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 
+var productRouter = require("./src/routes/api/shopapi/product");
+var categoryRouter = require("./src/routes/api/shopapi/category");
 var indexRouter = require("./src/routes/index");
 var usersRouter = require("./src/routes/api/users");
 var postsRouter = require("./src/routes/api/posts");
@@ -42,7 +44,6 @@ app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
-app.use("/api/bloguser", blogRouter);
 
 // catch 404 and forward to error handler
 

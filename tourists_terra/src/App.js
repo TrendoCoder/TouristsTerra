@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./Components/User_Module/homepage/landingpage/landingPage";
 import AccommodationHome from "./Components/User_Module/accommodationpage/accommodationhome/accommodationhome";
 import TransportHomePage from "./Components/User_Module/transportpage/transporthomepage/transporthomepage";
@@ -25,7 +21,7 @@ import FeaturedBlogs from "./Components/User_Module/blogpage/featuredblogs/featu
 import RecentBlogs from "./Components/User_Module/blogpage/recentblogs/recentblogs";
 import MyBlogs from "./Components/User_Module/blogpage/myblogs/myblogs";
 import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost";
-
+import ProductDetail from "./Components/User_Module/shoppage/shophomepage/ProductDetail";
 function App() {
   return (
     <div>
@@ -34,17 +30,27 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />}></Route>
             <Route path="accommodation" element={<AccommodationHome />}></Route>
-            <Route path="accomodation-list" element={<AccomodationListPage/>}></Route>
-            <Route path="accomodation-detail" element={<AccomodationDetail/>}></Route>
+            <Route
+              path="accomodation-list"
+              element={<AccomodationListPage />}
+            ></Route>
+            <Route
+              path="accomodation-detail/:hotel_id"
+              element={<AccomodationDetail />}
+            ></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
             <Route path="localguide" element={<LocalGuideHome />}></Route>
             <Route path="blog-home-page" element={<BlogHomePage />}></Route>
             <Route path="add-blog-post" element={<AddBlogPost />}></Route>
             <Route path="become-a-blogger" element={<BecomeABlogger />}></Route>
-            <Route path="featured-blogs" element={<FeaturedBlogs/>}></Route>
-            <Route path="recent-blogs" element={<RecentBlogs/>}></Route>
-            <Route path="my-blogs" element={<MyBlogs/>}> </Route>
-            <Route path="single-post" element={<SinglePost/>}> </Route>
+            <Route path="featured-blogs" element={<FeaturedBlogs />}></Route>
+            <Route path="recent-blogs" element={<RecentBlogs />}></Route>
+            <Route path="my-blogs" element={<MyBlogs />}>
+              {" "}
+            </Route>
+            <Route path="single-post" element={<SinglePost />}>
+              {" "}
+            </Route>
             <Route />
             <Route path="sign-up" element={<SignUpPage />}></Route>
             <Route path="login-user" element={<LoginUser />}></Route>
@@ -66,6 +72,7 @@ function App() {
               element={<EditUserProfile />}
             ></Route>
             <Route path="shop-home-page" element={<ShopHomePage />}></Route>
+            <Route path="/product/:productId" element={<ProductDetail />} />
           </Routes>
         </div>
       </Router>

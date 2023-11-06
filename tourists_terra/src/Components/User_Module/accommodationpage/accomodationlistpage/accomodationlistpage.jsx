@@ -8,6 +8,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import SearchedAccomodationItems from "../searchedaccomodationitems/searchedaccomodationitems";
 import NavBar from "../../homepage/navbar/navBar";
 import MenuBar from "../../homepage/menubar/menuBar";
+import useFetch from "../../../../Hooks/usefetch";
 
 const AccomodationListPage = () => {
   const location = useLocation();
@@ -15,7 +16,12 @@ const AccomodationListPage = () => {
   const [date, setDate] = useState(location.state.date);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
-
+  const [min,setMin] = useState(undefined);
+  const [max,setMax] = useState(undefined);
+  const {data, loading, error, reFetch} = useFetch(`http://localhost:3001/api/hotels/?city=${destination}&min=${min || 0}&max=${max || 999}`);
+  const handleSearch = () => {
+    reFetch();
+  }
   return (
     <>
     <NavBar/>
@@ -58,11 +64,11 @@ const AccomodationListPage = () => {
             <label>Options</label>
             <div id="isOptionItem">
                 <span>Min Price <small>per night</small></span>
-                <input type="number" id="isOptionItem-input" />
+                <input type="number" id="isOptionItem-input" onChange={e=>setMin(e.target.value)}/>
             </div>
             <div id="isOptionItem">
                 <span>Max Price <small>per night</small></span>
-                <input type="number" id="isOptionItem-input" />
+                <input type="number" id="isOptionItem-input" onChange={e=>setMax(e.target.value)}/>
             </div>
             <div id="isOptionItem">
                 <span>Adult</span>
@@ -83,15 +89,20 @@ const AccomodationListPage = () => {
                  placeholder={options.room} />
             </div>
           </div>
-          <button id="alp-search-btn">Search</button>
+          <button id="alp-search-btn" onClick={handleSearch}>Search</button>
         </div>
         <div id="atp-result">
-           <SearchedAccomodationItems/>
-           <SearchedAccomodationItems/>
-           <SearchedAccomodationItems/>
-           <SearchedAccomodationItems/>
-           <SearchedAccomodationItems/>
-           <SearchedAccomodationItems/>
+        {
+          loading?"Loading please wait":<>
+          {
+            data.map(item =>(
+              <SearchedAccomodationItems item={item} key={item._id}/>
+            ))
+          }
+          
+          </>
+        }
+           
         </div>
       </div>
     </div>

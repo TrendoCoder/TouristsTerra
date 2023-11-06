@@ -15,7 +15,7 @@
     color: white;
     text-align: center;
   }
-  #opacity-ad a h1 
+  #opacity-ad>a>h1 
   {
     color: white;
     margin-top: 170px;
@@ -31,6 +31,10 @@
     margin: auto;
     display: flex;
     flex-direction: column;
+  }
+  #main-container-accomo>h2{
+    font-size: 20px;
+    font-weight: 600;
   }
   #main-container-accomo #container-filter-accomo
   {

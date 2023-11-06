@@ -39,6 +39,7 @@ margin-bottom: 10px;
     border: none;
     outline: none;
     border-radius: 5px;
+    color: #0F4157;
 }
 #isItem>span{
     height: 30px;
@@ -62,6 +63,7 @@ width: 70px;
 border-radius: 3px;
 border: none;
 outline: none;
+color: #0F4157;
 }
 #alp-search-btn{
     width: 100%;
