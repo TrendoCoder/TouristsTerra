@@ -1,9 +1,8 @@
-const Blog=require('../model/Blog')
+const Blog=require('../../models/blog/blog')
 const _=require('lodash')
 const ObjectId = require('mongoose').Types.ObjectId;
-/**
- * get all blogs from database
- */
+
+//GET all blogs from database
 
 exports.getAllBlogs=async(req,res)=>{
     try {
@@ -18,12 +17,10 @@ exports.getAllBlogs=async(req,res)=>{
     }
 }
 
-/**
- * get single blog from database
- * @param blog_id
- */
 
-exports.getBlog=async (req, res) => {
+//GET single blog from database @param blog_id
+
+exports.getBlog = async (req, res) => {
   try {
     const blogId=req.params.id
     const blog = await Blog.findById(blogId);
@@ -33,11 +30,10 @@ exports.getBlog=async (req, res) => {
   }
 }
 
-/**
- * Like and Unlike the blog
- * @param id
- */
-exports.postLikeBlog=async(req,res)=>{
+
+// Like and Unlike the blog @param id
+
+exports.postLikeBlog = async(req,res)=>{
   try {
     const blogId=req.params.id
     const like=req.params.like
@@ -69,6 +65,7 @@ exports.postLikeBlog=async(req,res)=>{
  * @param { comment,userId } body 
  * @returns 
  */
+//Comment on post
 exports.postCommentBlog=async(req,res)=>{
   try {
     const blog = await Blog.findById(req.params.id);
@@ -78,8 +75,7 @@ exports.postCommentBlog=async(req,res)=>{
           comments:{
            comment:req.body.comment,
            author:req.body.userId
-          } 
-          
+          }          
         },
       });
       res.status(200).json("This blog has been commented");
@@ -87,38 +83,56 @@ exports.postCommentBlog=async(req,res)=>{
     return res.status(500).json(err);
   }
 }
+
 //-------- This code will transfer to Admin Pannel -----------
 
-/**
- * Create the new Blog
- */
+// Create the new Blog
 
-exports.createBlog=async (req, res) => {
-  const newBlog = new Blog(req.body);
-  try {
-    const savedBlog = await newBlog.save();
-    res.status(200).json(savedBlog);
-  } catch (err) {
-    return res.status(500).json(err);
-  }
-}
+exports.createBlog = async (req, res) => {
+    const { title, userId, image, category, description } = req.body;
+    console.log(req.body)
+    if (!title || !category || !description) {
+      return res.status(400).json({ error: 'Missing required fields' });    }
 
-exports.deleteBlog=async (req, res) => {
-  try {
-    const blogId=req.params.id
-    const blog = await Blog.findById(blogId);
-    console.log(typeof(blogId),blog)
-     if (blog.userId === req.body.userId) {
-      await Blog.deleteOne({_id:blogId},err=>{
-        if(err) throw err; 
-        res.status(200).json("Document deleted successfully");
+    try {
+      const newBlog = new Blog({
+        title,
+        category,
+        description,
       });
-     
+  
+      const savedBlog = await newBlog.save();
+      res.status(201).json(savedBlog);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-  } catch (err) {
-    return res.status(500).json(err);
-  }
-}
+  };
+
+//Delete a Blog
+
+exports.deleteBlog = async (req, res) => {
+    try {
+      const blogId = req.params.id;
+      const blog = await Blog.findById(blogId);
+      if (!blog) {
+        return res.status(404).json({ error: "Blog not found" });
+      }
+  
+      if (blog.userId === req.body.userId) {
+        await Blog.deleteOne({ _id: blogId });
+        res.status(200).json("Document deleted successfully");
+      } else {
+        res.status(403).json({ error: "Unauthorized to delete this blog" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+//UPDATE
 
 exports.updateBlog=async(req,res)=>{
   try {

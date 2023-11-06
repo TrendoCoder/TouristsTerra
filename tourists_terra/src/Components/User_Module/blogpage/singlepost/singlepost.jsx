@@ -110,6 +110,7 @@ function SinglePost() {
       </div>
     </div>
   </div>
+  
   {/*form form comments*/}
   <div className="max-w-4xl py-16 xl:px-8 flex justify-center mx-auto">
     <div className="w-full mt-16 md:mt-0 ">
@@ -120,6 +121,7 @@ function SinglePost() {
       </form>
     </div>
   </div>
+
   {/*comments*/}
   <div className="max-w-4xl px-10 py-16 mx-auto bg-gray-100  bg-white min-w-screen animation-fade animation-delay  px-0 px-8 mx-auto sm:px-12 xl:px-5">
     <p className="mt-1 text-2xl font-bold text-left text-gray-800 sm:mx-6 sm:text-2xl md:text-3xl lg:text-4xl sm:text-center sm:mx-0">

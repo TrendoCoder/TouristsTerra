@@ -5,6 +5,7 @@ import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 const AddBlogPost = () => {
   const validationSchema = yup.object().shape({
@@ -33,16 +34,34 @@ const AddBlogPost = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values, { resetForm }) => {
     if (!values.description || values.description.trim() == null) {
-      alert("Please fill all fields");
+      alert("Please fill all the fields");
     } else {
-      console.log(values);
-      // You can send the form data to your backend or perform any other actions here.
+      try {
+        const formData = new FormData();
+        formData.append("title", values.title);
+        formData.append("category", values.category);
+        formData.append("image", values.image);
+        formData.append("description", values.description);
 
-      // Clear the form fields
-      resetForm();
-      navigate("/my-blogs");
+        // Make the API request using Axios
+        const response = await axios.post("http://127.0.0.1:3001/api/bloguser/createblogs", values);
+console.log(response)
+        // Handle the response as needed
+        console.log("API Response:", response.data);
+        alert("Blog posted successfully");
+
+        // Clear the form fields
+        resetForm();
+
+        // Redirect to the desired page
+        navigate("/my-blogs");
+      } catch (error) {
+        console.error("API Error:", error);
+        alert("An error occurred while posting the blog");
+        // Handle the error as needed
+      }
     }
   };
 
@@ -51,7 +70,7 @@ const AddBlogPost = () => {
     handleBlur,
     handleChange,
     handleSubmit,
-    setFieldValue, // Added setFieldValue to handle file input
+    setFieldValue,
     errors,
     touched,
     resetForm,
@@ -72,9 +91,9 @@ const AddBlogPost = () => {
       values.category === "" ||
       values.description === ""
     ) {
-      alert("Please fill all required fields");
+      alert("Please fill all the required fields");
     } else {
-      onSubmit(values);
+      onSubmit(values, { resetForm });
     }
   };
 
@@ -123,9 +142,9 @@ const AddBlogPost = () => {
                     Select Category of Blog
                   </option>
                   <option className="text-black" value="hotel">
-                  Hotel
-                </option>
-                <option className="text-black" value="restaurant">
+                    Hotel
+                  </option>
+                  <option className="text-black" value="restaurant">
                     Restaurant
                   </option>
                   <option className="text-black" value="food">
@@ -157,7 +176,9 @@ const AddBlogPost = () => {
                   id="image"
                   name="image"
                   accept=".jpeg, .jpg, .png"
-                  onChange={(event) => setFieldValue("image", event.currentTarget.files[0])} // Set image field value
+                  onChange={(event) =>
+                    setFieldValue("image", event.currentTarget.files[0])
+                  }
                   className="w-full bg-gray-100 border-b border-black rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
                 />
                 {errors.image && touched.image && (
@@ -189,13 +210,13 @@ const AddBlogPost = () => {
                   Post Blog
                 </button>
               </div>
+              </div>
+              </form>
             </div>
-          </form>
+          </div>
+          <Footer />
         </div>
-      </div>
-      <Footer />
-    </div>
-  );
-};
-
+      );
+    };
+    
 export default AddBlogPost;
