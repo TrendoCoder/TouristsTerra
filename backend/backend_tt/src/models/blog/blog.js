@@ -9,7 +9,7 @@ const blogSchema = new mongoose.Schema({
   },
   userId:{
     type: String,
-    unique: false
+    required: false
   },
   image: {
     type: String,

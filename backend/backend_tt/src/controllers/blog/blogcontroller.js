@@ -92,8 +92,7 @@ exports.createBlog = async (req, res) => {
     const { title, userId, image, category, description } = req.body;
     console.log(req.body)
     if (!title || !category || !description) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
+      return res.status(400).json({ error: 'Missing required fields' });    }
 
     try {
       const newBlog = new Blog({
