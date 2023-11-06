@@ -35,7 +35,7 @@ function App() {
               element={<AccomodationListPage />}
             ></Route>
             <Route
-              path="accomodation-detail"
+              path="accomodation-detail/:hotel_id"
               element={<AccomodationDetail />}
             ></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
