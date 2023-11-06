@@ -1,13 +1,15 @@
 const express = require("express");
 const { verifyAdmin } = require("../../../utils/verifytoken");
-const { createRoom, updateRoom, deleteRoom, getRoom, getAllRoom } = require("../../../controllers/hotel/room");
+const { createRoom, updateRoom, deleteRoom, getRoom, getAllRoom, updateRoomAvailability } = require("../../../controllers/hotel/room");
 const router = express.Router();
 
 // Create
-router.post("/:hotelId",verifyAdmin, createRoom);
+router.post("/:hotelId", createRoom);
+// router.post("/:hotelId",verifyAdmin, createRoom);
 
 // Update
 router.put("/:id",verifyAdmin, updateRoom);
+router.put("/availability/:id", updateRoomAvailability);
 
 // Delete
 router.delete("/:id/:hotelId",verifyAdmin, deleteRoom);

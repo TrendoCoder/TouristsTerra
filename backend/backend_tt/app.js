@@ -14,6 +14,7 @@ var indexRouter = require("./src/routes/index");
 var usersRouter = require("./src/routes/api/users");
 var postsRouter = require("./src/routes/api/posts");
 var hotelRouter = require("./src/routes/api/hotelapi/hotels");
+var roomRouter = require("./src/routes/api/hotelapi/rooms");
 var authRouter = require("./src/routes/api/userloginapi/auth");
 var userRouter = require("./src/routes/api/userloginapi/user");
 
@@ -41,6 +42,7 @@ app.use("/", indexRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
+app.use("/api/rooms",roomRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);

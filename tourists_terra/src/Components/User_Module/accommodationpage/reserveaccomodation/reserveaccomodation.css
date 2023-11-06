@@ -1,0 +1,100 @@
+#acc-reserve{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.788);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+
+}
+#acc-reserve-container {
+    /* Your existing styles */
+    background-color: #0f4157c2;
+    padding: 20px;
+    position: relative;
+    height: 80vh;
+    top: 40px;
+    overflow-y: scroll;
+    box-shadow: 0px 0px 15px 2px white;
+}
+
+#acc-reserve-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#acc-reserve-container::-webkit-scrollbar-thumb {
+    background-color: white; 
+    border-radius: 10px;
+}
+#acc-reserve-container::-webkit-scrollbar-track {
+    background: #0f4157c2; 
+}
+
+#acc-reserve-container>i{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+#reserve-item{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 20px;
+    border: 1px solid white;
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+#reserve-item:hover{
+
+    border: 1px solid #0F4157;
+    background-color: white;
+    color: #0F4157;
+}
+#reserve-item-info{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#reserve-item-title{
+    font-weight: 500;
+}
+#reserve-item-desc{
+    font-weight: 300;
+}
+
+#reserve-max-people{
+    font-weight: 200;
+}
+#selected-rooms{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+#room{
+
+}
+#r-btn{
+    border: 1px solid white;
+    padding: 10px 20px;
+    background-color: #0F4157;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+#r-btn:hover{
+    background-color: white;
+    box-shadow: 0px 0px 10px 1px #0F4157;
+    color: #0F4157;
+}

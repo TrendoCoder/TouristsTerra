@@ -7,11 +7,13 @@ import pic2 from "../../../../images/hotel.jpeg";
 import { useLocation } from "react-router-dom";
 import useFetch from "../../../../Hooks/usefetch";
 import { SearchContext } from "../../../../Context/searchcontext";
+import ReserveAccomodation from "../reserveaccomodation/reserveaccomodation";
 const AccomodationDetail = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  const [slider, setSlider] = useState(0);
+    const [slider, setSlider] = useState(0);
   const [open, setOpen] = useState(false);
+  const [openModel, setOpenModel] = useState(false);
 
   const { data, loading, error } = useFetch(
     `http://localhost:3001/api/hotels/find/${id}`
@@ -44,6 +46,10 @@ let days = (dayDifference(
     }
     // setSlider(newSlideNumber);
   };
+
+  const handleClick = () =>{
+    setOpenModel(true);
+  }
   return (
     <div>
       <NavBar />
@@ -123,13 +129,16 @@ let days = (dayDifference(
                     <b>{days * data.cheapestPrice * options.room}$</b> ({days}{" "}
                     nights)
                   </h2>
-                  <button>Reserve or Book Now</button>
+                  <button onClick={handleClick}>Reserve or Book Now</button>
                 </div>
               </div>
             </div>
           </div>
         </>
       )}
+      {
+        openModel && <ReserveAccomodation setOpen={setOpenModel} hotelId= {id} />
+      }
     </div>
   );
 };
