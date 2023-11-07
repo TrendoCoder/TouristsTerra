@@ -41,7 +41,6 @@ const LoginUser = () => {
       navigate("/");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
-      alert("Wrong email or Password");
     }
     setLoading(false);
   };

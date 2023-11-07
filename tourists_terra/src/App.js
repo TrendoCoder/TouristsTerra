@@ -16,6 +16,7 @@ import EditUserProfile from "./Components/User_Module/profilepage/edituserprofil
 import ShopHomePage from "./Components/User_Module/shoppage/shophomepage/shophomepage";
 import AccomodationListPage from "./Components/User_Module/accommodationpage/accomodationlistpage/accomodationlistpage";
 import AccomodationDetail from "./Components/User_Module/accommodationpage/accomodationdetail/accomodationdetail";
+import HotelAdminHomePage from "./Components/User_Module/accommodationpage/hoteladmin/hoteladminhomepage/hoteladminhomepage";
 import BlogHomePage from "./Components/User_Module/blogpage/bloghomepage/bloghomepage";
 import FeaturedBlogs from "./Components/User_Module/blogpage/featuredblogs/featuredblogs";
 import RecentBlogs from "./Components/User_Module/blogpage/recentblogs/recentblogs";
@@ -37,6 +38,10 @@ function App() {
             <Route
               path="accomodation-detail/:hotel_id"
               element={<AccomodationDetail />}
+            ></Route>
+            <Route
+            path="hotel-admin-homepage"
+            element={<HotelAdminHomePage/>}
             ></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
             <Route path="localguide" element={<LocalGuideHome />}></Route>
