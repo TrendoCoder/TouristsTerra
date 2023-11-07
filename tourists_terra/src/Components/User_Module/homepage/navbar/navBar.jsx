@@ -10,7 +10,7 @@ function NavBar() {
           <div id="small-Container">
             <div id="logo-section">
               {/* <img src="" alt="logo" /> */}
-              <h3>TouristsTerra</h3>
+              <h3>Tourists Terra</h3>
             </div>
             <div id="search-section">
               <input type="text" placeholder="Search" />
@@ -20,12 +20,16 @@ function NavBar() {
             </div>
             <div id="small-menu">
               <Link to="/">
-              <i class="fa-solid fa-house"></i>
+                <i class="fa-solid fa-house" id="small-menu-icon"></i>
               </Link>
-              <i class="fa-solid fa-message"></i>
-              <i class="fa-solid fa-bell"></i>
+              <Link to="/">
+                <i class="fa-solid fa-message" id="small-menu-icon"></i>
+              </Link>
+              <Link to="/">
+                <i class="fa-solid fa-bell" id="small-menu-icon"></i>
+              </Link>
               <Link to="/sign-up">
-                <i class="fa-solid fa-user-tie"></i>
+                <i class="fa-solid fa-user-tie" id="small-menu-icon"></i>
               </Link>
             </div>
           </div>

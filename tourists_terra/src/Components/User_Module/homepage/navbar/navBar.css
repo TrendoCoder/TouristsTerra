@@ -2,7 +2,7 @@
 
 #big-Container {
     width: 100%;
-    height: auto;
+    height: 60px;
     background-color: #ffffff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed;
@@ -25,8 +25,11 @@
     width: 20%;
     color: #0F4157;
   }
-  
-  #logo-section img {
+  #logo-section>h3{
+    font-weight: 700;
+    font-size: 20px;
+  }
+  #logo-section>img {
     margin-right: 10px;
   }
   
@@ -34,15 +37,16 @@
     width: 60%;
     display: flex;
     align-items: center;
+    height: 50px;
   }
   
-  #search-section input {
+  #search-section>input {
     width: 90%;
     padding: 10px;
     border: none;
     border-radius: 5px;
-    font-size: 18px;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
   }
   #search-section #search-icon
   {
@@ -53,12 +57,12 @@
     align-content: center;
     color: #0F4157;
   }
-  #search-section #search-icon:hover
-  {
+  #search-section #search-icon:hover {
     transition: 0.4s;
     color: pink;
     cursor: pointer;
   }
+  
   #small-menu {
     width: 20%;
     display: flex;
@@ -66,13 +70,17 @@
     justify-content: flex-end;
   }
   
-  #small-menu i {
+  #small-menu a{
+    text-decoration: none;
+  }
+  #small-menu-icon{
     margin: 0 15px;
     font-size: 22px;
     color: #0F4157;
+    cursor: pointer;
   }
   
-  #small-menu i:hover {
+  #small-menu-icon:hover {
     cursor: pointer;
     color: #01b3ff;
     transition: 0.4s;
@@ -120,7 +128,7 @@
       font-size: 14px;
     }
   
-    #small-menu i {
+    #small-menu-icon{
       font-size: 16px;
     }
   }
