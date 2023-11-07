@@ -59,7 +59,7 @@ const ReserveAccomodation = ({ setOpen, hotelId }) => {
         })
       );
       setOpen(false);
-      navigate("/accommodation");
+      navigate("/booking-accomodation-form");
     } catch (err) {
       alert(err);
     }

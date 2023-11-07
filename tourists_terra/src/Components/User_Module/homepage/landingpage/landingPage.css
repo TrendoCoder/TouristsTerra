@@ -12,17 +12,19 @@
     width: 100%;
     padding: 0 80px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 #big-container-landing #sideBar-landing
 {
-    width: 20%;
+    width: 30%;
 }
 #feed-section-landing
 {
-    width: 60%;
+    width: 50%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 #rightBar-landing
 {
