@@ -7,14 +7,15 @@ const blogSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  userId:{
-    type: String,
-    required: false
-  },
-  image: {
-    type: String,
-    require: false
-  },
+//   userId:{
+//     type: String,
+//     required: false,
+//     unique: false
+//   },
+//   image: {
+//     type: String,
+//     required: false,
+//   },
   category: {
     type: String,
     required: true,

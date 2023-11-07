@@ -17,6 +17,8 @@ var hotelRouter = require("./src/routes/api/hotelapi/hotels");
 var roomRouter = require("./src/routes/api/hotelapi/rooms");
 var authRouter = require("./src/routes/api/userloginapi/auth");
 var userRouter = require("./src/routes/api/userloginapi/user");
+var blogRouter = require("./src/routes/api/blogapi/blogapi");
+
 
 dotenv.config();
 
@@ -47,6 +49,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/product", productRouter);
+app.use("/api/bloguser", blogRouter);
 app.use("/", indexRouter);
 // catch 404 and forward to error handler
 

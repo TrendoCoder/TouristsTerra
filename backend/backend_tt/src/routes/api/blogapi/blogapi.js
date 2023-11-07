@@ -10,6 +10,6 @@ router.post('/:id/comment',blogpostcontroller.postCommentBlog)
 //These routes will be transfer to the admin portal 
 
 router.post('/createblogs', blogpostcontroller.createBlog);
-router.delete("/:id",blogpostcontroller.deleteBlog)
+router.delete("/:id", blogpostcontroller.deleteBlog)
 router.put('/editblog/:id',blogpostcontroller.updateBlog)
 module.exports = router
