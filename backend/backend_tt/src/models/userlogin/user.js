@@ -18,9 +18,9 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    isVerifiedUser:{
-      type:Boolean,
-      default:false,
+    isVerifiedUser: {
+      type: Boolean,
+      default: false,
     },
     isBlogAdmin: {
       type: Boolean,
