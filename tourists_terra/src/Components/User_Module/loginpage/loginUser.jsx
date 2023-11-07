@@ -4,9 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoginImg from "../../../images/login-img.jpg";
 import { AuthContext } from "../../../Context/authcontext";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 
 const LoginUser = () => {
   const [credentials, setCredentials] = useState({
@@ -103,7 +100,8 @@ const LoginUser = () => {
                 {error && <p className="error-message">{error}</p>}
                 <Link to="">Forgot Password?</Link>
                 <br />
-                <button id="login-button" onClick={handleClick}>
+                <button id="login-button" disabled={loading}
+                 onClick={handleClick}>
                   {loading ? "Loading...." : "Login"}
                 </button>
               </form>
