@@ -23,10 +23,26 @@
 //       type: Array,
 //       default: [],
 //     },
-//     isAdmin: {
+//     isBlogAdmin: {
 //       type: Boolean,
 //       default: false,
 //     },
+//     isAccomodationAdmin: {
+//         type: Boolean,
+//         default: false,
+//       },
+//       isTrasportAdmin: {
+//         type: Boolean,
+//         default: false,
+//       },
+//       isShopAdmin: {
+//         type: Boolean,
+//         default: false,
+//       },
+//       isLocalGuideAdmin: {
+//         type: Boolean,
+//         default: false,
+//       },
 //     about: String,
 //     gender:String,
 //     city: String,

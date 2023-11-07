@@ -1,31 +1,55 @@
 var mongoose = require("mongoose");
 
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
-const UserSchema = new mongoose.Schema({
-    userName:{
-        type: String,
-        required:true,
-        unique:true,
+const UserSchema = new mongoose.Schema(
+  {
+    email: String,
+    userName: String,
+    contact: Number,
+    password: String,
+    userProfilePicture: { type: String, default: "" },
+    userCoverPicture: { type: String, default: "" },
+    followers: {
+      type: Array,
+      default: [],
     },
-    email:{
-        type: String,
-        required:true,
-        unique:true
+    following: {
+      type: Array,
+      default: [],
     },
-    password:{
-        type: String,
-        required:true
+    isVerifiedUser:{
+      type:Boolean,
+      default:false,
     },
-    isAdmin:{ 
-        type: Boolean,
-        default:false
+    isBlogAdmin: {
+      type: Boolean,
+      default: false,
     },
-}
-,
-{timestamps:true}
+    isAccomodationAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    isTrasportAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    isShopAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    isLocalGuideAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    about: String,
+    gender: String,
+    city: String,
+    country: String,
+  },
+  { timestamps: true }
 );
 
-var User =  mongoose.model("User", UserSchema);
+var User = mongoose.model("User", UserSchema);
 
 module.exports.User = User;

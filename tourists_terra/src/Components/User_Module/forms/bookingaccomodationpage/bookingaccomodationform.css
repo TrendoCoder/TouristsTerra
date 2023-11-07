@@ -1,0 +1,386 @@
+#h-name{
+    background-color: #0F4157;
+    text-align: center;
+}
+#h-name h2{
+    padding: 5px ;
+    color: white;
+}
+#main-container{
+    width: 85%;  
+    display: flex;
+    padding: 0 80px;
+    margin: auto;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+#right-container{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    color: rgb(85, 85, 85);
+}
+#right-container-top{
+    box-shadow: 0 0 10px 2px grey;
+    padding: 10px 40px;
+    background-color: #F6F6F6;
+}
+#cust-info{
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    margin-top: 20px;
+    color: #0F4157;
+    margin-bottom: 20px;
+}
+#inputs-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+#form-inputs{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;   
+    
+}
+
+#form-inputs #inputs{
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 15px 15px;
+    border-radius: 5px;
+    border-bottom: 2px solid #0F4157;
+
+}
+
+#form-inputs #inputs input{
+    border: none;
+    width: 100%;
+    margin-left: 10px;
+    font-size: 16px;
+}
+#form-inputs #inputs input::placeholder{
+    font-size: 16px;
+}
+#form-inputs #inputs input:focus{
+    outline: none;
+}
+
+#check-terms{
+    width: 80%;
+    color: black;
+    padding: 20px 40px;
+}
+
+#check-terms a{
+    color: #0F4157;
+}
+
+#input-row button{
+    padding: 15px 40px;
+    border: none;
+    background-color: #0F4157;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    float: right;
+}
+#input-row button:disabled{
+    opacity: 0.6;
+    cursor:no-drop;
+}
+#right-container-bottom{
+    width: 100%;
+    margin-top: 50px;
+    text-align: center;
+}
+#payment-heading{
+    font-size: 26px;
+    font-weight: 600;
+}
+#payment-method{
+    margin-top: 30px;
+    box-shadow: 0 0 10px 2px grey;
+    padding: 10px 40px;
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+    color: rgb(85, 85, 85);
+}
+#payment-method-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #0F4157;
+    font-size: 18px;
+    padding: 10px 30px;
+}
+#payment-method-bottom{
+    font-size: 18px;
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 30px;
+}
+#book-btn{
+    margin-top: 40px;
+    display: flex;
+    justify-content: flex-end;
+}
+#book-btn button{
+    padding: 20px 60px;
+    border: none;
+    background-color: #0F4157;
+    opacity: 0.5;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#book-btn button:hover{
+    background-color: #0F4157;
+    opacity: 1;
+    transition: 0.3s;
+}
+#left-container{
+    width: 30%;
+    height: max-content;
+    box-shadow: 0 0 10px 2px rgba(128, 128, 128, 0.705);
+    background-color: #F6F6F6;
+    padding: 15px 20px;
+    margin-left: 80px;
+    color: rgb(85, 85, 85)
+}
+#left-container #img{
+    width: 100%;
+}
+#left-container #img img{
+    width: 100%;
+    height: 250px;
+    border-radius: 5px;
+}
+#calender{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    color: rgb(85, 85, 85);
+}
+#date{
+    width: 50%; 
+}
+#date-checks{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#check-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#no-of-nights{
+    margin-left: 20px;
+    font-weight: 400;
+}
+#hr{
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+    border: 1px solid #0F4157;
+}
+#t-name{
+    padding: 10px 20px;
+}
+#r-detail{
+    padding: 0px 20px;
+    font-size: 18px;
+    color: black;
+}
+#details{
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(85, 85, 85);
+}
+#details-left-container{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+#details-right-container{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+.error{
+    color: red;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+@media screen and (max-width: 835px)  {
+
+    #main-container{
+        width: 90%;  
+        padding: 0 20px;
+    }
+    #right-container{
+        width: 70%;
+    }
+    #right-container-top{
+        padding: 10px 20px;
+    }
+    #left-container{
+        width: 40%;
+        margin-left: 30px;
+    }
+}
+
+@media screen and (max-width:710px) {
+    #main-container{
+        width: 90%;  
+        padding: 0 20px;
+    }
+    #right-container{
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        color: rgb(85, 85, 85);
+    }
+    #right-container-top{
+        padding: 10px 30px;
+    }
+    #inputs-row{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+    #form-inputs{
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;   
+    }
+    
+    #form-inputs #inputs{
+        margin-top: 5px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        padding: 15px 15px;
+        border-radius: 5px;
+        border-bottom: 2px solid #0F4157;
+    
+    }
+    
+    #form-inputs #inputs input{
+        border: none;
+        width: 100%;
+        margin-left: 10px;
+        font-size: 20px;
+    }
+    #form-inputs #inputs input::placeholder{
+        font-size: 16px;
+    }
+    #form-inputs #inputs input:focus{
+        outline: none;
+    }
+    
+    #check-terms{
+        width: 80%;
+        color: black;
+        padding: 20px 40px;
+    }
+    
+    #check-terms a{
+        color: darkcyan;
+    }
+    
+    #input-row button{
+        padding: 15px 40px;
+        border: none;
+        background-color: #0F4157;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        float: right;
+    }
+    #input-row button:disabled{
+        opacity: 0.6;
+        cursor:no-drop;
+    }
+    #right-container-bottom{
+        width: 100%;
+        margin-top: 50px;
+        text-align: center;
+    }
+    #payment-heading{
+        font-size: 26px;
+        font-weight: 600;
+    }
+    #payment-method{
+        margin-top: 30px;
+        box-shadow: 0 0 10px 2px grey;
+        padding: 10px 40px;
+        background-color: #F6F6F6;
+        display: flex;
+        flex-direction: column;
+        color: rgb(85, 85, 85);
+    }
+    #payment-method-top{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #0F4157;
+        font-size: 18px;
+        padding: 10px 30px;
+    }
+    #payment-method-bottom{
+        font-size: 18px;
+        display: flex;
+        justify-content: flex-start;
+        padding: 10px 30px;
+    }
+    #book-btn{
+        margin-top: 40px;
+        display: flex;
+        justify-content: flex-end;
+    }
+    #book-btn button{
+        padding: 20px 60px;
+        border: none;
+        background-color: #0F4157;
+        opacity: 0.5;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    #book-btn button:hover{
+        background-color: #0F4157;
+        opacity: 1;
+        transition: 0.3s;
+    }
+    #left-container{
+        width: 40%;
+        margin-left: 30px;
+    }
+}

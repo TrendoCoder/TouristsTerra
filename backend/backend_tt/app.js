@@ -11,7 +11,7 @@ const helmet = require("helmet");
 var productRouter = require("./src/routes/api/shopapi/product");
 var categoryRouter = require("./src/routes/api/shopapi/category");
 var indexRouter = require("./src/routes/index");
-var usersRouter = require("./src/routes/api/users");
+// var usersRouter = require("./src/routes/api/users");
 var postsRouter = require("./src/routes/api/posts");
 var hotelRouter = require("./src/routes/api/hotelapi/hotels");
 var roomRouter = require("./src/routes/api/hotelapi/rooms");
@@ -41,7 +41,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/api/users", usersRouter);
+// app.use("/api/users", usersRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
 app.use("/api/rooms",roomRouter);

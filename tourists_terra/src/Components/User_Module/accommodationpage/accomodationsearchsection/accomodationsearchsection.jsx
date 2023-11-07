@@ -4,7 +4,7 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../../../Context/searchcontext";
 
 const AccomodationSearchSection = () => {
@@ -36,14 +36,17 @@ const AccomodationSearchSection = () => {
     });
   };
 
-  const {dispatch} = useContext(SearchContext);
+  const { dispatch } = useContext(SearchContext);
   const handleSearch = () => {
-    dispatch({type:"NEW_SEARCH", payload:{destination, date, options}}); 
+    dispatch({ type: "NEW_SEARCH", payload: { destination, date, options } });
     navigate("/accomodation-list", { state: { destination, date, options } });
   };
 
   return (
     <div>
+      <Link to="/become-hotel-provider" style={{ textDecoration: "none" }}>
+        <button id="switch-to-hp-btn">Switch to Hotel Provider</button>
+      </Link>
       <div id="acc-search-section-container">
         <div id="acc-search-section-item">
           <i class="fa-solid fa-bed" id="acc-search-icons"></i>

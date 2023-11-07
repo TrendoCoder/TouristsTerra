@@ -2,14 +2,16 @@
     width: 100%;
     font-family: 'Roboto', sans-serif;
     box-shadow: 0px 0px 15px 1px rgba(128, 128, 128, 0.233);
+    margin-bottom: 2px;
 }
 #main-container-nav-lite{
-    width: 85%;
+    width: 95%;
     padding: 0px 60px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin: auto;
+    height: 50px;
 }
 #container-title-nav{
     width: 15%;

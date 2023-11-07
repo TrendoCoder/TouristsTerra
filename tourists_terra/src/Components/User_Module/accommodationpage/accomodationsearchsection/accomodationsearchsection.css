@@ -78,3 +78,17 @@ box-shadow: 0px 0px 10px -5px black;
 #acc-option-counter:disabled{
 cursor: not-allowed;
 }
+#switch-to-hp-btn{
+    background-color: transparent;
+    color:#0F4157;
+    font-weight:700;
+    padding:5px 10px;
+    margin-top:20px;
+    border:1px solid #0F4157;
+    transition: 0.3s;
+    margin-left: 970px;
+}
+#switch-to-hp-btn:hover{
+    background-color: #0F4157;
+    color: white;
+}

@@ -35,7 +35,6 @@ const AccommodationHome = () => {
 
           <h2>Browse by Property Type</h2>
           <PropertyList />
-          <h1>Homes guest love</h1>
           {/* <div id='container-filter-accomo'>
     <AccomoFilter/>
     </div>
