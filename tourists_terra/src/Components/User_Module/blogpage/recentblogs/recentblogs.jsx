@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import NavBar from '../../homepage/navbar/navBar';
 import BlogMenu from '../blogmenu/blogmenu';
 import blogPosts from './BlogPostData';
-import hotel from '../../../../images/foods.jfif';
-import Footer from '../../accommodationpage/footer/footer';
-
-const formatTimestamp = (timestamp) => {
-  const date = new Date(timestamp);
-  return date.toLocaleDateString(); // You can customize the date format as needed
-};
+import hotel from "../../../../images/foods.jfif";
+import Footer from "../../accommodationpage/footer/footer";
 
 const RecentBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,14 +17,14 @@ const RecentBlogs = () => {
     'attraction points',
     'food',
     'self blog',
-    'others',
+    'others'
   ];
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category === 'All' ? null : category);
   };
 
-  const filteredBlogPosts = selectedCategory
+  const filteredBlogPosts = selectedCategory 
     ? blogPosts.filter((item) => item.category === selectedCategory)
     : blogPosts;
 
@@ -46,8 +42,8 @@ const RecentBlogs = () => {
     <button
       key={number}
       onClick={() => setCurrentPage(number)}
-      className={`bg-blue-500 text-white px-3 py-2 mx-1 rounded ${
-        currentPage === number ? 'bg-blue-700' : ''
+      className={`bg-[#8b919483] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${
+        currentPage === number ? 'bg-gray-500' : ''
       }`}
     >
       {number}
@@ -55,18 +51,15 @@ const RecentBlogs = () => {
   ));
 
   return (
-    <div>
+    <div className='min-h-screen bg-gray-100 text-gray-900'>
       <NavBar />
       <BlogMenu />
 
-     
       <div className="inline-flex rounded-md shadow-sm m-6">
         {categories.map((item) => (
           <button
             key={item}
-            className={`px-4 py-2 text-sm font-medium text-white hover:scale-105 duration-200 bg-gray-600 rounded mx-4 hover:shadow-md ${
-              selectedCategory === item ? 'bg-blue-700' : ''
-            }`}
+            className={`px-4 py-2 text-sm font-medium text-white hover:scale-105 duration-200 bg-[#2f5869ee] rounded mx-4 hover:shadow-md ${selectedCategory === item ? 'bg-[#0d2833]' : ''}`}
             onClick={() => handleCategoryClick(item)}
           >
             {item}
@@ -74,65 +67,51 @@ const RecentBlogs = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10 mx-10">
+      <h1 className="text-center mt-5 font-bold text-lg text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">Recent Blogs</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-10 mx-10">
         {currentPosts.length === 0 ? (
           <div className="text-center col-span-12">
-            <p className="mt-10 text-center font-semibold text-lg text-black-200 dark:text-gray-400">
+            <p className="mt-10 text-center font-semibold text-lg text-[#182f3a]">
               No blog posts available for the selected category.
             </p>
           </div>
         ) : (
           currentPosts.map((item, index) => (
-            <div key={item.id} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <a href="/single-post">
-                <img className="rounded-t-lg w-full h-48" src={hotel} alt="" />
+            
+            <div key={item.id} className="max-w-sm md:max-w-md bg-white rounded overflow-hidden shadow-lg">
+              <a href='/single-post'>
+                <img className="w-full h-18 md:h-50 rounded-t-lg" src={hotel} alt="Sunset in the mountains" />
               </a>
-              <div className="p-5">
+              <div className="px-6 py-4">
                 <a href="/single-post">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    {item.title}
-                  </h5>
+                  <div className="font-bold text-xl mb-2">{item.title}</div>
                 </a>
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                  {item.description.split(' ').slice(0, 12).join(' ')}{' '}
-                  {item.description.split(' ').length > 12 ? '...' : ''}
+                <p className="text-gray-700 text-base">
+                  {item.description.length > 90
+                    ? `${item.description.substring(0, 90)}...`
+                    : item.description}
                 </p>
-                
-                <div className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-center text-blue-950 shadow-md rounded-lg hover:bg-blue-800 hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover-bg-blue-700 dark:focus:ring-blue-800">
-                    <a href='/single-post'>Read more</a>
-                    <svg
-                      className="w-3.5 h-3.5 ml-2"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 10"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M1 5h12m0 0L9 1m4 4L9 9"
-                      />
-                    </svg>
+              </div>
+              <div className="mut-auto flex items-center justify-between mt-4">
+                <div className="inline-flex items-center px-3 py-1 ml-5 text-sm font-medium text-center bg-[#478ca9b4] hover.bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark.hover-bg-green-700 dark.focus-ring-green-800">
+                  <a href='/single-post'>Read more</a>
+                  <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                  </svg>
                 </div>
-                <div className="mt-auto flex flex-col justify-center"><br/>
-                  <div className='flex justify-between'>               
-                    <div className="text-s py-2 font-semibold rounded-md disabled ml-2">
-                      {item.category}
-                    </div>
-                    <div className="text-xs py-2 rounded-md disabled ml-2">
-                      {formatTimestamp(item.timestamp)}
-                    </div>
-                  </div>
-                </div>
+                <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mr-3 mb-2">{item.category}</span>
+              </div>
+              <div className="mt-3 ml-5 mb-6 text-sm  text-gray-800">
+                {moment(item.postedTime).fromNow()}   {/* 'postedTime' field in the 'item' */}
               </div>
             </div>
           ))
         )}
       </div>
       <br></br>
-      <div className="flex justify-center mt-4">{renderPageNumbers}</div>
+      <div className="flex justify-center mt-4">
+        {renderPageNumbers}
+      </div>
       <br></br>
       <Footer />
     </div>

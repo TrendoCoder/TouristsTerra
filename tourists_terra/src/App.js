@@ -4,7 +4,6 @@ import LandingPage from "./Components/User_Module/homepage/landingpage/landingPa
 import AccommodationHome from "./Components/User_Module/accommodationpage/accommodationhome/accommodationhome";
 import TransportHomePage from "./Components/User_Module/transportpage/transporthomepage/transporthomepage";
 import LocalGuideHome from "./Components/User_Module/localguidepage/localguidehome/localguidehome";
-import BlogHomePage from "./Components/User_Module/blogpage/bloghomepage/bloghomepage";
 import SignUpPage from "./Components/User_Module/signuppage/signUpPage";
 import LoginUser from "./Components/User_Module/loginpage/loginUser";
 import BookingTransportForm from "./Components/User_Module/forms/bookingtransportform/bookingtransportform";
@@ -17,9 +16,7 @@ import EditUserProfile from "./Components/User_Module/profilepage/edituserprofil
 import ShopHomePage from "./Components/User_Module/shoppage/shophomepage/shophomepage";
 import AccomodationListPage from "./Components/User_Module/accommodationpage/accomodationlistpage/accomodationlistpage";
 import AccomodationDetail from "./Components/User_Module/accommodationpage/accomodationdetail/accomodationdetail";
-import BookingAccomodationForm from "./Components/User_Module/forms/bookingaccomodationpage/bookingaccomodationform";
-import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider";
-import HotelAdminHomePage from "./Components/User_Module/accommodationpage/hoteladmin/hoteladminhomepage/hoteladminhomepage";
+import BlogHomePage from "./Components/User_Module/blogpage/bloghomepage/bloghomepage";
 import FeaturedBlogs from "./Components/User_Module/blogpage/featuredblogs/featuredblogs";
 import RecentBlogs from "./Components/User_Module/blogpage/recentblogs/recentblogs";
 import MyBlogs from "./Components/User_Module/blogpage/myblogs/myblogs";
@@ -40,18 +37,6 @@ function App() {
             <Route
               path="accomodation-detail/:hotel_id"
               element={<AccomodationDetail />}
-            ></Route>
-            <Route
-              path="booking-accomodation-form"
-              element={<BookingAccomodationForm />}
-            ></Route>
-            <Route
-              path="become-hotel-provider"
-              element={<BecomeHotelProvider />}
-            ></Route>
-            <Route
-              path="hote-admin-homepage"
-              element={<HotelAdminHomePage />}
             ></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
             <Route path="localguide" element={<LocalGuideHome />}></Route>

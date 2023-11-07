@@ -88,26 +88,22 @@ exports.postCommentBlog=async(req,res)=>{
 
 // Create the new Blog
 
-exports.createBlog = async (req, res) => {
-    const { title, userId, image, category, description } = req.body;
-    console.log(req.body)
-    if (!title || !category || !description) {
-      return res.status(400).json({ error: 'Missing required fields' });    }
-
-    try {
-      const newBlog = new Blog({
-        title,
-        category,
-        description,
-      });
+exports.createBlog=async (req, res) => {
+    
+  // const userId = req.user._id
   
+    console.log(req.body)
+    const newBlog = new Blog(req.body);
+    try {
       const savedBlog = await newBlog.save();
-      res.status(201).json(savedBlog);
+      res.status(200).json(savedBlog);
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: 'Internal Server Error' });
+      return res.status(500).json(err);
     }
-  };
+  }
+
+
 
 //Delete a Blog
 
