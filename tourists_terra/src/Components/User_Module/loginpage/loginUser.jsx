@@ -1,44 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./loginUser.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoginImg from "../../../images/login-img.jpg";
+import { AuthContext } from "../../../Context/authcontext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const LoginUser = () => {
-  const naviagte = useNavigate();
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { user, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handleEmail = (e) => {
-    const user = e.target.value;
-    setEmail(user);
+  const handleChange = (e) => {
+    setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    setError(""); 
   };
-  const handlePassword = (e) => {
-    const pass = e.target.value;
-    setPassword(pass);
-  };
 
-  function handleSubmit(e) {
+  const handleClick = async (e) => {
     e.preventDefault();
-    axios
-      .post(
-        "http://localhost:3001/api/users/login",
-        { email: email, password: password },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((token) => {
-        localStorage.setItem("token", JSON.stringify(token.data));
-        console.log(token.data);
-        naviagte("/");
-        window.location.reload();
-      })
-      .catch((err) => alert(err));
-  }
+    setLoading(true);
+    dispatch({ type: "LOGIN_START" });
+
+    if (!credentials.email || !credentials.password) {
+      setError("Email and Password cannot be empty");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await axios.post(
+        "http://localhost:3001/api/auth/loginUser",
+        credentials
+      );
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      navigate("/");
+    } catch (err) {
+      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+      alert("Wrong email or Password");
+    }
+    setLoading(false);
+  };
 
   return (
     <div id="login-container">
@@ -54,7 +63,10 @@ const LoginUser = () => {
             <span id="already-account">
               If you don't have a registered account.
               <br />
-              You can <a href="/sign-up">Register Here</a>
+              You can{" "}
+              <Link to="/sign-up" style={{ color: "#0F4157" }}>
+                Register Here
+              </Link>
             </span>
           </div>
           <div id="image">
@@ -64,34 +76,35 @@ const LoginUser = () => {
           </div>
           <div id="login-form-container">
             <div id="login-form">
-              <form onSubmit={handleSubmit}>
+              <form>
                 <h3>Login</h3>
                 <div id="input-div">
-                  <i class="fa-solid fa-user"></i>
+                  <i className="fa-solid fa-user"></i>
                   <input
                     type="email"
                     placeholder="Enter Email"
-                    onChange={handleEmail}
-                    value={email}
+                    onChange={handleChange}
+                    id="email"
                     required
                   />
                 </div>
                 <br />
                 <div id="input-div">
-                  <i class="fa-solid fa-lock"></i>
+                  <i className="fa-solid fa-lock"></i>
                   <input
                     type="password"
                     placeholder="Enter Password"
-                    onChange={handlePassword}
-                    value={password}
+                    onChange={handleChange}
+                    id="password"
                     required
                   />
                 </div>
                 <br />
-                <a href="">Forgot Password?</a>
+                {error && <p className="error-message">{error}</p>}
+                <Link to="">Forgot Password?</Link>
                 <br />
-                <button id="login-button" type="submit">
-                  Login
+                <button id="login-button" onClick={handleClick}>
+                  {loading ? "Loading...." : "Login"}
                 </button>
               </form>
             </div>
