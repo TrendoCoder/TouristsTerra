@@ -93,9 +93,9 @@ module.exports.followAUser = followAUser;
 const unFollowUser = async (req, res) => {
   if (req.body.userId !== req.params.id) {
     try {
-      const user = await findById(req.params.id);
-      const currentUser = await findById(req.body.userId);
-      if (user.followes.include(req.body.userId)) {
+      const user = await User.findById(req.params.id);
+      const currentUser = await User.findById(req.body.userId);
+      if (user.followes.includes(req.body.userId)) {
         await user.updateOne({
           $pull: { followers: req.body.userId },
         });

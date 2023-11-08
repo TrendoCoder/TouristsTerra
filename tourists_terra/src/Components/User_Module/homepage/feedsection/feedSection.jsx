@@ -41,7 +41,7 @@ const FeedSection = () => {
         <div key={post._id} id="main-container-feed">
           <div id="u-info">
             <div id="u-info-detail">
-              <img src={user.profilePicture} alt={post.user.userName} />
+              <img src={user.profilePicture}  />
               <h3>{user.userName}</h3>
             </div>
             <div id="ellipsis">
