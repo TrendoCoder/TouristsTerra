@@ -5,7 +5,7 @@ import axios from "axios";
 const FeedSection = () => {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState({});
-  const [like, setLike] = useState(posts.likes.length);
+  const [like, setLike] = useState();
   const [isLiked, setIsLiked] = useState(false);
   useEffect(() => {
     const fetchPosts = async () => {
