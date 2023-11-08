@@ -1,73 +1,57 @@
 import React, { useEffect, useState } from "react";
 import "./feedSection.css";
 import axios from "axios";
+import pic from "../../../../images/nature.jpg"
+const FeedSection = ({ posts }) => {
+  console.log(posts);
+  const [users, setUsers] = useState([]);
 
-const FeedSection = () => {
-  const [posts, setPosts] = useState([]);
-  const [user, setUser] = useState({});
-  const [like, setLike] = useState();
-  const [isLiked, setIsLiked] = useState(false);
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await axios.get(
-          "http://localhost:3001/api/post/timeline/65304089e4728d7e78e251b5"
-        );
-        console.log(res);
-        setPosts(res.data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-    fetchPosts();
-
-    const fetchUser = async () => {
+    const fetchUsers = async () => {
       try {
         const res = await axios.get(
           `http://localhost:3001/api/user/${posts.userId}`
         );
-        console.log(res);
-        setUser(res.data);
+        setUsers(res.data);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
     };
-    fetchUser();
-  }, []);
-
+    fetchUsers();
+  }, [posts]);
+  console.log(users);
   return (
     <div id="big-container-feed">
-      {posts.map((post) => (
-        <div key={post._id} id="main-container-feed">
-          <div id="u-info">
-            <div id="u-info-detail">
-              <img src={user.profilePicture}  />
-              <h3>{user.userName}</h3>
-            </div>
-            <div id="ellipsis">
-              <i id="fa-solid fa-ellipsis-vertical"></i>
-            </div>
+      <div id="main-container-feed">
+        <div id="u-info">
+          <div id="u-info-detail">
+            <>
+              <img src={pic} alt="Profile" />
+              <h3>{users.userName}</h3>
+            </>
           </div>
-          <div id="u-des">
-            <span>{post.description}</span>
-          </div>
-          <div id="u-img">
-            <img src={post.img} alt="" />
-          </div>
-          <div id="u-likes">
-            <div>
-              <i id="fa-regular fa-heart"></i> <span>{post.likes.length}</span>
-            </div>
-            <div>
-              <i id="fa-regular fa-comment"></i>{" "}
-              <span>{post.comments.length}</span>
-            </div>
-            <div>
-              <i id="fa-solid fa-share"></i> <span>3</span>
-            </div>
+          <div id="ellipsis">
+            <i className="fa-solid fa-ellipsis-vertical"></i>
           </div>
         </div>
-      ))}
+        <div id="u-des">
+          <span>{posts.desc}</span>
+        </div>
+        <div id="u-img">
+          <img src={pic} alt="" />
+        </div>
+        <div id="u-likes">
+          <div>
+            <i className="fa-regular fa-heart"></i> <span>{posts.likes.length}</span>
+          </div>
+          {/* <div>
+            <i className="fa-regular fa-comment"></i> <span></span>
+          </div> */}
+          <div>
+            <i className="fa-solid fa-share"></i> <span></span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

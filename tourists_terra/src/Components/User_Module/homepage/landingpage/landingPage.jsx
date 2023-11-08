@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../sidebar/sideBar";
 import UploadSection from "../uploadsection/uploadSection";
 import FeedSection from "../feedsection/feedSection";
@@ -6,7 +6,26 @@ import RightBar from "../rightbar/rightBar";
 import "./landingPage.css";
 import MenuBar from "../menubar/menuBar";
 import NavBar from "../navbar/navBar";
+import axios from "axios";
 const LandingPage = () => {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:3001/api/post/timeline/654b3352327c3f2b71778cfd"
+        );
+        console.log(res);
+        setPosts(res.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchPosts();
+  }, []);
+  if(!posts){
+    return <div>Loading...</div>
+  }
   return (
     <>
       <NavBar />
@@ -26,7 +45,9 @@ const LandingPage = () => {
               <UploadSection />
             </div>
             <div style={{ marginLeft: "20px" }}>
-              <FeedSection />
+              {posts.map((p) => (
+                <FeedSection key={p._id} posts={p} />
+              ))}
             </div>
           </div>
           <div id="rightBar-landing">
