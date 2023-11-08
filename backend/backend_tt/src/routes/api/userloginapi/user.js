@@ -3,7 +3,9 @@ const {
   updateUser,
   deleteUser,
   getUser,
-  getAllUser,
+  getAllUsers,
+  followAUser,
+  unFollowUser,
 } = require("../../../controllers/userlogin/user");
 const {
   verifyToken,
@@ -33,8 +35,10 @@ router.delete("/:id", deleteUser);
 router.get("/:id", getUser);
 
 // Get All
-router.get("/", getAllUser);
+router.get("/", getAllUsers);
 
+router.put("/:id/follow", followAUser);
 
+router.put("/:id/unfollow", unFollowUser);
 
 module.exports = router;
