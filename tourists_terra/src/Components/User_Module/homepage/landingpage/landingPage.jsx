@@ -23,8 +23,8 @@ const LandingPage = () => {
     };
     fetchPosts();
   }, []);
-  if(!posts){
-    return <div>Loading...</div>
+  if (!posts) {
+    return <div>Loading...</div>;
   }
   return (
     <>
@@ -44,7 +44,7 @@ const LandingPage = () => {
             <div>
               <UploadSection />
             </div>
-            <div style={{ marginLeft: "20px" }}>
+            <div>
               {posts.map((p) => (
                 <FeedSection key={p._id} posts={p} />
               ))}
