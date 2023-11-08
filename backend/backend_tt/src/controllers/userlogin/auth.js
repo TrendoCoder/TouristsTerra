@@ -2,14 +2,24 @@ const { User } = require("../../models/userlogin/user");
 var bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { createError } = require("../../utils/error");
+
 const register = async (req, res, next) => {
   try {
+    const existingUser = await User.findOne({ userName: req.body.userName });
+
+    if (existingUser) {
+      return res.status(409).send("Username already exists");
+    }
+
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     const newUser = new User({
       userName: req.body.userName,
       email: req.body.email,
+      contact:req.body.contact,
       password: hash,
+     
+
     });
     await newUser.save();
     res.status(200).send("User has been created ");
@@ -17,8 +27,8 @@ const register = async (req, res, next) => {
     next(err);
   }
 };
-module.exports.register = register;
 
+module.exports.register = register;
 const login = async (req, res, next) => {
   try {
     const user = await User.findOne({

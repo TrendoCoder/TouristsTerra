@@ -1,10 +1,28 @@
 #editUserProfile-container{
     width: 100%;
-    margin : 0;
+    max-width: 1290px;
+    margin : auto;
+    padding: 10px;
 }
-#editUserProfile-container h2{
+
+
+#edit-user-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 25px;
+    box-shadow: 0 0 100px 1px rgba(128, 128, 128, 0.15);
+}
+#edit-user-nav>a>h2{
     padding: 20px 40px;
+    font-weight: 700;
+    font-size: 22px;
     color: #0E4157;
+}
+#edit-user-nav>a>span{
+    font-size: 20px;
+    font-weight: 500;
+    padding: 20px 40px;
 }
 #editUserProfile-mini-container{
     width: 60%;
@@ -12,7 +30,8 @@
     background-color: white;
     margin-top: 30px;
     margin-bottom: 30px;
-    box-shadow: 1px 1px 10px 1px grey;
+    border-radius: 10px;
+    box-shadow: 0 0 100px 1px rgba(128, 128, 128, 0.15);
 }
 #editUserProfile-form{
     width:90%;
@@ -35,6 +54,7 @@
     justify-content: center;
     align-content: center;
 }
+
 #editUserProfile-image-div{
     margin: auto;
 }

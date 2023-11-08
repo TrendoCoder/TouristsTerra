@@ -36,7 +36,7 @@ const ProfileSideBar = () => {
             <span>10</span>
         </div>
         <div id="leftbar-options">
-            <Link to="/">
+            <Link to="/edit-user-profile">
                 Edit Profile
             </Link>
         </div>

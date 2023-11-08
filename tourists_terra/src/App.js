@@ -64,10 +64,10 @@ function App() {
               element={<BookingTransportForm />}
             ></Route>
             <Route path="profile-page" element={<ProfilePage />}></Route>
-            <Route
+            {/* <Route
               path="edit-profile-page"
               element={<EditProfilePage />}
-            ></Route>
+            ></Route> */}
             <Route
               path="explore-home-page"
               element={<ExploreHomepage />}

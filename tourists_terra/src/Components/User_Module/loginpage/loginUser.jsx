@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoginImg from "../../../images/login-img.jpg";
 import { AuthContext } from "../../../Context/authcontext";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginUser = () => {
   const [credentials, setCredentials] = useState({
@@ -20,7 +22,7 @@ const LoginUser = () => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
     setError(""); 
   };
-
+  const notify = () => toast("Wrong Email or Password");
   const handleClick = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -41,6 +43,7 @@ const LoginUser = () => {
       navigate("/");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+      notify();
     }
     setLoading(false);
   };
@@ -103,7 +106,9 @@ const LoginUser = () => {
                  onClick={handleClick}>
                   {loading ? "Loading...." : "Login"}
                 </button>
+                
               </form>
+              <ToastContainer />
             </div>
           </div>
         </div>

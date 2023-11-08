@@ -123,7 +123,13 @@
     cursor: pointer;
     opacity: 1;
 }
-
+.error-message-signup{
+    color: red;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
 @media screen and (max-width: 888px) {
     #signup-info{
         flex: 6;
