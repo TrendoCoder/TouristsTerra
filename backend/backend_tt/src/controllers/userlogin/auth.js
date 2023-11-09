@@ -29,6 +29,7 @@ const register = async (req, res, next) => {
 };
 
 module.exports.register = register;
+
 const login = async (req, res, next) => {
   try {
     const user = await User.findOne({

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import moment from 'moment';
 import NavBar from '../../homepage/navbar/navBar';
 import BlogMenu from '../blogmenu/blogmenu';
-import blogPosts from './BlogPostData';
-import hotel from "../../../../images/foods.jfif";
 import Footer from "../../accommodationpage/footer/footer";
+import useFetch from "../../../../Hooks/usefetch";
 
 const RecentBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,14 +12,28 @@ const RecentBlogs = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const categories = [
     'All', 
-    'hotel',
-    'restaurant',
-    'attraction points',
-    'food',
-    'self blog',
-    'others'
+    'Hotel',
+    'Restaurant',
+    'Attraction Points',
+    'Food',
+    'Self Blog',
+    'Others'
   ];
-
+  const { data, loading, error } = useFetch(
+    `http://localhost:3001/api/bloguser/recentBlogs`
+  );
+  
+  if (loading) {
+    // You can add loading UI or message here
+    return <div>Loading...</div>;
+  }
+  
+  if (error) {
+    // Handle the error, for example:
+    return <div>Error: {error.message}</div>;
+  }
+  
+  const blogPosts = data || [];
   const handleCategoryClick = (category) => {
     setSelectedCategory(category === 'All' ? null : category);
   };
@@ -42,7 +56,7 @@ const RecentBlogs = () => {
     <button
       key={number}
       onClick={() => setCurrentPage(number)}
-      className={`bg-[#8b919483] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${
+      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${
         currentPage === number ? 'bg-gray-500' : ''
       }`}
     >
@@ -79,13 +93,13 @@ const RecentBlogs = () => {
           currentPosts.map((item, index) => (
             
             <div key={item.id} className="max-w-sm md:max-w-md bg-white rounded overflow-hidden shadow-lg">
-              <a href='/single-post'>
-                <img className="w-full h-18 md:h-50 rounded-t-lg" src={hotel} alt="Sunset in the mountains" />
-              </a>
+              <Link to={`/single-post/${item._id}`}>
+                <img className="w-full h-18 md:h-50 rounded-t-lg" src={item.imageURL} />
+              </Link>
               <div className="px-6 py-4">
-                <a href="/single-post">
+                <Link to={`/single-post/${item._id}`}>
                   <div className="font-bold text-xl mb-2">{item.title}</div>
-                </a>
+                </Link>
                 <p className="text-gray-700 text-base">
                   {item.description.length > 90
                     ? `${item.description.substring(0, 90)}...`
@@ -93,8 +107,8 @@ const RecentBlogs = () => {
                 </p>
               </div>
               <div className="mut-auto flex items-center justify-between mt-4">
-                <div className="inline-flex items-center px-3 py-1 ml-5 text-sm font-medium text-center bg-[#478ca9b4] hover.bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark.hover-bg-green-700 dark.focus-ring-green-800">
-                  <a href='/single-post'>Read more</a>
+              <div className="inline-flex items-center px-3 py-1 ml-3 text-sm font-medium text-center bg-[#478ca9b4] hover.bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark:hover-bg-green-700">
+              <Link to={`/single-post/${item._id}`}>Read more</Link>
                   <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                   </svg>
@@ -102,7 +116,7 @@ const RecentBlogs = () => {
                 <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mr-3 mb-2">{item.category}</span>
               </div>
               <div className="mt-3 ml-5 mb-6 text-sm  text-gray-800">
-                {moment(item.postedTime).fromNow()}   {/* 'postedTime' field in the 'item' */}
+                {moment(item.date).fromNow()}   {/* 'postedTime' field in the 'item' */}
               </div>
             </div>
           ))

@@ -12,10 +12,9 @@ const blogSchema = new mongoose.Schema({
 //     required: false,
 //     unique: false
 //   },
-//   image: {
-//     type: String,
-//     required: false,
-//   },
+  imageURL:{
+    type: String,
+  },
   category: {
     type: String,
     required: true,

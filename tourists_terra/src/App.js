@@ -18,7 +18,7 @@ import AccomodationListPage from "./Components/User_Module/accommodationpage/acc
 import AccomodationDetail from "./Components/User_Module/accommodationpage/accomodationdetail/accomodationdetail";
 import HotelAdminHomePage from "./Components/User_Module/accommodationpage/hoteladmin/hoteladminhomepage/hoteladminhomepage";
 import BlogHomePage from "./Components/User_Module/blogpage/bloghomepage/bloghomepage";
-import FeaturedBlogs from "./Components/User_Module/blogpage/featuredblogs/featuredblogs";
+import PopularBlogs from "./Components/User_Module/blogpage/popularblogs/popularblogs";
 import RecentBlogs from "./Components/User_Module/blogpage/recentblogs/recentblogs";
 import MyBlogs from "./Components/User_Module/blogpage/myblogs/myblogs";
 import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost";
@@ -48,12 +48,12 @@ function App() {
             <Route path="blog-home-page" element={<BlogHomePage />}></Route>
             <Route path="add-blog-post" element={<AddBlogPost />}></Route>
             <Route path="become-a-blogger" element={<BecomeABlogger />}></Route>
-            <Route path="featured-blogs" element={<FeaturedBlogs />}></Route>
+            <Route path="popular-blogs" element={<PopularBlogs />}></Route>
             <Route path="recent-blogs" element={<RecentBlogs />}></Route>
             <Route path="my-blogs" element={<MyBlogs />}>
               {" "}
             </Route>
-            <Route path="single-post" element={<SinglePost />}>
+            <Route path="single-post/:id" element={<SinglePost />}>
               {" "}
             </Route>
             <Route />
