@@ -21,8 +21,8 @@ const ProfileFeed = ({ user }) => {
       }
     };
     fetchUsers();
-  }, [posts.userId]);
-console.log(posts);
+  }, []);
+console.log(posts._id);
   const likeHandler = () => {
     setLikes(isLiked ? likes - 1 : likes + 1);
     setIsLiked(!isLiked);
