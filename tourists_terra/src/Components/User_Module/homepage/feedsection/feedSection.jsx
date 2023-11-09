@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import "./feedSection.css";
 import axios from "axios";
 import pic from "../../../../images/nature.jpg";
-import {format} from "timeago.js";
+import { format } from "timeago.js";
 import { AuthContext } from "../../../../Context/authcontext";
-
+const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 const FeedSection = ({ posts }) => {
   const { user: currentUser } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
@@ -31,7 +31,9 @@ const FeedSection = ({ posts }) => {
   console.log(users);
   const likeHandler = () => {
     try {
-      axios.put("http://localhost:3001/api/post/" + posts._id + "/like", { userId: currentUser._id });
+      axios.put("http://localhost:3001/api/post/" + posts._id + "/like", {
+        userId: currentUser._id,
+      });
     } catch (err) {}
     setLikes(isLiked ? likes - 1 : likes + 1);
     setIsLiked(!isLiked);
@@ -43,8 +45,8 @@ const FeedSection = ({ posts }) => {
         <div id="u-info">
           <div id="u-info-detail">
             <>
-              <img src={users.profilePicture} alt="Profile" />
-              <h3>{users.userName}</h3> 
+              <img src={pic} alt="Profile" />
+              <h3>{users.userName}</h3>
               <span>{format(posts.createdAt)}</span>
             </>
           </div>
@@ -56,13 +58,20 @@ const FeedSection = ({ posts }) => {
           <span>{posts.desc}</span>
         </div>
         <div id="u-img">
-          <img src={posts.img} alt="" />
+          <img src={pic} alt="" />
         </div>
         <hr />
         <div id="u-likes">
           <div>
-            {isLiked?<i class="fa-solid fa-heart" style={{color:"red"}} onClick={likeHandler}></i>:<i className="fa-regular fa-heart"
-            onClick={likeHandler}></i>}{" "}
+            {isLiked ? (
+              <i
+                class="fa-solid fa-heart"
+                style={{ color: "red" }}
+                onClick={likeHandler}
+              ></i>
+            ) : (
+              <i className="fa-regular fa-heart" onClick={likeHandler}></i>
+            )}{" "}
             <span>{likes}</span>
           </div>
           <div>
