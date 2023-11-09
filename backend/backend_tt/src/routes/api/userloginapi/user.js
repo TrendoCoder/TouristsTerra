@@ -32,7 +32,7 @@ router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
 
 // Get
-router.get("/:id", getUser);
+router.get("/", getUser);
 
 // Get All
 router.get("/", getAllUsers);

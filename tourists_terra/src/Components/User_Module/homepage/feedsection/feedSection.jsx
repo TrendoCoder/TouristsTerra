@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./feedSection.css";
 import axios from "axios";
-import pic from "../../../../images/nature.jpg"
+import pic from "../../../../images/nature.jpg";
+import {format} from "timeago.js";
 const FeedSection = ({ posts }) => {
-  console.log(posts);
-  const [users, setUsers] = useState([]);
+ 
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -18,8 +18,14 @@ const FeedSection = ({ posts }) => {
       }
     };
     fetchUsers();
-  }, [posts]);
-  console.log(users);
+  }, [posts.userId]);
+  const [users, setUsers] = useState([]);
+  const [likes, setLikes] = useState();
+  const [isLiked, setIsLiked] = useState(false);
+  const likeHandler = () => {
+    setLikes(isLiked ? likes - 1: likes + 1);
+    setIsLiked(!isLiked);
+  };
   return (
     <div id="big-container-feed">
       <div id="main-container-feed">
@@ -27,7 +33,8 @@ const FeedSection = ({ posts }) => {
           <div id="u-info-detail">
             <>
               <img src={pic} alt="Profile" />
-              <h3>{users.userName}</h3>
+              <h3>{users.userName}</h3> 
+              <span>{format(posts.createdAt)}</span>
             </>
           </div>
           <div id="ellipsis">
@@ -43,7 +50,9 @@ const FeedSection = ({ posts }) => {
         <hr />
         <div id="u-likes">
           <div>
-            <i className="fa-regular fa-heart"></i> <span>{posts.likes.length}</span>
+            <i className="fa-regular fa-heart"
+            onClick={likeHandler}></i>{" "}
+            <span>{likes}</span>
           </div>
           <div>
             <i className="fa-regular fa-comment"></i> <span></span>
@@ -58,4 +67,3 @@ const FeedSection = ({ posts }) => {
 };
 
 export default FeedSection;
-

@@ -7,12 +7,14 @@ import "./landingPage.css";
 import MenuBar from "../menubar/menuBar";
 import NavBar from "../navbar/navBar";
 import axios from "axios";
-const LandingPage = () => {
+const LandingPage = ({userName}) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(
+        const res = userName? await axios.get(
+          "http://localhost:3001/api/post/profile/"+userName
+        ) :await axios.get(
           "http://localhost:3001/api/post/timeline/654b3352327c3f2b71778cfd"
         );
         console.log(res);
@@ -22,10 +24,11 @@ const LandingPage = () => {
       }
     };
     fetchPosts();
-  }, []);
+  }, [userName]);
   if (!posts) {
     return <div>Loading...</div>;
   }
+
   return (
     <>
       <NavBar />
@@ -38,7 +41,7 @@ const LandingPage = () => {
       <div id="full-container" style={{ marginTop: "100px" }}>
         <div id="big-container-landing">
           <div id="sideBar-landing">
-            <Sidebar />
+            <Sidebar  />
           </div>
           <div id="feed-section-landing">
             <div>

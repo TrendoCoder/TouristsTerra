@@ -1,5 +1,6 @@
 #mainn-container{
     width: 85%;
+    max-width: 1100px;
     padding: 20px 80px;
     margin: auto;
     display: flex;
@@ -15,7 +16,7 @@
     width: 70%;
 }
 #profile-main-div #mini-nav{
-    width: 85%;
+    width: 90%;
 }
 #profile-main-div #p-feed{
     width: 80%;

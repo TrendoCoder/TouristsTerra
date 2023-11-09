@@ -38,10 +38,14 @@ const deleteUser = async (req, res, next) => {
 module.exports.deleteUser = deleteUser;
 
 const getUser = async (req, res, next) => {
+  const userId = req.query.userId;
+  const username = req.query.userName;
   try {
-    const user = await User.findById(req.params.id);
+    const user = userId
+      ? await User.findById(userId)
+      : await User.findOne({ userName: username });
     const { password, updatedAt, ...other } = user._doc;
-    res.status(200).json(other); // Sending the modified user data without password and updatedAt fields
+    res.status(200).json(other);
   } catch (err) {
     next(err);
   }
@@ -49,10 +53,9 @@ const getUser = async (req, res, next) => {
 
 module.exports.getUser = getUser;
 
-
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find({}, '-password -updatedAt'); // Excluding password and updatedAt fields
+    const users = await User.find({}, "-password -updatedAt");
     res.status(200).json(users);
   } catch (err) {
     next(err);
@@ -73,7 +76,7 @@ const followAUser = async (req, res) => {
         });
         await currentUser.updateOne({
           $push: {
-            following : req.params.userId,
+            following: req.params.userId,
           },
         });
         return res.status(200).json("User has been Followed");

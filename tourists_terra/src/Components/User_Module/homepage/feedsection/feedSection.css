@@ -38,10 +38,14 @@
 }
 #u-info-detail h3
 {
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
     font-weight: 500;
     padding: 0px 10px;
+}
+#u-info-detail>span{
+    font-size: 14px;
+    color: grey;
 }
 #ellipsis
 {
