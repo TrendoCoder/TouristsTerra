@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./profileinfo.css"
 import img from "./../../../../../images/profile.jpeg"
-const ProfileInfo = () => {
+const ProfileInfo = ({user}) => {
   return (
     <div id='p-main-container'>
     <div id="p-main-container-lite">
@@ -12,7 +12,7 @@ const ProfileInfo = () => {
         </div>
         <div id="p-detail">
           <div id="p-name">
-            <span>Shamir Hussain</span>
+            <span>{user.userName}</span>
           </div>
           <div id="p-loca">
             <div>
@@ -27,7 +27,7 @@ const ProfileInfo = () => {
             <span>Traveller</span>
             </div>
             <div id='p-row-right'>
-            <span>Contact</span>
+            <span>{user.contact}</span>
             </div>
           </div>
           </div>

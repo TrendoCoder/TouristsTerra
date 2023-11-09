@@ -1,7 +1,7 @@
 const express = require("express");
 let router = express.Router();
-const Post = require("../../../models/userpost/posts")
-const User = require("../../../models/userlogin/user");
+const Post = require("../../../models/userpost/posts");
+const { User } = require("../../../models/userlogin/user");
 
 // Create a post
 router.post("/", async (req, res) => {
@@ -84,22 +84,26 @@ router.get("/:id", async (req, res) => {
 router.get("/timeline/:userId", async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.userId);
-    if (currentUser && currentUser.followings) {
-      const userPosts = await Post.find({ userId: currentUser._id });
-      const friendPosts = await Promise.all(
-        currentUser.followings.map((friendId) => {
-          return Post.find({
-            userId: friendId,
-          });
-        })
-      );
-      const timelinePosts = userPosts.concat(...friendPosts);
-      res.status(200).json(timelinePosts);
-    } else {
-      res.status(404).json("User not found or has no followings");
+    if (!currentUser) {
+      return res.status(404).json({ message: "User not found" });
     }
+
+    const userPosts = await Post.find({ userId: currentUser._id });
+    const friendPosts = await Promise.all(
+      currentUser.following.map(async (friendId) => {
+        try {
+          return await Post.find({ userId: friendId });
+        } catch (err) {
+          throw new Error(`Error fetching friend posts: ${err}`);
+        }
+      })
+    );
+
+    res.status(200).json(userPosts.concat(...friendPosts));
   } catch (err) {
-    res.status(500).json(err);
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: err.message });
   }
 });
 

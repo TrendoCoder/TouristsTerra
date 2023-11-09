@@ -7,7 +7,7 @@ var mongoose = require("mongoose");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
-
+const multer = require("multer");
 var productRouter = require("./src/routes/api/shopapi/product");
 var categoryRouter = require("./src/routes/api/shopapi/category");
 var indexRouter = require("./src/routes/index");
@@ -18,7 +18,6 @@ var roomRouter = require("./src/routes/api/hotelapi/rooms");
 var authRouter = require("./src/routes/api/userloginapi/auth");
 var userRouter = require("./src/routes/api/userloginapi/user");
 var blogRouter = require("./src/routes/api/blogapi/blogapi");
-
 
 dotenv.config();
 
@@ -40,11 +39,27 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File uploded successfully");
+  } catch (error) {
+    console.error(error);
+  }
+});
 app.use("/", indexRouter);
 // app.use("/api/users", usersRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
-app.use("/api/rooms",roomRouter);
+app.use("/api/rooms", roomRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);

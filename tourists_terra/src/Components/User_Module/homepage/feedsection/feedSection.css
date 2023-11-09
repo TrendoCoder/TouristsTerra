@@ -13,7 +13,8 @@
     padding: 10px 20px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 0px 5px #bdbcbc6c;
+    gap: 10px;
+    box-shadow: 0px 0px 70px 1px rgba(128, 128, 128, 0.3);
     border-radius: 10px;
     margin-top: 30px;
 }
@@ -37,9 +38,14 @@
 }
 #u-info-detail h3
 {
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
+    font-weight: 500;
     padding: 0px 10px;
+}
+#u-info-detail>span{
+    font-size: 14px;
+    color: grey;
 }
 #ellipsis
 {
@@ -53,7 +59,6 @@
 {
     width: 100%;
     height: auto;
-    background-color: black;
     margin-top: 5px;
 }
 #u-img img
@@ -61,6 +66,7 @@
     width: 100%;
     max-height: 350px;
     object-fit: cover;
+    border-radius: 5px;
 }
 #u-likes
 {
