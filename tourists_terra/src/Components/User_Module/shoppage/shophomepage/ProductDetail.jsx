@@ -9,6 +9,7 @@ import MenuBar from '../../homepage/menubar/menuBar'
 const ProductDetail = () => {
     const [product, setProduct] = useState(null);
     const { productId } = useParams();
+    // console.log(useParams())
 
     useEffect(() => {
         fetch(`http://localhost:3001/api/product/${productId}`)
@@ -18,18 +19,18 @@ const ProductDetail = () => {
     }, [productId]);
 
     if (!product) {
-        return <div className="text-center">Loading...</div>;
+        return <div className="h-screen flex justify-center items-center">Loading...</div>;
     }
 
     return (
         <div>
             <Navbar />
             <div id='accomo-ad-container'>
-                    <AccommodationAdSection />
-                    <div id='opacity-ad'>
-                        <Link to=""><h1>Wana Shop?</h1></Link>
-                    </div>
+                <AccommodationAdSection />
+                <div id='opacity-ad'>
+                    <Link to=""><h1>Wana Shop?</h1></Link>
                 </div>
+            </div>
 
 
             <div id='menu-acc'>
@@ -68,7 +69,14 @@ const ProductDetail = () => {
                             </div>
                             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt className="text-sm font-medium text-gray-500">Seller Information</dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">{product.seller.userName} - {product.seller.email}</dd>
+                                <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                                    {product.seller && product.seller.userName && product.seller.email ? (
+                                        `${product.seller.userName} - ${product.seller.email}`
+                                    ) : (
+                                        'N/A'
+                                    )}
+                                </dd>
+
                             </div>
                             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt className="text-sm font-medium text-gray-500">Stock Availability</dt>
