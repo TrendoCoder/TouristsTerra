@@ -1,31 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./feedSection.css";
 import axios from "axios";
 import pic from "../../../../images/nature.jpg";
 import {format} from "timeago.js";
+import { AuthContext } from "../../../../Context/authcontext";
+
 const FeedSection = ({ posts }) => {
- 
+  const { user: currentUser } = useContext(AuthContext);
+  const [users, setUsers] = useState([]);
+  const [likes, setLikes] = useState(posts.likes.length);
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    setIsLiked(posts.likes.includes(currentUser._id));
+  }, [currentUser._id, posts.likes]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/user/${posts.userId}`
+          `http://localhost:3001/api/user/?userId=${posts.userId}`
         );
         setUsers(res.data);
+        console.log(users);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
     };
     fetchUsers();
   }, [posts.userId]);
-  const [users, setUsers] = useState([]);
-  const [likes, setLikes] = useState();
-  const [isLiked, setIsLiked] = useState(false);
+  console.log(users);
   const likeHandler = () => {
-    setLikes(isLiked ? likes - 1: likes + 1);
+    try {
+      axios.put("http://localhost:3001/api/post/" + posts._id + "/like", { userId: currentUser._id });
+    } catch (err) {}
+    setLikes(isLiked ? likes - 1 : likes + 1);
     setIsLiked(!isLiked);
   };
+
   return (
     <div id="big-container-feed">
       <div id="main-container-feed">
@@ -50,8 +62,8 @@ const FeedSection = ({ posts }) => {
         <hr />
         <div id="u-likes">
           <div>
-            <i className="fa-regular fa-heart"
-            onClick={likeHandler}></i>{" "}
+            {isLiked?<i class="fa-solid fa-heart" style={{color:"red"}} onClick={likeHandler}></i>:<i className="fa-regular fa-heart"
+            onClick={likeHandler}></i>}{" "}
             <span>{likes}</span>
           </div>
           <div>

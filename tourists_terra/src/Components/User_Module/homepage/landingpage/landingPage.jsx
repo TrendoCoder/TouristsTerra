@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../sidebar/sideBar";
 import UploadSection from "../uploadsection/uploadSection";
 import FeedSection from "../feedsection/feedSection";
@@ -7,24 +7,29 @@ import "./landingPage.css";
 import MenuBar from "../menubar/menuBar";
 import NavBar from "../navbar/navBar";
 import axios from "axios";
-const LandingPage = ({userName}) => {
+import { AuthContext } from "../../../../Context/authcontext";
+
+const LandingPage = ({ userName }) => {
   const [posts, setPosts] = useState([]);
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = userName? await axios.get(
-          "http://localhost:3001/api/post/profile/"+userName
-        ) :await axios.get(
-          "http://localhost:3001/api/post/timeline/654b3352327c3f2b71778cfd"
-        );
-        console.log(res);
+        const res = userName
+          ? await axios.get(
+              "http://localhost:3001/api/post/profile/" + userName
+            )
+          : await axios.get(
+              "http://localhost:3001/api/post/timeline/" + user._id
+            );
+            
         setPosts(res.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
     fetchPosts();
-  }, [userName]);
+  }, [userName, user._id]);
   if (!posts) {
     return <div>Loading...</div>;
   }
@@ -41,7 +46,7 @@ const LandingPage = ({userName}) => {
       <div id="full-container" style={{ marginTop: "100px" }}>
         <div id="big-container-landing">
           <div id="sideBar-landing">
-            <Sidebar  />
+            <Sidebar />
           </div>
           <div id="feed-section-landing">
             <div>
