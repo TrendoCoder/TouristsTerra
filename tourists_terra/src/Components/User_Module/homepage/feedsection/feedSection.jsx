@@ -22,7 +22,6 @@ const FeedSection = ({ posts }) => {
           `http://localhost:3001/api/user/?userId=${posts.userId}`
         );
         setUsers(res.data);
-        console.log(users);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -44,7 +43,7 @@ const FeedSection = ({ posts }) => {
         <div id="u-info">
           <div id="u-info-detail">
             <>
-              <img src={pic} alt="Profile" />
+              <img src={users.profilePicture} alt="Profile" />
               <h3>{users.userName}</h3> 
               <span>{format(posts.createdAt)}</span>
             </>
@@ -57,7 +56,7 @@ const FeedSection = ({ posts }) => {
           <span>{posts.desc}</span>
         </div>
         <div id="u-img">
-          <img src={pic} alt="" />
+          <img src={posts.img} alt="" />
         </div>
         <hr />
         <div id="u-likes">

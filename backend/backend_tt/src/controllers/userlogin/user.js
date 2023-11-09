@@ -2,6 +2,7 @@ const express = require("express");
 const { User } = require("../../models/userlogin/user");
 const bcrypt = require("bcryptjs");
 const updateUser = async (req, res, next) => {
+
   if (req.body.userId === req.params.id) {
     if (req.body.password) {
       try {

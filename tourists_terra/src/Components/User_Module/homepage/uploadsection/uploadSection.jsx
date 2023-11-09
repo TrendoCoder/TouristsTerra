@@ -2,9 +2,6 @@ import React from "react";
 import "./uploadSection.css";
 import {
   PermMedia,
-  Label,
-  Room,
-  EmojiEmotions,
   Cancel,
 } from "@mui/icons-material";
 import { useContext, useRef, useState } from "react";
@@ -21,7 +18,7 @@ const UploadSection = () => {
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
-    };
+    }; 
     if (file) {
       const data = new FormData();
       const fileName = Date.now() + file.name;
@@ -30,7 +27,7 @@ const UploadSection = () => {
       newPost.img = fileName;
       console.log(newPost);
       try {
-        await axios.post("http://localhost:3001/api/post", data);
+        await axios.post("http://localhost:3001/api/upload", data);
       } catch (err) {}
     }
     try {

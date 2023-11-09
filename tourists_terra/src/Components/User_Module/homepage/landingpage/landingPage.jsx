@@ -15,13 +15,15 @@ const LandingPage = ({ userName }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = userName
-          ? await axios.get(
-              "http://localhost:3001/api/post/profile/" + userName
-            )
-          : await axios.get(
-              "http://localhost:3001/api/post/timeline/" + user._id
-            );
+        const res =
+          // userName
+          //   ? await axios.get(
+          //       "http://localhost:3001/api/post/profile/" + userName
+          //     )
+          //   :
+          await axios.get(
+            "http://localhost:3001/api/post/timeline/" + user._id
+          );
 
         setPosts(res.data);
       } catch (error) {
@@ -29,7 +31,7 @@ const LandingPage = ({ userName }) => {
       }
     };
     fetchPosts();
-  }, [userName, user._id]);
+  }, [user._id]);
   if (!posts) {
     return <div>Loading...</div>;
   }
@@ -52,7 +54,7 @@ const LandingPage = ({ userName }) => {
             <div id="uploading-section">
               <UploadSection />
             </div>
-            <div>
+            <div id="uploading-section">
               {posts.map((p) => (
                 <FeedSection key={p._id} posts={p} />
               ))}

@@ -55,6 +55,7 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
     console.error(error);
   }
 });
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use("/", indexRouter);
 // app.use("/api/users", usersRouter);
 app.use("/api/post", postsRouter);
