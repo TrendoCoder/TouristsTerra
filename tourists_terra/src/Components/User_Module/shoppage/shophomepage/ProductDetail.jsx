@@ -19,7 +19,7 @@ const ProductDetail = () => {
     }, [productId]);
 
     if (!product) {
-        return <div className="text-center">Loading...</div>;
+        return <div className="h-screen flex justify-center items-center">Loading...</div>;
     }
 
     return (
@@ -68,7 +68,8 @@ const ProductDetail = () => {
                                 </dd>
                             </div>
                             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">Seller Information</dt><dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                                <dt className="text-sm font-medium text-gray-500">Seller Information</dt>
+                                <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
                                     {product.seller && product.seller.userName && product.seller.email ? (
                                         `${product.seller.userName} - ${product.seller.email}`
                                     ) : (
