@@ -27,6 +27,9 @@
     justify-content: center;
     align-items: center;
 }
+#uploading-section{
+    width: 100%;
+}
 #rightBar-landing
 {
     width: 25%;

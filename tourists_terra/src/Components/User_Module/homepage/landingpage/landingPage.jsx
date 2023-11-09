@@ -22,7 +22,7 @@ const LandingPage = ({ userName }) => {
           : await axios.get(
               "http://localhost:3001/api/post/timeline/" + user._id
             );
-            
+
         setPosts(res.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -49,7 +49,7 @@ const LandingPage = ({ userName }) => {
             <Sidebar />
           </div>
           <div id="feed-section-landing">
-            <div>
+            <div id="uploading-section">
               <UploadSection />
             </div>
             <div>
