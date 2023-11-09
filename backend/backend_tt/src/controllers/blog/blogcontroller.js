@@ -1,7 +1,7 @@
 const Blog=require('../../models/blog/blog')
 const _=require('lodash')
 const ObjectId = require('mongoose').Types.ObjectId;
-
+const cloudinary = require('cloudinary').v2;
 //GET all blogs from database
 
 exports.getAllBlogs=async(req,res)=>{
@@ -91,9 +91,9 @@ exports.postCommentBlog=async(req,res)=>{
 exports.createBlog=async (req, res) => {
     
   // const userId = req.user._id
-  
     console.log(req.body)
     const newBlog = new Blog(req.body);
+    console.log(newBlog);
     try {
       const savedBlog = await newBlog.save();
       res.status(200).json(savedBlog);
@@ -143,5 +143,24 @@ exports.updateBlog=async(req,res)=>{
     }
   } catch (err) {
     return res.status(500).json(err);
+  }
+}
+
+
+exports.getRecentBlogs=async(req,res)=>{
+  const now = new Date();
+  console.log("now date",now)
+  now.setUTCHours(0, 0, 0, 0);
+  const updatedDate= now.toISOString();
+  console.log(updatedDate)
+  let data= await Blog.find({date:{$gt:updatedDate}})
+  console.log(data)
+  if(!_.isEmpty(data))
+  {
+    res.status(200).json(data)
+  }
+  else
+  {
+    res.status(200).json("No recent Blog found")
   }
 }

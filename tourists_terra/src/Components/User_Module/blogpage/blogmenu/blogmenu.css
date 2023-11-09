@@ -1,7 +1,7 @@
 #blog-menu-container{
 width: 100%;
 height: 50px;
-background-color: #0f4157b2;
+background-color: #0F4157;
 margin-top: 70px;
 display: flex;
 justify-content: flex-start;
@@ -46,6 +46,7 @@ align-items: center;
     width: 70%;
     height: 100%;
     display: flex;
+    color: white;
 justify-content: center;
 align-items: center;
 }
