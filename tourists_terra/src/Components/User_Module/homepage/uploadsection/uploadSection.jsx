@@ -41,8 +41,8 @@ const UploadSection = () => {
             id="shareProfileImg"
             src={
               user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "/profileUpload.png"
+                ? PF+`/${user.profilePicture}`
+                : PF+"/profileUpload.png"
             }
             alt=""
           />

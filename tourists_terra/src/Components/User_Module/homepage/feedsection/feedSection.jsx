@@ -53,7 +53,8 @@ const FeedSection = ({ posts }) => {
           <div id="u-info-detail">
             <>
               <img
-                src={imageUrl}
+                src={ users.profilePicture ? PF+users.profilePicture: PF+"/profileUpload.png"}
+                crossOrigin="anonymous"
                 alt="Profile"
               />
               <h3>{users.userName}</h3>
@@ -71,9 +72,10 @@ const FeedSection = ({ posts }) => {
           <img
             src={
               posts.img
-                ? `http://localhost:3001/images/1699593630963gallery.png`
-                : "http://localhost:3001/images/uploadProfile.png"
+                ? PF+`/${posts.img}`
+                : PF+"/profileUpload.png"
             }
+            crossOrigin="anonymous"
             alt=""
           />
         </div>

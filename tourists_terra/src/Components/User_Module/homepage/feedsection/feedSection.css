@@ -60,12 +60,14 @@
     width: 100%;
     height: auto;
     margin-top: 5px;
+    display: flex;
+    justify-content: center;
 }
 #u-img img
 {
-    width: 100%;
+    max-width: max-content;
     max-height: 350px;
-    object-fit: cover;
+    object-fit:cover;
     border-radius: 5px;
 }
 #u-likes
