@@ -4,15 +4,12 @@ import ProfileInfo from "../profileinfo/profileinfo";
 import NavBar from "../../../homepage/navbar/navBar";
 import ProfileSideBar from "../profilesidebar/profilesidebar";
 import MiniNavBar from "../mininavbar/mininavbar";
-import UploadSection from "../../../homepage/uploadsection/uploadSection"
-import ProfileFeed from "../profilefeed/profilefeed";
 import axios from "axios";
 import { AuthContext } from "../../../../../Context/authcontext";
 const ProfilePage = () => {
 
   const {user} = useContext(AuthContext);
   const [users, setUsers] = useState([]); 
-  const [click,setClick] = useState(0);
 
   useEffect(() => {
     const fetchUsers = async () => {

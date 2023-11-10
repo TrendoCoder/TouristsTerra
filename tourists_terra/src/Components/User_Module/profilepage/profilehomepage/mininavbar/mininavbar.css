@@ -1,4 +1,9 @@
-#mini-nav-container{
+#main-mini-nav-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#main-mini-nav-container #mini-nav-container{
     width: 100%;
     height: 50px;
     display: flex;
