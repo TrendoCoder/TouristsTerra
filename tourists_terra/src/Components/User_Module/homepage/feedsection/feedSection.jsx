@@ -19,7 +19,7 @@ const FeedSection = ({ username }) => {
               )
             :
           await axios.get(
-            "http://localhost:3001/api/post/timeline/654b2ff53aae04e6a43d6c15"
+            `http://localhost:3001/api/post/timeline/${user._id}`
           );
 
         setPosts(res.data);
