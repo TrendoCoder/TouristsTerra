@@ -58,6 +58,8 @@ const FeedSection = ({ posts }) => {
                 alt="Profile"
               />
               <h3>{users.userName}</h3>
+              <img src={users.profilePicture} alt="Profile" />
+              <h3>{users?.userName}</h3> 
               <span>{format(posts.createdAt)}</span>
             </>
           </div>
