@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
 import useFetch from "../../../../Hooks/usefetch";
 import moment from "moment";
+import { AuthContext } from "../../../../Context/authcontext";
 
 function SinglePost() {
   const location = useLocation();
@@ -13,6 +14,8 @@ function SinglePost() {
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]); // State to hold comments
   const { id } = useParams();
+  const {user} =  useContext(AuthContext)
+
 
   const { data, loading, error } = useFetch(
     `http://localhost:3001/api/bloguser/blog/${id}`
@@ -52,14 +55,14 @@ function SinglePost() {
       },
       body: JSON.stringify({
         comment: commentText,
-        userId: "5", // You might need to get the user ID dynamically
+        userId: user._id, // You might need to get the user ID dynamically
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data === "This blog has been commented") {
           // Update the comments state with the new comment
-          setComments([...comments, { comment: commentText, author: "5" }]);
+          setComments([...comments, { comment: commentText, author: user._id }]);
         }
       })
       .catch((error) => {
@@ -143,15 +146,6 @@ function SinglePost() {
             </div>
           </div>
 
-          <h2 className="text-2xl mt-4 text-gray-500 font-bold text-center">
-            Related Posts
-          </h2>
-          <div className="flex h-full grid-cols-12 gap-10 pb-10 mt-8 sm:mt-16">
-            <div className="grid grid-cols-12 col-span-12 gap-7">
-              {/* Related posts code */}
-            </div>
-          </div>
-
           {/* Form for comments */}
           <div className="max-w-4xl py-16 xl:px-8 flex justify-center mx-auto">
             <div className="w-full mt-16 md:mt-0 ">
@@ -209,7 +203,7 @@ function SinglePost() {
                 </a>
                 <div>
                   <h3 className="text-lg font-bold text-blue-800 sm:text-xl md:text-2xl">
-                    By James Amos
+                    By {user.userName}
                   </h3>
                   <p className="text-sm font-bold text-gray-300">August 22, 2021</p>
                   <p className="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">

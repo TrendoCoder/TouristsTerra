@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, {useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, MenuItem, Select, TextField, InputLabel, FormControl } from "@material-ui/core";
 import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
+import {AuthContext} from "../../../../Context/authcontext"
 import { useNavigate } from "react-router";
 import axios from "axios";
 
 const AddBlogPost = () => {
+  const {user} = useContext(AuthContext);
+  console.log(user);
   const [image, setImage] = useState("");
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -16,6 +19,7 @@ const AddBlogPost = () => {
   };
 
   const validationSchema = yup.object().shape({
+    userId: user._Id,
     title: yup.string().required("Title is required").max(32),
     category: yup.string().required("Select Category"),
     description: yup.string().required("Description is required").min(1),
@@ -27,6 +31,7 @@ const AddBlogPost = () => {
     try {
       // Upload the image to Cloudinary
       const formData = new FormData();
+      values.userId = user._id; 
       formData.append('file', image);
       formData.append('upload_preset', 'oj2mvysk'); // Replace with your Cloudinary upload preset
       const cloudinaryResponse = await axios.post(

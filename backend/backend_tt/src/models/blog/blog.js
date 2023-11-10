@@ -7,11 +7,9 @@ const blogSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-//   userId:{
-//     type: String,
-//     required: false,
-//     unique: false
-//   },
+  userId:{
+    type: String
+  },
   imageURL:{
     type: String,
   },
@@ -24,8 +22,8 @@ const blogSchema = new mongoose.Schema({
     required: true,
   },
   likes: {
-    type: Number,
-    default: 0,
+    type: Array,
+    default: [],
   },
   comments: [
     {
