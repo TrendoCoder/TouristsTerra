@@ -9,7 +9,7 @@ import NavBar from "../navbar/navBar";
 import axios from "axios";
 import { AuthContext } from "../../../../Context/authcontext";
 
-const LandingPage = ({ userName }) => {
+const LandingPage = () => {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(AuthContext);
   useEffect(() => {
@@ -22,7 +22,7 @@ const LandingPage = ({ userName }) => {
           //     )
           //   :
           await axios.get(
-            "http://localhost:3001/api/post/timeline/" + user._id
+            "http://localhost:3001/api/post/timeline/" + user?._id
           );
 
         setPosts(res.data);
@@ -31,7 +31,7 @@ const LandingPage = ({ userName }) => {
       }
     };
     fetchPosts();
-  }, [user._id]);
+  }, [user?._id]);
   if (!posts) {
     return <div>Loading...</div>;
   }
@@ -56,7 +56,7 @@ const LandingPage = ({ userName }) => {
             </div>
             <div id="uploading-section">
               {posts.map((p) => (
-                <FeedSection key={p._id} posts={p} />
+                <FeedSection key={p?._id} posts={p} />
               ))}
             </div>
           </div>

@@ -47,7 +47,7 @@ const UploadSection = () => {
             alt=""
           />
           <input
-            placeholder={"What's in your mind " + user.userName + "?"}
+            placeholder={"What's in your mind " + user?.userName + "?"}
             id="shareInput"
             ref={desc}
           />

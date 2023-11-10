@@ -6,6 +6,7 @@ router.get('/blogs',blogpostcontroller.getAllBlogs)
 router.get('/blog/:id',blogpostcontroller.getBlog)
 router.get("/:id/like/:like",blogpostcontroller.postLikeBlog)
 router.post('/:id/comment',blogpostcontroller.postCommentBlog)
+router.get('/:id/comments',blogpostcontroller.getAllCommentsBlog)
 router.get('/recentBlogs',blogpostcontroller.getRecentBlogs)
 //These routes will be transfer to the admin portal 
 
