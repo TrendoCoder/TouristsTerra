@@ -39,12 +39,6 @@ const ProfilePage = () => {
         <div id="mini-nav">
         <MiniNavBar/>
         </div>
-        {/* <div id="profile-upload-section">
-          <UploadSection/>
-        </div>
-        <div id="render-profile-data">
-        <ProfileFeed user={users} />
-        </div> */}
         </div>
       </div>
     </div>

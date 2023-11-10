@@ -55,9 +55,11 @@ const DisplayPost = ({posts}) => {
         <i className="fa-solid fa-ellipsis-vertical"></i>
       </div>
     </div>
+    
     <div id="u-des">
       <span>{posts.desc}</span>
     </div>
+    <hr />
     <div id="u-img">
       <img
         src={posts.img ? PF + `/${posts.img}` : PF + "/profileUpload.png"}
@@ -77,7 +79,7 @@ const DisplayPost = ({posts}) => {
         ) : (
           <i className="fa-regular fa-heart" onClick={likeHandler}></i>
         )}{" "}
-        <span>{posts.likes}</span>
+        <span>{likes}</span>
       </div>
       <div>
         <i className="fa-regular fa-comment"></i> <span></span>

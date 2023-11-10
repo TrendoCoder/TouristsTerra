@@ -7,8 +7,7 @@ import { AuthContext } from "../../../../Context/authcontext";
 
 const FeedSection = ({ username }) => {
   const [posts, setPosts] = useState([]);
-  const { user, loading } = useContext(AuthContext);
-  console.log(user._id);
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -17,8 +16,11 @@ const FeedSection = ({ username }) => {
           : await axios.get(
               "http://localhost:3001/api/post/timeline/" + user?._id
             );
-        setPosts(res.data);
-        console.log(posts);
+        setPosts(
+          res.data.sort((p1, p2) => {
+            return new Date(p2.createdAt) - new Date(p1.createdAt);
+          })
+        );
       } catch (error) {
         console.error("Error fetching posts:", error);
       }

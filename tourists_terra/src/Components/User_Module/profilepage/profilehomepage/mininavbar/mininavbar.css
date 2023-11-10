@@ -45,3 +45,17 @@
     background-color: #0F4157;
     border-radius: 5px;
 }
+#friend-list-container{
+    width:100%;
+    height: 300px;
+    margin-bottom: 20px;
+    padding: 10px 03px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+#friend-list-mini-container{
+    width: 40%;
+    max-height: 300px;
+}
