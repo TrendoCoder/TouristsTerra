@@ -32,32 +32,61 @@ exports.getBlog = async (req, res) => {
 
 
 // Like and Unlike the blog @param id
-
-exports.postLikeBlog = async(req,res)=>{
+exports.postLikeBlog = async (req, res) => {
   try {
-    const blogId=req.params.id
-    const like=req.params.like
-    if(like=="true")
-    {
-      const updatedBlog = await Blog.findByIdAndUpdate(
-        blogId,
-        { $inc: { likes: 1 } },
-        { new: true }
-      );
-      res.status(200).json({message:"like",data:updatedBlog});
+    const blog = await Blog.findById(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
     }
-    else{
-      const updatedBlog = await Blog.findByIdAndUpdate(
-        blogId,
-        { $inc: { likes:-1 } },
-        { new: true }
-      );
-      res.status(200).json({message:"unlike",data:updatedBlog});
+    const isLiked = blog.likes.includes(req.user.id);
+    if (isLiked) {
+      // If the user has already liked the blog, unlike it
+      await blog.updateOne({
+        $pull: {
+          likes: req.user.id,
+        },
+      });
+      res.status(200).json({ message: "Post has been unliked", liked: false });
+    } else {
+      // If the user hasn't liked the blog, like it
+      await blog.updateOne({
+        $push: {
+          likes: req.user.id,
+        },
+      });
+      res.status(200).json({ message: "Post has been liked", liked: true });
     }
   } catch (err) {
     return res.status(500).json(err);
   }
-}
+};
+
+
+// exports.postLikeBlog = async(req,res)=>{
+//   try {
+//     const blogId=req.params.id
+//     const like=req.params.like
+//     if(like=="true")
+//     {
+//       const updatedBlog = await Blog.findByIdAndUpdate(
+//         blogId,
+//         { $inc: { likes: 1 } },
+//         { new: true }
+//       );
+//       res.status(200).json({message:"like",data:updatedBlog});
+//     }
+//     else{
+//       const updatedBlog = await Blog.findByIdAndUpdate(
+//         blogId,
+//         { $inc: { likes:-1 } },
+//         { new: true }
+//       );
+//       res.status(200).json({message:"unlike",data:updatedBlog});
+//     }
+//   } catch (err) {
+//     return res.status(500).json(err);
+//   }
+// }
 
 /**
  * 

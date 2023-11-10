@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../../homepage/navbar/navBar';
 import BlogMenu from '../blogmenu/blogmenu';
 import useFetch from '../../../../Hooks/usefetch';
 import Footer from '../../accommodationpage/footer/footer';
+import axios from 'axios';
 
 const PopularBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 9;
-  const [selectedCategory, setSelectedCategory] = useState('All'); // Default to 'All'
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [blogs, setBlogs] = useState([]);
+  const [like, setLike] = useState(blogs.likes);
+  const [isLiked, setIsLiked] = useState(false);
   const categories = [
     'All',
     'Hotel',
@@ -19,30 +23,71 @@ const PopularBlogs = () => {
     'Others',
   ];
 
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/api/bloguser/blogs`
+        );
+        const fetchedBlogs = response.data || [];
+        setBlogs(fetchedBlogs);
+        console.log(blogs);
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    setCurrentPage(1); // Reset to the first page when selecting a category.
+    setCurrentPage(1);
   };
 
-  const { data, loading, error } = useFetch(
-    `http://localhost:3001/api/bloguser/blogs`
-  );
+  const handleLike = async (blogId) => {
+    console.log(blogId);
+    try {
+      await axios.put(`http://localhost:3001/api/bloguser/${blogId}/like`);
+      setLike((prevLike) => (isLiked ? prevLike - 1 : prevLike + 1));
+      setIsLiked(!isLiked);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  const blogs = data || []; // Use fetched data or an empty array as a fallback
+  // const handleLike = async (blogId) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:3001/api/bloguser/${blogId}/like/true`
+  //     );
 
-  // Filter the blogs based on the selected category
+  //     const updatedBlog = response.data.data;
+
+  //     setBlogs((prevBlogs) =>
+  //       prevBlogs.map((blog) =>
+  //         blog._id === updatedBlog._id ? updatedBlog : blog
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error('Error updating like:', error);
+  //   }
+  // };
+
   const filteredBlogs =
     selectedCategory === 'All'
       ? blogs
       : blogs.filter((blog) => blog.category === selectedCategory);
 
+  const sortedBlogs = [...filteredBlogs].sort((a, b) => b.likes - a.likes);
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredBlogs.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = sortedBlogs.slice(indexOfFirstPost, indexOfLastPost);
 
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(filteredBlogs.length / postsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(sortedBlogs.length / postsPerPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -50,19 +95,12 @@ const PopularBlogs = () => {
     <button
       key={number}
       onClick={() => setCurrentPage(number)}
-      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${
-        currentPage === number ? 'bg-gray-500' : ''
-      }`}
+      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${currentPage === number ? 'bg-gray-500' : ''
+        }`}
     >
       {number}
     </button>
   ));
-
-  // You can implement the like functionality here
-  const handleLike = (blogId) => {
-    // Add your like logic here
-    console.log(`Liked blog with ID: ${blogId}`);
-  };
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
@@ -73,9 +111,7 @@ const PopularBlogs = () => {
         {categories.map((item) => (
           <button
             key={item?._id}
-            className={`px-4 py-2 text-sm font-medium text-white hover:scale-105 duration-200 bg-[#2f5869ee] rounded mx-4 hover:shadow-md ${
-              selectedCategory === item ? 'bg-[#0d2833]' : ''
-            }`}
+            className={`px-4 py-2 text-sm font-medium text-white hover:scale-105 duration-200 bg-[#2f5869ee] rounded mx-4 hover:shadow-md ${selectedCategory === item ? 'bg-[#0d2833]' : ''}`}
             onClick={() => handleCategoryClick(item)}
           >
             {item}
@@ -83,9 +119,7 @@ const PopularBlogs = () => {
         ))}
       </div>
 
-      <h1 className="text-center mt-5 font-bold text-lg text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">
-        Popular Blogs
-      </h1>
+      <h1 className="text-center mt-5 font-bold text-lg text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">Popular Blogs</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-10 mx-10">
         {currentPosts.length === 0 ? (
           <div className="text-center col-span-12">
@@ -100,11 +134,7 @@ const PopularBlogs = () => {
               className="max-w-sm md:max-w-md bg-white rounded overflow-hidden shadow-lg"
             >
               <Link to={`/single-post/${item?._id}`}>
-                <img
-                  className="w-full h-[220px]  rounded-t-lg"
-                  src={item.imageURL}
-                  alt={item.title}
-                />
+                <img className="w-full h-[220px] rounded-t-lg" src={item.imageURL} alt={item.title} />
               </Link>
               <div className="px-6 py-4">
                 <Link to={`/single-post/${item?._id}`}>
@@ -119,43 +149,44 @@ const PopularBlogs = () => {
                   <div className="inline-flex items-center px-3 py-1 text-sm font-medium text-center bg-[#478ca986] hover:bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark:hover-bg-green-700 dark:focus:ring-green-800">
                     <Link to={`/single-post/${item?._id}`}>Read more</Link>
                     <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M1 5h12m0 0L9 1m4 4L9 9"
-                      />
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                     </svg>
                   </div>
-                  <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mb-2">
-                    {item.category}
-                  </span>
-                  <button
-                    className="ml-2 p-1 text-sm text-gray-700 hover:text-red-500"
-                    onClick={() => handleLike(item._id)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
+                  <div className="flex items-center space-x-1">
+                    <button
+                      className="inline-flex items-center px-3 py-1 text-sm font-medium text-center bg-[#fcea4d] hover:bg-[#fcb42d] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9]"
+                      onClick={() => handleLike(item._id)}
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a1 1 0 0 1-.53-.15l-7-4a1 1 0 0 1 0-1.7l7-4a1 1 0 0 1 1.06 0l7 4a1 1 0 0 1 0 1.7l-7 4A1 1 0 0 1 10 18zm-7-5.86L10 12l7 4.14V6.86l-7-4.14L3 6.86v5.28z"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        className="w-4 h-4 mr-1"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M6 3c-1.667 0-3 1.333-3 3 0 4 6 9 9 9s9-5 9-9c0-1.667-1.333-3-3-3"
+                        />
+                      </svg>
+                    </button>
+                    <span className="text-sm text-[#102129]">{item.likes} likes</span>
+                  </div>
+                  <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mb-2">{item.category}</span>
                 </div>
               </div>
             </div>
           ))
         )}
       </div>
-      <br></br>
-      <div className="flex justify-center mt-4">{renderPageNumbers}</div>
-      <br></br>
+      <br />
+      <div className="flex justify-center mt-4">
+        {renderPageNumbers}
+      </div>
+      <br />
       <Footer />
     </div>
   );
