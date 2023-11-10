@@ -4,7 +4,7 @@ const blogpostcontroller = require("../../../controllers/blog/blogcontroller");
 
 router.get('/blogs',blogpostcontroller.getAllBlogs)
 router.get('/blog/:id',blogpostcontroller.getBlog)
-router.put("/like/:id",blogpostcontroller.postLikeBlog)
+router.put("/like/:id",blogpostcontroller.likeDislikePost)
 router.post('/:id/comment',blogpostcontroller.postCommentBlog)
 // router.get('/:id/comments',blogpostcontroller.getAllCommentsBlog)
 router.get("/recentBlogs", blogpostcontroller.getRecentBlogs);
