@@ -52,12 +52,17 @@ const FeedSection = ({ posts }) => {
         <div id="u-info">
           <div id="u-info-detail">
             <>
+<<<<<<< Updated upstream
               <img
                 src={ users.profilePicture ? PF+users.profilePicture: PF+"/profileUpload.png"}
                 crossOrigin="anonymous"
                 alt="Profile"
               />
               <h3>{users.userName}</h3>
+=======
+              <img src={users.profilePicture} alt="Profile" />
+              <h3>{users?.userName}</h3> 
+>>>>>>> Stashed changes
               <span>{format(posts.createdAt)}</span>
             </>
           </div>

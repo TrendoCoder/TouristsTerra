@@ -84,6 +84,7 @@ exports.postCommentBlog=async(req,res)=>{
   }
 }
 
+
 //-------- This code will transfer to Admin Pannel -----------
 
 // Create the new Blog
@@ -101,7 +102,7 @@ exports.createBlog=async (req, res) => {
       console.error(err);
       return res.status(500).json(err);
     }
-  }
+}
 
 
 
