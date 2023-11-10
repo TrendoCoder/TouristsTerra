@@ -8,10 +8,10 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const multer = require("multer");
+const cors = require('cors'); 
 var productRouter = require("./src/routes/api/shopapi/product");
 var categoryRouter = require("./src/routes/api/shopapi/category");
 var indexRouter = require("./src/routes/index");
-// var usersRouter = require("./src/routes/api/users");
 var postsRouter = require("./src/routes/api/userpostapi/posts");
 var hotelRouter = require("./src/routes/api/hotelapi/hotels");
 var roomRouter = require("./src/routes/api/hotelapi/rooms");
@@ -21,16 +21,13 @@ var blogRouter = require("./src/routes/api/blogapi/blogapi");
 
 dotenv.config();
 
-// var config = require("config");
-var cors = require("cors");
 var app = express();
 
-// view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
 app.use(logger("dev"));
-app.use(cors());
+app.use(cors()); 
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
@@ -56,8 +53,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   }
 });
 app.use("/images", express.static(path.join(__dirname, "public/images")));
+
 app.use("/", indexRouter);
-// app.use("/api/users", usersRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
 app.use("/api/rooms", roomRouter);
@@ -67,13 +64,11 @@ app.use("/api/category", categoryRouter);
 app.use("/api/product", productRouter);
 app.use("/api/bloguser", blogRouter);
 app.use("/", indexRouter);
-// catch 404 and forward to error handler
 
 app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "Something went wrong";
@@ -95,4 +90,5 @@ mongoose
   )
   .then(() => console.log("Connected to MongoDb"))
   .catch((error) => console.log(error.message));
+
 module.exports = app;

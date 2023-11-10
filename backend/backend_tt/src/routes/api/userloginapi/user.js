@@ -6,6 +6,7 @@ const {
   getAllUsers,
   followAUser,
   unFollowUser,
+  getFriends,
 } = require("../../../controllers/userlogin/user");
 const {
   verifyToken,
@@ -37,8 +38,13 @@ router.get("/", getUser);
 // Get All
 router.get("/", getAllUsers);
 
+// Get friends
+router.get("/friends/:userId", getFriends);
+//follow a user
 router.put("/:id/follow", followAUser);
-
+// unfollow a user
 router.put("/:id/unfollow", unFollowUser);
+
+
 
 module.exports = router;

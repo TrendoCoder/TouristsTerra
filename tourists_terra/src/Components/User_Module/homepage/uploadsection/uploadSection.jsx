@@ -1,15 +1,13 @@
 import React from "react";
 import "./uploadSection.css";
-import {
-  PermMedia,
-  Cancel,
-} from "@mui/icons-material";
+import { PermMedia, Cancel } from "@mui/icons-material";
 import { useContext, useRef, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../../Context/authcontext";
 import pic from "../../../../images/profile.jpeg";
 const UploadSection = () => {
   const { user } = useContext(AuthContext);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
   const [file, setFile] = useState(null);
 
@@ -18,10 +16,10 @@ const UploadSection = () => {
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
-    }; 
+    };
     if (file) {
       const data = new FormData();
-      const fileName = Date.now()+file.name;
+      const fileName = Date.now() + file.name;
       data.append("name", fileName);
       data.append("file", file);
       newPost.img = fileName;
@@ -39,7 +37,15 @@ const UploadSection = () => {
     <div id="share">
       <div id="shareWrapper">
         <div id="shareTop">
-          <img id="shareProfileImg" src={pic} alt="" />
+          <img
+            id="shareProfileImg"
+            src={
+              user.profilePicture
+                ? PF + user.profilePicture
+                : PF + "/profileUpload.png"
+            }
+            alt=""
+          />
           <input
             placeholder={"What's in your mind " + user.userName + "?"}
             id="shareInput"
@@ -89,4 +95,3 @@ const UploadSection = () => {
 };
 
 export default UploadSection;
-

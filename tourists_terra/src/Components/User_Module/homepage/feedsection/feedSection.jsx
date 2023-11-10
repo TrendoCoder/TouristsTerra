@@ -11,16 +11,22 @@ const FeedSection = ({ posts }) => {
   const [likes, setLikes] = useState(posts.likes.length);
   const [isLiked, setIsLiked] = useState(false);
 
+  const [img, setImg] = useState("");
   useEffect(() => {
     setIsLiked(posts.likes.includes(currentUser._id));
   }, [currentUser._id, posts.likes]);
-
+  const imageUrl = 'http://localhost:3001/images/your-image.jpg';
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const res = await axios.get(
           `http://localhost:3001/api/user/?userId=${posts.userId}`
         );
+        const imge = axios.get(
+          "http://localhost:3001/images/1699593630963gallery.png"
+        );
+        setImg(imge);
+        console.log(img);
         setUsers(res.data);
       } catch (error) {
         console.error("Error fetching user:", error);
@@ -28,6 +34,7 @@ const FeedSection = ({ posts }) => {
     };
     fetchUsers();
   }, [posts.userId]);
+
   console.log(users);
   const likeHandler = () => {
     try {
@@ -45,7 +52,10 @@ const FeedSection = ({ posts }) => {
         <div id="u-info">
           <div id="u-info-detail">
             <>
-              <img src={pic} alt="Profile" />
+              <img
+                src={imageUrl}
+                alt="Profile"
+              />
               <h3>{users.userName}</h3>
               <span>{format(posts.createdAt)}</span>
             </>
@@ -58,7 +68,14 @@ const FeedSection = ({ posts }) => {
           <span>{posts.desc}</span>
         </div>
         <div id="u-img">
-          <img src={pic} alt="" />
+          <img
+            src={
+              posts.img
+                ? `http://localhost:3001/images/1699593630963gallery.png`
+                : "http://localhost:3001/images/uploadProfile.png"
+            }
+            alt=""
+          />
         </div>
         <hr />
         <div id="u-likes">
