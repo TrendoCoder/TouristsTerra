@@ -1,0 +1,52 @@
+#friend-card-main-container {
+    position: relative; /* Make it a positioning context for absolute positioning */
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0px 0px 10px 1px rgba(128, 128, 128, 1);
+    color: #fff; /* Set text color to white */
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.4s;
+    background-color: #161a1a;
+  }
+  
+  #friend-card-main-container:hover {
+    box-shadow: 0px 0px 10px 5px #3b3b3b;
+    cursor: pointer;
+  }
+  
+  #friend-card-main-container > img {
+    width: 100%;
+    max-width: max-content;
+    height: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+  
+  #friend-card-main-container > .friend-details {
+    position: absolute;
+    top: 88%;
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, -50%);
+    background-color: #080808d0;/* Set the background color to black with some opacity */
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%; 
+    height: 50px;
+    box-sizing: border-box; 
+  }
+  
+  #friend-card-main-container > .friend-details > a {
+    color: #fff; 
+    text-decoration: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+  

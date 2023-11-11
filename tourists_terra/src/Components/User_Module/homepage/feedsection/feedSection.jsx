@@ -8,44 +8,112 @@ import { AuthContext } from "../../../../Context/authcontext";
 const FeedSection = ({ username }) => {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(AuthContext);
-  console.log(user._id);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res =
-          username
-            ? await axios.get(
-                "http://localhost:3001/api/post/profile/" + username
-              )
-            :
-          await axios.get(
-            "http://localhost:3001/api/post/timeline/654b2ff53aae04e6a43d6c15"
-          );
-
-        setPosts(res.data);
-        console.log(posts);
+        const res = username
+          ? axios.get("http://localhost:3001/api/post/profile/" + username)
+          : await axios.get(
+              "http://localhost:3001/api/post/timeline/" + user?._id
+            );
+        setPosts(
+          res.data.sort((p1, p2) => {
+            return new Date(p2.createdAt) - new Date(p1.createdAt);
+          })
+        );
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
+
     fetchPosts();
-  }, [username, user._id]);
+  }, [username, user?._id]);
+
   if (!posts) {
-    return <div>Loading...</div>;
+    return <div>Loading....</div>;
   }
+
   return (
     <div id="big-container-feed">
       <div id="big-container-feed-wrapper">
-        {(!username || username === user.userName) && <UploadSection />}
-        {/* {posts.map((p) => (
-          <DisplayPost key={p._id} post={p} />
-        ))} */}
+        <UploadSection />
+        {posts.length === 0 ? (
+          <div>No posts found.</div>
+        ) : (
+          posts.map((p) => <DisplayPost key={p._id} posts={p} />)
+        )}
       </div>
     </div>
   );
 };
 
 export default FeedSection;
+
+// import React, { useContext, useEffect, useState } from "react";
+// import "./feedSection.css";
+// import DisplayPost from "../displaypost/displaypost";
+// import UploadSection from "../uploadsection/uploadSection";
+// import axios from "axios";
+// import { AuthContext } from "../../../../Context/authcontext";
+
+// const FeedSection = () => {
+//   const [posts, setPosts] = useState([]);
+//   const { user, loading } = useContext(AuthContext);
+//   console.log(user._id);
+
+//   useEffect(() => {
+//     const fetchPosts = async () => {
+//       try {
+//         const res =
+//           // username
+//           //   ? await axios.get(
+//           //       "http://localhost:3001/api/post/profile/"+ username
+//           //     )
+//           //   :
+//           await axios.get(
+//             `http://localhost:3001/api/post/timeline/${user._id}`
+//           );
+
+//           setPosts((prevPosts) => {
+//             console.log(prevPosts);
+//             return res.data;
+//           });
+
+//         console.log(posts);
+//       } catch (error) {
+//         console.error("Error fetching posts:", error);
+//       }
+//     };
+//     fetchPosts();
+//   }, [posts]);
+//   if (!posts) {
+//     return <div>Loading...</div>;
+//   }
+//   return (
+//     <div id="big-container-feed">
+//       <div id="big-container-feed-wrapper">
+//         {/* {(!username || username === user.userName) && <UploadSection />
+//         } */}
+//         {loading ? (
+//   <div>Loading....</div>
+// ) : (
+//   posts.length === 0 ? (
+//     <div>No posts found.</div>
+//   ) : (
+//     <>
+//       {posts.map((p) => (
+//         <DisplayPost key={p._id} post={p} />
+//       ))}
+//     </>
+//   )
+// )}
+
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default FeedSection;
 
 // import React, { useContext, useEffect, useState } from "react";
 // import "./feedSection.css";
