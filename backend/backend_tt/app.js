@@ -80,13 +80,13 @@ app.post(
     }
   }
 );
-// store Profile Cover Pic 
+// store Profile Cover Pic
 const storageProfileCoverPic = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/images/profileCoverPic");
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, req.body.name);
   },
 });
 const uploadProfileCoverPic = multer({ storage: storageProfileCoverPic });
