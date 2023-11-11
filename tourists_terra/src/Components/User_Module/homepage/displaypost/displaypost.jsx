@@ -39,13 +39,13 @@ const DisplayPost = ({posts}) => {
       <div id="u-info-detail">
         <>
           <img
-            src={
-              user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "/profileUpload.png"
-            }
-            crossOrigin="anonymous"
-            alt="Profile"
+             src={
+                        user.userProfilePicture
+                          ? PF + `/profilePicture/${user.userProfilePicture}`
+                          : PF + "/profileUpload.png"
+                      }
+                      crossOrigin="anonymous"
+                      alt={PF + "/profileUpload.png"}
           />
           <h3>{user.userName}</h3>
           <span>{format(posts.createdAt)}</span>

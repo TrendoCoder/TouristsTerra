@@ -9,7 +9,6 @@ function NavBar() {
         <div id="big-Container">
           <div id="small-Container">
             <div id="logo-section">
-              {/* <img src="" alt="logo" /> */}
               <h3>Tourists Terra</h3>
             </div>
             <div id="search-section">

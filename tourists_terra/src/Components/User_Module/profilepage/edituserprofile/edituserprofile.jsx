@@ -1,15 +1,15 @@
 import React, { useContext, useState } from "react";
 import "./edituserprofile.css";
 import axios from "axios";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import uploadImage from "../../../../images/gallery.png";
-import coverImage from "../../../../images/cover.png";
 import { AuthContext } from "../../../../Context/authcontext";
 
 const EditUserProfile = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user, loading, setUser } = useContext(AuthContext);
- const navigate = useNavigate();
+
+  const navigate = useNavigate();
   const [userName, setUserName] = useState(user.userName);
   const [contact, setContact] = useState(user.contact);
   const [userProfilePicture, setUserProfilePicture] = useState(
@@ -91,7 +91,7 @@ const EditUserProfile = () => {
 
       setUser(updatedUser);
       alert("Successfully updated");
-      navigate(`/edit-user-profile/${user._id}`)
+      navigate(`/edit-profile/${user._id}`);
     } catch (err) {
       alert("There is an issue occur.. Try again");
     }
@@ -126,23 +126,15 @@ const EditUserProfile = () => {
                 </h3>
                 <div id="editUserProfile-image-div">
                   <div id="editUserProfile-image-div-div">
-                    {userProfilePicture && (
-                      <img
-                        src={URL.createObjectURL(userProfilePicture) || PF+`/profilePicture/${user.userProfilePicture}`}
-                        alt={uploadImage}
-                      />
-                    )}
-                    {!userProfilePicture && (
-                      <img
-            src={
-              user.userProfilePicture
-                ? PF+`/profilePicture/${user.userProfilePicture}`
-                : PF + "/profileUpload.png"
-            }
-            crossOrigin="anonymous"
-            alt={uploadImage}
-          />
-                    )}
+                    <img
+                      src={
+                        user.userProfilePicture
+                          ? PF + `/profilePicture/${user.userProfilePicture}`
+                          : PF + "/profileUpload.png"
+                      }
+                      crossOrigin="anonymous"
+                      alt={uploadImage}
+                    />
                   </div>
                   <br />
                   <div id="editUserProfile-image-div-div-file">
@@ -171,26 +163,18 @@ const EditUserProfile = () => {
               </h3>
               <div id="editUserProfile-image-div">
                 <div id="editUserProfile-cover-image-div-div">
-                  {userCoverPicture && (
-                    <img
-                      src={URL.createObjectURL(userCoverPicture) || PF+`/profilePicture/${user.userProfilePicture}`}
-                      alt={coverImage}
-                    />
-                  )}
-                  {!userCoverPicture && (
-                    <img
-            src={
-              user.userCoverPicture
-                ? PF+`/profileCoverPic/${user.userCoverPicture}`
-                : PF + "profileCoverPic/coverPic.jpg"
-            }
-            crossOrigin="anonymous"
-            alt={uploadImage}
-          />
-                  )}
+                  <img
+                    src={
+                      user.userCoverPicture
+                        ? PF + `/profileCoverPic/${user.userCoverPicture}`
+                        : PF + "profileCoverPic/coverPic.jpg"
+                    }
+                    crossOrigin="anonymous"
+                    alt={uploadImage}
+                  />
                 </div>
                 <br />
-               
+
                 <div id="editUserProfile-image-div-div-file">
                   <input
                     type="file"
