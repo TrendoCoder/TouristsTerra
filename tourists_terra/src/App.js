@@ -73,7 +73,7 @@ function App() {
               element={<ExploreHomepage />}
             ></Route>
             <Route
-              path="edit-user-profile"
+              path="edit-user-profile/:id"
               element={<EditUserProfile />}
             ></Route>
             <Route path="shop-home-page" element={<ShopHomePage />}></Route>

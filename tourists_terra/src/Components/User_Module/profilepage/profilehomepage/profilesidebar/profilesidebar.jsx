@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './profilesidebar.css'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../../../../../Context/authcontext'
 const ProfileSideBar = () => {
+    
+    const {user}  = useContext(AuthContext);
   return (
     <>
     <div id="leftbar-main-container">
@@ -36,7 +39,7 @@ const ProfileSideBar = () => {
             <span>10</span>
         </div>
         <div id="leftbar-options">
-            <Link to="/edit-user-profile">
+            <Link to={`/edit-user-profile/${user._id}`}>
                 Edit Profile
             </Link>
         </div>

@@ -8,7 +8,7 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const multer = require("multer");
-const cors = require('cors'); 
+const cors = require("cors");
 var productRouter = require("./src/routes/api/shopapi/product");
 var categoryRouter = require("./src/routes/api/shopapi/category");
 var indexRouter = require("./src/routes/index");
@@ -27,9 +27,11 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
 app.use(logger("dev"));
-app.use(cors({
-  origin:"http://localhost:3000"
-})); 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
@@ -38,6 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Image storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/images");
@@ -56,6 +59,48 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 });
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
+// Store profile picture
+const storageProfilePic = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/profilePicture");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+const uploadProfilePic = multer({ storage: storageProfilePic });
+app.post(
+  "/api/upload/profilePicture",
+  uploadProfilePic.single("file"),
+  (req, res) => {
+    try {
+      return res.status(200).json("File uploded successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+// store Profile Cover Pic 
+const storageProfileCoverPic = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/profileCoverPic");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const uploadProfileCoverPic = multer({ storage: storageProfileCoverPic });
+app.post(
+  "/api/upload/profileCoverPic",
+  uploadProfileCoverPic.single("file"),
+  (req, res) => {
+    try {
+      return res.status(200).json("File uploded successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
 app.use("/", indexRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
