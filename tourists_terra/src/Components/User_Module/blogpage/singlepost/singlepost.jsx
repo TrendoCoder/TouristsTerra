@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, Link } from "react-router-dom";
 import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
@@ -14,8 +14,7 @@ function SinglePost() {
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]); // State to hold comments
   const { id } = useParams();
-  const {user} =  useContext(AuthContext)
-
+  const { user } = useContext(AuthContext);
 
   const { data, loading, error } = useFetch(
     `http://localhost:3001/api/bloguser/blog/${id}`
@@ -28,19 +27,31 @@ function SinglePost() {
     }
   }, [data]);
 
-  const handleLike = (like) => {
-    const likeStatus = like ? "true" : "false";
-    fetch(`http://localhost:3001/api/bloguser/${id}/like/${likeStatus}`)
+  const handleLike = () => {
+    // Use the like/dislike API
+    const likeStatus = liked ? 'false' : 'true';
+    fetch(`http://127.0.0.1:3001/api/bloguser/like/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: user._id,
+      }),
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setLiked(!liked);
+          console.log(data.message); // Log the message from the server
+          // Update the like count in the UI
+          setLiked(data.payload.blog.likes.length);
         } else {
-          // Handle the case where the like/unlike was not successful
+          console.error('Failed to update like status:', data.message);
         }
       })
       .catch((error) => {
         // Handle any network errors
+        console.error('Network error while updating like status:', error);
       });
   };
 
@@ -63,6 +74,7 @@ function SinglePost() {
         if (data === "This blog has been commented") {
           // Update the comments state with the new comment
           setComments([...comments, { comment: commentText, author: user._id }]);
+          e.target.elements.comment.value = "";
         }
       })
       .catch((error) => {
@@ -115,7 +127,7 @@ function SinglePost() {
                 <p
                   className={`text-m font-boldr rounded-full py-7 px-7 ${liked ? "text-red-500" : "text-gray-500"
                     } cursor-pointer`}
-                  onClick={() => handleLike(!liked)}
+                  onClick={handleLike}
                 >
                   {liked ? "❤️ Liked" : "🤍 Like"} {data.likes}
                 </p>
@@ -139,7 +151,7 @@ function SinglePost() {
                     className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
                   />
                   <h1 className="font-bold text-gray-700 hover:underline">
-                    By James Amos
+                    Written by {user.userName} 
                   </h1>
                 </a>
               </div>
@@ -150,7 +162,7 @@ function SinglePost() {
           <div className="max-w-4xl py-16 xl:px-8 flex justify-center mx-auto">
             <div className="w-full mt-16 md:mt-0 ">
               <form
-                onSubmit={handleCommentSubmit} // Use onSubmit instead of onClick for form submission
+                onSubmit={handleCommentSubmit} // onSubmit for form submission
                 className="relative z-10 h-auto p-8 py-10 overflow-hidden bg-gray-100 border-b-2 border-gray-300 rounded-lg shadow-2xl px-7"
               >
                 <h3 className="mb-6 text-2xl font-medium text-center">
@@ -173,9 +185,9 @@ function SinglePost() {
                 />
                 <input
                   type="submit"
-                  value="Submit comment"
+                  value="Submit "
                   name="submit"
-                  className=" text-white px-4 py-3 bg-[#0f4157]  rounded-lg"
+                  className=" text-white px-4 py-3 bg-[#0f4157] hover:bg-[#0f4157bd] rounded-lg"
                 />
               </form>
             </div>
@@ -202,9 +214,9 @@ function SinglePost() {
                   />
                 </a>
                 <div>
-                  <h3 className="text-lg font-bold text-blue-800 sm:text-xl md:text-2xl">
+                  <h5 className="text-lg font-bold text-blue-800 sm:text-xs md:text-xl">
                     By {user.userName}
-                  </h3>
+                  </h5>
                   <p className="text-sm font-bold text-gray-300">August 22, 2021</p>
                   <p className="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">
                     {comment.comment}

@@ -32,31 +32,32 @@ exports.getBlog = async (req, res) => {
 
 
 // Like and Unlike the blog @param id
-exports.likeDislikePost = async (req, res, next) => {
+exports.likeDislikeBlog = async (req, res, next) => {
   try {
     const blog = await Blog.findById(req.params.id);
     if (!blog) {
       return res.status(404).json({ message: 'Blog not found' });
     }
-    
+
     const userId = req.body.userId;
+
     if (!blog.likes.includes(userId)) {
+      // If the user has not liked the post, add their ID to the likes array
       await blog.updateOne({ $push: { likes: userId } });
-      res.status(200).json({
-        statusCode: 200,
-        success: true,
-        message: 'Post has been liked',
-        payload: { blog },
-      });
     } else {
+      // If the user has already liked the post, remove their ID from the likes array
       await blog.updateOne({ $pull: { likes: userId } });
-      res.status(200).json({
-        statusCode: 200,
-        success: true,
-        message: 'Post has been disliked',
-        payload: { blog },
-      });
     }
+
+    // Fetch the updated blog after the like/dislike operation
+    const updatedBlog = await Blog.findById(req.params.id);
+
+    res.status(200).json({
+      statusCode: 200,
+      success: true,
+      message: blog.likes.includes(userId) ? 'Post has been liked' : 'Post has been disliked',
+      payload: { blog: updatedBlog },
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json(err);
