@@ -4,6 +4,7 @@ import NavBar from '../../homepage/navbar/navBar';
 import BlogMenu from '../blogmenu/blogmenu';
 import useFetch from "../../../../Hooks/usefetch";
 import Footer from "../../accommodationpage/footer/footer";
+import moment from 'moment'; // Import the moment library
 
 const BlogHomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -91,6 +92,9 @@ const BlogHomePage = () => {
               <div className="px-6 py-4">
                 <Link to={`/single-post/${item?._id}`}>
                   <div className="font-bold text-xl mb-2">{item.title}</div>
+                  <p className="text-gray-500 text-sm mb-2">
+                    Posted: {moment(item.date).format('MMMM D, YYYY')}
+                  </p>
                 </Link>
                 <p className="text-gray-700 text-base">
                   {item.description.length > 90
@@ -111,11 +115,11 @@ const BlogHomePage = () => {
           ))
         )}
       </div>
-      <br></br>
+      <br />
       <div className="flex justify-center mt-4">
         {renderPageNumbers}
       </div>
-      <br></br>
+      <br />
       <Footer />
     </div>
   );
