@@ -120,7 +120,7 @@ const MyBlogs = () => {
                     : item.description}
                 </p>
                 <div className="mut-auto flex items-center justify-between mt-4">
-                  <div className="inline-flex items-center px-3 py-1 text-sm font-medium text-center bg-[#478ca986] hover:bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark:hover-bg-green-700 dark:focus:ring-green-800">
+                  <div className="inline-flex items-center px-2 py-1 text-sm font-medium text-center bg-[#478ca986] hover:bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark:hover-bg-green-700 dark:focus:ring-green-800">
                     <Link to={`/single-post/${item?._id}`}>Read more</Link>
                     <DeleteIcon
                       className="ml-2 cursor-pointer"

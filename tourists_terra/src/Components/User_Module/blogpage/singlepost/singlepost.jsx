@@ -11,6 +11,7 @@ function SinglePost() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
+  const [like, setLike] = useState();
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]); // State to hold comments
   const { id } = useParams();
@@ -43,8 +44,10 @@ function SinglePost() {
       .then((data) => {
         if (data.success) {
           console.log(data.message); // Log the message from the server
+          // Toggle the liked state
+          setLiked(!liked);
           // Update the like count in the UI
-          setLiked(data.payload.blog.likes.length);
+          setLike(data.payload.blog.likes.length);
         } else {
           console.error('Failed to update like status:', data.message);
         }
@@ -114,32 +117,8 @@ function SinglePost() {
               </div>
             </div>
 
+
             <div className="flex items-center justify-start mt-4 mb-4">
-              <a
-                href="#"
-                className="px-2 py-1 font-bold bg-red-400 text-white rounded-lg hover:bg-gray-500 mr-4"
-              >
-                {data.category}
-              </a>
-            </div>
-            <div className="mt-2">
-              <div className="flex justify-start items-center mt-2">
-                <p
-                  className={`text-m font-boldr rounded-full py-7 px-7 ${liked ? "text-red-500" : "text-gray-500"
-                    } cursor-pointer`}
-                  onClick={handleLike}
-                >
-                  {liked ? "❤️ Liked" : "🤍 Like"} {data.likes}
-                </p>
-                <div className="flex justify-start items-center gap-x-2">
-                  <p className="text-m text-gray-600 font-bold ml-1">
-                    Posted:{" "}
-                  </p>
-                  <p className="text-m text-gray-600 font-bold mr-02">
-                    {moment(data.date).fromNow()}{" "}
-                  </p>
-                </div>
-              </div>
               <div className="font-light text-gray-600">
                 <a
                   href="#"
@@ -151,15 +130,39 @@ function SinglePost() {
                     className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
                   />
                   <h1 className="font-bold text-gray-700 hover:underline">
-                    Written by {user.userName} 
+                    Written by {user.userName}
                   </h1>
                 </a>
               </div>
+              <div className="flex justify-start items-center gap-x-2">
+                <p className="text-m text-gray-600 font-bold ml-11">
+                  Posted:{" "}
+                </p>
+                <p className="text-m text-gray-600 font-bold mr-06">
+                  {moment(data.date).fromNow()}{" "}
+                </p>
+              </div>
+              <p
+                className={`text-xl font-boldr rounded-full py-8 px-8 ${liked ? "text-gray-500" : "text-gray-500"
+                  } cursor-pointer`}
+                onClick={handleLike}
+              >
+                {liked ? "❤️ " : "🤍 "} {like}
+              </p>
+            </div>
+
+            <div className="flex ml-02">
+              <p className="px-1 py-1 font-bold  text-gray-700 ">
+                Category :
+              </p>
+              <p className="px-4 max-w-[160px] py-1 font-bold bg-red-400 text-white rounded-lg ml-3" >
+                {data.category}
+              </p>
             </div>
           </div>
 
           {/* Form for comments */}
-          <div className="max-w-4xl py-16 xl:px-8 flex justify-center mx-auto">
+          <div className="max-w-4xl py-7 xl:px-8 flex justify-center mx-auto">
             <div className="w-full mt-16 md:mt-0 ">
               <form
                 onSubmit={handleCommentSubmit} // onSubmit for form submission

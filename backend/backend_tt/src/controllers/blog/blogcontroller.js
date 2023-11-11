@@ -55,7 +55,7 @@ exports.likeDislikeBlog = async (req, res, next) => {
     res.status(200).json({
       statusCode: 200,
       success: true,
-      message: blog.likes.includes(userId) ? 'Post has been liked' : 'Post has been disliked',
+      message: blog.likes.includes(userId) ? 'Post has been disliked' : 'Post has been liked',
       payload: { blog: updatedBlog },
     });
   } catch (err) {
@@ -148,7 +148,7 @@ exports.deleteBlog = async (req, res) => {
         return res.status(404).json({ error: "Blog not found" });
       }
   
-      if (blog.userId === req.body.userId) {
+      if (blog.userId === req.body.userId) { 
         await Blog.deleteOne({ _id: blogId });
         res.status(200).json("Document deleted successfully");
       } else {
