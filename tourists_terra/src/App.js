@@ -22,7 +22,8 @@ import RecentBlogs from "./Components/User_Module/blogpage/recentblogs/recentblo
 import MyBlogs from "./Components/User_Module/blogpage/myblogs/myblogs";
 import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost";
 import ProductDetail from "./Components/User_Module/shoppage/shophomepage/ProductDetail";
-import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider"
+import GuideDetails from "./Components/User_Module/localguidepage/localguidehome/guidedetail";
+import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider";
 function App() {
   return (
     <div>
@@ -44,11 +45,12 @@ function App() {
               element={<BecomeHotelProvider />}
             ></Route>
             <Route
-            path="hotel-admin-homepage/:userId"
-            element={<HotelAdminHomePage/>}
+              path="hotel-admin-homepage/:userId"
+              element={<HotelAdminHomePage />}
             ></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
             <Route path="localguide" element={<LocalGuideHome />}></Route>
+            <Route path="/details/:detailsId" element={<GuideDetails />} />
             <Route path="blog-home-page" element={<BlogHomePage />}></Route>
             <Route path="add-blog-post" element={<AddBlogPost />}></Route>
             <Route path="become-a-blogger" element={<BecomeABlogger />}></Route>
