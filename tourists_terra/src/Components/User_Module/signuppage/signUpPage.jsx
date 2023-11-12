@@ -69,8 +69,6 @@ const SignUpPage = () => {
   };
 
   const getPasswordStrength = () => {
-    // Implement your logic for password strength here
-    // This is just a basic example, you can use libraries for a more sophisticated approach
     const length = password.length;
 
     if (length < 6) {
@@ -174,7 +172,6 @@ const SignUpPage = () => {
                     placeholder="Contact"
                     onChange={handleContactChange}
                     value={contact}
-                   
                   />
                 </div>
                 {errors.contact && <span className="error-message-signup">{errors.contact}</span>}
