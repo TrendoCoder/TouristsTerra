@@ -161,7 +161,7 @@ function SinglePost() {
                     className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
                   />
                   <h1 className="font-semibold text-gray-700 hover:underline pr-4 border-r border-gray-500">
-                    Written by {user.userName}
+                    Written by {data.authorName}
                   </h1>
                 </a>
               </div>
@@ -256,7 +256,7 @@ function SinglePost() {
                   <h5 className="text-lg font-bold text-blue-800 sm:text-xs md:text-xl">
                     By {comment?.name}
                   </h5>
-                  <p className="text-sm font-bold text-gray-300">{moment(comment.date).fromNow()}</p>
+                  <p className="text-sm font-semibold text-gray-500">{moment(comment.date).fromNow()}</p>
                   <p className="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">
                     {comment.comment}
                   </p>

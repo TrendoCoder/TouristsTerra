@@ -21,6 +21,10 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  authorName:{
+    type: String,
+    required: false
+  },
   likes: {
     type: Array,
     default: [],
