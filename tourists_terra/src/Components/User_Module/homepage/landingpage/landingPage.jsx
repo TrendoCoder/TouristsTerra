@@ -13,7 +13,7 @@ const LandingPage = () => {
       <NavBar />
       <div
         id="menu-container"
-        style={{ position: "fixed", top: "0", left: "0", zIndex: "10000" }}
+        style={{ position: "fixed", top: "0px", left: "0" }}
       >
         <MenuBar />
       </div>
