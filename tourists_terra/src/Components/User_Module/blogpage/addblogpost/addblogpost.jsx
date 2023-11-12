@@ -22,7 +22,7 @@ const AddBlogPost = () => {
     userId: user._Id,
     title: yup.string().required("Title is required").max(32),
     category: yup.string().required("Select Category"),
-    description: yup.string().required("Description is required").min(1),
+    description: yup.string().required("Description is required").min(20),
   });
 
   const navigate = useNavigate();
@@ -162,8 +162,11 @@ const AddBlogPost = () => {
               </div>
             </div>
           </form>
+          <br/>
         </div>
+        <br/>
       </div>
+      <br/>
       <Footer />
     </div>
   );

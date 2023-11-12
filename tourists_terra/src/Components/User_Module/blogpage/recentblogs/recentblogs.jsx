@@ -82,7 +82,9 @@ const RecentBlogs = () => {
         ))}
       </div>
 
-      <h1 className="text-center mt-5 font-bold text-lg text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">Recent Blogs</h1>
+      <h1 className="text-center mt-5 font-bold text-2xl text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">
+        Recent Blogs
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-10 mx-10">
         {currentPosts.length === 0 ? (
           <div className="text-center col-span-12">
@@ -107,8 +109,8 @@ const RecentBlogs = () => {
                     : item.description}
                 </p>
                 <div className="mt-3 mb-2 text-sm  text-gray-800">
-                {moment(item.date).fromNow()}   {/* 'postedTime' field in the 'item' */}
-              </div>
+                  {moment(item.date).fromNow()}   {/* 'postedTime' field in the 'item' */}
+                </div>
               </div>
 
               <div>
@@ -121,7 +123,7 @@ const RecentBlogs = () => {
                   </div>
                   <span className=" bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white">{item.category}</span>
                 </div>
-            
+
               </div>
 
             </div>

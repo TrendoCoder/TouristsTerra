@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../../homepage/navbar/navBar';
 import BlogMenu from '../blogmenu/blogmenu';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { AuthContext } from '../../../../Context/authcontext';
 
 const MyBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,15 +17,17 @@ const MyBlogs = () => {
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
 
+  const {user} = useContext(AuthContext);
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/bloguser/blogs`
+          `http://localhost:3001/api/bloguser/blogs/user/${user._id}`, 
+          // { withCredentials : true}
         );
         const fetchedBlogs = response.data || [];
         setBlogs(fetchedBlogs);
-        console.log(blogs);
+        console.log(fetchedBlogs);
       } catch (error) {
         console.error('Error fetching blogs:', error);
       }
@@ -58,7 +61,8 @@ const MyBlogs = () => {
   const handleDeleteBlog = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/api/bloguser/${selectedBlog._id}`
+        `http://localhost:3001/api/bloguser/${selectedBlog._id}`, 
+        // { withCredentials : true}
       );
 
       console.log(response.data);
@@ -85,12 +89,21 @@ const MyBlogs = () => {
   ));
 
   return (
+    
     <div className="min-h-screen bg-gray-100 text-gray-900">
       <NavBar />
       <BlogMenu />
 
-      <h1 className="text-center mt-5 font-bold text-lg text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">My All Blogs</h1>
-      <br></br>
+      <Link to={`/add-blog-post`}>
+      <button id="switch-to-hp-btn" class="mt-20 ml-2 px-5 py-2 font-semibold border
+      border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white 
+      transition duration-300">Create a New Blog Here</button> </Link>
+      
+      <h1 className="text-center mt-5 font-bold text-2xl text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">
+  My All Blogs
+</h1>
+
+      <br /><br />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mx-10">
         {currentPosts.length === 0 ? (
           <div className="text-center col-span-12">

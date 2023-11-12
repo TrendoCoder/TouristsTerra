@@ -11,7 +11,7 @@ const BlogHomePage = () => {
   const postsPerPage = 9;
   const [selectedCategory, setSelectedCategory] = useState('All'); // Default to 'All'
   const categories = [
-    'All', 
+    'All',
     'Hotel',
     'Restaurant',
     'Attraction Points',
@@ -50,9 +50,8 @@ const BlogHomePage = () => {
     <button
       key={number}
       onClick={() => setCurrentPage(number)}
-      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${
-        currentPage === number ? 'bg-gray-500' : ''
-      }`}
+      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${currentPage === number ? 'bg-gray-500' : ''
+        }`}
     >
       {number}
     </button>
@@ -75,7 +74,10 @@ const BlogHomePage = () => {
         ))}
       </div>
 
-      <h1 className="text-center mt-5 font-bold text-lg text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">Blog Home Page</h1>
+      <h1 className="text-center mt-5 font-bold text-2xl text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">
+        Blogs Home Page
+      </h1>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-10 mx-10">
         {currentPosts.length === 0 ? (
           <div className="text-center col-span-12">
@@ -100,10 +102,10 @@ const BlogHomePage = () => {
                   {item.description.length > 90
                     ? `${item.description.substring(0, 90)}...`
                     : item.description}
-                </p>  
+                </p>
                 <div className="mut-auto flex items-center justify-between mt-4">
                   <div className="inline-flex items-center px-3 py-1 text-sm font-medium text-center bg-[#478ca986] hover:bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark:hover-bg-green-700 dark:focus:ring-green-800">
-                  <Link to={`/single-post/${item?._id}`}>Read more</Link>
+                    <Link to={`/single-post/${item?._id}`}>Read more</Link>
                     <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                     </svg>
