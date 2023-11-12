@@ -29,7 +29,7 @@ const ProfilePage = () => {
   return (
     <div>
       <NavBar />
-      <br />
+      <br/>
       <ProfileInfo user={users}  />
       <div id="mainn-container">
         <div id="profilesidebar-div">
