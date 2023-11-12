@@ -63,7 +63,7 @@ function App() {
               path="booking-transport-form"
               element={<BookingTransportForm />}
             ></Route>
-            <Route path="profile-page" element={<ProfilePage />}></Route>
+            <Route path="profile-page/:id" element={<ProfilePage />}></Route>
             {/* <Route
               path="edit-profile-page"
               element={<EditProfilePage />}
@@ -73,7 +73,7 @@ function App() {
               element={<ExploreHomepage />}
             ></Route>
             <Route
-              path="edit-user-profile"
+              path="edit-user-profile/:id"
               element={<EditUserProfile />}
             ></Route>
             <Route path="shop-home-page" element={<ShopHomePage />}></Route>

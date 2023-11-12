@@ -46,10 +46,10 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    about: String,
-    gender: String,
-    city: String,
-    country: String,
+    about: { type: String, default: "" },
+    gender: { type: String, default: "" },
+    city: { type: String, default: "" },
+    country: { type: String, default: "" },
   },
   { timestamps: true }
 );

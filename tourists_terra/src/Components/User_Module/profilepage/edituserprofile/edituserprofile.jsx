@@ -1,43 +1,100 @@
 import React, { useContext, useState } from "react";
 import "./edituserprofile.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import uploadImage from "../../../../images/gallery.png";
-import coverImage from "../../../../images/cover.png";
 import { AuthContext } from "../../../../Context/authcontext";
+
 const EditUserProfile = () => {
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [contact, setContact] = useState("");
-  const [password, setPassword] = useState("");
-  const [userProfilePicture, setUserProfilePicture] = useState("");
-  const [userCoverPicture, setUserCoverPicture] = useState("");
-  const [about, setAbout] = useState("");
-  const [gender, setGender] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { user, loading, setUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState(user.userName);
+  const [contact, setContact] = useState(user.contact);
+  const [userProfilePicture, setUserProfilePicture] = useState(
+    user.userProfilePicture
+  );
+  const [userCoverPicture, setUserCoverPicture] = useState(
+    user.userCoverPicture
+  );
+  const [about, setAbout] = useState(user.about);
+  const [gender, setGender] = useState(user.gender);
+  const [city, setCity] = useState(user.city);
+  const [country, setCountry] = useState(user.country);
   const [errors, setErrors] = useState({});
 
-  const { user, loading, error, dispatch } = useContext(AuthContext);
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-
     const fieldErrors = {};
-
     if (!userName) fieldErrors.userName = "Username is required";
-    if (!email) fieldErrors.email = "Email is required";
     if (!contact) fieldErrors.contact = "Contact is required";
-    if (!password) fieldErrors.password = "Password is required";
     if (!city) fieldErrors.city = "City is required";
     if (!country) fieldErrors.country = "Country is required";
-
     setErrors(fieldErrors);
 
     if (Object.keys(fieldErrors).length > 0) {
       return;
     }
 
-    axios.post(`http://localhost:3001/api/user/${user._id}`);
+    const updateUser = {
+      contact: contact,
+      city: city,
+      country: country,
+      gender: gender,
+      about: about,
+    };
+
+    if (userProfilePicture) {
+      const data = new FormData();
+      const fileName = Date.now() + userProfilePicture.name;
+      data.append("name", fileName);
+      data.append("file", userProfilePicture);
+      updateUser.userProfilePicture = fileName;
+
+      try {
+        await axios.post(
+          "http://localhost:3001/api/upload/profilePicture",
+          data
+        );
+      } catch (err) {
+        alert("Issue in Profile Picture");
+      }
+    }
+
+    if (userCoverPicture) {
+      const dataNew = new FormData();
+      const fileName = Date.now() + userCoverPicture.name;
+      dataNew.append("name", fileName);
+      dataNew.append("file", userCoverPicture);
+      updateUser.userCoverPicture = fileName;
+
+      try {
+        await axios.post(
+          "http://localhost:3001/api/upload/profileCoverPic",
+          dataNew
+        );
+      } catch (err) {
+        alert("Issue in Cover Picture");
+      }
+    }
+
+    try {
+      await axios.put(`http://localhost:3001/api/user/${user._id}`, updateUser);
+
+      const response = await axios.get(
+        `http://localhost:3001/api/user/?userId=${user._id}`
+      );
+      console.log(response);
+      const updatedUser = response.data;
+      // Update the user state
+
+      setUser(updatedUser);
+      alert("Successfully updated");
+      navigate(`/edit-profile/${user._id}`);
+    } catch (err) {
+      alert("There is an issue occur.. Try again");
+    }
   };
 
   return (
@@ -46,9 +103,9 @@ const EditUserProfile = () => {
         <Link to="/">
           <h2>Tourist's Terra</h2>
         </Link>
-        <Link tp="/login-user">
+        <Link to="/login-user">
           <span>
-            Logout <i class="fa-solid fa-right-from-bracket"></i>
+            Logout <i className="fa-solid fa-right-from-bracket"></i>
           </span>
         </Link>
       </div>
@@ -69,11 +126,27 @@ const EditUserProfile = () => {
                 </h3>
                 <div id="editUserProfile-image-div">
                   <div id="editUserProfile-image-div-div">
-                    <img src={uploadImage} alt="" />
+                    <img
+                      src={
+                        user.userProfilePicture
+                          ? PF + `/profilePicture/${user.userProfilePicture}`
+                          : PF + "/profileUpload.png"
+                      }
+                      crossOrigin="anonymous"
+                      alt={uploadImage}
+                    />
                   </div>
                   <br />
                   <div id="editUserProfile-image-div-div-file">
-                    <input type="file" name="" id="" />
+                    <input
+                      type="file"
+                      name=""
+                      id=""
+                      accept=".png,.jpeg,.jpg"
+                      onChange={(e) => {
+                        setUserProfilePicture(e.target.files[0]);
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -90,11 +163,28 @@ const EditUserProfile = () => {
               </h3>
               <div id="editUserProfile-image-div">
                 <div id="editUserProfile-cover-image-div-div">
-                  <img src={coverImage} alt="" />
+                  <img
+                    src={
+                      user.userCoverPicture
+                        ? PF + `/profileCoverPic/${user.userCoverPicture}`
+                        : PF + "profileCoverPic/coverPic.jpg"
+                    }
+                    crossOrigin="anonymous"
+                    alt={uploadImage}
+                  />
                 </div>
                 <br />
+
                 <div id="editUserProfile-image-div-div-file">
-                  <input type="file" name="" id="" />
+                  <input
+                    type="file"
+                    name=""
+                    id=""
+                    accept=".png,.jpeg,.jpg"
+                    onChange={(e) => {
+                      setUserCoverPicture(e.target.files[0]);
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -115,57 +205,28 @@ const EditUserProfile = () => {
                   </label>
                   <input
                     type="text"
-                    name=""
-                    id=""
+                    name="userName"
+                    value={userName}
                     placeholder="Enter your Name"
                     onChange={(e) => {
                       setUserName(e.target.value);
                     }}
+                    readOnly
                   />
                   {errors.userName && (
                     <p className="error-message">{errors.userName}</p>
                   )}
                 </div>
+
                 <div id="editUserProfile-inputs">
-                  <label htmlFor="">
-                    Your email<sup>*</sup>:
-                  </label>
-                  <input
-                    type="email"
-                    name=""
-                    id=""
-                    placeholder="Enter your Email"
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                  />
-                  {errors.email && (
-                    <p className="error-meesage">{errors.email}</p>
-                  )}
-                </div>
-              </div>
-              <div id="editUserProfile-main-inputs">
-                <div id="editUserProfile-inputs">
-                  <label htmlFor="">
-                    Password<sup>*</sup>:
-                  </label>
-                  <input
-                    type="password"
-                    name=""
-                    id=""
-                    placeholder="Enter your Password"
-                    readOnly
-                  />
-                </div>
-                <div id="editUserProfile-inputs">
-                  <label htmlFor="">
+                  <label>
                     Contact<sup>*</sup>:
                   </label>
+
                   <input
                     type="number"
-                    name=""
-                    id=""
-                    placeholder="Contact Number"
+                    placeholder="0310-0000001"
+                    value={contact}
                     onChange={(e) => {
                       setContact(e.target.value);
                     }}
@@ -180,12 +241,11 @@ const EditUserProfile = () => {
                   </label>
                   <input
                     type="text"
-                    name=""
-                    id=""
                     placeholder="Enter city"
                     onChange={(e) => {
                       setCity(e.target.value);
                     }}
+                    value={city}
                   />
                 </div>
                 <div id="editUserProfile-inputs">
@@ -194,12 +254,10 @@ const EditUserProfile = () => {
                   </label>
                   <input
                     type="text"
-                    name=""
-                    id=""
-                    value=""
+                    value={country}
                     placeholder="Enter country"
                     onChange={(e) => {
-                      setContact(e.target.value);
+                      setCountry(e.target.value);
                     }}
                   />
                 </div>
@@ -212,30 +270,25 @@ const EditUserProfile = () => {
                   <input
                     type="radio"
                     name="gender"
-                    id="radio-btns-gender"
-                    value=""
+                    value="Male"
                     onChange={(e) => {
                       setGender(e.target.value);
                     }}
                   />
-
                   <label>Male</label>
-
                   <input
                     type="radio"
                     name="gender"
-                    id="radio-btns-gender"
-                    value=""
+                    value="Female"
                     onChange={(e) => {
                       setGender(e.target.value);
                     }}
                   />
                   <label>Female</label>
-
                   <input
                     type="radio"
                     name="gender"
-                    id="radio-btns-gender"
+                    value="Others"
                     onChange={(e) => {
                       setGender(e.target.value);
                     }}
@@ -252,15 +305,19 @@ const EditUserProfile = () => {
                     name=""
                     id="textarea-edit"
                     placeholder="You can write maximum 150 characters"
+                    value={about}
                     onChange={(e) => {
                       setAbout(e.target.value);
                     }}
+                    maxLength={150}
                   ></textarea>
                 </div>
               </div>
               <div id="editUserProfile-main-inputs">
                 <div id="save-changes-btn">
-                  <button onChange={onSubmit}>Save Changes</button>
+                  <button onClick={onSubmit}>
+                    {loading ? "Loading..." : "Save Changes"}
+                  </button>
                 </div>
               </div>
             </div>

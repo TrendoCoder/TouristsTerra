@@ -40,11 +40,12 @@ const UploadSection = () => {
           <img
             id="shareProfileImg"
             src={
-              user.profilePicture
-                ? PF+`/${user.profilePicture}`
-                : PF+"/profileUpload.png"
+              user.userProfilePicture
+                ? PF + `/profilePicture/${user.userProfilePicture}`
+                : PF + "/profileUpload.png"
             }
-            alt=""
+            crossOrigin="anonymous"
+            alt={PF + "/profileUpload.png"}
           />
           <input
             placeholder={"What's in your mind " + user?.userName + "?"}

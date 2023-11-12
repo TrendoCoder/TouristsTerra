@@ -2,26 +2,14 @@ const express = require("express");
 const { User } = require("../../models/userlogin/user");
 const bcrypt = require("bcryptjs");
 const updateUser = async (req, res, next) => {
-
-  if (req.body.userId === req.params.id) {
-    if (req.body.password) {
-      try {
-        const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(req.body.password, salt);
-      } catch (err) {
-        next(err);
-      }
-    }
-  }
   try {
-    const updateUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      { new: true }
-    );
-    res.status(200).json(updateUser);
+    const user = await User.findByIdAndUpdate(req.params.id, {
+      $set: req.body,
+    });
+    res.status(200).json(user);
+    console.log(user);
   } catch (err) {
-    next(err);
+    return res.status(500).json(err);
   }
 };
 module.exports.updateUser = updateUser;
@@ -122,7 +110,7 @@ const unFollowUser = async (req, res) => {
 module.exports.unFollowUser = unFollowUser;
 
 // get friends
-const getFriends =  async (req, res) => {
+const getFriends = async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     const friends = await Promise.all(
@@ -135,7 +123,7 @@ const getFriends =  async (req, res) => {
       const { _id, username, profilePicture } = friend;
       friendList.push({ _id, username, profilePicture });
     });
-    res.status(200).json(friendList)
+    res.status(200).json(friendList);
   } catch (err) {
     res.status(500).json(err);
   }
