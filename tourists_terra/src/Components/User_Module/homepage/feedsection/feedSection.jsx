@@ -12,7 +12,7 @@ const FeedSection = ({ username }) => {
     const fetchPosts = async () => {
       try {
         const res = username
-          ? axios.get("http://localhost:3001/api/post/profile/" + username)
+          ? axios.get(`http://localhost:3001/api/post/profile/${username}`)
           : await axios.get(
               "http://localhost:3001/api/post/timeline/" + user?._id
             );
@@ -48,4 +48,3 @@ const FeedSection = ({ username }) => {
 };
 
 export default FeedSection;
-

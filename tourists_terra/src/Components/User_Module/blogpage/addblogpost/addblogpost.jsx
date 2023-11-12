@@ -20,7 +20,7 @@ const AddBlogPost = () => {
 
   const validationSchema = yup.object().shape({
     userId: user._Id,
-    title: yup.string().required("Title is required").max(32),
+    title: yup.string().required("Title is required").max(50),
     category: yup.string().required("Select Category"),
     description: yup.string().required("Description is required").min(20),
   });

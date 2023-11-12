@@ -131,25 +131,25 @@ function SinglePost() {
                     alt="avatar"
                     className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
                   />
-                  <h1 className="font-bold text-gray-700 hover:underline">
+                  <h1 className="font-semibold text-gray-700 hover:underline pr-4 border-r border-gray-500">
                     Written by {user.userName}
                   </h1>
                 </a>
               </div>
-              <div className="flex justify-start items-center gap-x-2">
-                <p className="text-m text-gray-600 font-bold ml-11">
-                  Posted:{" "}
+              <div className="flex justify-start font-semibold items-center pr-4 border-r border-gray-500">
+                <p className="text-m text-gray-900 ml-4">
+                  Posted: {" "}
                 </p>
-                <p className="text-m text-gray-600 font-bold mr-06">
+                <p className="text-m text-gray-900 ml-2 mr-03">
                   {moment(data.date).fromNow()}{" "}
                 </p>
               </div>
               <p
-                className={`text-xl font-boldr rounded-full py-8 px-8 ${liked ? "text-gray-500" : "text-gray-500"
+                className={`text-l mr-08 font-semibold rounded-full py-8 px-8 ${liked ? "text-gray-500" : "text-gray-500"
                   } cursor-pointer`}
                 onClick={handleLike}
               >
-                {liked ? "❤️ " : "🤍 "} {like}
+              Like: {liked ? "❤️ " : "🤍 "} {like}
               </p>
             </div>
 

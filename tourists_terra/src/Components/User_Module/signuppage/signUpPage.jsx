@@ -11,6 +11,7 @@ const SignUpPage = () => {
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [checkPolicy, setCheckPolicy] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -31,10 +32,10 @@ const SignUpPage = () => {
     if (!userName) {
       errors.userName = "Username is required";
     }
-
-    // if (!contact || contact.length !== 11) {
-    //   errors.contact = "Enter Valid Contact";
-    // }
+    console.log(contact.length);
+    if (!contact || contact.length !== 12) {
+      errors.contact = "Enter Valid Contact";
+    }
 
     if (!password) {
       errors.password = "Password is required";
@@ -55,7 +56,7 @@ const SignUpPage = () => {
     const formattedContact = e.target.value
       .replace(/[^0-9]/g, "")
       .slice(0, 11)
-      .replace(/(\d{4})(\d{0,7})/, "$1-$2");
+      .replace(/(\d{4})(\d{0,7})(\d{0,4})/, "$1-$2$3");
 
     setContact(formattedContact);
   };
@@ -90,12 +91,14 @@ const SignUpPage = () => {
       return;
     }
 
+    setIsAdmin(true);
     axios
       .post("http://localhost:3001/api/auth/register", {
         email,
         userName,
         contact,
         password,
+        isAdmin,
       })
       .then((res) => {
         if (res.status === 200) {
@@ -107,6 +110,8 @@ const SignUpPage = () => {
       .catch((err) => {
         if (err.response.status === 409) {
           setErrors({ userName: "Username already exists" });
+        } else if (err.response.status === 900) {
+          setErrors({ email: "Email already exists" });
         } else {
           // Other errors
           alert(err.message);
