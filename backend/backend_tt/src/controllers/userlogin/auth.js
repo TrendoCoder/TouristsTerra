@@ -16,10 +16,9 @@ const register = async (req, res, next) => {
     const newUser = new User({
       userName: req.body.userName,
       email: req.body.email,
-      contact:req.body.contact,
+      contact: req.body.contact,
       password: hash,
-    
-
+      isAdmin: true,
     });
     await newUser.save();
     res.status(200).send("User has been created ");
