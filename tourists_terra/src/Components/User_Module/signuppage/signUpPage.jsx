@@ -11,7 +11,7 @@ const SignUpPage = () => {
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isAdmin,setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [checkPolicy, setCheckPolicy] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -32,8 +32,7 @@ const SignUpPage = () => {
     if (!userName) {
       errors.userName = "Username is required";
     }
-
-    console.log(contact.length)
+    console.log(contact.length);
     if (!contact || contact.length !== 12) {
       errors.contact = "Enter Valid Contact";
     }
@@ -111,7 +110,7 @@ const SignUpPage = () => {
       .catch((err) => {
         if (err.response.status === 409) {
           setErrors({ userName: "Username already exists" });
-        }else  if (err.response.status === 900) {
+        } else if (err.response.status === 900) {
           setErrors({ email: "Email already exists" });
         } else {
           // Other errors

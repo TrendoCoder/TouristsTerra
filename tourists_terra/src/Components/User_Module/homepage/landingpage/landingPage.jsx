@@ -24,7 +24,7 @@ const LandingPage = () => {
           </div>
           <div id="feed-section-landing">
             <div id="uploading-section">
-                <FeedSection/>
+                <FeedSection />
             </div>
           </div>
           <div id="rightBar-landing">

@@ -1,9 +1,6 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import "./profileinfo.css";
-import img from "./../../../../../images/profile.jpeg";
-import { AuthContext } from "../../../../../Context/authcontext";
-const ProfileInfo = () => {
-  const { user } = useContext(AuthContext);
+const ProfileInfo = ({ user }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div id="p-main-container">
