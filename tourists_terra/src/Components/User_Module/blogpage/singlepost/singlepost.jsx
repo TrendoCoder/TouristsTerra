@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useParams, Link } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
@@ -13,7 +13,8 @@ function SinglePost() {
 
   const [like, setLike] = useState();
   const [liked, setLiked] = useState(false);
-  const [comments, setComments] = useState([]); // State to hold comments
+  const [comments, setComments] = useState([]);
+  const [commentSubmitted, setCommentSubmitted] = useState(false);
   const { id } = useParams();
   const { user } = useContext(AuthContext);
 
@@ -22,14 +23,12 @@ function SinglePost() {
   );
 
   useEffect(() => {
-    // Load comments when the component mounts
     if (data && data.comments) {
       setComments(data.comments);
     }
   }, [data]);
 
   const handleLike = () => {
-    // Use the like/dislike API
     const likeStatus = liked ? 'false' : 'true';
     fetch(`http://127.0.0.1:3001/api/bloguser/like/${id}`, {
       method: 'PUT',
@@ -43,24 +42,25 @@ function SinglePost() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log(data.message); // Log the message from the server
-          // Toggle the liked state
           setLiked(!liked);
-          // Update the like count in the UI
           setLike(data.payload.blog.likes.length);
         } else {
           console.error('Failed to update like status:', data.message);
         }
       })
       .catch((error) => {
-        // Handle any network errors
         console.error('Network error while updating like status:', error);
       });
   };
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
-    const commentText = e.target.elements.comment.value;
+    const commentText = e.target.elements.comment.value.trim();
+
+    if (!commentText) {
+      console.error('Comment cannot be empty');
+      return;
+    }
 
     fetch(`http://localhost:3001/api/bloguser/${id}/comment`, {
       method: "POST",
@@ -69,19 +69,22 @@ function SinglePost() {
       },
       body: JSON.stringify({
         comment: commentText,
-        userId: user._id, // You might need to get the user ID dynamically
+        userId: user._id,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data === "This blog has been commented") {
-          // Update the comments state with the new comment
-          setComments([...comments, { comment: commentText, author: user._id }]);
+          setComments([...comments, { comment: commentText, author: user._id, date: moment() }]);
           e.target.elements.comment.value = "";
+          setCommentSubmitted(true);
+          setTimeout(() => {
+            setCommentSubmitted(false);
+          }, 3000);
         }
       })
       .catch((error) => {
-        // Handle any network errors
+        console.error('Error submitting comment:', error);
       });
   };
 
@@ -116,7 +119,6 @@ function SinglePost() {
                 <p className="mt-2 p-8">{data.description}</p>
               </div>
             </div>
-
 
             <div className="flex items-center justify-start mt-4 mb-4">
               <div className="font-light text-gray-600">
@@ -165,7 +167,7 @@ function SinglePost() {
           <div className="max-w-4xl py-7 xl:px-8 flex justify-center mx-auto">
             <div className="w-full mt-16 md:mt-0 ">
               <form
-                onSubmit={handleCommentSubmit} // onSubmit for form submission
+                onSubmit={handleCommentSubmit}
                 className="relative z-10 h-auto p-8 py-10 overflow-hidden bg-gray-100 border-b-2 border-gray-300 rounded-lg shadow-2xl px-7"
               >
                 <h3 className="mb-6 text-2xl font-medium text-center">
@@ -192,6 +194,11 @@ function SinglePost() {
                   name="submit"
                   className=" text-white px-4 py-3 bg-[#0f4157] hover:bg-[#0f4157bd] rounded-lg"
                 />
+              {commentSubmitted && (
+                <p className="text-[#0f4157]  mt-3 font-bold">
+                  Comment submitted successfully!
+                </p>
+              )}
               </form>
             </div>
           </div>
@@ -220,7 +227,7 @@ function SinglePost() {
                   <h5 className="text-lg font-bold text-blue-800 sm:text-xs md:text-xl">
                     By {user.userName}
                   </h5>
-                  <p className="text-sm font-bold text-gray-300">August 22, 2021</p>
+                  <p className="text-sm font-bold text-gray-300">{moment(comment.date).fromNow()}</p>
                   <p className="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">
                     {comment.comment}
                   </p>
