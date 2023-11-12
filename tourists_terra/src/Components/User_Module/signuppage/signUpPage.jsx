@@ -20,6 +20,12 @@ const SignUpPage = () => {
 
     if (!email) {
       errors.email = "Email is required";
+    } else {
+      const regex =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if (!regex.test(email)) {
+        errors.email = "This is not a valid email format";
+      }
     }
 
     if (!userName) {
@@ -45,6 +51,37 @@ const SignUpPage = () => {
     return errors;
   };
 
+  const handleContactChange = (e) => {
+    const formattedContact = e.target.value
+      .replace(/[^0-9]/g, "")
+      .slice(0, 11)
+      .replace(/(\d{4})(\d{0,7})/, "$1-$2");
+
+    setContact(formattedContact);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const getPasswordStrength = () => {
+    // Implement your logic for password strength here
+    // This is just a basic example, you can use libraries for a more sophisticated approach
+    const length = password.length;
+
+    if (length < 6) {
+      return "Weak";
+    } else if (length < 10) {
+      return "Normal";
+    } else {
+      return "Excellent";
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -56,12 +93,12 @@ const SignUpPage = () => {
     }
 
     axios
-.post("http://localhost:3001/api/auth/register", {
-  email,
-  userName,
-  contact,
-  password,
-})
+      .post("http://localhost:3001/api/auth/register", {
+        email,
+        userName,
+        contact,
+        password,
+      })
       .then((res) => {
         if (res.status === 200) {
           localStorage.setItem("token", JSON.stringify(res.data.token));
@@ -93,7 +130,7 @@ const SignUpPage = () => {
             <span id="already-account">
               If you have a registered account.
               <br />
-              You can <a href="/login-user">Login Here</a>
+              You can <Link to="/login-user">Login Here</Link>
             </span>
           </div>
           <div id="image">
@@ -125,17 +162,19 @@ const SignUpPage = () => {
                     placeholder="Create User Name"
                     onChange={(e) => setUserName(e.target.value)}
                     value={userName}
+                    style={{textTransform:"capitalize"}}
                   />
                 </div>
                 {errors.userName && <span className="error-message-signup">{errors.userName}</span>}
                 <div id="signup-input-div">
                   <i className="fa-solid fa-phone"></i>
                   <input
-                    type="number"
+                    type="text"
                     name="contact"
                     placeholder="Contact"
-                    onChange={(e) => setContact(e.target.value)}
+                    onChange={handleContactChange}
                     value={contact}
+                   
                   />
                 </div>
                 {errors.contact && <span className="error-message-signup">{errors.contact}</span>}
@@ -145,7 +184,7 @@ const SignUpPage = () => {
                     type="password"
                     name="password"
                     placeholder="Password"
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handlePasswordChange}
                     value={password}
                   />
                 </div>
@@ -156,11 +195,14 @@ const SignUpPage = () => {
                     type="password"
                     name="confirmPassword"
                     placeholder="Confirm Password"
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onChange={handleConfirmPasswordChange}
                     value={confirmPassword}
                   />
                 </div>
                 {errors.confirmPassword && <span className="error-message-signup">{errors.confirmPassword}</span>}
+                <div id="password-strength">
+                  Password Strength: {getPasswordStrength()}
+                </div>
                 <div id="signup-check-terms">
                   <input
                     type="checkbox"
@@ -188,5 +230,3 @@ const SignUpPage = () => {
 };
 
 export default SignUpPage;
-
-
