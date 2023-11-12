@@ -11,7 +11,7 @@ function SinglePost() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
-  const [like, setLike] = useState();
+  const [like, setLike] = useState(0); // Default to 0 likes
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
   const [commentSubmitted, setCommentSubmitted] = useState(false);
@@ -23,17 +23,38 @@ function SinglePost() {
   );
 
   useEffect(() => {
-    if (data && data.comments) {
-      setComments(data.comments);
+    if (data) {
+      const likes = data.likes ? data.likes.length : 0;
+      setLike(likes);
+      const storedLikedStatus = localStorage.getItem(`liked-${id}`);
+      setLiked(storedLikedStatus === "true");
+      setComments(data.comments || []);
     }
-  }, [data]);
+  }, [data, user, id]);
+
+  const fetchData = () => {
+    fetch(`http://localhost:3001/api/bloguser/blog/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          const likes = data.likes ? data.likes.length : 0;
+          setLike(likes);
+          const storedLikedStatus = localStorage.getItem(`liked-${id}`);
+          setLiked(storedLikedStatus === "true");
+          setComments(data.comments || []);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
 
   const handleLike = () => {
-    const likeStatus = liked ? 'false' : 'true';
+    const likeStatus = liked ? "false" : "true";
     fetch(`http://127.0.0.1:3001/api/bloguser/like/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         userId: user._id,
@@ -44,12 +65,16 @@ function SinglePost() {
         if (data.success) {
           setLiked(!liked);
           setLike(data.payload.blog.likes.length);
+          localStorage.setItem(`liked-${id}`, (!liked).toString());
+
+          // After handling like, fetch updated data
+          fetchData();
         } else {
-          console.error('Failed to update like status:', data.message);
+          console.error("Failed to update like status:", data.message);
         }
       })
       .catch((error) => {
-        console.error('Network error while updating like status:', error);
+        console.error("Network error while updating like status:", error);
       });
   };
 
@@ -58,7 +83,7 @@ function SinglePost() {
     const commentText = e.target.elements.comment.value.trim();
 
     if (!commentText) {
-      console.error('Comment cannot be empty');
+      console.error("Comment cannot be empty");
       return;
     }
 
@@ -70,6 +95,7 @@ function SinglePost() {
       body: JSON.stringify({
         comment: commentText,
         userId: user._id,
+        name: user?.userName
       }),
     })
       .then((response) => response.json())
@@ -81,10 +107,13 @@ function SinglePost() {
           setTimeout(() => {
             setCommentSubmitted(false);
           }, 3000);
+
+          // After submitting a comment, fetch updated data
+          fetchData();
         }
       })
       .catch((error) => {
-        console.error('Error submitting comment:', error);
+        console.error("Error submitting comment:", error);
       });
   };
 
@@ -149,7 +178,7 @@ function SinglePost() {
                   } cursor-pointer`}
                 onClick={handleLike}
               >
-              Like: {liked ? "❤️ " : "🤍 "} {like}
+                Like: {liked ? "🤍 " : "❤️ "} {like}
               </p>
             </div>
 
@@ -194,11 +223,11 @@ function SinglePost() {
                   name="submit"
                   className=" text-white px-4 py-3 bg-[#0f4157] hover:bg-[#0f4157bd] rounded-lg"
                 />
-              {commentSubmitted && (
-                <p className="text-[#0f4157]  mt-3 font-bold">
-                  Comment submitted successfully!
-                </p>
-              )}
+                {commentSubmitted && (
+                  <p className="text-[#0f4157]  mt-3 font-bold">
+                    Comment submitted successfully!
+                  </p>
+                )}
               </form>
             </div>
           </div>
@@ -208,7 +237,7 @@ function SinglePost() {
             <p className="mt-1 text-2xl font-bold text-left text-gray-800 sm:mx-6 sm:text-2xl md:text-3xl lg:text-4xl sm:text-center sm:mx-0">
               All comments on this post
             </p>
-            {comments.map((comment, index) => (
+            {comments?.map((comment, index) => (
               <div
                 key={index}
                 className="flex  items-center w-full px-6 py-6 mx-auto mt-10 bg-white border border-gray-200 rounded-lg sm:px-8 md:px-12 sm:py-8 sm:shadow lg:w-5/6 xl:w-2/3"
@@ -225,7 +254,7 @@ function SinglePost() {
                 </a>
                 <div>
                   <h5 className="text-lg font-bold text-blue-800 sm:text-xs md:text-xl">
-                    By {user.userName}
+                    By {comment?.name}
                   </h5>
                   <p className="text-sm font-bold text-gray-300">{moment(comment.date).fromNow()}</p>
                   <p className="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">

@@ -61,10 +61,9 @@ const MyBlogs = () => {
   const handleDeleteBlog = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/api/bloguser/${selectedBlog._id}`, 
-        // { withCredentials : true}
+        `http://localhost:3001/api/bloguser/${selectedBlog?._id}?userId=${user?._id}`
+        // { withCredentials: true }
       );
-
       console.log(response.data);
 
       // Assuming the delete request was successful, you may want to update the state or refetch the blogs
