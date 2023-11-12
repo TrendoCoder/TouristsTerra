@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../../homepage/navbar/navBar';
 import BlogMenu from '../blogmenu/blogmenu';
-import useFetch from '../../../../Hooks/usefetch';
 import Footer from '../../accommodationpage/footer/footer';
 import axios from 'axios';
 import moment from 'moment';
@@ -12,8 +11,8 @@ const PopularBlogs = () => {
   const postsPerPage = 9;
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [blogs, setBlogs] = useState([]);
-
   const [isLiked, setIsLiked] = useState(false);
+
   const categories = [
     'All',
     'Hotel',
@@ -28,7 +27,7 @@ const PopularBlogs = () => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/bloguser/blogs`
+          'http://localhost:3001/api/bloguser/blogs'
         );
         const fetchedBlogs = response.data || [];
         setBlogs(fetchedBlogs);
@@ -45,17 +44,14 @@ const PopularBlogs = () => {
     setSelectedCategory(category);
     setCurrentPage(1);
   };
-  
-  const [like, setLike] = useState();
+
   const handleLike = async (blogId) => {
-    console.log(blogId);
     try {
       await axios.put(`http://localhost:3001/api/bloguser/${blogId}/like`);
-      setLike((prevLike) => (isLiked ? prevLike - 1 : prevLike + 1));
       setIsLiked(!isLiked);
 
       // Fetch the updated blogs after liking to get the latest data
-      const response = await axios.get(`http://localhost:3001/api/bloguser/blogs`);
+      const response = await axios.get('http://localhost:3001/api/bloguser/blogs');
       const updatedBlogs = response.data || [];
       setBlogs(updatedBlogs);
     } catch (err) {
@@ -63,8 +59,10 @@ const PopularBlogs = () => {
     }
   };
 
+  const filteredBlogs = selectedCategory === 'All' ? blogs : blogs.filter(blog => blog.category === selectedCategory);
+
   // Sorting the blogs based on the number of likes
-  const sortedBlogs = [...blogs].sort((a, b) => b.likes.length - a.likes.length);
+  const sortedBlogs = [...filteredBlogs].sort((a, b) => b.likes.length - a.likes.length);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -80,8 +78,7 @@ const PopularBlogs = () => {
     <button
       key={number}
       onClick={() => setCurrentPage(number)}
-      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${currentPage === number ? 'bg-gray-500' : ''
-        }`}
+      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${currentPage === number ? 'bg-gray-500' : ''}`}
     >
       {number}
     </button>
@@ -95,7 +92,7 @@ const PopularBlogs = () => {
       <div className="inline-flex rounded-md shadow-sm m-6">
         {categories.map((item) => (
           <button
-            key={item?._id}
+            key={item}
             className={`px-4 py-2 text-sm font-medium text-white hover:scale-105 duration-200 bg-[#2f5869ee] rounded mx-4 hover:shadow-md ${selectedCategory === item ? 'bg-[#0d2833]' : ''}`}
             onClick={() => handleCategoryClick(item)}
           >
@@ -104,7 +101,9 @@ const PopularBlogs = () => {
         ))}
       </div>
 
-      <h1 className="text-center mt-5 font-bold text-lg text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">Popular Blogs</h1>
+      <h1 className="text-center mt-5 font-bold text-2xl text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">
+        Popular Blogs
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-10 mx-10">
         {currentPosts.length === 0 ? (
           <div className="text-center col-span-12">
@@ -141,28 +140,27 @@ const PopularBlogs = () => {
                     </svg>
                   </div>
                   <div className="flex items-center space-x-1">
-                    <icon
-                      className="inline-flex items-center px-2 py-1 text-sm font-medium text-center text-[#102129] shadow-md rounded-lg focus:ring-4 focus:outline-none focus:ring-[#478ba9]"
+                    <span
+                      className="inline-flex items-center px-1 py-1 text-sm font-medium text-center text-[#102129] shadow-md rounded-lg focus:ring-4 focus:outline-none"
                       onClick={() => handleLike(item._id)}
                     >
                       <svg
-                        className={`w-4 h-4 mr-1 ${isLiked ? 'text-[#e53e3e]' : 'text-[#102129]'}`}
-                        aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
-                        viewBox="0 0 24 24"
+                        viewBox="0 0 24 26"
+                        stroke="currentColor"
+                        className={`w-5 h-4 ${isLiked ? 'text-red-500' : 'text-gray-500'}`}
                       >
                         <path
-                          stroke="currentColor"
                           stroke-linecap="round"
                           stroke-linejoin="round"
                           stroke-width="2"
-                          d="M6 3c-1.667 0-3 1.333-3 3 0 4 6 9 9 9s9-5 9-9c0-1.667-1.333-3-3-3"
+                          d="M12 21.35l-1.45-1.32C5.4 14.36 2 11.47 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C16.09 3.81 17.76 3 19.5 3 22.58 3 25 5.42 25 8.5c0 2.97-3.4 5.86-8.55 11.54L12 21.35z"
                         />
                       </svg>
-                    </icon>
+                    </span>
                     <span className="text-sm text-[#102129]">
-                      {item.likes.length} {item.likes === 1 ? 'like' : 'likes'}
+                      {item.likes.length} {item.likes.length === 1 ? 'like' : 'likes'}
                     </span>
                   </div>
                   <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mb-2">{item.category}</span>
@@ -173,10 +171,12 @@ const PopularBlogs = () => {
         )}
       </div>
       <br />
+
       <div className="flex justify-center mt-4">
         {renderPageNumbers}
       </div>
       <br />
+
       <Footer />
     </div>
   );

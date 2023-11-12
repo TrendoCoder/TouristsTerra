@@ -2,6 +2,7 @@ const Blog=require('../../models/blog/blog')
 const _=require('lodash')
 const ObjectId = require('mongoose').Types.ObjectId;
 const cloudinary = require('cloudinary').v2;
+const {User} = require("../../models/userlogin/user")
 //GET all blogs from database
 
 exports.getAllBlogs=async(req,res)=>{
@@ -29,6 +30,42 @@ exports.getBlog = async (req, res) => {
     res.status(500).json(err);
   }
 }
+
+//Get all blogs from database on a UserId
+// exports.getBlogsByUserId = async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+
+//     // Find the user based on the provided userId
+//     const user = await User.findOne({ userId });
+//     if (!user) {
+//       return res.status(404).json({ message: 'User not found' });
+//       console.log(data)
+//     }
+//     // Find all blogs associated with the user
+//     const blogs = await Blog.find({ user: user._id });
+//     res.status(200).json(blogs);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
+exports.getBlogsByUserId = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const blogs = await Blog.find({ userId: user._id });
+    res.status(200).json(blogs);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+//POST new blog to database
 
 
 // Like and Unlike the blog @param id
