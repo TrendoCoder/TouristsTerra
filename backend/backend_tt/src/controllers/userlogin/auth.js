@@ -6,9 +6,13 @@ const { createError } = require("../../utils/error");
 const register = async (req, res, next) => {
   try {
     const existingUser = await User.findOne({ userName: req.body.userName });
-
     if (existingUser) {
       return res.status(409).send("Username already exists");
+    }
+
+    const existingEmail = await User.findOne({ email: req.body.email });
+    if (existingEmail) {
+      return res.status(900).send("Email already exists");
     }
 
     const salt = bcrypt.genSaltSync(10);
@@ -18,7 +22,7 @@ const register = async (req, res, next) => {
       email: req.body.email,
       contact: req.body.contact,
       password: hash,
-      isAdmin: true,
+      isAdmin: req.body.isAdmin,
     });
     await newUser.save();
     res.status(200).send("User has been created ");
