@@ -12,11 +12,8 @@ const FeedSection = ({ username }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = username ? (await axios.get(`http://localhost:3001/api/post/profile/${username}`),
-        console.log("sahi chala"))
-        
-          : (await axios.get("http://localhost:3001/api/post/timeline/" + user?._id ),
-          console.log("Nhi sahi chala"));
+        const res = username ? await axios.get(`http://localhost:3001/api/post/profile/${username}`)
+          : await axios.get("http://localhost:3001/api/post/timeline/" + user?._id )
         setPosts(
           res.data.sort((p1, p2) => {
             return new Date(p2.createdAt) - new Date(p1.createdAt);
@@ -26,14 +23,12 @@ const FeedSection = ({ username }) => {
         console.error("Error fetching posts:", error);
       }
     };
-
     fetchPosts();
   }, [username, user?._id]);
 
   if (!posts) {
     return <div>Loading....</div>;
   }
-
   return (
     <div id="big-container-feed">
       <div id="big-container-feed-wrapper">

@@ -57,36 +57,59 @@
     border-radius: 5px;
     font-size: 20px;
     align-content: center;
-    color: #0F4157;
+    color: #0f41577a;
   }
  #search-icon:hover {
     transition: 0.4s;
-    color: pink;
-    cursor: pointer;
-  }
-  
-  #small-menu {
-    width: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-  
-  #small-menu a{
-    text-decoration: none;
-  }
-  #small-menu-icon{
-    margin: 0 15px;
-    font-size: 22px;
     color: #0F4157;
     cursor: pointer;
-    transition: 0.3s;
   }
   
-  #small-menu-icon:hover {
-    color: #01b3ff;
-    
-  }
+#container-personal{
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#container-personal-menu{
+    transition: 0.2s ease;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#container-personal-menu #profile{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#container-personal-menu i{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    position: relative;
+}
+#container-personal-menu #msg{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: crimson;
+    position: absolute;
+    top: -18px;
+    right: -20%;
+}
+#container-personal-menu #notification{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: crimson;
+    position: absolute;
+    top: -18px;
+    right: -10%;
+}
   
   /* Responsive styling */
   
