@@ -2,8 +2,6 @@ import React from "react";
 import "./accommodationhome.css";
 import AccommodationAdSection from "../accomoadsection/accomoadsection";
 import MenuBar from "../../homepage/menubar/menuBar";
-import AccomoFilter from "../accomofiltersection/accomofilter";
-import AccomoList from "../accomolist/accomolist";
 import Footer from "../footer/footer";
 import { Link } from "react-router-dom";
 import NavBar from "../../homepage/navbar/navBar";
@@ -32,15 +30,8 @@ const AccommodationHome = () => {
         <AccomodationSearchSection />
         <div id="main-container-accomo">
           <FeaturedAccomodation />
-
           <h2>Browse by Property Type</h2>
           <PropertyList />
-          {/* <div id='container-filter-accomo'>
-    <AccomoFilter/>
-    </div>
-    <div id='container-accomo-cards'>
-<AccomoList/>
-    </div> */}
         </div>
         <div>
           <Footer />

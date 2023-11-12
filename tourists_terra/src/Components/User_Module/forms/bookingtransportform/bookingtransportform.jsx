@@ -4,6 +4,7 @@ import "./bookingtransportform.css";
 import MainNavBar from "../mainnavbar/mainnavbar";
 import FormFooter from "../formfooter/formfooter";
 import img from "../../../../images/h_ad1.jfif";
+import Footer from "../../accommodationpage/footer/footer";
 const BookingTransportForm = () => {
   const initialValuesCustomer = {
     firstName: "",
@@ -12,9 +13,12 @@ const BookingTransportForm = () => {
     contact: "",
     cnic: "",
     city: "",
-    address: "",
-    state: "",
-    zipCode: "",
+    experience: "",
+    language: "",
+    // accountTitle:"",
+    // accountNumber:"",
+    // bankName:"",
+    // branchCode:"",
   };
   const [formValuesCustomer, setFormValuesCustomer] = useState(
     initialValuesCustomer
@@ -27,6 +31,7 @@ const BookingTransportForm = () => {
     const { name, value } = e.target;
     setFormValuesCustomer({ ...formValuesCustomer, [name]: value });
   };
+
   const onSubmitCust = (e) => {
     e.preventDefault();
     setFormErrorsCustomer(validate(formValuesCustomer));
@@ -79,291 +84,264 @@ const BookingTransportForm = () => {
     if (!values.state) {
       errors.state = "State is required";
     }
-    if (!values.zipCode) {
-      errors.zipCode = "Zipcode is required";
+    if (!values.experience) {
+      errors.experience = "Experience is required";
     }
+    if(!values.language){
+      errors.language = "Language is required";
+    }
+    // if(!values.accountNumber){
+    //   errors.accountNumber = "Acc Number is required";
+    // }
+    // if(!values.accountTitle){
+    //   errors.accountTitle = "Acc Title is required";
+    // }
+    // if(!values.bankName){
+    //   errors.bankName = "Bank Name is required";
+    // }
+    // if(!values.branchCode){
+    //   errors.branchCode = "Branch code is required";
+    // }
     return errors;
   };
-
   return (
-    <div>
-      <MainNavBar />
-      <div id="h-name">
-        <h2>Hotel Name</h2>
-      </div>
-      <div id="main-container">
-        <div id="right-container">
-          <div id="right-container-top">
-            <div id="cust-info">
-              <span>Customer Information</span>
-            </div>
-            <form onSubmit={onSubmitCust}>
-              <div id="inputs-row">
-                <div id="form-inputs" className="margin">
-                  <label>First Name</label>
-                  <div id="inputs">
-                    <i class="fa-solid fa-user"></i>
-                    <input
-                      type="text"
-                      name="firstName"
-                      placeholder="first name"
-                      value={formValuesCustomer.firstName}
-                      onChange={handleChangeCust}
-                    />
+    <>
+    <MainNavBar/>
+
+      <div id="big-main-container" style={{marginTop:"10px",marginBottom:"10px"}}>
+        <div id="main-container">
+          <div id="right-container">
+            <div id="right-container-top">
+              <div id="cust-info">
+                <span>Hotel Verification Form</span>
+              </div>
+              <form onSubmit={onSubmitCust}>
+                <div id="inputs-row">
+                  <div id="form-inputs" className="margin">
+                    <label>First Name</label>
+                    <div id="inputs">
+                      <i class="fa-solid fa-user"></i>
+                      <input
+                        type="text"
+                        name="firstName"
+                        placeholder="first name"
+                        value={formValuesCustomer.firstName}
+                        onChange={handleChangeCust}
+                      />
+                    </div>
+                    <p className="error">{formErrorsCustomer.firstName}</p>
                   </div>
-                  <p className="error">{formErrorsCustomer.firstName}</p>
-                </div>
 
-                <div id="form-inputs">
-                  <label>Last Name</label>
-                  <div id="inputs">
-                    <i class="fa-solid fa-user"></i>
-                    <input
-                      type="text"
-                      name="lastName"
-                      id=""
-                      placeholder="last name"
-                      value={formValuesCustomer.lastName}
-                      onChange={handleChangeCust}
-                    />
+                  <div id="form-inputs">
+                    <label>Last Name</label>
+                    <div id="inputs">
+                      <i class="fa-solid fa-user"></i>
+                      <input
+                        type="text"
+                        name="lastName"
+                        id=""
+                        placeholder="last name"
+                        value={formValuesCustomer.lastName}
+                        onChange={handleChangeCust}
+                      />
+                    </div>
+                    <p className="error">{formErrorsCustomer.lastName}</p>
                   </div>
-                  <p className="error">{formErrorsCustomer.lastName}</p>
                 </div>
-              </div>
 
-              <div id="inputs-row">
-                <div id="form-inputs" className="margin">
-                  <label>Email</label>
-                  <div id="inputs">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input
-                      type="email"
-                      name="email"
-                      id=""
-                      placeholder="email@gmail.com"
-                      value={formValuesCustomer.email}
-                      onChange={handleChangeCust}
-                    />
+                <div id="inputs-row">
+                  <div id="form-inputs" className="margin">
+                    <label>Email</label>
+                    <div id="inputs">
+                      <i class="fa-solid fa-envelope"></i>
+                      <input
+                        type="email"
+                        name="email"
+                        id=""
+                        placeholder="email@gmail.com"
+                        value={formValuesCustomer.email}
+                        onChange={handleChangeCust}
+                      />
+                    </div>
+                    <p className="error">{formErrorsCustomer.email}</p>
                   </div>
-                  <p className="error">{formErrorsCustomer.email}</p>
-                </div>
 
-                <div id="form-inputs">
-                  <label>Contact no.</label>
-                  <div id="inputs">
-                    <i class="fa-solid fa-phone"></i>
-                    <input
-                      type="number"
-                      name="contact"
-                      id=""
-                      placeholder="03xx-xxxxxxx"
-                      value={formValuesCustomer.contact}
-                      onChange={handleChangeCust}
-                    />
+                  <div id="form-inputs">
+                    <label>Contact no.</label>
+                    <div id="inputs">
+                      <i class="fa-solid fa-phone"></i>
+                      <input
+                        type="number"
+                        name="contact"
+                        id=""
+                        placeholder="03xx-xxxxxxx"
+                        value={formValuesCustomer.contact}
+                        onChange={handleChangeCust}
+                      />
+                    </div>
+                    <p className="error">{formErrorsCustomer.contact}</p>
                   </div>
-                  <p className="error">{formErrorsCustomer.contact}</p>
                 </div>
-              </div>
 
-              <div id="inputs-row">
-                <div id="form-inputs" className="margin">
-                  <label>CNIC</label>
-                  <div id="inputs">
-                    <i class="fa-solid fa-id-card"></i>
-                    <input
-                      type="text"
-                      name="cnic"
-                      id=""
-                      placeholder="342xxxxxxxxxxx"
-                      value={formValuesCustomer.cnic}
-                      onChange={handleChangeCust}
-                    />
+                <div id="inputs-row">
+                  <div id="form-inputs" className="margin">
+                    <label>CNIC</label>
+                    <div id="inputs">
+                      <i class="fa-solid fa-id-card"></i>
+                      <input
+                        type="text"
+                        name="cnic"
+                        id=""
+                        placeholder="342xxxxxxxxxxx"
+                        value={formValuesCustomer.cnic}
+                        onChange={handleChangeCust}
+                      />
+                    </div>
+                    <p className="error">{formErrorsCustomer.cnic}</p>
                   </div>
-                  <p className="error">{formErrorsCustomer.cnic}</p>
-                </div>
 
-                <div id="form-inputs">
-                  <label>City</label>
-                  <div id="inputs">
-                    <i class="fa-solid fa-city"></i>
-                    <input
-                      type="text"
-                      name="city"
-                      id=""
-                      placeholder="enter your city"
-                      value={formValuesCustomer.city}
-                      onChange={handleChangeCust}
-                    />
+                  <div id="form-inputs">
+                    <label>City</label>
+                    <div id="inputs">
+                      <i class="fa-solid fa-city"></i>
+                      <input
+                        type="text"
+                        name="city"
+                        id=""
+                        placeholder="enter your city"
+                        value={formValuesCustomer.city}
+                        onChange={handleChangeCust}
+                      />
+                    </div>
+                    <p className="error">{formErrorsCustomer.city}</p>
                   </div>
-                  <p className="error">{formErrorsCustomer.city}</p>
                 </div>
-              </div>
 
-              <div id="inputs-row">
-                <div id="form-inputs" style={{ width: "90%" }}>
-                  <label>Address</label>
-                  <div id="inputs">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <input
-                      type="text"
-                      name="address"
-                      id=""
-                      placeholder="enter your address"
-                      value={formValuesCustomer.address}
-                      onChange={handleChangeCust}
-                    />
+                <div id="inputs-row">
+                  <div id="form-inputs" className="margin">
+                    <label>Experience</label>
+                    <div id="inputs">
+                      <i class="fa-solid fa-certificate"></i>
+                      <input
+                        type="text"
+                        name="experience"
+                        id=""
+                        placeholder="2 years.."
+                        value={formValuesCustomer.experience}
+                        onChange={handleChangeCust}
+                      />
+                    </div>
+                    <p className="error">{formErrorsCustomer.experience}</p>
                   </div>
-                  <p className="error">{formErrorsCustomer.address}</p>
-                </div>
-              </div>
 
-              <div id="inputs-row">
-                <div id="form-inputs" className="margin">
-                  <label>State/Province</label>
-                  <div id="inputs">
-                    <i class="fa-solid fa-location-arrow"></i>
-                    <input
-                      type="text"
-                      name="state"
-                      id=""
-                      placeholder="enter your province"
-                      value={formValuesCustomer.state}
-                      onChange={handleChangeCust}
-                    />
+                  <div id="form-inputs">
+                    <label>Languages Preferences</label>
+                    <div id="inputs">
+                      <i class="fa-solid fa-language"></i>
+                      <input
+                        type="text"
+                        name="language"
+                        id=""
+                        placeholder="English etc"
+                        value={formValuesCustomer.language}
+                        onChange={handleChangeCust}
+                      />
+                    </div>
+                    <p className="error">{formErrorsCustomer.language}</p>
                   </div>
-                  <p className="error">{formErrorsCustomer.state}</p>
                 </div>
-
-                <div id="form-inputs">
-                  <label>Zip Code</label>
-                  <div id="inputs">
-                    <i class="fa-solid fa-envelope-open"></i>
-                    <input
-                      type="number"
-                      name="zipCode"
-                      id=""
-                      placeholder="enter Zip code"
-                      value={formValuesCustomer.zipCode}
-                      onChange={handleChangeCust}
-                    />
-                  </div>
-                  <p className="error">{formErrorsCustomer.zipCode}</p>
-                </div>
-              </div>
-              <div id="check-terms">
-                <input
-                  type="checkbox"
-                  name=""
-                  id=""
-                  onChange={handleCheckPolicy}
-                />
-                <span>
-                  I accept the <Link>Terms And Policies</Link> and{" "}
-                  <Link>Privacy Policies</Link>{" "}
-                </span>
-              </div>
-              <br />
-              <div id="input-row">
-                <button disabled={!checkPolicy}>Save Info</button>
-              </div>
-            </form>
-          </div>
-          <div id="right-container-bottom">
-            <span id="payment-heading">Choose a Payment Method</span>
-
-            <div id="payment-method">
-              <div id="payment-method-top">
-                <div>
-                  <input type="radio" name="payment" id="" />
-                  <label htmlFor="">JazzCash</label>
-                </div>
-
-                <div>
-                  <input type="radio" name="payment" id="" />
-                  <label htmlFor="">Bank Transfer</label>
-                </div>
-              </div>
-              <div id="payment-method-bottom">
-                <div>
-                  <input type="radio" name="payment" id="" />
-                  <label htmlFor="">Cash on Delivery</label>
-                </div>
-              </div>
-            </div>
-            <div id="book-btn">
-              <button onSubmit={onSubmitCust}>Book Now</button>
-            </div>
-          </div>
-        </div>
-        <div id="left-container">
-          <div id="img">
-            <img src={img} alt="" />
-          </div>
-
-          <div id="calender">
-            <div id="date">
-              <div>
-                <div>
-                  <i class="fa-solid fa-calendar-days"></i>
-                  <span> Check in</span>
-                </div>
-                <div>
-                  <span> 20-03-2023</span>
-                </div>
-              </div>
-            </div>
-
-            <div id="date">
-              <div id="date-checks">
-                <div id="check-div">
+                <div id="check-terms">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    onChange={handleCheckPolicy}
+                  />
                   <span>
-                    <i class="fa-solid fa-calendar-days"></i> Check out
+                    I accept the <Link>Terms And Policies</Link> and{" "}
+                    <Link>Privacy Policies</Link>{" "}
                   </span>
                 </div>
-                <div>
-                  <span> 20-03-2023</span>
+                <br />
+                <div id="input-row">
+                  <button disabled={!checkPolicy} onSubmit={onSubmitCust}>Register</button>
                 </div>
-              </div>
+              </form>
             </div>
-          </div>
-          <div id="no-of-nights">
-            <span>1x night</span>
-          </div>
-          <hr id="hr" />
-          <div id="t-name">
-            <span>Million star</span>
-          </div>
-          <div id="r-detail">
-            <span>1x Delux King Room</span>
-          </div>
-          <div id="details">
-            <div id="details-left-container">
-              <div id="details-left">
-                <span>1x night</span>
+            {/* <div id="right-container-bottom">
+              <div id="book-btn">
+                <button onSubmit={onSubmitCust}>Register</button>
               </div>
-              <div id="details-left">
-                <span>Total GST(16%)</span>
-              </div>
-              <div id="details-left">
-                <span>Total</span>
-              </div>
+            </div> */}
+          </div>
+          {/* <div id="left-container">
+            <div id="cust-info">
+              <span>Add Bank Details</span>
             </div>
-            <div id="details-right-container">
-              <div id="details-left">
-                <span>Rs 6000</span>
+            <div id="form-inputs" style={{ width: "90%" }}>
+              <label>Account Title</label>
+              <div id="inputs" style={{ padding: "10px 10px" }}>
+                <input
+                  type="text"
+                  name="accountTitle"
+                  id=""
+                  placeholder=""
+                  value={formValuesCustomer.accountTitle}
+                  onChange={handleChangeCust}
+                />
               </div>
-              <div id="details-left">
-                <span>Rs 500</span>
-              </div>
-              <div id="details-left">
-                <span>Rs 70000</span>
-              </div>
+              <p className="error">{formErrorsCustomer.accountTitle}</p>
             </div>
-          </div>
+
+            <div id="form-inputs" style={{ width: "90%" }}>
+              <label>Account Number</label>
+              <div id="inputs" style={{ padding: "10px 10px" }}>
+                <input
+                  type="text"
+                  name="accountNumber"
+                  id=""
+                  placeholder=""
+                  value={formValuesCustomer.accountNumber}
+                  onChange={handleChangeCust}
+                />
+              </div>
+              <p className="error">{formErrorsCustomer.accountNumber}</p>
+            </div>
+
+            <div id="form-inputs" style={{ width: "90%" }}>
+              <label>Bank Name</label>
+              <div id="inputs" style={{ padding: "10px 10px" }}>
+                <input
+                  type="text"
+                  name="bankName"
+                  id=""
+                  placeholder=""
+                  value={formValuesCustomer.bankName}
+                  onChange={handleChangeCust}
+                />
+              </div>
+              <p className="error">{formErrorsCustomer.bankName}</p>
+            </div>
+
+            <div id="form-inputs" style={{ width: "90%" }}>
+              <label>Branch Code</label>
+              <div id="inputs" style={{ padding: "10px 10px" }}>
+                <input
+                  type="text"
+                  name="branchCode"
+                  id=""
+                  placeholder=""
+                  value={formValuesCustomer.branchCode}
+                  onChange={handleChangeCust}
+                />
+              </div>
+              <p className="error">{formErrorsCustomer.branchCode}</p>
+            </div>
+          </div> */}
         </div>
       </div>
-      <FormFooter />
-    </div>
+      <Footer />
+    </>
   );
 };
 

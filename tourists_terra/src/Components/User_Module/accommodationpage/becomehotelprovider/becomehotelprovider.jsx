@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import "./becomehotelprovider.css";
 import { Link } from "react-router-dom";
 import Footer from "../../accommodationpage/footer/footer";
 import MainNavBar from "../../forms/mainnavbar/mainnavbar";
+import { AuthContext } from "../../../../Context/authcontext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import uploadImage from "../../../../images/gallery.png";
 const BecomeHotelProvider = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const initialValuesCustomer = {
     firstName: "",
     lastName: "",
@@ -13,10 +19,8 @@ const BecomeHotelProvider = () => {
     city: "",
     experience: "",
     language: "",
-    accountTitle:"",
-    accountNumber:"",
-    bankName:"",
-    branchCode:"",
+    idCardFrontImg: null,
+    idCardBackImg: null,
   };
   const [formValuesCustomer, setFormValuesCustomer] = useState(
     initialValuesCustomer
@@ -27,25 +31,115 @@ const BecomeHotelProvider = () => {
 
   const handleChangeCust = (e) => {
     const { name, value } = e.target;
-    setFormValuesCustomer({ ...formValuesCustomer, [name]: value });
+
+    if (name === "contact") {
+      const formattedContact = value
+        .replace(/[^0-9]/g, "")
+        .slice(0, 11)
+        .replace(/(\d{4})(\d{0,7})(\d{0,4})/, "$1-$2$3");
+      setFormValuesCustomer({
+        ...formValuesCustomer,
+        [name]: formattedContact,
+      });
+    } else if (name === "cnic") {
+      const formattedCnic = value
+        .replace(/[^0-9]/g, "")
+        .slice(0, 13)
+        .replace(/(\d{5})(\d{0,7})(\d{0,1})/, "$1-$2-$3");
+      setFormValuesCustomer({ ...formValuesCustomer, [name]: formattedCnic });
+    } else {
+      setFormValuesCustomer({ ...formValuesCustomer, [name]: value });
+    }
   };
 
-  const onSubmitCust = (e) => {
+  const handleImageClick = (inputName) => {
+    document.getElementById(inputName).click();
+  };
+
+  const handleImageChange = (e, imageType) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setFormValuesCustomer({
+          ...formValuesCustomer,
+          [imageType]: file,
+        });
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const onSubmitCust = async (e) => {
     e.preventDefault();
     setFormErrorsCustomer(validate(formValuesCustomer));
     setIsSubmit(true);
+
+    if (Object.keys(formErrorsCustomer).length === 0) {
+      const newPost = {
+        userId: user._id,
+        firstName: formValuesCustomer.firstName,
+        lastName: formValuesCustomer.lastName,
+        contact: formValuesCustomer.contact,
+        city: formValuesCustomer.city,
+        email: formValuesCustomer.email,
+        cnic: formValuesCustomer.cnic,
+        experience: formValuesCustomer.experience,
+        language: formValuesCustomer.language,
+        requestFor: "Accommodation Provider",
+      };
+
+      if (formValuesCustomer.idCardFrontImg) {
+        const data = new FormData();
+        const fileName = Date.now() + formValuesCustomer.idCardFrontImg.name;
+        data.append("name", fileName);
+        data.append("file", formValuesCustomer.idCardFrontImg);
+        newPost.idCardFrontImg = fileName;
+        try {
+          await axios.post(
+            "http://localhost:3001/api/upload/idcardfrontpic",
+            data
+          );
+        } catch (err) {
+          alert("Formatting Error in Id Card Front Image");
+          navigate("/accommodation");
+        }
+      }
+
+      if (formValuesCustomer.idCardBackImg) {
+        const data = new FormData();
+        const fileName = Date.now() + formValuesCustomer.idCardBackImg.name;
+        data.append("name", fileName);
+        data.append("file", formValuesCustomer.idCardBackImg);
+        newPost.idCardBackImg = fileName;
+        try {
+          await axios.post(
+            "http://localhost:3001/api/upload/idcardbackpic",
+            data
+          );
+        } catch (err) {
+          alert("Formatting Error in Id Card Back Image");
+        }
+      }
+
+      try {
+        await axios.post("http://localhost:3001/api/serviceProvider/", newPost);
+
+        alert(
+          "Your request has been successfully sent to our team. We'll respond to you soon."
+        );
+      } catch (err) {
+        alert(err);
+      }
+    }
   };
 
   const handleCheckPolicy = () => {
     setCheckPolicy(!checkPolicy);
-    console.log(checkPolicy);
   };
-
-  useEffect(() => {
-    if (Object.keys(formErrorsCustomer) === 0 && isSubmit) {
-      console.log(formValuesCustomer);
-    }
-  }, [formErrorsCustomer]);
 
   const validate = (values) => {
     const errors = {};
@@ -65,48 +159,36 @@ const BecomeHotelProvider = () => {
     }
     if (!values.contact) {
       errors.contact = "Contact is required";
-    } else if (values.contact.length < 10) {
-      errors.contact = "Enter a valid contact number";
     }
     if (!values.cnic) {
-      errors.cnic = "Cnic is required";
-    } else if (values.cnic.length < 13 || values.cnic.length > 13) {
-      errors.cnic = "Enter valid cnic";
+      errors.cnic = "CNIC is required";
     }
     if (!values.city) {
       errors.city = "City is required";
     }
-    if (!values.address) {
-      errors.address = "Address is required";
-    }
-    if (!values.state) {
-      errors.state = "State is required";
-    }
     if (!values.experience) {
       errors.experience = "Experience is required";
     }
-    if(!values.language){
+    if (!values.language) {
       errors.language = "Language is required";
-    }
-    if(!values.accountNumber){
-      errors.accountNumber = "Acc Number is required";
-    }
-    if(!values.accountTitle){
-      errors.accountTitle = "Acc Title is required";
-    }
-    if(!values.bankName){
-      errors.bankName = "Bank Name is required";
-    }
-    if(!values.branchCode){
-      errors.branchCode = "Branch code is required";
     }
     return errors;
   };
+
+  useEffect(() => {
+    if (Object.keys(formErrorsCustomer).length === 0 && isSubmit) {
+      console.log(formValuesCustomer);
+    }
+  }, [formErrorsCustomer]);
+
   return (
     <>
-    <MainNavBar/>
+      <MainNavBar />
 
-      <div id="big-main-container" style={{marginTop:"10px",marginBottom:"10px"}}>
+      <div
+        id="big-main-container"
+        style={{ marginTop: "10px", marginBottom: "10px" }}
+      >
         <div id="main-container">
           <div id="right-container">
             <div id="right-container-top">
@@ -118,11 +200,11 @@ const BecomeHotelProvider = () => {
                   <div id="form-inputs" className="margin">
                     <label>First Name</label>
                     <div id="inputs">
-                      <i class="fa-solid fa-user"></i>
+                      <i className="fa-solid fa-user"></i>
                       <input
                         type="text"
                         name="firstName"
-                        placeholder="first name"
+                        placeholder="First name"
                         value={formValuesCustomer.firstName}
                         onChange={handleChangeCust}
                       />
@@ -133,12 +215,11 @@ const BecomeHotelProvider = () => {
                   <div id="form-inputs">
                     <label>Last Name</label>
                     <div id="inputs">
-                      <i class="fa-solid fa-user"></i>
+                      <i className="fa-solid fa-user"></i>
                       <input
                         type="text"
                         name="lastName"
-                        id=""
-                        placeholder="last name"
+                        placeholder="Last name"
                         value={formValuesCustomer.lastName}
                         onChange={handleChangeCust}
                       />
@@ -151,14 +232,14 @@ const BecomeHotelProvider = () => {
                   <div id="form-inputs" className="margin">
                     <label>Email</label>
                     <div id="inputs">
-                      <i class="fa-solid fa-envelope"></i>
+                      <i className="fa-solid fa-envelope"></i>
                       <input
                         type="email"
                         name="email"
-                        id=""
-                        placeholder="email@gmail.com"
+                        placeholder="Email@gmail.com"
                         value={formValuesCustomer.email}
                         onChange={handleChangeCust}
+                        style={{ textTransform: "none" }}
                       />
                     </div>
                     <p className="error">{formErrorsCustomer.email}</p>
@@ -167,11 +248,10 @@ const BecomeHotelProvider = () => {
                   <div id="form-inputs">
                     <label>Contact no.</label>
                     <div id="inputs">
-                      <i class="fa-solid fa-phone"></i>
+                      <i className="fa-solid fa-phone"></i>
                       <input
-                        type="number"
+                        type="text"
                         name="contact"
-                        id=""
                         placeholder="03xx-xxxxxxx"
                         value={formValuesCustomer.contact}
                         onChange={handleChangeCust}
@@ -185,12 +265,11 @@ const BecomeHotelProvider = () => {
                   <div id="form-inputs" className="margin">
                     <label>CNIC</label>
                     <div id="inputs">
-                      <i class="fa-solid fa-id-card"></i>
+                      <i className="fa-solid fa-id-card"></i>
                       <input
                         type="text"
                         name="cnic"
-                        id=""
-                        placeholder="342xxxxxxxxxxx"
+                        placeholder="342xx-xxxxxxx-x"
                         value={formValuesCustomer.cnic}
                         onChange={handleChangeCust}
                       />
@@ -201,12 +280,11 @@ const BecomeHotelProvider = () => {
                   <div id="form-inputs">
                     <label>City</label>
                     <div id="inputs">
-                      <i class="fa-solid fa-city"></i>
+                      <i className="fa-solid fa-city"></i>
                       <input
                         type="text"
                         name="city"
-                        id=""
-                        placeholder="enter your city"
+                        placeholder="Enter your city"
                         value={formValuesCustomer.city}
                         onChange={handleChangeCust}
                       />
@@ -219,11 +297,10 @@ const BecomeHotelProvider = () => {
                   <div id="form-inputs" className="margin">
                     <label>Experience</label>
                     <div id="inputs">
-                      <i class="fa-solid fa-certificate"></i>
+                      <i className="fa-solid fa-certificate"></i>
                       <input
                         type="text"
                         name="experience"
-                        id=""
                         placeholder="2 years.."
                         value={formValuesCustomer.experience}
                         onChange={handleChangeCust}
@@ -235,11 +312,10 @@ const BecomeHotelProvider = () => {
                   <div id="form-inputs">
                     <label>Languages Preferences</label>
                     <div id="inputs">
-                      <i class="fa-solid fa-language"></i>
+                      <i className="fa-solid fa-language"></i>
                       <input
                         type="text"
                         name="language"
-                        id=""
                         placeholder="English etc"
                         value={formValuesCustomer.language}
                         onChange={handleChangeCust}
@@ -248,13 +324,55 @@ const BecomeHotelProvider = () => {
                     <p className="error">{formErrorsCustomer.language}</p>
                   </div>
                 </div>
-                <div id="check-terms">
-                  <input
-                    type="checkbox"
-                    name=""
-                    id=""
-                    onChange={handleCheckPolicy}
+                <div id="id-card-veri-img">
+                  <label onClick={() => handleImageClick("fileInputFront")}>
+                    Upload Front side of your Id Card
+                  </label>
+                  <img
+                    src={
+                      formValuesCustomer.idCardFrontImg
+                        ? URL.createObjectURL(formValuesCustomer.idCardFrontImg)
+                        : uploadImage
+                    }
+                    alt=""
+                    onClick={() => handleImageClick("fileInputFront")}
                   />
+                  <input
+                    type="file"
+                    name="idCardFrontImg"
+                    id="fileInputFront"
+                    accept=".png,.jpeg,.jpg"
+                    onChange={(e) => handleImageChange(e, "idCardFrontImg")}
+                    style={{ display: "none" }}
+                  />
+                </div>
+
+                <div id="id-card-veri-img">
+                  <label onClick={() => handleImageClick("fileInputBack")}>
+                    Upload Back side of your Id Card
+                  </label>
+                  <img
+                    src={
+                      formValuesCustomer.idCardBackImg
+                        ? URL.createObjectURL(formValuesCustomer.idCardBackImg)
+                        : uploadImage
+                    }
+                    alt=""
+                    onClick={() => handleImageClick("fileInputBack")}
+                  />
+                  <input
+                    type="file"
+                    name="idCardBackImg"
+                    id="fileInputBack"
+                    accept=".png,.jpeg,.jpg"
+                    onChange={(e) => handleImageChange(e, "idCardBackImg")}
+                    style={{ display: "none" }}
+                  />
+                </div>
+
+                <div id="check-terms">
+                  <input type="checkbox" name="" onChange={handleCheckPolicy} />{" "}
+                  {"  "}
                   <span>
                     I accept the <Link>Terms And Policies</Link> and{" "}
                     <Link>Privacy Policies</Link>{" "}
@@ -262,78 +380,11 @@ const BecomeHotelProvider = () => {
                 </div>
                 <br />
                 <div id="input-row">
-                  <button disabled={!checkPolicy}>Save Info</button>
+                  <button disabled={!checkPolicy} onSubmit={onSubmitCust}>
+                    Register
+                  </button>
                 </div>
               </form>
-            </div>
-            <div id="right-container-bottom">
-              <div id="book-btn">
-                <button onSubmit={onSubmitCust}>Register</button>
-              </div>
-            </div>
-          </div>
-          <div id="left-container">
-            <div id="cust-info">
-              <span>Add Bank Details</span>
-            </div>
-            <div id="form-inputs" style={{ width: "90%" }}>
-              <label>Account Title</label>
-              <div id="inputs" style={{ padding: "10px 10px" }}>
-                <input
-                  type="text"
-                  name="accountTitle"
-                  id=""
-                  placeholder=""
-                  value={formValuesCustomer.accountTitle}
-                  onChange={handleChangeCust}
-                />
-              </div>
-              <p className="error">{formErrorsCustomer.accountTitle}</p>
-            </div>
-
-            <div id="form-inputs" style={{ width: "90%" }}>
-              <label>Account Number</label>
-              <div id="inputs" style={{ padding: "10px 10px" }}>
-                <input
-                  type="text"
-                  name="accountNumber"
-                  id=""
-                  placeholder=""
-                  value={formValuesCustomer.accountNumber}
-                  onChange={handleChangeCust}
-                />
-              </div>
-              <p className="error">{formErrorsCustomer.accountNumber}</p>
-            </div>
-
-            <div id="form-inputs" style={{ width: "90%" }}>
-              <label>Bank Name</label>
-              <div id="inputs" style={{ padding: "10px 10px" }}>
-                <input
-                  type="text"
-                  name="bankName"
-                  id=""
-                  placeholder=""
-                  value={formValuesCustomer.bankName}
-                  onChange={handleChangeCust}
-                />
-              </div>
-              <p className="error">{formErrorsCustomer.bankName}</p>
-            </div>
-
-            <div id="form-inputs" style={{ width: "90%" }}>
-              <label>Branch Code</label>
-              <div id="inputs" style={{ padding: "10px 10px" }}>
-                <input
-                  type="text"
-                  name="branchCode"
-                  id=""
-                  placeholder=""
-                  value={formValuesCustomer.branchCode}
-                  onChange={handleChangeCust}
-                />
-              </div>
-              <p className="error">{formErrorsCustomer.branchCode}</p>
             </div>
           </div>
         </div>
@@ -344,4 +395,3 @@ const BecomeHotelProvider = () => {
 };
 
 export default BecomeHotelProvider;
-
