@@ -14,27 +14,27 @@
     display: flex;
     justify-content: space-between;
 }
-#u-info-detail
+#u-info-detail>a
 {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-#u-info-detail img
+#u-info-detail>a>img
 {
     width: 40px;
     height: 40px;
     border-radius: 50px;
     object-fit: cover;
 }
-#u-info-detail h3
+#u-info-detail>a>h3
 {
     font-size: 18px;
     text-align: center;
     font-weight: 500;
     padding: 0px 10px;
 }
-#u-info-detail>span{
+#u-info-detail>a>span{
     font-size: 14px;
     color: grey;
 }

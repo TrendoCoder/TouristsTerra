@@ -4,41 +4,49 @@ import ProfileInfo from "../profileinfo/profileinfo";
 import NavBar from "../../../homepage/navbar/navBar";
 import ProfileSideBar from "../profilesidebar/profilesidebar";
 import MiniNavBar from "../mininavbar/mininavbar";
+import { useParams } from "react-router";
 import axios from "axios";
-import { AuthContext } from "../../../../../Context/authcontext";
-const ProfilePage = () => {
 
-  const {user} = useContext(AuthContext);
-  const [users, setUsers] = useState([]); 
+const ProfilePage = () => {
+  const { userName } = useParams();
+  const [user, setUser] = useState({});
+  console.log(userName);
+
+  const fetchUsers = async () => {
+    try {
+      console.log("Fetching user data...");
+      const res = await axios.get(
+        `http://localhost:3001/api/user/?userName=${userName}`
+      );
+      console.log(res.data);
+      setUser(res.data);
+      console.log(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3001/api/user/?userName=${user.userName}`
-        );
-        console.log(res);
-        setUsers(res.data);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    };
     fetchUsers();
-  }, []);
-  
+  }, [userName]);
+
   return (
     <div>
       <NavBar />
-      <br/>
-      <ProfileInfo user={users}  />
+      <br />
+      {Object.keys(user).length === 0 ? (
+        <div>Kindly wait a bit</div>
+      ) : (
+        <ProfileInfo user={user} />
+      )}
       <div id="mainn-container">
         <div id="profilesidebar-div">
           <ProfileSideBar />
         </div>
         <div id="profile-main-div">
-        <div id="mini-nav">
-        <MiniNavBar/>
-        </div>
+          <div id="mini-nav">
+            <MiniNavBar username={user.userName} />
+          </div>
         </div>
       </div>
     </div>

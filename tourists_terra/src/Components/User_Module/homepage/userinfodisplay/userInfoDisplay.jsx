@@ -40,7 +40,7 @@ const UserInfoDisplay = () => {
         </div>
       </div>
       <div id="edit-profilee">
-        <Link to={`/profile-page/${user._id}`}>
+        <Link to={`/profile-page/${user.userName}`}>
           <i class="fa-solid fa-pen"></i> Edit Profile
         </Link>
       </div>

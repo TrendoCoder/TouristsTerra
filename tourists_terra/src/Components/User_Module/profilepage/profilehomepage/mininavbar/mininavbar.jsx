@@ -1,11 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, {useState } from 'react'
 import './mininavbar.css'
 import { Link } from 'react-router-dom'
 import FeedSection from "../../../homepage/feedsection/feedSection"
 import FriendListCard from '../friendlistcard/friendlistcard'
-import { AuthContext } from '../../../../../Context/authcontext'
-const MiniNavBar = () => {
-    const {user} = useContext(AuthContext);
+
+const MiniNavBar = ({username}) => {
     const [active, isActive] = useState(0);
   return (
     <div id="main-mini-nav-container">
@@ -28,7 +27,7 @@ const MiniNavBar = () => {
     </div>
     {active===0?(
     <div id="mini-nav-opt-rendering" >
-        <FeedSection username={user.userName}/>
+        <FeedSection username={username}/>
     </div>)
     :active===1?(
         <div id='friend-list-container'>
@@ -44,7 +43,6 @@ const MiniNavBar = () => {
         <div id='friend-list-mini-container'>
         <FriendListCard/>
         </div>
-        
         </div>
     )
     :active===2?(

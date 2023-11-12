@@ -5,9 +5,9 @@ import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../Context/authcontext";
+import ProfilePage from "../../profilepage/profilehomepage/profilepage/profilepage";
 
 const DisplayPost = ({ posts }) => {
-  console.log(posts);
   const [likes, setLike] = useState(posts.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
@@ -37,11 +37,12 @@ const DisplayPost = ({ posts }) => {
     setLike(isLiked ? likes - 1 : likes + 1);
     setIsLiked(!isLiked);
   };
+
   return (
     <div id="main-container-feed">
       <div id="u-info">
         <div id="u-info-detail">
-          <>
+          <Link to={`/profile-page/${user.userName}`}>
             <img
               src={
                 user.userProfilePicture
@@ -53,7 +54,7 @@ const DisplayPost = ({ posts }) => {
             />
             <h3>{user.userName}</h3>
             <span>{format(posts.createdAt)}</span>
-          </>
+          </Link>
         </div>
         <div id="ellipsis">
           <i className="fa-solid fa-ellipsis-vertical"></i>
@@ -65,6 +66,7 @@ const DisplayPost = ({ posts }) => {
       </div>
       <hr />
       <div id="u-img">
+      
         <img
           src={posts.img?PF+`/${posts.img}`:PF+"/profileUpload.png"}
           crossOrigin="anonymous"
