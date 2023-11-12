@@ -32,7 +32,8 @@ const SignUpPage = () => {
       errors.userName = "Username is required";
     }
 
-    if (!contact || contact.length !== 11) {
+    console.log(contact.length)
+    if (!contact || contact.length !== 12) {
       errors.contact = "Enter Valid Contact";
     }
 
@@ -55,7 +56,7 @@ const SignUpPage = () => {
     const formattedContact = e.target.value
       .replace(/[^0-9]/g, "")
       .slice(0, 11)
-      .replace(/(\d{4})(\d{0,7})/, "$1-$2");
+      .replace(/(\d{4})(\d{0,7})(\d{0,4})/, "$1-$2$3");
 
     setContact(formattedContact);
   };
@@ -151,7 +152,9 @@ const SignUpPage = () => {
                     required
                   />
                 </div>
-                {errors.email && <span className="error-message-signup">{errors.email}</span>}
+                {errors.email && (
+                  <span className="error-message-signup">{errors.email}</span>
+                )}
                 <div id="signup-input-div">
                   <i className="fa-solid fa-user"></i>
                   <input
@@ -160,10 +163,14 @@ const SignUpPage = () => {
                     placeholder="Create User Name"
                     onChange={(e) => setUserName(e.target.value)}
                     value={userName}
-                    style={{textTransform:"capitalize"}}
+                    style={{ textTransform: "capitalize" }}
                   />
                 </div>
-                {errors.userName && <span className="error-message-signup">{errors.userName}</span>}
+                {errors.userName && (
+                  <span className="error-message-signup">
+                    {errors.userName}
+                  </span>
+                )}
                 <div id="signup-input-div">
                   <i className="fa-solid fa-phone"></i>
                   <input
@@ -174,7 +181,9 @@ const SignUpPage = () => {
                     value={contact}
                   />
                 </div>
-                {errors.contact && <span className="error-message-signup">{errors.contact}</span>}
+                {errors.contact && (
+                  <span className="error-message-signup">{errors.contact}</span>
+                )}
                 <div id="signup-input-div">
                   <i className="fa-solid fa-lock"></i>
                   <input
@@ -185,7 +194,11 @@ const SignUpPage = () => {
                     value={password}
                   />
                 </div>
-                {errors.password && <span className="error-message-signup">{errors.password}</span>}
+                {errors.password && (
+                  <span className="error-message-signup">
+                    {errors.password}
+                  </span>
+                )}
                 <div id="signup-input-div">
                   <i className="fa-solid fa-lock"></i>
                   <input
@@ -196,7 +209,11 @@ const SignUpPage = () => {
                     value={confirmPassword}
                   />
                 </div>
-                {errors.confirmPassword && <span className="error-message-signup">{errors.confirmPassword}</span>}
+                {errors.confirmPassword && (
+                  <span className="error-message-signup">
+                    {errors.confirmPassword}
+                  </span>
+                )}
                 <div id="password-strength">
                   Password Strength: {getPasswordStrength()}
                 </div>
@@ -207,9 +224,14 @@ const SignUpPage = () => {
                     checked={checkPolicy}
                   />
                   <span>
-                    I accept the <Link to="/">Terms And Policies</Link> and <Link to="/">Privacy Policies</Link>
+                    I accept the <Link to="/">Terms And Policies</Link> and{" "}
+                    <Link to="/">Privacy Policies</Link>
                   </span>
-                  {errors.checkPolicy && <span className="error-message-signup">{errors.checkPolicy}</span>}
+                  {errors.checkPolicy && (
+                    <span className="error-message-signup">
+                      {errors.checkPolicy}
+                    </span>
+                  )}
                 </div>
                 <button id="signup-button" type="submit" onClick={handleSubmit}>
                   Sign Up
