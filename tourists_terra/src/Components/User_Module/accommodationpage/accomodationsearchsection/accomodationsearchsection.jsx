@@ -6,8 +6,10 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../../../Context/searchcontext";
+import { AuthContext } from "../../../../Context/authcontext";
 
 const AccomodationSearchSection = () => {
+  const { user } = useContext(AuthContext);
   const [openDate, setOpenDate] = useState(false);
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState([
@@ -44,7 +46,10 @@ const AccomodationSearchSection = () => {
 
   return (
     <div>
-      <Link to="/become-hotel-provider" style={{ textDecoration: "none" }}>
+      <Link
+        to={user.isAccomodationAdmin?`/hotel-admin-homepage/${user._id}`:`/become-hotel-provider/${user._id}`}
+        style={{ textDecoration: "none" }}
+      >
         <button id="switch-to-hp-btn">Switch to Hotel Provider</button>
       </Link>
       <div id="acc-search-section-container">

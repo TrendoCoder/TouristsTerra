@@ -8,7 +8,6 @@ import SignUpPage from "./Components/User_Module/signuppage/signUpPage";
 import LoginUser from "./Components/User_Module/loginpage/loginUser";
 import BookingTransportForm from "./Components/User_Module/forms/bookingtransportform/bookingtransportform";
 import ProfilePage from "./Components/User_Module/profilepage/profilehomepage/profilepage/profilepage";
-import EditProfilePage from "./Components/User_Module/profilepage/editprofilepage/editprofilepage";
 import BecomeABlogger from "./Components/User_Module/blogpage/becomeablogger/becomeablogger";
 import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpost";
 import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepage/explorehomepage";
@@ -23,6 +22,7 @@ import RecentBlogs from "./Components/User_Module/blogpage/recentblogs/recentblo
 import MyBlogs from "./Components/User_Module/blogpage/myblogs/myblogs";
 import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost";
 import ProductDetail from "./Components/User_Module/shoppage/shophomepage/ProductDetail";
+import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider"
 function App() {
   return (
     <div>
@@ -40,7 +40,11 @@ function App() {
               element={<AccomodationDetail />}
             ></Route>
             <Route
-            path="hotel-admin-homepage"
+              path="become-hotel-provider/:userId"
+              element={<BecomeHotelProvider />}
+            ></Route>
+            <Route
+            path="hotel-admin-homepage/:userId"
             element={<HotelAdminHomePage/>}
             ></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
