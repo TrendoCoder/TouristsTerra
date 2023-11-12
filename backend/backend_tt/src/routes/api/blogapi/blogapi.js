@@ -14,5 +14,6 @@ router.get("/recentBlogs", blogpostcontroller.getRecentBlogs);
 //These routes will be transfer to the admin portal
 router.post("/createblogs", blogpostcontroller.createBlog);
 router.delete("/:id", blogpostcontroller.deleteBlog);
+
 router.put("/editblog/:id", blogpostcontroller.updateBlog);
 module.exports = router;

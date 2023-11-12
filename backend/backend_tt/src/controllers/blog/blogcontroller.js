@@ -138,12 +138,13 @@ exports.likeDislikeBlog = async (req, res, next) => {
 exports.postCommentBlog=async(req,res)=>{
   try {
     const blog = await Blog.findById(req.params.id);
-    console.log(blog)
+    console.log(req.body.name)
       await blog.updateOne({
         $push: {
           comments:{
            comment:req.body.comment,
-           author:req.body.userId
+           author:req.body.userId,
+           name: req.body.name
           }          
         },
       });
@@ -178,24 +179,45 @@ exports.createBlog=async (req, res) => {
 //Delete a Blog
 
 exports.deleteBlog = async (req, res) => {
-    try {
-      const blogId = req.params.id;
-      const blog = await Blog.findById(blogId);
-      if (!blog) {
-        return res.status(404).json({ error: "Blog not found" });
-      }
-  
-      if (blog.userId === req.body.userId) { 
-        await Blog.deleteOne({ _id: blogId });
-        res.status(200).json("Document deleted successfully");
-      } else {
-        res.status(403).json({ error: "Unauthorized to delete this blog" });
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal Server Error' });
+  try {
+    const blogId = req.params.id;
+    const userId = req.query.userId; // Retrieve user ID from query parameters
+
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+      return res.status(404).json({ error: "Blog not found" });
     }
+
+    if (blog.userId === userId) {
+      await Blog.deleteOne({ _id: blogId });
+      res.status(200).json("Document deleted successfully");
+    } else {
+      res.status(403).json({ error: "Unauthorized to delete this blog" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
+
+//Delete all blogs
+// exports.deleteAllBlogs = async (req, res) => {
+//   try {
+//     const userId = req.query.userId; 
+//     // Check if the user is authorized to delete all blogs (you can modify this logic)
+//     if (userId) {
+//       // Assuming there's a field in your Blog model that corresponds to the user ID
+//       await Blog.deleteMany({ userId: userId });
+//       res.status(200).json("All blogs deleted successfully");
+//     } else {
+//       res.status(403).json({ error: "Unauthorized to delete all blogs" });
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// };
 
 
 //UPDATE

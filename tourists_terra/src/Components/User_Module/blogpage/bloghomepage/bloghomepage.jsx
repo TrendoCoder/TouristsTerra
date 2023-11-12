@@ -29,16 +29,24 @@ const BlogHomePage = () => {
     `http://localhost:3001/api/bloguser/blogs`
   );
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
   const blogs = data || []; // Use fetched data or an empty array as a fallback
 
   // Filter the blogs based on the selected category
   const filteredBlogs = selectedCategory === 'All'
     ? blogs
-    : blogs.filter(blog => blog.category === selectedCategory);
+    : blogs?.filter(blog => blog.category === selectedCategory);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredBlogs.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = filteredBlogs?.slice(indexOfFirstPost, indexOfLastPost);
 
   const pageNumbers = [];
 
