@@ -30,6 +30,7 @@ function SinglePost() {
       setLiked(storedLikedStatus === "true");
       setComments(data.comments || []);
     }
+    console.log(data)
   }, [data, user, id]);
 
   const fetchData = () => {
@@ -161,7 +162,7 @@ function SinglePost() {
                     className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
                   />
                   <h1 className="font-semibold text-gray-700 hover:underline pr-4 border-r border-gray-500">
-                    Written by {data.authorName}
+                    Written by {data?.authorName}
                   </h1>
                 </a>
               </div>
@@ -173,13 +174,19 @@ function SinglePost() {
                   {moment(data.date).fromNow()}{" "}
                 </p>
               </div>
-              <p
-                className={`text-l mr-08 font-semibold rounded-full py-8 px-8 ${liked ? "text-gray-500" : "text-gray-500"
-                  } cursor-pointer`}
-                onClick={handleLike}
-              >
-                Like: {liked ? "🤍 " : "❤️ "} {like}
-              </p>
+              <div id="u-like" className="flex justify-around ml-4">
+                <div>
+                  {liked ? (
+                    <i
+                      className="fas fa-heart text-red-500 cursor-pointer"
+                      onClick={handleLike}
+                    ></i>
+                  ) : (
+                    <i className="far fa-heart cursor-pointer" onClick={handleLike}></i>
+                  )}{" "}
+                  <span>{like}</span>
+                </div>
+              </div>
             </div>
 
             <div className="flex ml-02">

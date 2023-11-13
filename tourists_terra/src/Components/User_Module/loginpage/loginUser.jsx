@@ -39,6 +39,7 @@ const LoginUser = () => {
         "http://localhost:3001/api/auth/loginUser",
         credentials
       );
+      localStorage.setItem("username",res.data.userName)
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
       navigate("/");
     } catch (err) {
