@@ -41,6 +41,7 @@ const AddBlogPost = () => {
       const imageUrl = cloudinaryResponse.data.secure_url;
       // Add the Cloudinary image URL to the form data
       values.imageURL = imageUrl;
+      values.authorName = localStorage.getItem("username")
       console.log(values);
       const response = await axios.post("http://127.0.0.1:3001/api/bloguser/createblogs", values);
 

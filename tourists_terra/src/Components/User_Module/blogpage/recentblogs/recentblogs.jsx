@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import NavBar from '../../homepage/navbar/navBar';
 import BlogMenu from '../blogmenu/blogmenu';
-import Footer from "../../accommodationpage/footer/footer";
-import useFetch from "../../../../Hooks/usefetch";
+import Footer from '../../accommodationpage/footer/footer';
+import useFetch from '../../../../Hooks/usefetch';
 
 const RecentBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +17,7 @@ const RecentBlogs = () => {
     'Attraction Points',
     'Food',
     'Self Blog',
-    'Others'
+    'Others',
   ];
   const { data, loading, error } = useFetch(
     `http://localhost:3001/api/bloguser/recentBlogs`
@@ -33,20 +33,22 @@ const RecentBlogs = () => {
   }
 
   const blogPosts = data || [];
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category === 'All' ? null : category);
-  };
-
   // Sort the blogPosts array in descending order based on the 'date' property
-  const sortedBlogPosts = blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const sortedBlogPosts = blogPosts.sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
 
+  // If there's a selected category, filter the posts, else use all posts
   const filteredBlogPosts = selectedCategory
     ? sortedBlogPosts.filter((item) => item?.category === selectedCategory)
     : sortedBlogPosts;
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredBlogPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = filteredBlogPosts.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
 
   const pageNumbers = [];
 
@@ -58,15 +60,16 @@ const RecentBlogs = () => {
     <button
       key={number}
       onClick={() => setCurrentPage(number)}
-      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${currentPage === number ? 'bg-gray-500' : ''
-        }`}
+      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${
+        currentPage === number ? 'bg-gray-500' : ''
+      }`}
     >
       {number}
     </button>
   ));
 
   return (
-    <div className='min-h-screen bg-gray-100 text-gray-900'>
+    <div className="min-h-screen bg-gray-100 text-gray-900">
       <NavBar />
       <BlogMenu />
 
@@ -74,8 +77,10 @@ const RecentBlogs = () => {
         {categories.map((item) => (
           <button
             key={item}
-            className={`px-4 py-2 text-sm font-medium text-white hover:scale-105 duration-200 bg-[#2f5869ee] rounded mx-4 hover:shadow-md ${selectedCategory === item ? 'bg-[#0d2833]' : ''}`}
-            onClick={() => handleCategoryClick(item)}
+            className={`px-4 py-2 text-sm font-medium text-white hover:scale-105 duration-200 bg-[#2f5869ee] rounded mx-4 hover:shadow-md ${
+              selectedCategory === item ? 'bg-[#0d2833]' : ''
+            }`}
+            onClick={() => setSelectedCategory(item)}
           >
             {item}
           </button>
@@ -93,11 +98,17 @@ const RecentBlogs = () => {
             </p>
           </div>
         ) : (
-          currentPosts.map((item, index) => (
-
-            <div key={item?._id} className="flex flex-col justify-between max-w-sm md:max-w-md rounded  shadow-lg">
+          currentPosts.map((item) => (
+            <div
+              key={item?._id}
+              className="flex flex-col justify-between max-w-sm md:max-w-md rounded shadow-lg"
+            >
               <Link to={`/single-post/${item?._id}`} className="h-1/2">
-                <img className="w-full h-[220px]  rounded-t-lg" src={item.imageURL} />
+                <img
+                  className="w-full h-[220px] rounded-t-lg"
+                  src={item.imageURL}
+                  alt={item.title}
+                />
               </Link>
               <div className="px-4 py-5">
                 <Link to={`/single-post/${item?._id}`}>
@@ -108,33 +119,42 @@ const RecentBlogs = () => {
                     ? `${item.description.substring(0, 90)}...`
                     : item.description}
                 </p>
-                <div className="mt-3 mb-2 text-sm  text-gray-800">
-                  {moment(item.date).fromNow()}   {/* 'postedTime' field in the 'item' */}
+                <div className="mt-3 mb-2 text-sm text-gray-800">
+                  {moment(item.date).fromNow()}{' '}
+                  {/* 'postedTime' field in the 'item' */}
                 </div>
               </div>
 
               <div>
-                <div className=" flex items-end justify-around mb-9 ">
+                <div className="flex items-end justify-around mb-9">
                   <div className="inline-flex items-center px-3 py-1 text-sm font-medium text-center bg-[#478ca9b4] hover.bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark:hover-bg-green-700">
                     <Link to={`/single-post/${item?._id}`}>Read more</Link>
-                    <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    <svg
+                      className="w-3.5 h-3.5 ml-2"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 14 10"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9"
+                      />
                     </svg>
                   </div>
-                  <span className=" bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white">{item.category}</span>
+                  <span className=" bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white">
+                    {item.category}
+                  </span>
                 </div>
-
               </div>
-
             </div>
           ))
         )}
       </div>
-      <br></br>
-      <div className="flex justify-center mt-4">
-        {renderPageNumbers}
-      </div>
-      <br></br>
+      <div className="flex justify-center mt-4">{renderPageNumbers}</div>
       <Footer />
     </div>
   );
