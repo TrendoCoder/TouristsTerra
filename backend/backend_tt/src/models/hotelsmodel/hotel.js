@@ -3,6 +3,9 @@ var mongoose = require("mongoose");
 const {Schema} = mongoose;
 
 const HotelSchema = new mongoose.Schema({
+    userId:{
+        type:String,  
+    },
     name:{
         type: String,
         required:true
@@ -16,10 +19,6 @@ const HotelSchema = new mongoose.Schema({
         required:true
     },
     address:{
-        type: String,
-        required:true
-    },
-    distance:{
         type: String,
         required:true
     },
@@ -38,6 +37,9 @@ const HotelSchema = new mongoose.Schema({
         type: Number,
         min:0,
         max:5,
+    },
+    totalRooms:{
+        type:Number,
     },
     rooms:{
         type: [String],

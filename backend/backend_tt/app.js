@@ -111,7 +111,7 @@ const storageIdCardFrontPic = multer.diskStorage({
     cb(null, "public/images/idcardfrontpic");
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, req.body.name);
   },
 });
 const uploadIdCardFrontPic = multer({ storage: storageIdCardFrontPic });
@@ -133,7 +133,7 @@ const storageIdCardBackPic = multer.diskStorage({
     cb(null, "public/images/idcardbackpic");
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, req.body.name);
   },
 });
 const uploadIdCardBackPic = multer({ storage: storageIdCardBackPic });
@@ -148,6 +148,24 @@ app.post(
     }
   }
 );
+
+// store Hotel Image
+const storageHotelImage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/hotelimgs");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+const uploadHotelImg = multer({ storage: storageHotelImage });
+app.post("/api/upload/hotelimgs", uploadHotelImg.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File uploded successfully");
+  } catch (error) {
+    console.error(error);
+  }
+});
 app.use("/", indexRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
