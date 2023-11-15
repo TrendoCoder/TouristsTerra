@@ -222,18 +222,18 @@ const ShopHomePage = () => {
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </div>
                 </div>
-                <div id="small-menu">
+                <div className="flex gap-x-6 text-[#0F4157]" id="small-menu">
                   <Link to="/">
-                    <i class="fa-solid fa-house" id="small-menu-icon"></i>
+                    <i class="fa-solid fa-house fa-lg" id="small-menu-icon"></i>
                   </Link>
                   <Link to="/">
-                    <i class="fa-solid fa-message" id="small-menu-icon"></i>
+                    <i class="fa-solid fa-message fa-lg" id="small-menu-icon"></i>
                   </Link>
                   <Link to="/">
-                    <i class="fa-solid fa-bell" id="small-menu-icon"></i>
+                    <i class="fa-solid fa-bell fa-lg" id="small-menu-icon"></i>
                   </Link>
                   <Link to="/sign-up">
-                    <i class="fa-solid fa-user-tie" id="small-menu-icon"></i>
+                    <i class="fa-solid fa-user-tie fa-lg" id="small-menu-icon"></i>
                   </Link>
                 </div>
               </div>

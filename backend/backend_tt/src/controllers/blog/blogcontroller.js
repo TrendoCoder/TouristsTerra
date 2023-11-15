@@ -3,8 +3,8 @@ const _=require('lodash')
 const ObjectId = require('mongoose').Types.ObjectId;
 const cloudinary = require('cloudinary').v2;
 const {User} = require("../../models/userlogin/user")
-//GET all blogs from database
 
+//GET all blogs from database
 exports.getAllBlogs=async(req,res)=>{
     try {
       const blog = await Blog.find();
@@ -19,8 +19,7 @@ exports.getAllBlogs=async(req,res)=>{
 }
 
 
-//GET single blog from database @param blog_id
-
+//GET a single unique blog from database @param blog_id
 exports.getBlog = async (req, res) => {
   try {
     const blogId=req.params.id
@@ -31,25 +30,8 @@ exports.getBlog = async (req, res) => {
   }
 }
 
-//Get all blogs from database on a UserId
-// exports.getBlogsByUserId = async (req, res) => {
-//   try {
-//     const userId = req.params.userId;
 
-//     // Find the user based on the provided userId
-//     const user = await User.findOne({ userId });
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//       console.log(data)
-//     }
-//     // Find all blogs associated with the user
-//     const blogs = await Blog.find({ user: user._id });
-//     res.status(200).json(blogs);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Internal Server Error' });
-//   }
-// };
+//Get all blogs from database on a UserId
 exports.getBlogsByUserId = async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -65,7 +47,6 @@ exports.getBlogsByUserId = async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
-//POST new blog to database
 
 
 // Like and Unlike the blog @param id
@@ -79,6 +60,7 @@ exports.likeDislikeBlog = async (req, res, next) => {
     const userId = req.body.userId;
 
     if (!blog.likes.includes(userId)) {
+
       // If the user has not liked the post, add their ID to the likes array
       await blog.updateOne({ $push: { likes: userId } });
     } else {
@@ -101,32 +83,6 @@ exports.likeDislikeBlog = async (req, res, next) => {
   }
 };
 
-
-// exports.postLikeBlog = async(req,res)=>{
-//   try {
-//     const blogId=req.params.id
-//     const like=req.params.like
-//     if(like=="true")
-//     {
-//       const updatedBlog = await Blog.findByIdAndUpdate(
-//         blogId,
-//         { $inc: { likes: 1 } },
-//         { new: true }
-//       );
-//       res.status(200).json({message:"like",data:updatedBlog});
-//     }
-//     else{
-//       const updatedBlog = await Blog.findByIdAndUpdate(
-//         blogId,
-//         { $inc: { likes:-1 } },
-//         { new: true }
-//       );
-//       res.status(200).json({message:"unlike",data:updatedBlog});
-//     }
-//   } catch (err) {
-//     return res.status(500).json(err);
-//   }
-// }
 
 /**
  * 
@@ -154,6 +110,24 @@ exports.postCommentBlog=async(req,res)=>{
   }
 }
 
+//Get Recent Blogs
+exports.getRecentBlogs=async(req,res)=>{
+  const now = new Date();
+  console.log("now date",now)
+  now.setUTCHours(0, 0, 0, 0);
+  const updatedDate= now.toISOString();
+  console.log(updatedDate)
+  let data= await Blog.find({date:{$gt:updatedDate}})
+  console.log(data)
+  if(!_.isEmpty(data))
+  {
+    res.status(200).json(data)
+  }
+  else
+  {
+    res.status(200).json("No recent Blog found")
+  }
+}
 
 //-------- This code will transfer to Admin Pannel -----------
 
@@ -201,58 +175,45 @@ exports.deleteBlog = async (req, res) => {
   }
 };
 
-//Delete all blogs
-// exports.deleteAllBlogs = async (req, res) => {
-//   try {
-//     const userId = req.query.userId; 
-//     // Check if the user is authorized to delete all blogs (you can modify this logic)
-//     if (userId) {
-//       // Assuming there's a field in your Blog model that corresponds to the user ID
-//       await Blog.deleteMany({ userId: userId });
-//       res.status(200).json("All blogs deleted successfully");
-//     } else {
-//       res.status(403).json({ error: "Unauthorized to delete all blogs" });
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// };
-
 
 //UPDATE
 
-exports.updateBlog=async(req,res)=>{
+exports.updateBlog = async (req, res) => {
   try {
-    const blog = await Blog.findById(req.params.id);
-    if (blog.userId === req.body.userId) {
-      await Blog.updateOne({
-        $set: req.body,
-      });
-      res.status(200).json("This Blog has been updated");
+    const blogId = req.params.id;
+    const userId = req.query.userId; // Retrieve user ID from query parameters
+
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+
+    if (blog.userId === userId) {
+      const updatedBlog = await Blog.findByIdAndUpdate(
+        blogId,
+        {
+          title: req.body.title,
+          category: req.body.category,
+          description: req.body.description,
+          imageURL: req.body.imageURL,
+        },
+        { new: true } // Return the updated document
+      );
+
+      if (!updatedBlog) {
+        return res.status(404).json({ error: 'Blog post not found' });
+      }
+
+      res.status(200).json(updatedBlog);
     } else {
-      return res.status(404).json("You can update only Blog post");
+      res.status(403).json({ error: "Unauthorized to update this blog" });
     }
   } catch (err) {
-    return res.status(500).json(err);
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-}
+};
 
 
-exports.getRecentBlogs=async(req,res)=>{
-  const now = new Date();
-  console.log("now date",now)
-  now.setUTCHours(0, 0, 0, 0);
-  const updatedDate= now.toISOString();
-  console.log(updatedDate)
-  let data= await Blog.find({date:{$gt:updatedDate}})
-  console.log(data)
-  if(!_.isEmpty(data))
-  {
-    res.status(200).json(data)
-  }
-  else
-  {
-    res.status(200).json("No recent Blog found")
-  }
-}
+

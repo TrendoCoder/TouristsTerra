@@ -137,7 +137,7 @@ function SinglePost() {
           <div className="max-w-6xl px-10 py-6 mx-auto bg-gray-50">
             <a href="#_" className="block transition ease-out transform">
               <img
-                className="object-cover w-full shadow-sm h-full"
+                className="object-contain w-full h-90 mx-4 shadow-sm"
                 src={data.imageURL}
                 alt={data.title}
               />
@@ -150,47 +150,60 @@ function SinglePost() {
               </div>
             </div>
 
-            <div className="flex items-center justify-start mt-4 mb-4">
-              <div className="font-light text-gray-600">
-                <a
-                  href="#"
-                  className="flex items-center mt-6 mb-6"
-                >
-                  <img
-                    src="https://avatars.githubusercontent.com/u/71964085?v=4"
-                    alt="avatar"
-                    className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
-                  />
-                  <h1 className="font-semibold text-gray-700 hover:underline pr-4 border-r border-gray-500">
-                    Written by {data?.authorName}
-                  </h1>
-                </a>
-              </div>
-              <div className="flex justify-start font-semibold items-center pr-4 border-r border-gray-500">
-                <p className="text-m text-gray-900 ml-4">
-                  Posted: {" "}
-                </p>
-                <p className="text-m text-gray-900 ml-2 mr-03">
-                  {moment(data.date).fromNow()}{" "}
-                </p>
-              </div>
-              <div id="u-like" className="flex justify-around ml-4">
-                <div>
-                  {liked ? (
-                    <i
-                      className="fas fa-heart text-red-500 cursor-pointer"
-                      onClick={handleLike}
-                    ></i>
-                  ) : (
-                    <i className="far fa-heart cursor-pointer" onClick={handleLike}></i>
-                  )}{" "}
-                  <span>{like}</span>
+            <div className="flex max-w-5xl justify-start px-14 py-6 mx-auto bg-gray-50">
+              <div className="flex items-center justify-start mt-9 mb-1 border-t border-gray-400 .border-t-thin { border-width: 1px }">
+
+                <div className="font-light text-gray-600 ">
+                  <a
+                    href="#"
+                    className="flex items-center mt-2 mb-2"
+                  >
+                    <img
+                      src="https://avatars.githubusercontent.com/u/71964085?v=4"
+                      alt="avatar"
+                      className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
+                    />
+                    <h1 className="font-semibold text-gray-700 hover:underline pr-4 border-r border-gray-500">
+                      Written by {data?.authorName}
+                    </h1>
+                  </a>
                 </div>
+                <div className="flex justify-start font-semibold items-center pr-4 border-r border-gray-500">
+                  <p className="text-m text-gray-700 ml-4">
+                    Posted : {" "}
+                  </p>
+                  <p className="text-m text-gray-500 ml-2 mr-03 ">
+                    {moment(data.date).fromNow()}{" "}
+                  </p>
+                </div>
+                <div id="u-like" className="flex justify-around ml-4 pr-4 border-r border-gray-500">
+                  <i class="fa-regular fa-flag fa-4xs mt-1">
+                  </i>
+                  <p className="text-m text-gray-700 ml-2 mr-03 ">
+                    Report
+                  </p>
+
+                </div>
+                <div id="u-like" className="flex justify-around ml-4 ">
+                  <div>
+                    {liked ? (
+                      <i
+                        className="fas fa-heart text-red-500 cursor-pointer"
+                        onClick={handleLike}
+                      ></i>
+                    ) : (
+                      <i className="far fa-heart cursor-pointer" onClick={handleLike}></i>
+                    )}{" "}
+                    <span>{like}</span>
+                  </div>
+
+                </div>
+
               </div>
             </div>
 
-            <div className="flex ml-02">
-              <p className="px-1 py-1 font-bold  text-gray-700 ">
+            <div className="flex max-w-5xl justify-start px-14 py-3 mx-auto bg-gray-50">
+              <p className="px-13 py-1 font-bold  text-gray-700 ">
                 Category :
               </p>
               <p className="px-4 max-w-[160px] py-1 font-bold bg-red-400 text-white rounded-lg ml-3" >
