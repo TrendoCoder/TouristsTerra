@@ -2,6 +2,7 @@ const { User } = require("../../models/userlogin/user");
 var bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { createError } = require("../../utils/error");
+let otpGenerator = require("otp-generator");
 
 const register = async (req, res, next) => {
   try {
@@ -62,3 +63,70 @@ const login = async (req, res, next) => {
   }
 };
 module.exports.login = login;
+
+//otp generator
+const generateOtp = async (req,res)=>{
+  req.app.locals.OTP = await otpGenerator.generate(6,{lowerCaseAlphaber:false, upperCaseAlphabet:false, specialChars:false});
+  res.status(201).send({code: req.app.locals.OTP});
+}
+module.exports.generateOtp = generateOtp;
+
+//verifyOtp
+const verifyOtp = async(req,res)=>{
+  const {code}= req.query;
+  if(parseInt(req.app.locals.OTP)=== parseInt(code)){
+    res.app.locals.OTP = null;
+    res.app.locals.resetSession = true;
+    return res.status(200).send({msg:"Verify Successfully"});
+  }else {
+    return res.status(400).send({error:"Invalid OTP"});
+  }
+}
+module.exports.verifyOtp = verifyOtp;
+
+//create Reset Session
+const createResetSession = async(req,res)=>{
+  if(req.app.locals.resetSession){
+    req.app.locals.resetSession = false;
+    return res.status(201).send({msg: "Access"});
+  }
+  return res.status(400).send({msg: "Session Expried"});
+}
+module.exports.createResetSession = createResetSession;
+
+//resetPassword
+const resetPassword = async(req, res)=>{
+  try{
+    if(!req.app.locals.resetSession) return res.status(440).send({error:"Session Expired"});
+    const {email, password} = req.body;
+    try{
+      User.findOne({email})
+      .then(user=>{
+        bcrypt.hash(password,10)
+        .then( hashedPassword => {
+          User.updateOne({email: user.userName},{password:hashedPassword}, function(err,data){
+            if(err) throw err;
+            return res.status(201).send({msg:"Record Updated"});
+          })
+        })
+        .catch(e => {
+          return res.status(500).send({error:"Enable to hashed Password"}); 
+        })
+      })
+      .catch(error=>{
+        return res.status(404).send({error: "UserName Not Found"})
+      })
+    }catch(err){
+      return res.status(500).send({err})
+    }
+  }catch(err){
+    return res.status(401).send({err})
+  }
+}
+module.exports.resetPassword = resetPassword;
+
+//registed Mail
+const registerMail = async(req,res) => {
+
+}
+module.exports.registerMail = registerMail;

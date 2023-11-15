@@ -1,9 +1,22 @@
 const express = require("express");
-const { register, login } = require("../../../controllers/userlogin/auth");
+const {
+  register,
+  login,
+  verifyOtp,
+  generateOtp,
+  resetPassword,
+  createResetSession,
+  registerMail,
+} = require("../../../controllers/userlogin/auth");
+const { localVeriables, verifyUser } = require("../../../utils/verifytoken");
 
 let router = express.Router();
 
 router.post("/register", register);
 router.post("/loginUser", login);
-
+router.get("/otpGenerator",verifyUser, localVeriables, generateOtp);
+router.get("/verifyOtp", verifyOtp);
+router.get("/createResetSession", createResetSession);
+router.put("/resetPassword",resetPassword);
+router.post("/registerMail", registerMail);
 module.exports = router;

@@ -14,7 +14,7 @@ const {
   verifyAdmin,
 } = require("../../../utils/verifytoken");
 
-const router = express.Router();
+const router = express.Router();``
 
 router.get("/checkAuthentication", verifyToken, (req, res, next) => {
   res.send("Hello user, you are logged in");
