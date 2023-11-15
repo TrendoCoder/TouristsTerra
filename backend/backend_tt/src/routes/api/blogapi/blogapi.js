@@ -6,10 +6,11 @@ const blogpostcontroller = require("../../../controllers/blog/blogcontroller");
 router.get('/blogs',blogpostcontroller.getAllBlogs)
 router.get('/blog/:id',blogpostcontroller.getBlog)
 router.get('/blogs/user/:userId', blogpostcontroller.getBlogsByUserId);
+router.get("/recentBlogs", blogpostcontroller.getRecentBlogs);
 
 router.put("/like/:id",blogpostcontroller.likeDislikeBlog)
 router.post('/:id/comment',blogpostcontroller.postCommentBlog)
-router.get("/recentBlogs", blogpostcontroller.getRecentBlogs);
+router.post('/blogs/:id/report', blogpostcontroller.reportBlog);
 
 //These routes will be transfer to the admin portal
 router.post("/createblogs", blogpostcontroller.createBlog);

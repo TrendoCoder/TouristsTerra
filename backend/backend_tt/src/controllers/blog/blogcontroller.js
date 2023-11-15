@@ -129,6 +129,31 @@ exports.getRecentBlogs=async(req,res)=>{
   }
 }
 
+
+//Report a blog post
+
+exports.reportBlog = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+    // Assuming you have a 'reports' field in your Blog model to store reports
+    await blog.updateOne({
+      $push: {
+        reports: {
+          reason: req.body.reason,
+          reporter: req.body.userId,
+          name: req.body.name,
+        },
+      },
+    });
+
+    res.status(200).json("This blog has been reported");
+  } catch (error) {
+    console.error('Error reporting blog post:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+
 //-------- This code will transfer to Admin Pannel -----------
 
 // Create the new Blog
