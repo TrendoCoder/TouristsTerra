@@ -9,7 +9,7 @@ import useFetch from '../../../../Hooks/usefetch';
 const RecentBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 8;
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('All'); // Set the default category to "All"
   const categories = [
     'All',
     'Hotel',
@@ -32,14 +32,16 @@ const RecentBlogs = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const blogPosts = data || [];
+  // Make sure blogPosts is always an array
+  const blogPosts = Array.isArray(data) ? data : [];
+
   // Sort the blogPosts array in descending order based on the 'date' property
   const sortedBlogPosts = blogPosts.sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
   // If there's a selected category, filter the posts, else use all posts
-  const filteredBlogPosts = selectedCategory
+  const filteredBlogPosts = selectedCategory !== 'All'
     ? sortedBlogPosts.filter((item) => item?.category === selectedCategory)
     : sortedBlogPosts;
 
@@ -90,15 +92,16 @@ const RecentBlogs = () => {
       <h1 className="text-center mt-5 font-bold text-2xl text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-lg">
         Recent Blogs
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-10 mx-10">
-        {currentPosts.length === 0 ? (
-          <div className="text-center col-span-12">
-            <p className="mt-10 text-center font-semibold text-lg text-[#182f3a]">
-              No blog posts available for the selected category.
-            </p>
-          </div>
-        ) : (
-          currentPosts.map((item) => (
+
+      {filteredBlogPosts.length === 0 && selectedCategory !== 'All' ? (
+        <div className="text-center col-span-12 mt-10">
+          <p className="font-semibold text-lg text-[#182f3a]">
+            No blog posts available for the selected category.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-10 mx-10">
+          {currentPosts.map((item) => (
             <div
               key={item?._id}
               className="flex flex-col justify-between max-w-sm md:max-w-md rounded shadow-lg"
@@ -151,11 +154,11 @@ const RecentBlogs = () => {
                 </div>
               </div>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
       <div className="flex justify-center mt-4">{renderPageNumbers}</div>
-      <br/>
+      <br />
       <Footer />
     </div>
   );

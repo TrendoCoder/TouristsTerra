@@ -69,13 +69,13 @@ const AddBlogPost = () => {
     <div>
       <NavBar />
       <BlogMenu />
-      <div className="max-w-lg lg:mx-auto mx-auto mt-8">
-        <div className="py-2 px-4 rounded-md bg-white shadow-md">
+      <div className="max-w-xl xl:mx-auto mx-auto mt-8 bg-[#f7f7fdda] shadow-md">
+        <div className="py-2 px-8 rounded-md ">
           <form onSubmit={formik.handleSubmit}>
-            <div className="mb-4">
-              <h1 className="text-2xl font-semibold text-gray-900">Create a Blog</h1>
+            <div className="mb-8 text-center mt-2">
+              <h1 className="text-3xl font-semibold text-gray-900">Create a Blog</h1>
             </div>
-            <div className="grid grid-cols-1 gap-y-6">
+            <div className="grid grid-cols-1 gap-y-5">
               <div className="flex flex-col mb-4">
                 <TextField
                   label="Title *"
@@ -145,7 +145,7 @@ const AddBlogPost = () => {
                   onChange={formik.handleChange("description")}
                   variant="outlined"
                   multiline
-                  rows={14}  // number of rows to make the description box larger
+                  rows={17}  // number of rows to make the description box larger
                   fullWidth
                   error={formik.errors.description && formik.touched.description}
                   helperText={formik.errors.description && formik.touched.description && formik.errors.description}
