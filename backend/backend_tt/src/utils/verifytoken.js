@@ -35,3 +35,12 @@ const verifyAdmin = (req, res, next) => {
     });
   };
   module.exports.verifyAdmin = verifyAdmin;
+
+  const localVeriables = (req,res,next) => {
+    req.app.locals = {
+      OTP : null,
+      resetSession : false,
+    }
+    next();
+  }
+  module.exports.localVeriables = localVeriables;

@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./hoteladminhomepage.css";
 import useFetch from "../../../../../Hooks/usefetch";
-import pic from "../../../../../images/hotel.jpeg";
 import axios from "axios";
 import { AuthContext } from "../../../../../Context/authcontext";
 
@@ -27,17 +26,9 @@ const HotelAdminHomePage = () => {
   const [hotelDescriptionError, setHotelDescriptionError] = useState("");
   const [roomsError, setRoomsError] = useState("");
   const [cheapestPriceError, setCheapestPriceError] = useState("");
+  const [imageClicked, setImageClicked] = useState(false);
 
   const { data, loading } = useFetch("http://localhost:3001/api/hotels/");
-
-  const handleImageClick = () => {
-    document.getElementById("file").click();
-  };
-
-  const handleFileChange = (e) => {
-    const newFile = e.target.files[0];
-    setFile(newFile);
-  };
 
   const validateFields = () => {
     let isValid = true;
@@ -94,7 +85,8 @@ const HotelAdminHomePage = () => {
     return isValid;
   };
 
-  const handleAddHotelSubmit = async () => {
+  const handleAddHotelSubmit = async (e) => {
+    e.preventDefault();
     if (!validateFields() || !file) {
       alert("Please fill out all fields and upload an image.");
       return;
@@ -113,17 +105,18 @@ const HotelAdminHomePage = () => {
       featured: featured,
     };
 
-    const formData = new FormData();
-    const fileName = Date.now() + file.name;
-    formData.append("name", fileName);
-    formData.append("file", file);
-    newPost.photos = fileName;
-
-    try {
-      await axios.post("http://localhost:3001/api/upload/hotelimgs", formData);
-    } catch (err) {
-      console.error(err);
-      alert("Error found in uploading img");
+    if (file) {
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append("name", fileName);
+      data.append("file", file);
+      newPost.photos = fileName;
+      try {
+        await axios.post("http://localhost:3001/api/upload/hotelimgs", data);
+      } catch (err) {
+        console.error(err);
+        alert("Error found in uploading img");
+      }
     }
 
     try {
@@ -211,7 +204,7 @@ const HotelAdminHomePage = () => {
                       data.map((item, i) => (
                         <div id="list-all-hotels" key={i}>
                           <div id="hotel-imgs">
-                            <img src={pic} alt="" />
+                            <img src={PF + (item.photos || "/placeholder.png")} alt="" />
                           </div>
                           <div id="list-hotel-info">
                             <h3>
@@ -257,17 +250,20 @@ const HotelAdminHomePage = () => {
                   <img
                     src={
                       file
-                        ? URL.createObjectURL(file)
+                        ? imageClicked
+                          ? URL.createObjectURL(file)
+                          : PF + "/profileUpload.png"
                         : PF + "/profileUpload.png"
                     }
                     alt={PF + "/profileUpload.png"}
                     crossOrigin="anonymous"
-                    onClick={handleImageClick}
+                    onClick={() => file && setImageClicked(true)}
                   />
+
                   <input
                     type="file"
                     id="file"
-                    onChange={handleFileChange}
+                    onChange={(e) => setFile(e.target.files[0])}
                     accept=".png,.jpeg,.jpg"
                     style={{ display: "none" }}
                   />
@@ -330,7 +326,7 @@ const HotelAdminHomePage = () => {
                     <select onChange={(e) => setType(e.target.value)}>
                       <option value="Hotel">Hotel</option>
                       <option value="Local Hotel">Local Hotel</option>
-                      <option value="Appartment">Appartment</option>
+                      <option value="Apartment">Apartment</option>
                       <option value="Resort">Resort</option>
                       <option value="Villa">Villa</option>
                     </select>
