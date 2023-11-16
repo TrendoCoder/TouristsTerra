@@ -31,7 +31,6 @@ const register = async (req, res, next) => {
     next(err);
   }
 };
-
 module.exports.register = register;
 
 const login = async (req, res, next) => {
@@ -124,9 +123,3 @@ const resetPassword = async(req, res)=>{
   }
 }
 module.exports.resetPassword = resetPassword;
-
-//registed Mail
-const registerMail = async(req,res) => {
-
-}
-module.exports.registerMail = registerMail;

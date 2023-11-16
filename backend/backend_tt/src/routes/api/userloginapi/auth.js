@@ -6,8 +6,8 @@ const {
   generateOtp,
   resetPassword,
   createResetSession,
-  registerMail,
 } = require("../../../controllers/userlogin/auth");
+const {registerMail} = require("../../../controllers/userlogin/maller")
 const { localVeriables, verifyUser } = require("../../../utils/verifytoken");
 
 let router = express.Router();

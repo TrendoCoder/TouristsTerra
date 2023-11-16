@@ -1,13 +1,10 @@
 let nodemailer = require("nodemailer");
-let Mailgun = require("mailgen");
+let Mailgen = require("mailgen");
 let ENV = require("../../../config");
 
 let nodeConfig={
-    host: "smtp.forwardemail.net",
-    port: 465,
-    secure: true,
+    service:'gmail',
     auth: {
-      // TODO: replace `user` and `pass` values from <https://forwardemail.net>
       user: ENV.EMAIL,
       pass: ENV.PASSWORD,
     },
@@ -38,4 +35,10 @@ const registerMail = async(req,res)=>{
         subject: subject || "SignUp Succesfully",
         html:emailBody
     }
+    transporter.sendMail(message)
+    .then(()=>{
+        res.status(200).send("OTP send to you successfully");
+    })
+    .catch(error => res.status(500).send(err))
 }
+module.exports.registerMail = registerMail;
