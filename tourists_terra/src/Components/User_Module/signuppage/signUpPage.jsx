@@ -4,6 +4,8 @@ import "./signUpPage.css";
 import LoginImg from "../../../images/login-img.jpg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUpPage = () => {
   const [userName, setUserName] = useState("");
@@ -14,11 +16,12 @@ const SignUpPage = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [checkPolicy, setCheckPolicy] = useState(false);
   const [errors, setErrors] = useState({});
+  const [otp, setOtp] = useState("");
+  const [verification, setVerification] = useState(false);
   const navigate = useNavigate();
 
   const validate = () => {
     const errors = {};
-
     if (!email) {
       errors.email = "Email is required";
     } else {
@@ -28,27 +31,21 @@ const SignUpPage = () => {
         errors.email = "This is not a valid email format";
       }
     }
-
     if (!userName) {
       errors.userName = "Username is required";
     }
-    console.log(contact.length);
     if (!contact || contact.length !== 12) {
       errors.contact = "Enter Valid Contact";
     }
-
     if (!password) {
       errors.password = "Password is required";
     }
-
     if (password !== confirmPassword) {
       errors.confirmPassword = "Passwords do not match";
     }
-
     if (!checkPolicy) {
       errors.checkPolicy = "Please accept the Terms And Policies";
     }
-
     return errors;
   };
 
@@ -57,7 +54,6 @@ const SignUpPage = () => {
       .replace(/[^0-9]/g, "")
       .slice(0, 11)
       .replace(/(\d{4})(\d{0,7})(\d{0,4})/, "$1-$2$3");
-
     setContact(formattedContact);
   };
 
@@ -71,7 +67,6 @@ const SignUpPage = () => {
 
   const getPasswordStrength = () => {
     const length = password.length;
-
     if (length < 6) {
       return "Weak";
     } else if (length < 10) {
@@ -81,42 +76,95 @@ const SignUpPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     const fieldErrors = validate();
-
     if (Object.keys(fieldErrors).length > 0) {
       setErrors(fieldErrors);
       return;
     }
 
-    setIsAdmin(true);
-    axios
-      .post("http://localhost:3001/api/auth/register", {
-        email,
-        userName,
-        contact,
-        password,
-        isAdmin,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          localStorage.setItem("token", JSON.stringify(res.data.token));
-          alert("Successfully Account Created");
-          navigate("/login-user");
+    try {
+      const validateUser = await axios.get(
+        `http://localhost:3001/api/auth/alreadyRegister?userName=${userName}&email=${email}`
+      );
+      console.log(validateUser.status);
+      if (validateUser.status === 200) {
+        await otpGenerated();
+        if (verification) {
+          const res = await axios.post(
+            "http://localhost:3001/api/auth/register",
+            {
+              email,
+              userName,
+              contact,
+              password,
+              isAdmin,
+            }
+          );
+
+          if (res.status === 200) {
+            localStorage.setItem("token", JSON.stringify(res.data.token));
+            toast.success("Successfully Account Created");
+            setVerification(false);
+            navigate("/login-user");
+          } else {
+            toast.error("Sorry..Try Again");
+          }
         }
-      })
-      .catch((err) => {
-        if (err.response.status === 409) {
-          setErrors({ userName: "Username already exists" });
-        } else if (err.response.status === 900) {
-          setErrors({ email: "Email already exists" });
-        } else {
-          // Other errors
-          alert(err.message);
-        }
+      }
+    } catch (err) {
+      if (err.response && err.response.status === 409) {
+        setErrors({ userName: "Username already exists" });
+      } else if (err.response && err.response.status === 900) {
+        setErrors({ email: "Email already exists" });
+      } else {
+        toast.error(err.message);
+      }
+    }
+  };
+
+  const otpGenerated = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3001/api/auth/otpGenerator"
+      );
+      console.log("Otp Generated");
+      console.log("new otp:", response.data.code);
+      await axios.post("http://localhost:3001/api/auth/registerMail", {
+        userName: userName,
+        userEmail: email,
+        text: response.data.code,
+        subject: "OTP For Verification",
       });
+      toast.success("Otp sent to your email");
+      const enteredOtp = prompt("Enter the OTP sent to your email:");
+      if (enteredOtp) {
+        await verifyOtp(enteredOtp);
+      } else {
+        toast.error("You did not enter the OTP. Please try again.");
+      }
+    } catch (err) {
+      alert(err + "Some issue in generating or verifying Otp");
+    }
+  };
+
+  const verifyOtp = async (enteredOtp) => {
+    try {
+      console.log("entered otp" + enteredOtp);
+      const res = await axios.get(
+        `http://localhost:3001/api/auth/verifyOtp?code=${enteredOtp}`
+      );
+      console.log(res);
+      if (res.status === 200) {
+        toast.success("Correct Otp");
+        setVerification(true);
+      } else {
+        toast.error("Wrong Otp");
+      }
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (

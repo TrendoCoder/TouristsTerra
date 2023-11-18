@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./Components/User_Module/homepage/landingpage/landingPage";
 import AccommodationHome from "./Components/User_Module/accommodationpage/accommodationhome/accommodationhome";
@@ -25,7 +25,9 @@ import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost"
 import ProductDetail from "./Components/User_Module/shoppage/shophomepage/ProductDetail";
 import GuideDetails from "./Components/User_Module/localguidepage/localguidehome/guidedetail";
 import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider";
+import { AuthContext } from "./Context/authcontext";
 function App() {
+  const {user} = useContext(AuthContext);
   return (
     <div>
       <Router>

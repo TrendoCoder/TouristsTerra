@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./hoteladminhomepage.css";
 import useFetch from "../../../../../Hooks/usefetch";
 import axios from "axios";
@@ -27,7 +27,8 @@ const HotelAdminHomePage = () => {
   const [roomsError, setRoomsError] = useState("");
   const [cheapestPriceError, setCheapestPriceError] = useState("");
   const [imageClicked, setImageClicked] = useState(false);
-
+  const {dispatch} = useContext(AuthContext);
+  const navigate = useNavigate();
   const { data, loading } = useFetch("http://localhost:3001/api/hotels/");
 
   const validateFields = () => {
@@ -129,6 +130,11 @@ const HotelAdminHomePage = () => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    dispatch({ type: "LOGOUT"});
+    navigate("/login-user");
+  };
   return (
     <div id="hotel-admin-main-container">
       <div id="admin-nav">
@@ -139,9 +145,9 @@ const HotelAdminHomePage = () => {
           <Link to="/accommodation">
             <button id="switch-to-au-btn">Switch to User Mode</button>
           </Link>
-          <Link to="">
+          <div onClick={logout}>
             LogOut <i className="fa-solid fa-right-from-bracket"></i>
-          </Link>
+          </div>
         </div>
       </div>
       <div id="hotel-admin-container">
@@ -158,12 +164,10 @@ const HotelAdminHomePage = () => {
             </div>
           </Link>
 
-          <Link to="">
             <div id="dashboard-mini-heading" onClick={() => setClickNumber(2)}>
               <i className="fa-solid fa-list"></i>
               <h3>List of All Rooms</h3>
             </div>
-          </Link>
           <hr />
           <Link to="">
             <div id="dashboard-mini-heading" onClick={() => setClickNumber(3)}>
@@ -204,7 +208,10 @@ const HotelAdminHomePage = () => {
                       data.map((item, i) => (
                         <div id="list-all-hotels" key={i}>
                           <div id="hotel-imgs">
-                            <img src={PF + (item.photos || "/placeholder.png")} alt="" />
+                            <img
+                              src={PF + (item.photos || "/placeholder.png")}
+                              alt=""
+                            />
                           </div>
                           <div id="list-hotel-info">
                             <h3>
