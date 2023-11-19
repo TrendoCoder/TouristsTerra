@@ -44,10 +44,11 @@ border-radius: 5px;
 #leftbar-options:hover a, #leftbar-options:hover span{
     color: white;
 }
-#leftbar-options a{
+#leftbar-options>a{
     margin-left: 20px;
     color: rgba(0, 0, 0, 0.808);
 }
+
 .active-opt{
     border-left: 2px solid #0F4157;
     color: #0F4157;

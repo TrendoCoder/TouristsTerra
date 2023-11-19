@@ -64,7 +64,7 @@ const UploadSection = () => {
           <div id="shareOptions">
             <label htmlFor="file" id="shareOption">
               <PermMedia htmlColor="tomato" id="shareIcon" />
-              <span id="shareOptionText">Photo or Video</span>
+              <span id="shareOptionText">Photo</span>
               <input
                 style={{ display: "none" }}
                 type="file"

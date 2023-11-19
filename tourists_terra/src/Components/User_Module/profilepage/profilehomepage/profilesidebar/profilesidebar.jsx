@@ -79,7 +79,9 @@ const ProfileSideBar = () => {
             </Link>
         </div>
         <div id='leftbar-options' onClick={logout}>
-            LOGOUT
+        <Link>
+                LogOut
+            </Link>
         </div>
     </div>
     </div>
