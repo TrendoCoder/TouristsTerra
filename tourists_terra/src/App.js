@@ -25,6 +25,8 @@ import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost"
 import ProductDetail from "./Components/User_Module/shoppage/shophomepage/ProductDetail";
 import GuideDetails from "./Components/User_Module/localguidepage/localguidehome/guidedetail";
 import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider";
+import AdminHomePage from "./Components/adminmodule/adminhomepage/adminhomepage";
+
 function App() {
   return (
     <div>
@@ -62,7 +64,6 @@ function App() {
             {/*<Route path="my-blogs/:id" element={<MyBlogs />}></Route>*/}
             <Route path="single-post/:id" element={<SinglePost />}> </Route>
 
-           
             <Route path="sign-up" element={<SignUpPage />}></Route>
             <Route path="login-user" element={<LoginUser />}></Route>
             <Route
@@ -87,6 +88,7 @@ function App() {
             ></Route>
             <Route path="shop-home-page" element={<ShopHomePage />}></Route>
             <Route path="/product/:productId" element={<ProductDetail />} />
+            <Route path="admin-home-page" element={<AdminHomePage />}></Route>
           </Routes>
         </div>
       </Router>

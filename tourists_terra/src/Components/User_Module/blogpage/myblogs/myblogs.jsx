@@ -5,16 +5,9 @@ import BlogMenu from '../blogmenu/blogmenu';
 import Footer from '../../accommodationpage/footer/footer';
 import axios from 'axios';
 import moment from 'moment';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Dialog, Transition } from '@headlessui/react';
+import { Button } from '@mui/material';
+import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { AuthContext } from '../../../../Context/authcontext';
 
 const MyBlogs = () => {
@@ -22,8 +15,7 @@ const MyBlogs = () => {
   const postsPerPage = 9;
   const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [openMenuBlogId, setOpenMenuBlogId] = useState(null); // Track which blog's menu is open
+  const [openMenuBlogId, setOpenMenuBlogId] = useState(null);
   const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
@@ -66,12 +58,12 @@ const MyBlogs = () => {
 
   const handleDeleteDialogClose = () => {
     setSelectedBlog(null);
-    setOpenMenuBlogId(null); // Close menu on X click
+    setOpenMenuBlogId(null);
   };
 
   const handleDeleteBlog = async () => {
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `http://localhost:3001/api/bloguser/${selectedBlog?._id}?userId=${user?._id}`
       );
 
@@ -146,17 +138,16 @@ const MyBlogs = () => {
                       <div className="bg-white h-[2px] w-7 transform transition-all duration-300 origin-left group-focus:-rotate-[42deg]"></div>
                     </div>
                   </div>
-                  {openMenuBlogId === item._id && ( // Show menu only for the selected blog
+                  {openMenuBlogId === item._id && (
                     <div className="absolute group-hover:flex flex-col space-y-2 bg-white rounded-md shadow-md p-2 right-8 top-8">
-                      <EditIcon
+                      <AiOutlineEdit
                         className="cursor-pointer"
                         onClick={() => handleUpdateBlog(item._id)}
                       />
-                      <DeleteIcon
+                      <AiOutlineDelete
                         className="cursor-pointer"
                         onClick={() => {
                           handleDeleteDialogOpen(item);
-                          // Note: You might want to close the menu here if needed
                           setOpenMenuBlogId(null);
                         }}
                       />
@@ -188,8 +179,8 @@ const MyBlogs = () => {
                     <Link to={`/single-post/${item?._id}`}>Read more</Link>
                   </div>
                   <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mb-2 ml-2">
-                  {item.category}
-                </span>
+                    {item.category}
+                  </span>
                 </div>
               </div>
             </div>
@@ -201,27 +192,34 @@ const MyBlogs = () => {
       <div className="flex justify-center mt-4">
         {renderPageNumbers}
       </div>
-      <Dialog
-        open={Boolean(selectedBlog)}
-        onClose={handleDeleteDialogClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Delete Blog?"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this blog?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDeleteDialogClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleDeleteBlog} color="primary" autoFocus={false}>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+
+      <Transition show={Boolean(selectedBlog)} as={React.Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={handleDeleteDialogClose}
+        >
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+
+          <div className="flex items-center justify-center min-h-screen">
+            <Dialog.Content>
+              <div className="bg-white p-4 rounded-md shadow-md">
+                <Dialog.Title>Delete Blog?</Dialog.Title>
+                <p>Are you sure you want to delete this blog?</p>
+                <Dialog.Actions>
+                  <Button onClick={handleDeleteDialogClose} color="primary">
+                    Cancel
+                  </Button>
+                  <Button onClick={handleDeleteBlog} color="primary" autoFocus={false}>
+                    Delete
+                  </Button>
+                </Dialog.Actions>
+              </div>
+            </Dialog.Content>
+          </div>
+        </Dialog>
+      </Transition>
+
       <br />
       <Footer />
     </div>
