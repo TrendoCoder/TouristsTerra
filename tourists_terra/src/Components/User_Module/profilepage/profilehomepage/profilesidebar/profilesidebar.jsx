@@ -1,10 +1,16 @@
 import React, { useContext } from 'react'
 import './profilesidebar.css'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../../Context/authcontext'
 const ProfileSideBar = () => {
     
-    const {user}  = useContext(AuthContext);
+    const {user, dispatch}  = useContext(AuthContext);
+    const navigate = useNavigate();
+    const logout = ()=>{
+        localStorage.removeItem("token");
+        dispatch({ type: "LOGOUT"});
+        navigate("/login-user");
+    }
   return (
     <>
     <div id="leftbar-main-container">
@@ -70,6 +76,11 @@ const ProfileSideBar = () => {
         <div id="leftbar-options">
             <Link to="/">
                 Upcoming Trips
+            </Link>
+        </div>
+        <div id='leftbar-options' onClick={logout}>
+        <Link>
+                LogOut
             </Link>
         </div>
     </div>

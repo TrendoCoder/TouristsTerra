@@ -40,6 +40,7 @@ margin-bottom: 10px;
     outline: none;
     border-radius: 5px;
     color: #0F4157;
+    text-transform: capitalize;
 }
 #isItem>span{
     height: 30px;

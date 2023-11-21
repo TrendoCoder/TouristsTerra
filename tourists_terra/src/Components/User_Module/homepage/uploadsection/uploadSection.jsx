@@ -68,8 +68,10 @@ const UploadSection = () => {
         <form id="shareBottom" onSubmit={submitHandler}>
           <div id="shareOptions">
             <label htmlFor="file" id="shareOption">
+
               <FaRegImage htmlColor="tomato" id="shareIcon" />
               <span id="shareOptionText">Photo or Video</span>
+
               <input
                 style={{ display: "none" }}
                 type="file"

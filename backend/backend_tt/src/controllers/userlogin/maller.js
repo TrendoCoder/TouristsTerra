@@ -15,7 +15,7 @@ let transporter = nodemailer.createTransport(nodeConfig);
 let MailGenerator = new Mailgen({
     theme:"default",
     product:{
-        name:"Mailgen",
+        name:"Tourists Terra",
         link:"https://mailgen.js"
     }
 })

@@ -29,6 +29,7 @@
 #acc-search-section-input{
     border: none;
     outline: none;
+    text-transform: capitalize;
 }
 #acc-search-section-btn{
     background-color: #0F4157;

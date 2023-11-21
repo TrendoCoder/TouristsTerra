@@ -141,6 +141,11 @@
         flex: 6;
     }
 }
+#otp-enter-container{
+    background-color: black;
+    height: 100vh;
+    color: white;
+}
 @media screen and (max-width: 653px) {
     #signup-container-lite{
         padding: 0px 20px;

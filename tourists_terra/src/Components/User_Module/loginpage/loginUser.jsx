@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./loginUser.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -14,10 +14,8 @@ const LoginUser = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const { user, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
     setError("");
@@ -27,19 +25,17 @@ const LoginUser = () => {
     e.preventDefault();
     setLoading(true);
     dispatch({ type: "LOGIN_START" });
-
     if (!credentials.email || !credentials.password) {
       setError("Email and Password cannot be empty");
       setLoading(false);
       return;
     }
-
     try {
       const res = await axios.post(
         "http://localhost:3001/api/auth/loginUser",
         credentials
       );
-      localStorage.setItem("username",res.data.userName)
+      localStorage.setItem("token", res.data.token);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
       navigate("/");
     } catch (err) {
@@ -48,7 +44,6 @@ const LoginUser = () => {
     }
     setLoading(false);
   };
-
   return (
     <div id="login-container">
       <div id="login-container-lite">

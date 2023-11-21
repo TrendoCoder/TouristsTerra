@@ -8,7 +8,6 @@ import { AuthContext } from "../../../../Context/authcontext";
 const FeedSection = ({ username }) => {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(AuthContext);
-  console.log(username);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
