@@ -20,6 +20,7 @@ import BlogHomePage from "./Components/User_Module/blogpage/bloghomepage/bloghom
 import PopularBlogs from "./Components/User_Module/blogpage/popularblogs/popularblogs";
 import RecentBlogs from "./Components/User_Module/blogpage/recentblogs/recentblogs";
 import MyBlogs from "./Components/User_Module/blogpage/myblogs/myblogs";
+import BlogMenu from "./Components/User_Module/blogpage/blogmenu/blogmenu";
 import UpdateBlogPost from "./Components/User_Module/blogpage/updateblogpost/updateblogpost";
 import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost";
 import ProductDetail from "./Components/User_Module/shoppage/shophomepage/ProductDetail";
@@ -63,6 +64,7 @@ function App() {
             <Route path="/update-blog/:id" element={<UpdateBlogPost />} />
             {/*<Route path="my-blogs/:id" element={<MyBlogs />}></Route>*/}
             <Route path="single-post/:id" element={<SinglePost />}> </Route>
+            <Route path="blog-menu" element={<BlogMenu />}></Route>
 
             <Route path="sign-up" element={<SignUpPage />}></Route>
             <Route path="login-user" element={<LoginUser />}></Route>
