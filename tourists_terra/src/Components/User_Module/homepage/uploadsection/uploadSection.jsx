@@ -1,10 +1,11 @@
 import React from "react";
 import "./uploadSection.css";
-import { PermMedia, Cancel } from "@mui/icons-material";
+import { FaRegImage, FaRegTimesCircle } from 'react-icons/fa'; // Import icons from react-icons
 import { useContext, useRef, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../../Context/authcontext";
 import pic from "../../../../images/profile.jpeg";
+
 const UploadSection = () => {
   const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -33,6 +34,7 @@ const UploadSection = () => {
       window.location.reload();
     } catch (err) {}
   };
+
   return (
     <div id="share">
       <div id="shareWrapper">
@@ -57,14 +59,19 @@ const UploadSection = () => {
         {file && (
           <div id="shareImgContainer">
             <img id="shareImg" src={URL.createObjectURL(file)} alt="" />
-            <Cancel id="shareCancelImg" onClick={() => setFile(null)} />
+            <FaRegTimesCircle
+              id="shareCancelImg"
+              onClick={() => setFile(null)}
+            />
           </div>
         )}
         <form id="shareBottom" onSubmit={submitHandler}>
           <div id="shareOptions">
             <label htmlFor="file" id="shareOption">
-              <PermMedia htmlColor="tomato" id="shareIcon" />
-              <span id="shareOptionText">Photo</span>
+
+              <FaRegImage htmlColor="tomato" id="shareIcon" />
+              <span id="shareOptionText">Photo or Video</span>
+
               <input
                 style={{ display: "none" }}
                 type="file"
@@ -73,18 +80,7 @@ const UploadSection = () => {
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </label>
-            {/* <div id="shareOption">
-              <Label htmlColor="blue" id="shareIcon" />
-              <span id="shareOptionText">Tag</span>
-            </div>
-            <div id="shareOption">
-              <Room htmlColor="green" id="shareIcon" />
-              <span id="shareOptionText">Location</span>
-            </div>
-            <div id="shareOption">
-              <EmojiEmotions htmlColor="goldenrod" id="shareIcon" />
-              <span id="shareOptionText">Feelings</span>
-            </div> */}
+            {/* Add more icons as needed */}
           </div>
           <button id="shareButton" type="submit">
             Share

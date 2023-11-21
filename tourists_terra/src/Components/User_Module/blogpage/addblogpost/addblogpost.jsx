@@ -1,16 +1,15 @@
-import React, {useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Button, MenuItem, Select, TextField, InputLabel, FormControl } from "@material-ui/core";
 import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
-import {AuthContext} from "../../../../Context/authcontext"
+import { AuthContext } from "../../../../Context/authcontext";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
 const AddBlogPost = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   console.log(user);
   const [image, setImage] = useState("");
   const handleImageChange = (e) => {
@@ -31,27 +30,30 @@ const AddBlogPost = () => {
     try {
       // Upload the image to Cloudinary
       const formData = new FormData();
-      values.userId = user._id; 
-      formData.append('file', image);
-      formData.append('upload_preset', 'oj2mvysk'); // Replace with your Cloudinary upload preset
+      values.userId = user._id;
+      formData.append("file", image);
+      formData.append("upload_preset", "oj2mvysk"); // Replace with your Cloudinary upload preset
       const cloudinaryResponse = await axios.post(
-        'https://api.cloudinary.com/v1_1/dw82alf1o/image/upload',
+        "https://api.cloudinary.com/v1_1/dw82alf1o/image/upload",
         formData
       );
       const imageUrl = cloudinaryResponse.data.secure_url;
       // Add the Cloudinary image URL to the form data
       values.imageURL = imageUrl;
-      values.authorName = localStorage.getItem("username")
+      values.authorName = localStorage.getItem("username");
       console.log(values);
-      const response = await axios.post("http://127.0.0.1:3001/api/bloguser/createblogs", values);
+      const response = await axios.post(
+        "http://127.0.0.1:3001/api/bloguser/createblogs",
+        values
+      );
 
-      console.log('API Response:', response.data);
-      alert('Blog posted successfully');
+      console.log("API Response:", response.data);
+      alert("Blog posted successfully");
       resetForm();
-      navigate('/my-blogs');
+      navigate("/my-blogs");
     } catch (error) {
-      console.error('API Error:', error);
-      alert('An error occurred while posting the blog');
+      console.error("API Error:", error);
+      alert("An error occurred while posting the blog");
     }
   };
 
@@ -73,53 +75,62 @@ const AddBlogPost = () => {
         <div className="py-2 px-8 rounded-md ">
           <form onSubmit={formik.handleSubmit}>
             <div className="mb-8 text-center mt-2">
-              <h1 className="text-3xl font-semibold text-gray-900">Create a Blog</h1>
+              <h1 className="text-3xl font-semibold text-gray-900">
+                Create a Blog
+              </h1>
             </div>
             <div className="grid grid-cols-1 gap-y-5">
               <div className="flex flex-col mb-4">
-                <TextField
-                  label="Title *"
+                <input
+                  type="text"
                   id="title"
                   name="title"
                   placeholder="Title"
                   value={formik.values.title}
                   onBlur={formik.handleBlur("title")}
                   onChange={formik.handleChange("title")}
-                  variant="outlined"
-                  fullWidth
-                  error={formik.errors.title && formik.touched.title}
-                  helperText={formik.errors.title && formik.touched.title && formik.errors.title}
+                  className="border p-2 rounded-md w-full"
                 />
+                {formik.errors.title && formik.touched.title && (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.title}
+                  </div>
+                )}
               </div>
               <div className="flex flex-col mb-4">
-                <FormControl variant="outlined" fullWidth>
-                  <InputLabel id="category-label">Category *</InputLabel>
-                  <Select
-                    labelId="category-label"
+                <div className="w-full">
+                  <label htmlFor="category" className="text-gray-700">
+                    Category *
+                  </label>
+                  <select
                     id="category"
                     name="category"
                     value={formik.values.category}
                     onBlur={formik.handleBlur("category")}
                     onChange={formik.handleChange("category")}
-                    label="Category *"
+                    className="mt-1 p-2 border rounded-md w-full"
                   >
-                    <MenuItem value="" disabled>
+                    <option value="" disabled>
                       Select Category of Blog
-                    </MenuItem>
-                    <MenuItem value="Hotel">Hotel</MenuItem>
-                    <MenuItem value="Restaurant">Restaurant</MenuItem>
-                    <MenuItem value="Food">Food</MenuItem>
-                    <MenuItem value="Attraction Points">Attraction Points</MenuItem>
-                    <MenuItem value="Self Blog">Self Blog</MenuItem>
-                    <MenuItem value="Others">Others</MenuItem>
-                  </Select>
-                </FormControl>
+                    </option>
+                    <option value="Hotel">Hotel</option>
+                    <option value="Restaurant">Restaurant</option>
+                    <option value="Food">Food</option>
+                    <option value="Attraction Points">Attraction Points</option>
+                    <option value="Self Blog">Self Blog</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
                 {formik.errors.category && formik.touched.category && (
-                  <div className="text-red-500 text-sm">{formik.errors.category}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.category}
+                  </div>
                 )}
               </div>
               <div className="flex flex-col mb-4">
-                <InputLabel className="mb-2" htmlFor="avatar">Select an image from your device (JPEG, JPG, PNG):</InputLabel>
+                <label htmlFor="avatar" className="mb-2">
+                  Select an image from your device (JPEG, JPG, PNG):
+                </label>
                 <input
                   type="file"
                   id="avatar"
@@ -128,46 +139,50 @@ const AddBlogPost = () => {
                   className="w-full bg-gray-100 border-b border-black rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
                 />
                 {formik.errors.image && formik.touched.image && (
-                  <div className="text-red-500 text-sm">{formik.errors.image}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.image}
+                  </div>
                 )}
                 {image && (
-                  <img className="w-10 h-10 rounded-full mt-2" src={URL.createObjectURL(image)} alt="Rounded avatar" />
+                  <img
+                    className="w-10 h-10 rounded-full mt-2"
+                    src={URL.createObjectURL(image)}
+                    alt="Rounded avatar"
+                  />
                 )}
               </div>
               <div className="flex flex-col mb-2">
-                <TextField
-                  label="Enter Blog here *"
+                <textarea
                   id="description"
                   name="description"
                   placeholder="Enter Blog here ..."
                   value={formik.values.description}
                   onBlur={formik.handleBlur("description")}
                   onChange={formik.handleChange("description")}
-                  variant="outlined"
-                  multiline
-                  rows={17}  // number of rows to make the description box larger
-                  fullWidth
-                  error={formik.errors.description && formik.touched.description}
-                  helperText={formik.errors.description && formik.touched.description && formik.errors.description}
+                  className="border p-2 rounded-md w-full"
+                  rows={17}
                 />
+                {formik.errors.description && formik.touched.description && (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.description}
+                  </div>
+                )}
               </div>
               <div className="my-1">
-                <Button
+                <button
                   type="submit"
-                  variant="contained"
-                  style={{ backgroundColor: "#0f4157", color: "white" }}
-                  className="w-full hover:bg-[#14262e] transition duration-300 "
+                  className="bg-[#0f4157] text-white w-full py-2 px-4 rounded-md hover:bg-[#14262e] transition duration-300"
                 >
                   Post Blog
-                </Button>
+                </button>
               </div>
             </div>
           </form>
-          <br/>
+          <br />
         </div>
-        <br/>
+        <br />
       </div>
-      <br/>
+      <br />
       <Footer />
     </div>
   );

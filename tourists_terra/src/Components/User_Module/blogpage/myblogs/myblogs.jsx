@@ -1,29 +1,21 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../../homepage/navbar/navBar';
 import BlogMenu from '../blogmenu/blogmenu';
 import Footer from '../../accommodationpage/footer/footer';
 import axios from 'axios';
 import moment from 'moment';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { FaEdit } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
 import { AuthContext } from '../../../../Context/authcontext';
+import { Dialog, Transition } from '@headlessui/react';
 
 const MyBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 9;
   const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [openMenuBlogId, setOpenMenuBlogId] = useState(null); // Track which blog's menu is open
+  const [openMenuBlogId, setOpenMenuBlogId] = useState(null);
   const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
@@ -140,23 +132,22 @@ const MyBlogs = () => {
               <div className="absolute top-0 right-0 p-2">
                 <button className="relative group" onClick={() => handleMenuToggle(item._id)}>
                   <div className="relative flex overflow-hidden items-center justify-center rounded-full w-[30px] h-[30px] transform transition-all bg-slate-700 ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
-                    <div className="flex flex-col justify-between w-[15px] h-[15px] transform transition-all duration-300 origin-center overflow-hidden">
-                      <div className="bg-white h-[2px] w-7 transform transition-all duration-300 origin-left group-focus:rotate-[42deg]"></div>
+                    <div className="flex flex-col justify-between w-[18px] h-[18px] transform transition-all duration-300 origin-center overflow-hidden">
+                      <div className="bg-white h-[2px] w-9 transform transition-all duration-300 origin-left group-focus:rotate-[42deg]"></div>
                       <div className="bg-white h-[2px] w-1/2 rounded transform transition-all duration-300 group-focus:-translate-x-10"></div>
-                      <div className="bg-white h-[2px] w-7 transform transition-all duration-300 origin-left group-focus:-rotate-[42deg]"></div>
+                      <div className="bg-white h-[2px] w-9 transform transition-all duration-300 origin-left group-focus:-rotate-[42deg]"></div>
                     </div>
                   </div>
-                  {openMenuBlogId === item._id && ( // Show menu only for the selected blog
+                  {openMenuBlogId === item._id && (
                     <div className="absolute group-hover:flex flex-col space-y-2 bg-white rounded-md shadow-md p-2 right-8 top-8">
-                      <EditIcon
-                        className="cursor-pointer"
+                      <FaEdit
+                        className="cursor-pointer text-2xl"
                         onClick={() => handleUpdateBlog(item._id)}
                       />
-                      <DeleteIcon
-                        className="cursor-pointer"
+                      <MdDelete
+                        className="cursor-pointer text-2xl"
                         onClick={() => {
                           handleDeleteDialogOpen(item);
-                          // Note: You might want to close the menu here if needed
                           setOpenMenuBlogId(null);
                         }}
                       />
@@ -188,8 +179,8 @@ const MyBlogs = () => {
                     <Link to={`/single-post/${item?._id}`}>Read more</Link>
                   </div>
                   <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mb-2 ml-2">
-                  {item.category}
-                </span>
+                    {item.category}
+                  </span>
                 </div>
               </div>
             </div>
@@ -201,27 +192,44 @@ const MyBlogs = () => {
       <div className="flex justify-center mt-4">
         {renderPageNumbers}
       </div>
-      <Dialog
-        open={Boolean(selectedBlog)}
-        onClose={handleDeleteDialogClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Delete Blog?"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this blog?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDeleteDialogClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleDeleteBlog} color="primary" autoFocus={false}>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+
+      {/* Headless UI Dialog */}
+      <Transition show={Boolean(selectedBlog)} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-50 overflow-hidden flex items-center justify-center"
+          onClose={handleDeleteDialogClose}
+        >
+          <div className="relative mx-auto my-6 max-w-sm">
+            <Dialog.Overlay className="fixed bg-gray-500 bg-opacity-75 transition-opacity" />
+
+            <div className="bg-white p-6 rounded shadow-md">
+              <Dialog.Title className="text-lg font-semibold">
+                Delete Blog?
+              </Dialog.Title>
+              <div className="mt-2">
+                <p>Are you sure you want to delete this blog?</p>
+              </div>
+
+              <div className="mt-4 flex justify-end">
+                <button
+                  onClick={handleDeleteBlog}
+                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={handleDeleteDialogClose}
+                  className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 focus:outline-none focus:ring focus:ring-blue-500"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+
       <br />
       <Footer />
     </div>
