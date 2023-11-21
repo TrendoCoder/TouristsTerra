@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./Components/User_Module/homepage/landingpage/landingPage";
 import AccommodationHome from "./Components/User_Module/accommodationpage/accommodationhome/accommodationhome";
@@ -25,13 +25,14 @@ import UpdateBlogPost from "./Components/User_Module/blogpage/updateblogpost/upd
 import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost";
 import ProductDetail from "./Components/User_Module/shoppage/shophomepage/ProductDetail";
 import GuideDetails from "./Components/User_Module/localguidepage/localguidehome/guidedetail";
+import Cart from "./Components/User_Module/shoppage/shophomepage/Cart";
 import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider";
 
 import AdminHomePage from "./Components/adminmodule/adminhomepage/adminhomepage";
 import { AuthContext } from "./Context/authcontext";
 
 function App() {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   return (
     <div>
       <Router>
@@ -66,7 +67,9 @@ function App() {
             <Route path="my-blogs" element={<MyBlogs />}></Route>
             <Route path="/update-blog/:id" element={<UpdateBlogPost />} />
             {/*<Route path="my-blogs/:id" element={<MyBlogs />}></Route>*/}
-            <Route path="single-post/:id" element={<SinglePost />}> </Route>
+            <Route path="single-post/:id" element={<SinglePost />}>
+              {" "}
+            </Route>
             <Route path="blog-menu" element={<BlogMenu />}></Route>
 
             <Route path="sign-up" element={<SignUpPage />}></Route>
@@ -93,6 +96,7 @@ function App() {
             ></Route>
             <Route path="shop-home-page" element={<ShopHomePage />}></Route>
             <Route path="/product/:productId" element={<ProductDetail />} />
+            <Route path="/cart/:productId" element={<Cart />} />
             <Route path="admin-home-page" element={<AdminHomePage />}></Route>
           </Routes>
         </div>
