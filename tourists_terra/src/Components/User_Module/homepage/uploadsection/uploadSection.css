@@ -88,8 +88,8 @@
 
 #shareCancelImg{
   position: absolute;
-  top: 0;
-  right: 20px;
+  top: 10px;
+  right: 30px;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.9;
 }

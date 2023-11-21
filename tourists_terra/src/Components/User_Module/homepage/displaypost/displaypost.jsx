@@ -17,6 +17,8 @@ const DisplayPost = ({ posts }) => {
   const [report, setReport] = useState();
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [editedDesc, setEditedDesc] = useState(posts.desc);
+  const [editedImage, setEditedImage] = useState(null);
   const { user: currentUser } = useContext(AuthContext);
   console.log(openReport);
   useEffect(() => {
@@ -173,7 +175,48 @@ const DisplayPost = ({ posts }) => {
           </div>
         </div>
       )}
-      {openEdit && <div id="Open-report"></div>}
+      {openEdit && <div id="Open-report">
+      <div id="rep-post-container">
+        <div id="rep-edit-wrapper">
+        <h2>Edit Your Post</h2>
+        <div id="rep-edit-wrapper-sec-one">
+        <i
+                  class="fa-solid fa-circle-xmark fa-beat"
+                  style={{ color: "#ff1900" }}
+                  onClick={() => {
+                    setOpenEdit(false);
+                  }}
+                ></i>
+        </div>
+        <div id="rep-edit-wrapper-sec-two">
+                <label>Post Description:</label>
+                <input
+                  type="text"
+                  value={editedDesc}
+                  onChange={(e) => setEditedDesc(e.target.value)}
+                />
+              </div>
+              <div id="rep-edit-wrapper-sec-three">
+                <label>Image:</label>
+                <img
+                  src={
+                    editedImage
+                      ? URL.createObjectURL(editedImage)
+                      : PF+"/profileUpload.png"
+                  }
+                  alt=""
+                />
+                <input
+                  type="file"
+                  onChange={(e) => setEditedImage(e.target.files[0])}
+                />
+              </div>
+              {/* <div id="rep-edit-wrapper-sec-four">
+                <button onClick={handleEditSubmit}>Submit</button>
+              </div> */}
+        </div>
+      </div>
+      </div>}
       {openDelete && (
         <div id="Open-report">
           <div id="rep-post-container">
