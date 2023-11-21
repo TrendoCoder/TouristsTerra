@@ -1,0 +1,5 @@
+.blur {
+    filter: blur(4px); /* Adjust the blur strength as needed */
+    pointer-events: none; /* Allow click-through on the blurred background */
+  }
+  
