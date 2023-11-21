@@ -41,7 +41,7 @@ const ProfilePage = () => {
       )}
       <div id="mainn-container">
         <div id="profilesidebar-div">
-          <ProfileSideBar />
+          <ProfileSideBar user={user} />
         </div>
         <div id="profile-main-div">
           <div id="mini-nav">

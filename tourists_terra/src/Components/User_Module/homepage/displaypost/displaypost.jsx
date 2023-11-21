@@ -44,10 +44,17 @@ const DisplayPost = ({ posts }) => {
   const handleEllipsisClick = () => {
     setShowOptions(!showOptions);
   };
-  const handleDeletePost = async() =>{
-    await axios.delete(`http://localhost:3001/api/post/${posts._id}`, {userId: currentUser._id})
-    window.location.reload();
-  }
+  const handleDeletePost = async () => {
+    try{
+      await axios.delete(`http://localhost:3001/api/post/${posts._id}?userId=${currentUser._id}`);
+      alert("Deleted successfully");
+      window.location.reload();
+    }catch(err){
+      alert(err)
+    }
+    
+  };
+  
   return (
     <div id="main-container-feed">
       <div id="u-info">
@@ -72,16 +79,17 @@ const DisplayPost = ({ posts }) => {
           </div>
           {showOptions && (
             <div id="post-report-dropdown">
-              <div
+              {currentUser._id !== posts.userId?<><div
                 onClick={() => {
                   setOpenReport(true);
                 }}
               >
                 <span>Report{"  "}</span>
                 <i class="fa-solid fa-flag"></i>
-              </div>
-
-              <div
+              </div></>:<></>
+              }
+{currentUser._id === posts.userId?
+              <><div
                 onClick={() => {
                   setOpenEdit(true);
                 }}
@@ -97,7 +105,7 @@ const DisplayPost = ({ posts }) => {
               >
                 <span>Delete{"  "}</span>
                 <i class="fa-solid fa-trash"></i>
-              </div>
+              </div></>:<></>}
             </div>
           )}
         </div>
@@ -181,12 +189,17 @@ const DisplayPost = ({ posts }) => {
               </div>
               <div id="del-post-wrapper-sec-two">
                 <span>Are you sure you want to delete this post?</span>
-                <button id="del-post-wrapper-sec-two-btn1" onClick={handleDeletePost}>Yes</button>
+                <button
+                  id="del-post-wrapper-sec-two-btn1"
+                  onClick={handleDeletePost}
+                >
+                  Yes
+                </button>
                 <button
                   onClick={() => {
                     setOpenDelete(false);
                   }}
-                  id='del-post-wrapper-sec-two-btn2'
+                  id="del-post-wrapper-sec-two-btn2"
                 >
                   No
                 </button>

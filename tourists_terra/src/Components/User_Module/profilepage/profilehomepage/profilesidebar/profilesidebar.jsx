@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import './profilesidebar.css'
 import { Link,useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../../Context/authcontext'
-const ProfileSideBar = () => {
+const ProfileSideBar = ({user}) => {
     
-    const {user, dispatch}  = useContext(AuthContext);
+    const {user:currentUser, dispatch}  = useContext(AuthContext);
     const navigate = useNavigate();
     const logout = ()=>{
         localStorage.removeItem("token");
@@ -14,7 +14,15 @@ const ProfileSideBar = () => {
   return (
     <>
     <div id="leftbar-main-container">
+   {user._id === currentUser._id?<></>:
+   <><div>
+        <button>Follow</button>
+    </div>
+    <div>
+        <button>UnFollow</button>
+    </div></>}
     <div id='leftbar-info-container'>
+  
         <div id="leftbar-options" className='active-opt'>
             <Link to="/">
                 Profile
@@ -24,7 +32,7 @@ const ProfileSideBar = () => {
             <Link to="/">
                 Friends
             </Link>
-            <span>940</span>
+            <span>{user.followers.length}</span>
         </div>
         <div id="leftbar-options">
             <Link to="/">
@@ -36,13 +44,13 @@ const ProfileSideBar = () => {
             <Link to="/">
                 Followers
             </Link>
-                <span>234</span>
+                <span>{user.followers.length}</span>
         </div>
         <div id="leftbar-options">
             <Link to="/">
                 Following
             </Link>
-            <span>10</span>
+            <span>{user.following.length}</span>
         </div>
         <div id="leftbar-options">
             <Link to={`/edit-user-profile/${user._id}`}>
@@ -61,13 +69,13 @@ const ProfileSideBar = () => {
             </Link>
             <span>10</span>
         </div>
-        <div id="leftbar-options">
+        {/* <div id="leftbar-options">
             <Link to="/">
                 Videos
             </Link>
             <span>2</span>
-        </div>
-        <div id="leftbar-options">
+        </div> */}
+        {/* <div id="leftbar-options">
             <Link to="/">
                 Trip History
             </Link>
@@ -77,7 +85,7 @@ const ProfileSideBar = () => {
             <Link to="/">
                 Upcoming Trips
             </Link>
-        </div>
+        </div> */}
         <div id='leftbar-options' onClick={logout}>
         <Link>
                 LogOut
