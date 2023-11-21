@@ -1,6 +1,6 @@
 import React from "react";
 import "./uploadSection.css";
-import { FaRegImage, FaRegTimesCircle } from 'react-icons/fa'; // Import icons from react-icons
+import { FaRegImage, FaRegTimesCircle } from "react-icons/fa"; // Import icons from react-icons
 import { useContext, useRef, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../../Context/authcontext";
@@ -59,18 +59,25 @@ const UploadSection = () => {
         {file && (
           <div id="shareImgContainer">
             <img id="shareImg" src={URL.createObjectURL(file)} alt="" />
-            <FaRegTimesCircle
+            <i
+              class="fa-solid fa-circle-xmark fa-beat"
+              style={{ color: "#ff0505" }}
               id="shareCancelImg"
               onClick={() => setFile(null)}
-            />
+            ></i>
           </div>
         )}
         <form id="shareBottom" onSubmit={submitHandler}>
           <div id="shareOptions">
             <label htmlFor="file" id="shareOption">
+              <i
+                class="fa-solid fa-images fa-beat"
+                style={{ color: "#ff1100" }}
+                id="shareIcon"
+              ></i>
+              {/* <FaRegImage htmlColor="tomato"  /> */}
 
-              <FaRegImage htmlColor="tomato" id="shareIcon" />
-              <span id="shareOptionText">Photo or Video</span>
+              <span id="shareOptionText"> {"   "}Photo</span>
 
               <input
                 style={{ display: "none" }}
