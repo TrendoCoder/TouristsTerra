@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import DOMPurify from 'dompurify';
 import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
@@ -11,7 +12,7 @@ function SinglePost() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
-  const [like, setLike] = useState(0); // Default to 0 likes
+  const [like, setLike] = useState(0);
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
   const [commentSubmitted, setCommentSubmitted] = useState(false);
@@ -21,17 +22,6 @@ function SinglePost() {
   const { data, loading, error } = useFetch(
     `http://localhost:3001/api/bloguser/blog/${id}`
   );
-
-  useEffect(() => {
-    if (data) {
-      const likes = data.likes ? data.likes.length : 0;
-      setLike(likes);
-      const storedLikedStatus = localStorage.getItem(`liked-${id}`);
-      setLiked(storedLikedStatus === "true");
-      setComments(data.comments || []);
-    }
-    console.log(data)
-  }, [data, user, id]);
 
   const fetchData = () => {
     fetch(`http://localhost:3001/api/bloguser/blog/${id}`)
@@ -50,6 +40,10 @@ function SinglePost() {
       });
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
   const handleLike = () => {
     const likeStatus = liked ? "false" : "true";
     fetch(`http://127.0.0.1:3001/api/bloguser/like/${id}`, {
@@ -58,7 +52,7 @@ function SinglePost() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: user._id,
+        userId: user?._id || '',
       }),
     })
       .then((response) => response.json())
@@ -67,8 +61,6 @@ function SinglePost() {
           setLiked(!liked);
           setLike(data.payload.blog.likes.length);
           localStorage.setItem(`liked-${id}`, (!liked).toString());
-
-          // After handling like, fetch updated data
           fetchData();
         } else {
           console.error("Failed to update like status:", data.message);
@@ -95,21 +87,19 @@ function SinglePost() {
       },
       body: JSON.stringify({
         comment: commentText,
-        userId: user._id,
-        name: user?.userName
+        userId: user?._id || '',
+        name: user?.userName || '',
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data === "This blog has been commented") {
-          setComments([...comments, { comment: commentText, author: user._id, date: moment() }]);
+          setComments([...comments, { comment: commentText, author: user?._id, date: moment() }]);
           e.target.elements.comment.value = "";
           setCommentSubmitted(true);
           setTimeout(() => {
             setCommentSubmitted(false);
           }, 3000);
-
-          // After submitting a comment, fetch updated data
           fetchData();
         }
       })
@@ -117,6 +107,15 @@ function SinglePost() {
         console.error("Error submitting comment:", error);
       });
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    console.error("Error fetching blog details:", error);
+    return <div>Error loading blog details</div>;
+  }
 
   return (
     <div>
@@ -146,13 +145,12 @@ function SinglePost() {
             <br />
             <div className="max-w-4xl px-10  mx-auto text-2xl text-gray-700 mt-4 rounded bg-gray-100">
               <div>
-                <p className="mt-2 p-8">{data.description}</p>
+                <p className="mt-2 p-8" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }} />
               </div>
             </div>
 
             <div className="flex max-w-5xl justify-start px-14 py-6 mx-auto bg-gray-50">
               <div className="flex items-center justify-start mt-9 mb-1 border-t border-gray-400 .border-t-thin { border-width: 1px }">
-
                 <div className="font-light text-gray-600 ">
                   <a
                     href="#"
@@ -182,7 +180,6 @@ function SinglePost() {
                   <p className="text-m text-gray-700 ml-2 mr-03 ">
                     Report
                   </p>
-
                 </div>
                 <div id="u-like" className="flex justify-around ml-4 ">
                   <div>
@@ -196,9 +193,7 @@ function SinglePost() {
                     )}{" "}
                     <span>{like}</span>
                   </div>
-
                 </div>
-
               </div>
             </div>
 
@@ -278,7 +273,7 @@ function SinglePost() {
                   </h5>
                   <p className="text-sm font-semibold text-gray-500">{moment(comment.date).fromNow()}</p>
                   <p className="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">
-                    {comment.comment}
+                    {DOMPurify.sanitize(comment.comment)}
                   </p>
                 </div>
               </div>

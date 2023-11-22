@@ -1,12 +1,16 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../../Context/authcontext";
+import BackgroundImage from "../../../../images/image.jpg";
+
 
 const UpdateBlogPost = () => {
   const { user } = useContext(AuthContext);
@@ -96,11 +100,34 @@ const UpdateBlogPost = () => {
     onSubmit,
   });
 
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+    ],
+  };
+
+  const quillFormats = [
+    'header',
+    'bold', 'italic', 'underline',
+    'list', 'bullet',
+  ];
+
   return (
     <div>
       <NavBar />
       <BlogMenu />
-      <div className="max-w-xl xl:mx-auto mx-auto mt-8 bg-[#f7f7fdda] shadow-md">
+
+      {/* Background section */}
+      <div
+        style={{ backgroundImage: `url(${BackgroundImage})`, backgroundPosition: "center", backgroundSize: "cover", backgroundAttachment: "fixed" }}
+      >
+        <br />
+        {/* Content within the background section */}
+        <br />
+
+        <div className="max-w-xl xl:mx-auto mx-auto  bg-[#fcfcfcd5] rounded-xl shadow-md">
         <div className="py-2 px-8 rounded-md">
           <form onSubmit={formikRef.current.handleSubmit}>
             <div className="mb-8 text-center mt-2">
@@ -160,21 +187,24 @@ const UpdateBlogPost = () => {
               )}
             </div>
             <div className="flex flex-col mb-2">
-              <textarea
-                placeholder="Enter Blog here ..."
+              <label htmlFor="description" className="mb-2">
+                Description:
+              </label>
+              <ReactQuill
                 id="description"
-                name="description"
                 value={formikRef.current.values.description}
-                onBlur={formikRef.current.handleBlur("description")}
-                onChange={formikRef.current.handleChange("description")}
-                className="border p-2 rounded-md w-full"
-                rows={17}
+                onBlur={() => formikRef.current.handleBlur("description")}
+                onChange={(value) => formikRef.current.handleChange("description")(value)}
+                className="w-full bg-white border-b mt-1 border-black rounded-md focus:outline-none"
+                modules={quillModules}
+                formats={quillFormats}
+                style={{ height: '400px' }}
               />
               {formikRef.current.errors.description && formikRef.current.touched.description && (
                 <div className="text-red-500 text-sm">{formikRef.current.errors.description}</div>
               )}
             </div>
-            <br />
+            <br /><br />
             <div className="my-1">
               <button
                 type="submit"
@@ -182,12 +212,18 @@ const UpdateBlogPost = () => {
               >
                 Update Blog
               </button>
+              
             </div>
             <br />
           </form>
+          <br />
         </div>
       </div>
       <br />
+      <br />
+
+      
+      </div>
       <Footer />
     </div>
   );
