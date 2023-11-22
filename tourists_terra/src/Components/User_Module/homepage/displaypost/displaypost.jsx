@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./displaypost.css";
 import { useContext, useEffect } from "react";
 import axios from "axios";
@@ -15,12 +15,11 @@ const DisplayPost = ({ posts }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [report, setReport] = useState();
-
+  const [file, setFile] = useState(null);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [editedDesc, setEditedDesc] = useState(posts.desc);
-  const [editedImage, setEditedImage] = useState(null);
   const { user: currentUser } = useContext(AuthContext);
-  console.log(openReport);
+
   useEffect(() => {
     setIsLiked(posts.likes.includes(currentUser._id));
   }, [currentUser._id, posts.likes]);
@@ -45,6 +44,31 @@ const DisplayPost = ({ posts }) => {
   };
   const handleEllipsisClick = () => {
     setShowOptions(!showOptions);
+  };
+  const handleEditSubmit= async (e) => {
+    e.preventDefault();
+    const updatedPost = {
+      desc: editedDesc,
+    };
+    if (file) {
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append("name", fileName);
+      data.append("file", file);
+      updatedPost.img = fileName;
+      try {
+        await axios.post("http://localhost:3001/api/upload", data);
+      } catch (err) {}
+    }else{
+      updatedPost.img = posts.img;
+    }
+    try {
+      await axios.put(`http://localhost:3001/api/post/${posts._id}?userId=${currentUser._id}`, updatedPost);
+      alert("Succesfully Edited")
+      window.location.reload();
+    } catch (err) {
+      alert("Some issue is facing try again later....")
+    }
   };
   const handleDeletePost = async () => {
     try{
@@ -175,20 +199,22 @@ const DisplayPost = ({ posts }) => {
           </div>
         </div>
       )}
-      {openEdit && <div id="Open-report">
-      <div id="rep-post-container">
-        <div id="rep-edit-wrapper">
-        <h2>Edit Your Post</h2>
-        <div id="rep-edit-wrapper-sec-one">
-        <i
-                  class="fa-solid fa-circle-xmark fa-beat"
+      {openEdit && (
+        <div id="Open-report">
+          <div id="rep-post-container">
+            <div id="rep-edit-wrapper">
+             
+              <div id="rep-edit-wrapper-sec-one">
+                <i
+                  className="fa-solid fa-circle-xmark fa-beat"
                   style={{ color: "#ff1900" }}
                   onClick={() => {
                     setOpenEdit(false);
                   }}
                 ></i>
-        </div>
-        <div id="rep-edit-wrapper-sec-two">
+              </div>
+              <h2 style={{fontWeight:"600"}}>Edit Your Post</h2>
+              <div id="rep-edit-wrapper-sec-two">
                 <label>Post Description:</label>
                 <input
                   type="text"
@@ -200,23 +226,29 @@ const DisplayPost = ({ posts }) => {
                 <label>Image:</label>
                 <img
                   src={
-                    editedImage
-                      ? URL.createObjectURL(editedImage)
-                      : PF+"/profileUpload.png"
+                    file
+                      ? URL.createObjectURL(file)
+                      : posts.img
+                      ? PF + `/${posts.img}`
+                      : PF + "/profileUpload.png"
                   }
-                  alt=""
+                  alt={PF + "/profileUpload.png"}
+                  crossOrigin="anonymous"
                 />
                 <input
                   type="file"
-                  onChange={(e) => setEditedImage(e.target.files[0])}
+                  id="file"
+                  accept=".png,.jpeg,.jpg"
+                  onChange={(e) => setFile(e.target.files[0])}
                 />
               </div>
-              {/* <div id="rep-edit-wrapper-sec-four">
-                <button onClick={handleEditSubmit}>Submit</button>
-              </div> */}
+              <div id="rep-edit-wrapper-sec-four">
+                <button onClick={handleEditSubmit}>Update</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      </div>}
+      )}
       {openDelete && (
         <div id="Open-report">
           <div id="rep-post-container">

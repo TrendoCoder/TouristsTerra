@@ -1,10 +1,9 @@
 import React from "react";
 import "./uploadSection.css";
-import { FaRegImage, FaRegTimesCircle } from "react-icons/fa"; // Import icons from react-icons
 import { useContext, useRef, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../../Context/authcontext";
-import pic from "../../../../images/profile.jpeg";
+
 
 const UploadSection = () => {
   const { user } = useContext(AuthContext);
@@ -75,8 +74,6 @@ const UploadSection = () => {
                 style={{ color: "#ff1100" }}
                 id="shareIcon"
               ></i>
-              {/* <FaRegImage htmlColor="tomato"  /> */}
-
               <span id="shareOptionText"> {"   "}Photo</span>
 
               <input
