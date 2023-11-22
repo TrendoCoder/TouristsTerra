@@ -235,16 +235,16 @@ const ShopHomePage = () => {
                   </div>
                 </div>
                 <div id="small-menu">
-                  <Link to="/">
+                  <Link to="/" style={{ marginRight: "15px" }}>
                     <i class="fa-solid fa-house" id="small-menu-icon"></i>
                   </Link>
-                  <Link to="/">
+                  <Link to="/" style={{ marginRight: "15px" }}>
                     <i class="fa-solid fa-message" id="small-menu-icon"></i>
                   </Link>
-                  <Link to="/">
+                  <Link to="/" style={{ marginRight: "15px" }}>
                     <i class="fa-solid fa-bell" id="small-menu-icon"></i>
                   </Link>
-                  <Link to="/sign-up">
+                  <Link to="/sign-up" style={{ marginRight: "15px" }}>
                     <i class="fa-solid fa-user-tie" id="small-menu-icon"></i>
                   </Link>
                 </div>
