@@ -12,7 +12,9 @@ function NavBar() {
         <div id="big-Container">
           <div id="small-Container">
             <div id="logo-section">
+            <Link to = "/">
             <h3 id="title-nav">Tourist's Terra</h3>
+            </Link>
             </div>
             <div id="search-section">
               <input type="text" placeholder="Search" />
