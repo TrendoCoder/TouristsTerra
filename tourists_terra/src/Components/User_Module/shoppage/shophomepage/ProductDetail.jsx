@@ -65,7 +65,7 @@ const ProductDetail = () => {
           <div className="md:py-8">
             <div className="mb-2 md:mb-3">
               <span className="mb-0.5 inline-block text-gray-500">
-                Fancy Brand
+                Product Name
               </span>
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
                 {product.name}
@@ -91,7 +91,7 @@ const ProductDetail = () => {
 
             <div className="mb-4 md:mb-6">
               <span className="mb-3 inline-block text-sm font-semibold text-gray-500 md:text-base">
-                Color
+                Description
               </span>
               <div className="flex flex-wrap gap-2">
                 {/* {product.colors?.map((color, index) => (
