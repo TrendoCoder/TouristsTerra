@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../../homepage/navbar/navBar';
 import BlogMenu from '../blogmenu/blogmenu';
-import useFetch from "../../../../Hooks/usefetch";
-import Footer from "../../accommodationpage/footer/footer";
-import moment from 'moment'; // Import the moment library
+import useFetch from '../../../../Hooks/usefetch';
+import Footer from '../../accommodationpage/footer/footer';
+import moment from 'moment';
 
 const BlogHomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,9 +40,10 @@ const BlogHomePage = () => {
   const blogs = data || []; // Use fetched data or an empty array as a fallback
 
   // Filter the blogs based on the selected category
-  const filteredBlogs = selectedCategory === 'All'
-    ? blogs
-    : blogs?.filter(blog => blog.category === selectedCategory);
+  const filteredBlogs =
+    selectedCategory === 'All'
+      ? blogs
+      : blogs?.filter((blog) => blog.category === selectedCategory);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -58,15 +59,16 @@ const BlogHomePage = () => {
     <button
       key={number}
       onClick={() => setCurrentPage(number)}
-      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${currentPage === number ? 'bg-gray-500' : ''
-        }`}
+      className={`bg-[#8b91945e] hover:bg-gray-600 text-[#0c1d25] font-semibold hover:text-white py-2 px-4 border border-[#155875c4] hover:border-transparent rounded mx-2 ${
+        currentPage === number ? 'bg-gray-500' : ''
+      }`}
     >
       {number}
     </button>
   ));
 
   return (
-    <div className='min-h-screen bg-gray-100 text-gray-900'>
+    <div className="min-h-screen bg-gray-100 text-gray-900">
       <NavBar />
       <BlogMenu />
 
@@ -74,7 +76,9 @@ const BlogHomePage = () => {
         {categories.map((item) => (
           <button
             key={item?._id}
-            className={`px-4 py-2 text-sm font-medium text-white hover:scale-105 duration-200 bg-[#2f5869ee] rounded mx-4 hover:shadow-md ${selectedCategory === item ? 'bg-[#0d2833]' : ''}`}
+            className={`px-4 py-2 text-sm font-medium text-white hover:scale-105 duration-200 bg-[#2f5869ee] rounded mx-4 hover:shadow-md ${
+              selectedCategory === item ? 'bg-[#0d2833]' : ''
+            }`}
             onClick={() => handleCategoryClick(item)}
           >
             {item}
@@ -95,9 +99,15 @@ const BlogHomePage = () => {
           </div>
         ) : (
           currentPosts.map((item, index) => (
-            <div key={item?._id} className="max-w-sm md:max-w-md bg-white rounded overflow-hidden shadow-lg">
+            <div
+              key={item?._id}
+              className="max-w-sm md:max-w-md bg-white rounded overflow-hidden shadow-lg"
+            >
               <Link to={`/single-post/${item?._id}`}>
-                <img className="w-full h-[220px]  rounded-t-lg" src={item.imageURL} />
+                <img
+                  className="w-full h-[220px] rounded-t-lg"
+                  src={item.imageURL}
+                />
               </Link>
               <div className="px-6 py-4">
                 <Link to={`/single-post/${item?._id}`}>
@@ -106,19 +116,38 @@ const BlogHomePage = () => {
                     Posted: {moment(item.date).format('MMMM D, YYYY')}
                   </p>
                 </Link>
-                <p className="text-gray-700 text-base">
-                  {item.description.length > 90
-                    ? `${item.description.substring(0, 90)}...`
-                    : item.description}
-                </p>
+                <div
+                  className="text-gray-700 text-base overflow-hidden"
+                  style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    overflow: 'hidden',
+                    WebkitBoxOrient: 'vertical',
+                  }}
+                  dangerouslySetInnerHTML={{ __html: item.description }}
+                />
                 <div className="mut-auto flex items-center justify-between mt-4">
                   <div className="inline-flex items-center px-3 py-1 text-sm font-medium text-center bg-[#478ca986] hover:bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark:hover-bg-green-700 dark:focus:ring-green-800">
                     <Link to={`/single-post/${item?._id}`}>Read more</Link>
-                    <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    <svg
+                      className="w-3.5 h-3.5 ml-2"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 14 10"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9"
+                      />
                     </svg>
                   </div>
-                  <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mb-2">{item.category}</span>
+                  <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mb-2">
+                    {item.category}
+                  </span>
                 </div>
               </div>
             </div>
@@ -126,9 +155,7 @@ const BlogHomePage = () => {
         )}
       </div>
       <br />
-      <div className="flex justify-center mt-4">
-        {renderPageNumbers}
-      </div>
+      <div className="flex justify-center mt-4">{renderPageNumbers}</div>
       <br />
       <Footer />
     </div>

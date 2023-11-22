@@ -9,7 +9,7 @@ import useFetch from '../../../../Hooks/usefetch';
 const RecentBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 8;
-  const [selectedCategory, setSelectedCategory] = useState('All'); // Set the default category to "All"
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const categories = [
     'All',
     'Hotel',
@@ -24,7 +24,7 @@ const RecentBlogs = () => {
   );
 
   if (loading) {
-    // loading UI or message here
+    // Loading UI or message here
   }
 
   if (error) {
@@ -32,18 +32,16 @@ const RecentBlogs = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  // Make sure blogPosts is always an array
   const blogPosts = Array.isArray(data) ? data : [];
 
-  // Sort the blogPosts array in descending order based on the 'date' property
   const sortedBlogPosts = blogPosts.sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
-  // If there's a selected category, filter the posts, else use all posts
-  const filteredBlogPosts = selectedCategory !== 'All'
-    ? sortedBlogPosts.filter((item) => item?.category === selectedCategory)
-    : sortedBlogPosts;
+  const filteredBlogPosts =
+    selectedCategory !== 'All'
+      ? sortedBlogPosts.filter((item) => item?.category === selectedCategory)
+      : sortedBlogPosts;
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -117,11 +115,16 @@ const RecentBlogs = () => {
                 <Link to={`/single-post/${item?._id}`}>
                   <div className="font-bold text-xl mb-2">{item.title}</div>
                 </Link>
-                <p className="text-gray-700 text-base">
-                  {item?.description.length > 90
-                    ? `${item.description.substring(0, 90)}...`
-                    : item.description}
-                </p>
+                <div
+                  className="text-gray-700 text-base overflow-hidden"
+                  style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    overflow: 'hidden',
+                    WebkitBoxOrient: 'vertical',
+                  }}
+                  dangerouslySetInnerHTML={{ __html: item.description }}
+                />
                 <div className="mt-3 mb-2 text-sm text-gray-800">
                   {moment(item.date).fromNow()}{' '}
                   {/* 'postedTime' field in the 'item' */}

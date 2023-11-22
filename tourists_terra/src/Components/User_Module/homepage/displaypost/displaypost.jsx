@@ -39,7 +39,7 @@ const DisplayPost = ({ posts }) => {
       axios.put("http://localhost:3001/api/post/" + posts._id + "/like", {
         userId: currentUser._id,
       });
-    } catch (err) {}
+    } catch (err) { }
     setLike(isLiked ? likes - 1 : likes + 1);
     setIsLiked(!isLiked);
   };
@@ -47,16 +47,16 @@ const DisplayPost = ({ posts }) => {
     setShowOptions(!showOptions);
   };
   const handleDeletePost = async () => {
-    try{
+    try {
       await axios.delete(`http://localhost:3001/api/post/${posts._id}?userId=${currentUser._id}`);
       alert("Deleted successfully");
       window.location.reload();
-    }catch(err){
+    } catch (err) {
       alert(err)
     }
-    
+
   };
-  
+
   return (
     <div id="main-container-feed">
       <div id="u-info">
@@ -81,33 +81,33 @@ const DisplayPost = ({ posts }) => {
           </div>
           {showOptions && (
             <div id="post-report-dropdown">
-              {currentUser._id !== posts.userId?<><div
+              {currentUser._id !== posts.userId ? <><div
                 onClick={() => {
                   setOpenReport(true);
                 }}
               >
                 <span>Report{"  "}</span>
                 <i class="fa-solid fa-flag"></i>
-              </div></>:<></>
+              </div></> : <></>
               }
-{currentUser._id === posts.userId?
-              <><div
-                onClick={() => {
-                  setOpenEdit(true);
-                }}
-              >
-                <span>Edit{"  "}</span>
-                <i class="fa-solid fa-pen"></i>
-              </div>
+              {currentUser._id === posts.userId ?
+                <><div
+                  onClick={() => {
+                    setOpenEdit(true);
+                  }}
+                >
+                  <span>Edit{"  "}</span>
+                  <i class="fa-solid fa-pen"></i>
+                </div>
 
-              <div
-                onClick={() => {
-                  setOpenDelete(true);
-                }}
-              >
-                <span>Delete{"  "}</span>
-                <i class="fa-solid fa-trash"></i>
-              </div></>:<></>}
+                  <div
+                    onClick={() => {
+                      setOpenDelete(true);
+                    }}
+                  >
+                    <span>Delete{"  "}</span>
+                    <i class="fa-solid fa-trash"></i>
+                  </div></> : <></>}
             </div>
           )}
         </div>
@@ -176,46 +176,46 @@ const DisplayPost = ({ posts }) => {
         </div>
       )}
       {openEdit && <div id="Open-report">
-      <div id="rep-post-container">
-        <div id="rep-edit-wrapper">
-        <h2>Edit Your Post</h2>
-        <div id="rep-edit-wrapper-sec-one">
-        <i
-                  class="fa-solid fa-circle-xmark fa-beat"
-                  style={{ color: "#ff1900" }}
-                  onClick={() => {
-                    setOpenEdit(false);
-                  }}
-                ></i>
-        </div>
-        <div id="rep-edit-wrapper-sec-two">
-                <label>Post Description:</label>
-                <input
-                  type="text"
-                  value={editedDesc}
-                  onChange={(e) => setEditedDesc(e.target.value)}
-                />
-              </div>
-              <div id="rep-edit-wrapper-sec-three">
-                <label>Image:</label>
-                <img
-                  src={
-                    editedImage
-                      ? URL.createObjectURL(editedImage)
-                      : PF+"/profileUpload.png"
-                  }
-                  alt=""
-                />
-                <input
-                  type="file"
-                  onChange={(e) => setEditedImage(e.target.files[0])}
-                />
-              </div>
-              {/* <div id="rep-edit-wrapper-sec-four">
+        <div id="rep-post-container">
+          <div id="rep-edit-wrapper">
+            <h2>Edit Your Post</h2>
+            <div id="rep-edit-wrapper-sec-one">
+              <i
+                class="fa-solid fa-circle-xmark fa-beat"
+                style={{ color: "#ff1900" }}
+                onClick={() => {
+                  setOpenEdit(false);
+                }}
+              ></i>
+            </div>
+            <div id="rep-edit-wrapper-sec-two">
+              <label>Post Description:</label>
+              <input
+                type="text"
+                value={editedDesc}
+                onChange={(e) => setEditedDesc(e.target.value)}
+              />
+            </div>
+            <div id="rep-edit-wrapper-sec-three">
+              <label>Image:</label>
+              <img
+                src={
+                  editedImage
+                    ? URL.createObjectURL(editedImage)
+                    : PF + "/profileUpload.png"
+                }
+                alt=""
+              />
+              <input
+                type="file"
+                onChange={(e) => setEditedImage(e.target.files[0])}
+              />
+            </div>
+            {/* <div id="rep-edit-wrapper-sec-four">
                 <button onClick={handleEditSubmit}>Submit</button>
               </div> */}
+          </div>
         </div>
-      </div>
       </div>}
       {openDelete && (
         <div id="Open-report">
