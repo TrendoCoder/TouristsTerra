@@ -30,6 +30,7 @@ import BecomeHotelProvider from "./Components/User_Module/accommodationpage/beco
 
 import AdminHomePage from "./Components/adminmodule/adminhomepage/adminhomepage";
 import { AuthContext } from "./Context/authcontext";
+import Success from "./Components/User_Module/shoppage/shophomepage/Success";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -95,6 +96,7 @@ function App() {
               element={<EditUserProfile />}
             ></Route>
             <Route path="shop-home-page" element={<ShopHomePage />}></Route>
+            <Route path="/success" element={<Success />}></Route>
             <Route path="/product/:productId" element={<ProductDetail />} />
             <Route path="/cart/:productId" element={<Cart />} />
             <Route path="admin-home-page" element={<AdminHomePage />}></Route>
