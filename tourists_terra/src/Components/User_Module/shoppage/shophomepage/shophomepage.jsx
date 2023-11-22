@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./shophomepage.css";
 import Navbar from "../../homepage/navbar/navBar";
 import AccommodationAdSection from "../../accommodationpage/accomoadsection/accomoadsection";
 import Footer from "../../accommodationpage/footer/footer";
 import MenuBar from "../../homepage/menubar/menuBar";
 import SellerModal from "./sellerModal";
+import axios from "axios";
+import { AuthContext } from "../../../../Context/authcontext";
 
 // Helper function to group products by category name
 const groupByCategory = (products) => {
@@ -23,6 +26,15 @@ const ShopHomePage = () => {
   const [products, setProducts] = useState([]);
   const [temp, setTemp] = useState([]);
   const [groupedProducts, setGroupedProducts] = useState({});
+  const { user } = useContext(AuthContext);
+
+  // console.log(user);
+
+  // check
+  const [isShopAdmin, setIsShopAdmin] = useState(user.isShopAdmin);
+  console.log(user);
+  console.log(user.isShopAdmin);
+  // const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
@@ -222,18 +234,18 @@ const ShopHomePage = () => {
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </div>
                 </div>
-                <div className="flex gap-x-6 text-[#0F4157]" id="small-menu">
+                <div id="small-menu">
                   <Link to="/">
-                    <i class="fa-solid fa-house fa-lg" id="small-menu-icon"></i>
+                    <i class="fa-solid fa-house" id="small-menu-icon"></i>
                   </Link>
                   <Link to="/">
-                    <i class="fa-solid fa-message fa-lg" id="small-menu-icon"></i>
+                    <i class="fa-solid fa-message" id="small-menu-icon"></i>
                   </Link>
                   <Link to="/">
-                    <i class="fa-solid fa-bell fa-lg" id="small-menu-icon"></i>
+                    <i class="fa-solid fa-bell" id="small-menu-icon"></i>
                   </Link>
                   <Link to="/sign-up">
-                    <i class="fa-solid fa-user-tie fa-lg" id="small-menu-icon"></i>
+                    <i class="fa-solid fa-user-tie" id="small-menu-icon"></i>
                   </Link>
                 </div>
               </div>
@@ -285,6 +297,19 @@ const ShopHomePage = () => {
                 >
                   Want to Become A Seller?
                 </button>
+
+                {isShopAdmin && (
+                  <Link
+                    className={`ml-6 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+                      !isShopAdmin && "cursor-not-allowed opacity-50"
+                    }`}
+                    to="http://localhost:3002/products"
+                    style={{ backgroundColor: "#0F4157" }}
+                    disabled={!isShopAdmin}
+                  >
+                    Switch To seller account
+                  </Link>
+                )}
               </div>
 
               <div class="mt-4 lg:mt-8 lg:grid lg:grid-cols-4 lg:items-start lg:gap-8 ">
@@ -559,6 +584,7 @@ const ShopHomePage = () => {
         </div>
         <Footer />
       </div>
+      ;
     </>
   );
 };

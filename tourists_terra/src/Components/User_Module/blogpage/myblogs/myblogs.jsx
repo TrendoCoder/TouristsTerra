@@ -10,12 +10,15 @@ import { MdDelete } from 'react-icons/md';
 import { AuthContext } from '../../../../Context/authcontext';
 import { Dialog, Transition } from '@headlessui/react';
 
+import './myblogs.css'; // Import your CSS file
+
 const MyBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 9;
   const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [openMenuBlogId, setOpenMenuBlogId] = useState(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // New state
   const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
@@ -54,11 +57,13 @@ const MyBlogs = () => {
 
   const handleDeleteDialogOpen = (blog) => {
     setSelectedBlog(blog);
+    setIsDeleteDialogOpen(true); // Open the dialog and trigger the blur effect
   };
 
   const handleDeleteDialogClose = () => {
     setSelectedBlog(null);
     setOpenMenuBlogId(null); // Close menu on X click
+    setIsDeleteDialogOpen(false); // Close the dialog and remove the blur effect
   };
 
   const handleDeleteBlog = async () => {
@@ -95,7 +100,7 @@ const MyBlogs = () => {
   ));
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900">
+    <div className={`min-h-screen bg-gray-100 text-gray-900 ${isDeleteDialogOpen ? 'blur' : ''}`}>
       <NavBar />
       <BlogMenu />
 
@@ -153,87 +158,86 @@ const MyBlogs = () => {
                       />
                     </div>
                   )}
-                </button>
-              </div>
-              <Link to={`/single-post/${item?._id}`}>
-                <img
-                  className="w-full h-[220px] rounded-t-lg"
-                  src={item.imageURL}
-                  alt={item.title}
-                />
-              </Link>
-              <div className="px-6 py-4">
-                <Link to={`/single-post/${item?._id}`}>
-                  <div className="font-bold text-xl mb-2">{item.title}</div>
-                  <p className="text-gray-500 text-sm mb-2">
-                    Posted: {moment(item.date).format('MMMM D, YYYY')}
-                  </p>
-                </Link>
-                <p className="text-gray-700 text-base">
-                  {item.description.length > 90
-                    ? `${item.description.substring(0, 90)}...`
-                    : item.description}
-                </p>
-                <div className="mut-auto flex items-center justify-between mt-4">
-                  <div className="inline-flex items-center px-2 py-1 text-sm font-medium text-center bg-[#478ca986] hover:bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark:hover-bg-green-700 dark:focus:ring-green-800">
-                    <Link to={`/single-post/${item?._id}`}>Read more</Link>
+                  </button>
                   </div>
-                  <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mb-2 ml-2">
-                    {item.category}
-                  </span>
+                  <Link to={`/single-post/${item?._id}`}>
+                    <img
+                      className="w-full h-[220px] rounded-t-lg"
+                      src={item.imageURL}
+                      alt={item.title}
+                    />
+                  </Link>
+                  <div className="px-6 py-4">
+                    <Link to={`/single-post/${item?._id}`}>
+                      <div className="font-bold text-xl mb-2">{item.title}</div>
+                      <p className="text-gray-500 text-sm mb-2">
+                        Posted: {moment(item.date).format('MMMM D, YYYY')}
+                      </p>
+                    </Link>
+                    <p className="text-gray-700 text-base">
+                      {item.description.length > 90
+                        ? `${item.description.substring(0, 90)}...`
+                        : item.description}
+                    </p>
+                    <div className="mut-auto flex items-center justify-between mt-4">
+                      <div className="inline-flex items-center px-2 py-1 text-sm font-medium text-center bg-[#478ca986] hover:bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark:hover-bg-green-700 dark:focus:ring-green-800">
+                        <Link to={`/single-post/${item?._id}`}>Read more</Link>
+                      </div>
+                      <span className="inline-block bg-[#0f4157] rounded-full px-3 py-1 text-sm font-semibold text-white mb-2 ml-2">
+                        {item.category}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+    
+          <br />
+          <div className="flex justify-center mt-4">
+            {renderPageNumbers}
+          </div>
+    
+          {/* Confirmation Dialog Box*/}
+          <Transition show={isDeleteDialogOpen} as={Fragment}>
+            <Dialog
+              as="div"
+              className="fixed inset-0 z-50 overflow-hidden flex items-center justify-center"
+              onClose={handleDeleteDialogClose}
+            >
+              <div className="relative mx-auto my-6 max-w-sm">
+                <Dialog.Overlay className="fixed bg-gray-500 bg-opacity-75 transition-opacity" />
+    
+                <div className="bg-white p-6 rounded shadow-md">
+                  <Dialog.Title className="text-lg font-semibold">
+                    Delete Blog?
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p>Are you sure you want to delete this blog?</p>
+                  </div>
+    
+                  <div className="mt-4 flex justify-end">
+                    <button
+                      onClick={handleDeleteBlog}
+                      className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      onClick={handleDeleteDialogClose}
+                      className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 focus:outline-none focus:ring focus:ring-blue-500"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        )}
-      </div>
-
-      <br />
-      <div className="flex justify-center mt-4">
-        {renderPageNumbers}
-      </div>
-
-      {/* Headless UI Dialog */}
-      <Transition show={Boolean(selectedBlog)} as={Fragment}>
-        <Dialog
-          as="div"
-          className="fixed inset-0 z-50 overflow-hidden flex items-center justify-center"
-          onClose={handleDeleteDialogClose}
-        >
-          <div className="relative mx-auto my-6 max-w-sm">
-            <Dialog.Overlay className="fixed bg-gray-500 bg-opacity-75 transition-opacity" />
-
-            <div className="bg-white p-6 rounded shadow-md">
-              <Dialog.Title className="text-lg font-semibold">
-                Delete Blog?
-              </Dialog.Title>
-              <div className="mt-2">
-                <p>Are you sure you want to delete this blog?</p>
-              </div>
-
-              <div className="mt-4 flex justify-end">
-                <button
-                  onClick={handleDeleteBlog}
-                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500"
-                >
-                  Delete
-                </button>
-                <button
-                  onClick={handleDeleteDialogClose}
-                  className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 focus:outline-none focus:ring focus:ring-blue-500"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-
-      <br />
-      <Footer />
-    </div>
-  );
-};
-
-export default MyBlogs;
+            </Dialog>
+          </Transition>
+          <br />
+          <Footer />
+        </div>
+      );
+    };
+    
+    export default MyBlogs;
