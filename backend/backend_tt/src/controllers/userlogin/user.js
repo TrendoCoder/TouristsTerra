@@ -87,7 +87,7 @@ const unFollowUser = async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
       const currentUser = await User.findById(req.body.userId);
-      if (user.followes.includes(req.body.userId)) {
+      if (user.followers.includes(req.body.userId)) {
         await user.updateOne({
           $pull: { followers: req.body.userId },
         });

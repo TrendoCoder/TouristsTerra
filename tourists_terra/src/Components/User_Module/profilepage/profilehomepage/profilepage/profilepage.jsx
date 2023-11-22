@@ -14,11 +14,9 @@ const ProfilePage = () => {
 
   const fetchUsers = async () => {
     try {
-      console.log("Fetching user data...");
       const res = await axios.get(
         `http://localhost:3001/api/user/?userName=${userName}`
       );
-      console.log(res.data);
       setUser(res.data);
       console.log(user);
     } catch (error) {
