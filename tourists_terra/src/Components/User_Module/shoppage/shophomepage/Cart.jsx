@@ -302,7 +302,10 @@ const Cart = () => {
                     </div>
                   </div>
 
-                  <button className="select-none text-sm font-semibold text-indigo-500 transition duration-100 hover:text-indigo-600 active:text-indigo-700">
+                  <button
+                    className="select-none text-sm font-semibold text-indigo-500 transition duration-100 hover:text-indigo-600 active:text-indigo-700"
+                    style={{ color: "#0F4157" }}
+                  >
                     Delete
                   </button>
                 </div>
@@ -347,6 +350,7 @@ const Cart = () => {
             <button
               onClick={makePayment}
               className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
+              style={{ backgroundColor: "#0F4157" }}
             >
               Check out
             </button>
