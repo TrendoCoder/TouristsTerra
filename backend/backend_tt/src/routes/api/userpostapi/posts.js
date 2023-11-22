@@ -18,10 +18,12 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    if (post.userId === req.body.userId) {
-      await post.updateOne({
-        $set: req.body,
-      });
+    if (post.userId === req.query.userId) {
+      await Post.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: req.body },
+        { new: true } 
+      );
       res.status(200).json("This post has been updated");
     } else {
       return res.status(404).json("You can update only your post");
@@ -30,6 +32,7 @@ router.put("/:id", async (req, res) => {
     return res.status(500).json(err);
   }
 });
+
 
 // Delete a post
 

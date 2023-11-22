@@ -118,7 +118,7 @@
 #Open-report{
     width: 100vw;
     height: 100vh;
-    z-index: 900;
+    z-index: 9999;
     position: fixed;
     top: 0;
     left: 0;
@@ -127,7 +127,7 @@
     position: relative;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -241,15 +241,16 @@
 
 #rep-edit-wrapper{
     padding: 15px 20px;
-    width: 500px;
-    max-height: max-content;
+    width: 600px;
+    max-height: 100%;
+    min-height: max-content;
     background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     border-radius: 8px;
-    gap: 20px;
+    gap: 10px;
     box-shadow: 0px 0px 100px 10px #0F4157;
 }
 #rep-edit-wrapper-sec-one{
@@ -260,12 +261,12 @@
     height: max-content;
 }
 #rep-edit-wrapper-sec-one>i{
-    padding: 10px 20px;
+    padding: 5px 20px;
     cursor: pointer;
 }
 #rep-edit-wrapper-sec-two{
     width: 100%;
-    padding: 10px 20px;
+    padding: 5px 20px;
 }
 #rep-edit-wrapper-sec-two>label{
     font-size: 15px;
@@ -281,8 +282,7 @@
 }
 #rep-edit-wrapper-sec-three{
     width: 100%;
-    height: 150px;
-    padding: 10px 20px;
+    padding: 5px 20px;
 }
 #rep-edit-wrapper-sec-three>label{
     font-size: 15px;
@@ -290,8 +290,34 @@
     color: #333;
 }
 #rep-edit-wrapper-sec-three>img{
-   width: max-content;
-   height: max-content;
+    max-width: 100%;
+    min-width: max-content;
+    max-height: 200px;
+    min-height: max-content;
     object-fit: cover;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#rep-edit-wrapper-sec-four{
+    width: 100%;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+#rep-edit-wrapper-sec-four>button{
+    padding: 5px 10px;
+    border: none;
+    border-radius: 2px;
+    background-color: #0F4157;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: 0.2s;
+    color: white;
+    font-weight: bold;
+}
+#rep-edit-wrapper-sec-four>button:hover{
+    opacity: 1;
 }
