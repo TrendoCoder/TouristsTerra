@@ -3,7 +3,7 @@ var express = require("express");
 var path = require("path");
 
 const stripe = require("stripe")(
-  "sk_test_51MGLBKIr2GtQtYrgGdvP4lRaA8Wd6UVYqJoWYvJxE5JHHRLzCNLueoenlo30JqJ54N6zsOWSOFi2eMG86oRkCAk000RlLrnPMW"
+  "sk_test_51OFAzLHNYB7xRUttx13GbXadMp57xuuxhCoDWelr1cNz9DJZdg96PevapuTssYvQ5mIdd34UfCyzZIyyt8CppBDd00R3ViuhYz"
 );
 
 var cookieParser = require("cookie-parser");
