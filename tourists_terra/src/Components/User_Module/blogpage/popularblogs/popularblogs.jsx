@@ -127,11 +127,16 @@ const PopularBlogs = () => {
                     Posted: {moment(item.date).format('MMMM D, YYYY')}
                   </p>
                 </Link>
-                <p className="text-gray-700 text-base">
-                  {item.description.length > 90
-                    ? `${item.description.substring(0, 90)}...`
-                    : item.description}
-                </p>
+                <div
+                  className="text-gray-700 text-base overflow-hidden"
+                  style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    overflow: 'hidden',
+                    WebkitBoxOrient: 'vertical',
+                  }}
+                  dangerouslySetInnerHTML={{ __html: item.description }}
+                />
                 <div className="mut-auto flex items-center justify-between mt-4">
                   <div className="inline-flex items-center px-3 py-1 text-sm font-medium text-center bg-[#478ca986] hover:bg-[#2c536e] text-[#102129] shadow-md rounded-lg hover:text-white duration-150 curs focus:ring-4 focus:outline-none focus:ring-[#478ba9] dark:hover-bg-green-700 dark:focus:ring-green-800">
                     <Link to={`/single-post/${item?._id}`}>Read more</Link>

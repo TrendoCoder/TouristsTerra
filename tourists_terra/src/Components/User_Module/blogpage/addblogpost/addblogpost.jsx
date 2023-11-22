@@ -1,13 +1,15 @@
 import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; 
 import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
 import { AuthContext } from "../../../../Context/authcontext";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import BackgroundImage from "../../../../images/image.jpg"; // Import the image file
+import BackgroundImage from "../../../../images/image.jpg";
 
 const AddBlogPost = () => {
   const { user } = useContext(AuthContext);
@@ -33,7 +35,7 @@ const AddBlogPost = () => {
       const formData = new FormData();
       values.userId = user._id;
       formData.append("file", image);
-      formData.append("upload_preset", "oj2mvysk"); // Replace with your Cloudinary upload preset
+      formData.append("upload_preset", "oj2mvysk");
       const cloudinaryResponse = await axios.post(
         "https://api.cloudinary.com/v1_1/dw82alf1o/image/upload",
         formData
@@ -68,6 +70,21 @@ const AddBlogPost = () => {
     onSubmit,
   });
 
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+
+    ],
+  };
+
+  const quillFormats = [
+    'header',
+    'bold', 'italic', 'underline',
+    'list', 'bullet',
+  ];
+
   return (
     <div>
       <NavBar />
@@ -75,20 +92,24 @@ const AddBlogPost = () => {
 
       {/* Background section */}
       <div
-        style={{ backgroundImage: `url(${BackgroundImage})`, backgroundSize: "cover", backgroundPosition: "center" }}
+        style={{ backgroundImage: `url(${BackgroundImage})`, backgroundPosition: "center", backgroundSize: "cover", backgroundAttachment: "fixed" }}
       >
-      <br/>
+        <br />
         {/* Content within the background section */}
-        <div className="max-w-xl xl:mx-auto mx-auto  bg-[#f7f7fdda] shadow-md">
-          <div className="py-2 px-8 rounded-md">
+        <br />
+        <div className="max-w-xl xl:mx-auto mx-auto  bg-[#fcfcfcd5] rounded-xl shadow-md">
+          <div className="py-2 px-8 ">
             <form onSubmit={formik.handleSubmit}>
-              <div className="mb-8 text-center mt-1">
+              <div className="mb-8 text-center mt-1 rounded-md">
                 <h1 className="text-3xl font-semibold text-gray-900">
                   Create a Blog
                 </h1>
               </div>
               <div className="grid grid-cols-1 gap-y-5">
                 <div className="flex flex-col mb-4">
+                  <label htmlFor="category" className="text-gray-900 font-semibold">
+                    Title *
+                  </label>
                   <input
                     type="text"
                     id="title"
@@ -97,17 +118,17 @@ const AddBlogPost = () => {
                     value={formik.values.title}
                     onBlur={formik.handleBlur("title")}
                     onChange={formik.handleChange("title")}
-                    className="border p-2 rounded-md w-full"
+                    className="w-full bg-white mt-1 border-b border-black rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
                   />
                   {formik.errors.title && formik.touched.title && (
-                    <div className="text-red-500 text-sm">
+                    <div className="text-red-500 text-sm font-semibold">
                       {formik.errors.title}
                     </div>
                   )}
                 </div>
                 <div className="flex flex-col mb-4">
                   <div className="w-full">
-                    <label htmlFor="category" className="text-gray-700">
+                    <label htmlFor="category" className="text-gray-900 font-semibold">
                       Category *
                     </label>
                     <select
@@ -116,7 +137,7 @@ const AddBlogPost = () => {
                       value={formik.values.category}
                       onBlur={formik.handleBlur("category")}
                       onChange={formik.handleChange("category")}
-                      className="mt-1 p-2 border rounded-md w-full"
+                      className="w-full bg-white mt-1 border-b border-black rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
                     >
                       <option value="" disabled>
                         Select Category of Blog
@@ -130,13 +151,13 @@ const AddBlogPost = () => {
                     </select>
                   </div>
                   {formik.errors.category && formik.touched.category && (
-                    <div className="text-red-500 text-sm">
+                    <div className="text-red-500 text-sm font-semibold">
                       {formik.errors.category}
                     </div>
                   )}
                 </div>
                 <div className="flex flex-col mb-4">
-                  <label htmlFor="avatar" className="mb-2">
+                  <label htmlFor="avatar" className="mb-2 text-gray-900 font-semibold">
                     Select an image from your device (JPEG, JPG, PNG):
                   </label>
                   <input
@@ -144,7 +165,7 @@ const AddBlogPost = () => {
                     id="avatar"
                     name="avatar"
                     onChange={handleImageChange}
-                    className="w-full bg-gray-100 border-b border-black rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
+                    className="w-full bg-white border-b border-black rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
                   />
                   {formik.errors.image && formik.touched.image && (
                     <div className="text-red-500 text-sm">
@@ -160,22 +181,26 @@ const AddBlogPost = () => {
                   )}
                 </div>
                 <div className="flex flex-col mb-2">
-                  <textarea
+                  <label htmlFor="category" className="text-gray-900 font-semibold">
+                    Description *
+                  </label>
+                  <ReactQuill
                     id="description"
-                    name="description"
-                    placeholder="Enter Blog here ..."
                     value={formik.values.description}
-                    onBlur={formik.handleBlur("description")}
-                    onChange={formik.handleChange("description")}
-                    className="border p-2 rounded-md w-full"
-                    rows={17}
+                    onBlur={() => formik.handleBlur("description")}
+                    onChange={(value) => formik.handleChange("description")(value)}
+                    className="w-full bg-white border-b mt-1 border-black rounded-md focus:outline-none"
+                    modules={quillModules}
+                    formats={quillFormats}
+                    style={{ height: '400px' }}
                   />
                   {formik.errors.description && formik.touched.description && (
-                    <div className="text-red-500 text-sm">
+                    <div className="text-red-500 text-sm font-semibold">
                       {formik.errors.description}
                     </div>
                   )}
                 </div>
+                <br/>
                 <div className="my-1">
                   <button
                     type="submit"
@@ -190,10 +215,10 @@ const AddBlogPost = () => {
           </div>
           <br />
         </div>
-        <br/>
-        <br/>
+        <br />
+        <br />
       </div>
-      
+
       <Footer />
     </div>
   );
