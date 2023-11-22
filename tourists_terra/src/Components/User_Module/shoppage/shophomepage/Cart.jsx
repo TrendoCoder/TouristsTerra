@@ -309,7 +309,7 @@ const Cart = () => {
 
                 <div className="ml-4 mr-4 pt-3 md:ml-6 md:pt-2 lg:ml-16">
                   <span className="block font-bold text-gray-800 md:text-lg">
-                    ${product.price.toFixed(2)}
+                    Rs{product.price.toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -321,7 +321,7 @@ const Cart = () => {
               <div className="space-y-1">
                 <div className="flex justify-between gap-4 text-gray-500">
                   <span>Subtotal</span>
-                  <span>${(product.price * quantity).toFixed(2)}</span>
+                  <span>Rs{(product.price * quantity).toFixed(2)}</span>
                 </div>
 
                 {/* <div className="flex justify-between gap-4 text-gray-500">
@@ -336,7 +336,7 @@ const Cart = () => {
 
                   <span className="flex flex-col items-end">
                     <span className="text-lg font-bold">
-                      ${(product.price * quantity).toFixed(2)} USD
+                      Rs{(product.price * quantity).toFixed(2)} Pkr
                     </span>
                     <span className="text-sm text-gray-500">including VAT</span>
                   </span>

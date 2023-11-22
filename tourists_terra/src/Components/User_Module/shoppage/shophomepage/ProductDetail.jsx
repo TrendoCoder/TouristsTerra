@@ -4,6 +4,7 @@ import Navbar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
 import MenuBar from "../../homepage/menubar/menuBar";
 import AccommodationAdSection from "../../accommodationpage/accomoadsection/accomoadsection";
+import { loadStripe } from "@stripe/stripe-js";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -16,6 +17,52 @@ const ProductDetail = () => {
       .then((data) => setProduct(data))
       .catch((error) => console.error("Error fetching product:", error));
   }, [productId]);
+
+  // payment integration
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51OFAzLHNYB7xRUtt828R4itFeJaCXKxqwqnzeaJpfhrjXmn3Ptb3dGbFRA6FatC1ClmXEhzwXqmpF4C3PaIOgv4Y002iRHUwKW"
+    );
+
+    const body = {
+      product: {
+        id: product.id, // Assuming your product object has an 'id' property
+        name: product.name,
+        description: product.description,
+        image: product.image,
+        price: product.price,
+        quantity: quantity,
+        // tax: tax,
+        // Send the incremented quantity
+      },
+    };
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/stripe/create-checkout-session",
+        {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(body),
+        }
+      );
+
+      const session = await response.json();
+
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+
+      if (result.error) {
+        console.log(result.error);
+      }
+    } catch (error) {
+      console.error("Error making payment:", error);
+    }
+  };
 
   if (!product) {
     return (
@@ -155,7 +202,10 @@ const ProductDetail = () => {
                   Add to cart
                 </button>
               </Link>
-              <button className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
+              <button
+                onClick={makePayment}
+                className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
+              >
                 Buy now
               </button>
             </div>
