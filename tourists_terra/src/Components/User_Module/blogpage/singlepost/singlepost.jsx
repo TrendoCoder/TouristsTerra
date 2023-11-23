@@ -174,13 +174,15 @@ function SinglePost() {
                     {moment(data.date).fromNow()}{" "}
                   </p>
                 </div>
-                <div id="u-like" className="flex justify-around ml-4 pr-4 border-r border-gray-500">
+
+                {/* <div id="u-like" className="flex justify-around ml-4 pr-4 border-r border-gray-500">
                   <i class="fa-regular fa-flag fa-4xs mt-1">
                   </i>
                   <p className="text-m text-gray-700 ml-2 mr-03 ">
                     Report
-                  </p>
-                </div>
+                  </p>  
+  </div> */}
+
                 <div id="u-like" className="flex justify-around ml-4 ">
                   <div>
                     {liked ? (
