@@ -1,0 +1,13 @@
+#searchedUser-container{
+    width: 100%;
+    height: 200px;
+    z-index: 99999;
+    background-color: aqua;
+}
+#searchedUser-wrapper{
+    width: 100%;
+    padding: 10px 15px;
+}
+#searchedUser-wrapper>span{
+    font-size: 18px;
+}

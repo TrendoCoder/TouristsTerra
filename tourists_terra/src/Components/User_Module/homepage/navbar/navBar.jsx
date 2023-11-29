@@ -1,11 +1,18 @@
-import React ,{useContext}from "react";
+import React ,{useContext, useState}from "react";
 import "./navBar.css";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../Context/authcontext";
+import useFetch from "../../../../Hooks/usefetch";
+import SearchedUser from "../searcheduser/searcheduser";
 
 function NavBar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useContext(AuthContext);
+  const [searchUserName,setSearchUserName] = useState();
+  const {data, loading, reFetch} = useFetch(`http://localhost:3001/api/user/?userName=${searchUserName}`)
+  const handleSearch = () => {
+    reFetch();
+  }
   return (
     <div>
       <center>
@@ -17,9 +24,29 @@ function NavBar() {
             </Link>
             </div>
             <div id="search-section">
-              <input type="text" placeholder="Search" />
+            <div id="search-user-section">
+            <input
+               type="text" 
+               placeholder="Search by name"
+               value={searchUserName}
+               onChange={(e)=>{setSearchUserName(e.target.value)}}
+               />
+
+<div id="searched-user-list">
+{
+                loading?"Fetching User":<>
+                  {data.map(item => (
+                    <SearchedUser item={item} key={item._id} />
+                  ))}
+                </>
+               }
+</div>
+             
+            </div>
+             
               <div id="search-icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-magnifying-glass" 
+                onClick={handleSearch}></i>
               </div>
             </div>
             <div id="container-personal">

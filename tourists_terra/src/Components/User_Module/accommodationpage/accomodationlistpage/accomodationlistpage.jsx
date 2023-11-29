@@ -3,8 +3,8 @@ import "./accomodationlistpage.css";
 import { useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import "react-date-range/dist/styles.css"; 
+import "react-date-range/dist/theme/default.css"; 
 import SearchedAccomodationItems from "../searchedaccomodationitems/searchedaccomodationitems";
 import NavBar from "../../homepage/navbar/navBar";
 import MenuBar from "../../homepage/menubar/menuBar";

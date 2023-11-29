@@ -12,12 +12,8 @@ const EditUserProfile = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState(user.userName);
   const [contact, setContact] = useState(user.contact);
-  const [userProfilePicture, setUserProfilePicture] = useState(
-    user.userProfilePicture
-  );
-  const [userCoverPicture, setUserCoverPicture] = useState(
-    user.userCoverPicture
-  );
+  const [userProfilePicture, setUserProfilePicture] = useState(null);
+  const [userCoverPicture, setUserCoverPicture] = useState(null);
   const [about, setAbout] = useState(user.about);
   const [gender, setGender] = useState(user.gender);
   const [city, setCity] = useState(user.city);
@@ -60,6 +56,8 @@ const EditUserProfile = () => {
       } catch (err) {
         alert("Issue in Profile Picture");
       }
+    } else {
+      updateUser.userProfilePicture = user.userProfilePicture;
     }
 
     if (userCoverPicture) {
@@ -77,6 +75,8 @@ const EditUserProfile = () => {
       } catch (err) {
         alert("Issue in Cover Picture");
       }
+    } else {
+      updateUser.userCoverPicture = user.userCoverPicture;
     }
 
     try {
@@ -87,14 +87,20 @@ const EditUserProfile = () => {
       );
       console.log(response);
       const updatedUser = response.data;
-      // Update the user state
-
       setUser(updatedUser);
       alert("Successfully updated");
-      navigate(`/edit-profile/${user._id}`);
+      navigate(`/profile-page/${user.userName}`);
     } catch (err) {
       alert("There is an issue occur.. Try again");
     }
+  };
+
+  const handleProfilePictureChange = (e) => {
+    setUserProfilePicture(e.target.files[0]);
+  };
+
+  const handleCoverPictureChange = (e) => {
+    setUserCoverPicture(e.target.files[0]);
   };
 
   return (
@@ -128,7 +134,9 @@ const EditUserProfile = () => {
                   <div id="editUserProfile-image-div-div">
                     <img
                       src={
-                        user.userProfilePicture
+                        userProfilePicture
+                          ? URL.createObjectURL(userProfilePicture)
+                          : user.userProfilePicture
                           ? PF + `/profilePicture/${user.userProfilePicture}`
                           : PF + "/profileUpload.png"
                       }
@@ -143,9 +151,7 @@ const EditUserProfile = () => {
                       name=""
                       id=""
                       accept=".png,.jpeg,.jpg"
-                      onChange={(e) => {
-                        setUserProfilePicture(e.target.files[0]);
-                      }}
+                      onChange={handleProfilePictureChange}
                     />
                   </div>
                 </div>
@@ -165,9 +171,11 @@ const EditUserProfile = () => {
                 <div id="editUserProfile-cover-image-div-div">
                   <img
                     src={
-                      user.userCoverPicture
+                      userCoverPicture
+                        ? URL.createObjectURL(userCoverPicture)
+                        : user.userCoverPicture
                         ? PF + `/profileCoverPic/${user.userCoverPicture}`
-                        : PF + "profileCoverPic/coverPic.jpg"
+                        : PF + "/profileCoverPic/coverPic.jpg"
                     }
                     crossOrigin="anonymous"
                     alt={uploadImage}
@@ -181,9 +189,7 @@ const EditUserProfile = () => {
                     name=""
                     id=""
                     accept=".png,.jpeg,.jpg"
-                    onChange={(e) => {
-                      setUserCoverPicture(e.target.files[0]);
-                    }}
+                    onChange={handleCoverPictureChange}
                   />
                 </div>
               </div>
@@ -247,6 +253,9 @@ const EditUserProfile = () => {
                     }}
                     value={city}
                   />
+                  {errors.city && (
+                    <p className="error-message">{errors.city}</p>
+                  )}
                 </div>
                 <div id="editUserProfile-inputs">
                   <label htmlFor="">
@@ -260,6 +269,9 @@ const EditUserProfile = () => {
                       setCountry(e.target.value);
                     }}
                   />
+                  {errors.country && (
+                    <p className="error-message">{errors.country}</p>
+                  )}
                 </div>
               </div>
               <div id="editUserProfile-main-inputs">
@@ -312,6 +324,9 @@ const EditUserProfile = () => {
                     maxLength={150}
                   ></textarea>
                 </div>
+                {errors.about && (
+                  <p className="error-message">{errors.about}</p>
+                )}
               </div>
               <div id="editUserProfile-main-inputs">
                 <div id="save-changes-btn">

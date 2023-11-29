@@ -27,8 +27,8 @@ import ProductDetail from "./Components/User_Module/shoppage/shophomepage/Produc
 import GuideDetails from "./Components/User_Module/localguidepage/localguidehome/guidedetail";
 import Cart from "./Components/User_Module/shoppage/shophomepage/Cart";
 import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider";
-
 import AdminHomePage from "./Components/adminmodule/adminhomepage/adminhomepage";
+import UserChatPage from "./Components/User_Module/userchatpage/userchatpage/userchatpage";
 import { AuthContext } from "./Context/authcontext";
 import Success from "./Components/User_Module/shoppage/shophomepage/Success";
 
@@ -39,7 +39,13 @@ function App() {
       <Router>
         <div>
           <Routes>
+            <Route path="sign-up" element={<SignUpPage />}></Route>
+            <Route path="login-user" element={<LoginUser />}></Route>
             <Route path="/" element={<LandingPage />}></Route>
+            <Route
+              path="user-chat-page"
+              element={<UserChatPage />}
+            ></Route>
             <Route path="accommodation" element={<AccommodationHome />}></Route>
             <Route
               path="accomodation-list"
@@ -72,9 +78,6 @@ function App() {
               {" "}
             </Route>
             <Route path="blog-menu" element={<BlogMenu />}></Route>
-
-            <Route path="sign-up" element={<SignUpPage />}></Route>
-            <Route path="login-user" element={<LoginUser />}></Route>
             <Route
               path="booking-transport-form"
               element={<BookingTransportForm />}
@@ -83,10 +86,7 @@ function App() {
               path="profile-page/:userName"
               element={<ProfilePage />}
             ></Route>
-            {/* <Route
-              path="edit-profile-page"
-              element={<EditProfilePage />}
-            ></Route> */}
+
             <Route
               path="explore-home-page"
               element={<ExploreHomepage />}

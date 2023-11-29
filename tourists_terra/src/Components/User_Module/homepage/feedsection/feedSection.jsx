@@ -26,14 +26,14 @@ const FeedSection = ({ username }) => {
   }, [username, user?._id]);
 
   if (!posts) {
-    return <div>Loading....</div>;
+    return <div>No Posts to show....</div>;
   }
   return (
     <div id="big-container-feed">
       <div id="big-container-feed-wrapper">
         <UploadSection />
         {posts.length === 0 ? (
-          <div>Posts Loading....</div>
+          <div>No Posts to show....</div>
         ) : (
           posts.map((p) => <DisplayPost key={p._id} posts={p} />)
         )}
