@@ -5,6 +5,7 @@ const SearchedUser = ({item}) => {
     <div id='searchedUser-container'>
     <div id='searchedUser-wrapper'>
         <span>{item.userName}</span>
+        <p>Shamir</p>
     </div>
     </div>
   )

@@ -76,3 +76,14 @@
 #u-chat-online{
     padding: 10px 20px;
 }
+#no-conversation{
+    width:100%;
+    height: 100%;
+    color: rgba(128, 128, 128, 0.637);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 42px;
+    font-weight: 800;
+}

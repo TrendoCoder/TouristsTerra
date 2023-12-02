@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import "./userInfoDisplay.css";
-import pic from "../../../../images/profile.jpeg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../Context/authcontext";
 const UserInfoDisplay = () => {
   const { user } = useContext(AuthContext);

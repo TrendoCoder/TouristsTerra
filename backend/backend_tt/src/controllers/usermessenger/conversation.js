@@ -25,3 +25,16 @@ const getConversation = async (req, res, next) => {
     }
 };
 module.exports.getConversation = getConversation;
+
+//get conversation includes two userId
+const getConvIncludesTwoUserId = async (req,res,next)=>{
+    try{
+const conversation = await Conversation.findOne({
+    members:{$all :[req.params.firstUserId, req.params.secondUserId]} 
+});
+res.status(200).json(conversation);
+    }catch(err){
+next(err);
+    }
+}
+module.exports.getConvIncludesTwoUserId = getConvIncludesTwoUserId;
