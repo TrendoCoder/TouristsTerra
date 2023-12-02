@@ -13,7 +13,6 @@ import BackgroundImage from "../../../../images/image.jpg";
 
 const AddBlogPost = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
   const [image, setImage] = useState("");
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -31,7 +30,6 @@ const AddBlogPost = () => {
 
   const onSubmit = async (values, { resetForm }) => {
     try {
-      // Upload the image to Cloudinary
       const formData = new FormData();
       values.userId = user._id;
       formData.append("file", image);
@@ -41,10 +39,8 @@ const AddBlogPost = () => {
         formData
       );
       const imageUrl = cloudinaryResponse.data.secure_url;
-      // Add the Cloudinary image URL to the form data
       values.imageURL = imageUrl;
       values.authorName = localStorage.getItem("username");
-      console.log(values);
       const response = await axios.post(
         "http://127.0.0.1:3001/api/bloguser/createblogs",
         values
@@ -75,7 +71,6 @@ const AddBlogPost = () => {
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       ['bold', 'italic', 'underline'],
       [{ list: 'ordered' }, { list: 'bullet' }],
-
     ],
   };
 
@@ -84,6 +79,11 @@ const AddBlogPost = () => {
     'bold', 'italic', 'underline',
     'list', 'bullet',
   ];
+
+  const quillStyles = {
+    maxHeight: '400px', // Set the max height as needed
+    overflowY: 'auto', // Add vertical scroll if needed
+  };
 
   return (
     <div>
@@ -192,7 +192,7 @@ const AddBlogPost = () => {
                     className="w-full bg-white border-b mt-1 border-black rounded-md focus:outline-none"
                     modules={quillModules}
                     formats={quillFormats}
-                    style={{ height: '400px' }}
+                    style={{ ...quillStyles, minHeight: '250px' }}  
                   />
                   {formik.errors.description && formik.touched.description && (
                     <div className="text-red-500 text-sm font-semibold">
