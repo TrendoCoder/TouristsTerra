@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./hoteladminhomepage.css";
 import useFetch from "../../../../../Hooks/usefetch";
-import axios from "axios";
 import { AuthContext } from "../../../../../Context/authcontext";
 import CreateHotel from "../createhotel/createhotel";
 const HotelAdminHomePage = () => {
@@ -91,8 +90,9 @@ const HotelAdminHomePage = () => {
                         <div id="list-all-hotels" key={i}>
                           <div id="hotel-imgs">
                             <img
-                              src={PF + (item.photos || "/placeholder.png")}
-                              alt=""
+                              src={item.photos ? (PF + `/hotelimgs/${item.photos}`): (PF+"/profileUpload.png")}
+                              alt={PF+"/profileUpload.png"}
+                              crossOrigin="anonymous"
                             />
                           </div>
                           <div id="list-hotel-info">
