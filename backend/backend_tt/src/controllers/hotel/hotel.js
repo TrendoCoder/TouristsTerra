@@ -29,13 +29,18 @@ module.exports.updateHotel = updateHotel;
 
 const deleteHotel = async (req, res, next) => {
   try {
-    await Hotel.findByIdAndDelete(req.params.id);
-    res.status(200).json("Hotel has been deleted");
+    const deletedHotelId = req.params.id;
+    const roomsToDelete = await Room.find({ hotelId: deletedHotelId });
+    await Hotel.findByIdAndDelete(deletedHotelId);
+    await Room.deleteMany({ hotelId: deletedHotelId });
+    res.status(200).json("Hotel and its rooms have been deleted");
   } catch (err) {
     next(err);
   }
 };
+
 module.exports.deleteHotel = deleteHotel;
+
 
 const getHotel = async (req, res, next) => {
   try {

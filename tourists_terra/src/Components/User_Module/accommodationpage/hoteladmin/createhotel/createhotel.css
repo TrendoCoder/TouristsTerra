@@ -52,6 +52,9 @@
     font-weight: 500;
     color: #0F4157;
 }
+#num-inpts{
+    width: 30%;
+}
 #add-hotel-container-rs-inputs>input,#add-hotel-container-rs-inputs>select{
     border-radius: 4px;
     border: 1px solid #0F4157;

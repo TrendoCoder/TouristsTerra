@@ -1,0 +1,39 @@
+#del-preview-room{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: #24262bf5;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+}
+#del-preview-room-big-container{
+    max-width: 1024px;
+    height: 100%;
+    padding: 20px 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+}
+
+#del-room-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 60%;
+    background-color: #0F4157;
+    padding: 20px 40px;
+    border-radius: 10px;
+    gap: 20px;
+    color: white;
+    box-shadow: 0 0 10px 2px white;
+}
+#del-room-wrapper>div{
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}

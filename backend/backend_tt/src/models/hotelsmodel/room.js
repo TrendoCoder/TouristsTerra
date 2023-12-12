@@ -4,15 +4,39 @@ const { Schema } = mongoose;
 
 const RoomSchema = new mongoose.Schema(
   {
+    hotelId: {
+      type: String,
+      required: true,
+    },
+    hotelName:{
+      type:String,
+      required:true,
+    },
     title: {
       type: String,
       required: true,
     },
-    price: {
-      type: Number,
+    city:{
+      type: String,
       required: true,
     },
-    maxPeople : {
+    address:{
+      type:String,
+      required:true,
+    },
+    roomNumber:{
+      type:Number,
+      required:true,
+    },
+    numOfBeds:{
+      type:Number,
+      required:true,
+    },
+    numOfAdults:{
+      type:Number,
+      required:true,
+    },
+    pricePerNight: {
       type: Number,
       required: true,
     },
@@ -20,12 +44,32 @@ const RoomSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    roomNumber: [
-      {
-        number: Number,
-        unavailableDates: { type: [Date] },
-      },
-    ],
+    photos:{
+      type:Array,
+    },
+    isWifi:{
+      type:Boolean,
+      default:false,
+    },
+    isLaundary:{
+      type:Boolean,
+      default:false,
+    },
+    isParking:{
+      type:Boolean,
+      default:false,
+    },
+    extraFeatures:{
+      type:String,
+    },
+    furnished:{
+      type:Boolean,
+      default:true,
+    },
+    availabilty:{
+      type:Boolean,
+      default:true,
+    }
   },
   {
     timestamps: true,

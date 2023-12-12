@@ -177,6 +177,24 @@ app.post("/api/upload/hotelimgs", uploadHotelImg.single("file"), (req, res) => {
     console.error(error);
   }
 });
+
+// store Room Image
+const storageRoomImage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/hotelimgs/roomimgs");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+const uploadRoomImg = multer({ storage: storageRoomImage });
+app.post("/api/upload/hotelimgs/roomimgs", uploadRoomImg.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File uploded successfully");
+  } catch (error) {
+    console.error(error);
+  }
+});
 app.use("/", indexRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);

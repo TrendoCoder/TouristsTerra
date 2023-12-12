@@ -1,0 +1,17 @@
+#admin-hp-main-container{
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: space-between;
+color: white;
+}
+#admin-hp-left-bar{
+    padding: 20px 10px;
+    width: 20%;
+    height: 100vh;
+    background-color: #24262b;
+}
+#admin-hp-right-bar{
+    padding: 20px 10px;
+    width: 70%;
+}

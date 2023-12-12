@@ -8,11 +8,12 @@ router.post("/:hotelId", createRoom);
 // router.post("/:hotelId",verifyAdmin, createRoom);
 
 // Update
-router.put("/:id",verifyAdmin, updateRoom);
+router.put("/:id", updateRoom);
 router.put("/availability/:id", updateRoomAvailability);
 
 // Delete
-router.delete("/:id/:hotelId",verifyAdmin, deleteRoom);
+router.delete("/:id/:hotelId", deleteRoom);
+// router.delete("/:id/:hotelId",verifyAdmin, deleteRoom);
 
 // Get
 router.get("/:id", getRoom);
