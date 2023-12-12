@@ -56,9 +56,14 @@
     align-items: center;
     gap: 20px;
     padding: 20px 5px;
-    color: #0F4157;
+    color: white;
     transition: 0.3s;
-    border-radius: 20px
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #0F4157;
+    margin-bottom: 10px;
+}#dashboard-heading>i,#dashboard-mini-heading>i{
+    margin-left: 15px;
 }
 #dashboard-heading>h3{
     font-size: 20px;
@@ -68,13 +73,15 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    padding: 20px 5px;
+    padding: 15px 5px;
     color: #0F4157;
     transition: 0.3s;
-    border-radius: 20px;
+    border-radius: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
+    cursor: pointer;
 }
+
 #dashboard-mini-heading:hover{
     background-color: #0F4157;
     color: white;

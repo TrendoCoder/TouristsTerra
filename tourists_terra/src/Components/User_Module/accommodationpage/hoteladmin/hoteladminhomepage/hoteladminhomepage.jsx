@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./hoteladminhomepage.css";
 import useFetch from "../../../../../Hooks/usefetch";
@@ -7,11 +7,12 @@ import CreateHotel from "../createhotel/createhotel";
 import CreateRoom from "../createroom/createroom";
 import ListOfRooms from "../listofrooms/listofrooms";
 import ListOfHotels from "../listofhotels/listofhotels";
+import HotelAdminDashboard from "../hoteladmindashboard/hoteladmindashboard";
 const HotelAdminHomePage = () => {
- 
   const { user } = useContext(AuthContext);
-  const [clickNumber, setClickNumber] = useState(1);
+  const [clickNumber, setClickNumber] = useState(0);
   const { dispatch } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const { data, loading } = useFetch(
     `http://localhost:3001/api/hotels/?userId=${user._id}`
@@ -38,7 +39,7 @@ const HotelAdminHomePage = () => {
       </div>
       <div id="hotel-admin-container">
         <div id="h-admin-left-side">
-          <div id="dashboard-heading">
+          <div id="dashboard-heading" onClick={() => setClickNumber(0)}>
             <i className="fa-solid fa-vector-square"></i>
             <h3>Dashboard</h3>
           </div>
@@ -82,10 +83,19 @@ const HotelAdminHomePage = () => {
           </Link>
         </div>
         <div id="h-admin-right-side">
-          {clickNumber === 1 ? (
+          {clickNumber === 0 ? (
+            <div id="h-admin-right-side-container" style={{backgroundColor:"#0F4157"}}>
+              <h2>DashBoard</h2>
+              <HotelAdminDashboard />
+            </div>
+          ) : clickNumber === 1 ? (
             <div id="h-admin-right-side-container">
               <h2>List of All Hotels</h2>
-              {loading ? "Loading please wait" : <ListOfHotels hotels={data} />}
+              {loading ? (
+                "Loading please wait"
+              ) : (
+                <ListOfHotels />
+              )}
             </div>
           ) : clickNumber === 2 ? (
             <div id="h-admin-right-side-container">

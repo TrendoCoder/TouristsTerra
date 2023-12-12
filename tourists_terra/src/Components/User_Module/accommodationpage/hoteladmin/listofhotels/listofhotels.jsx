@@ -1,15 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import "./listofhotels.css"
 import PreviewHotel from '../previewhotel/previewhotel';
 import DeleteHotel from '../deletehotel/deletehotel';
 import EditHotel from '../edithotel/edithotel';
-const ListOfHotels = ({hotels}) => {
+import useFetch from '../../../../../Hooks/usefetch';
+import { AuthContext } from '../../../../../Context/authcontext';
+const ListOfHotels = () => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    const { user } = useContext(AuthContext);
     const [showPreview, setShowPreview] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [selectedHotel, setSelectedHotel] = useState(null);
-
+    const { data, loading } = useFetch(
+      `http://localhost:3001/api/hotels/?userId=${user._id}`
+    );
     const handlePreviewClick = (hotel) => {
         setSelectedHotel(hotel);
         setShowPreview(true);
@@ -25,8 +30,8 @@ const ListOfHotels = ({hotels}) => {
   return (
     <div id="loah-container">
       <>
-        {hotels &&
-          hotels.map((item, i) => (
+       {loading?"...":<>{data &&
+          data.map((item, i) => (
             <div id="list-all-hotels" key={i}>
               <div id="hotel-imgs">
                 <img
@@ -68,7 +73,7 @@ const ListOfHotels = ({hotels}) => {
         <button style={{backgroundColor:"orangeRed"}} onClick={() => handleDeleteClick(item)}>Delete</button>
       </div>
             </div>
-          ))}
+          ))}</>}
       </>
       {showPreview && (
         <PreviewHotel

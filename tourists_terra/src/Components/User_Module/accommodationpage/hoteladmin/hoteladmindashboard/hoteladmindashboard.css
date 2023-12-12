@@ -1,0 +1,46 @@
+#HotelAdminDashboard-main-container{
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+#HotelAdminDashboard-main-container-sec-one, #HotelAdminDashboard-main-container-sec-two{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+   
+}
+#HotelAdminDashboard-main-container-sec-one-divs{
+    border-radius: 5px;
+    border: 1px solid rgba(128, 128, 128, 0.301);
+    flex: 2;
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 10px;
+    background-color: #0F4157;
+}
+#HotelAdminDashboard-main-container-sec-one-divs:hover{
+    box-shadow: 0 0 20px 2px rgba(128, 128, 128, 0.692);
+    transition: 0.2s;
+}
+#HotelAdminDashboard-main-container-sec-one-divs>i{
+    font-size: 42px;
+    margin-bottom: 10px;
+    color: white;
+}
+#HotelAdminDashboard-main-container-sec-one-divs>h2{
+    font-size: 22px;
+    font-weight:700;
+    color: greenyellow;
+}
+#HotelAdminDashboard-main-container-sec-one-divs>h3{
+    font-size: 20px;
+    color: greenyellow;
+}
