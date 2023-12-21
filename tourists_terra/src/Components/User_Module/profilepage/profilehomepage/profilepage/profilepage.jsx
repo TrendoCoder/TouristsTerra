@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import "./profilepage.css";
 import ProfileInfo from "../profileinfo/profileinfo";
 import NavBar from "../../../homepage/navbar/navBar";
@@ -6,12 +6,10 @@ import ProfileSideBar from "../profilesidebar/profilesidebar";
 import MiniNavBar from "../mininavbar/mininavbar";
 import { useParams } from "react-router";
 import axios from "axios";
-
 const ProfilePage = () => {
   const { userName } = useParams();
   const [user, setUser] = useState({});
   console.log(userName);
-
   const fetchUsers = async () => {
     try {
       const res = await axios.get(
@@ -23,7 +21,6 @@ const ProfilePage = () => {
       console.error("Error fetching user:", error);
     }
   };
-
   useEffect(() => {
     fetchUsers();
   }, [userName]);

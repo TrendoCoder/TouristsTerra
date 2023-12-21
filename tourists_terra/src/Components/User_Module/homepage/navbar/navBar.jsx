@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./navBar.css";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../Context/authcontext";
@@ -9,12 +9,18 @@ function NavBar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useContext(AuthContext);
   const [searchUserName, setSearchUserName] = useState("");
-  const { data, loading, reFetch } = useFetch(
-    `http://localhost:3001/api/user/?userName=${searchUserName}`
+  const { data, loading } = useFetch(
+    `http://localhost:3001/api/user/all`
   );
-  const handleSearch = () => {
-    reFetch();
-  };
+  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    const searchData = data.filter((item) =>
+      item.userName.toLowerCase().includes(searchUserName.toLowerCase())
+    );
+    setFilteredData(searchData);
+  }, [data, searchUserName]);
+
   return (
     <div>
       <center>
@@ -31,36 +37,34 @@ function NavBar() {
                   type="text"
                   placeholder="Search by name"
                   value={searchUserName}
-                  onChange={(e) => {
-                    setSearchUserName(e.target.value);
-                  }}
+                  onChange={(e) => setSearchUserName(e.target.value)}
                 />
-
                 <div id="searched-user-list">
-                  {loading ? (
-                    "Fetching User"
-                  ) : (
+                  {(
                     <>
-                      {data.map((item) => (
-                        <SearchedUser item={item} key={item._id} />
-                      ))}
+                      {searchUserName.trim() !== "" && filteredData.length > 0 ? (
+                        loading ? (
+                    "Fetching User"
+                  ) :filteredData.map((item) => (
+                    <SearchedUser item={item}/>
+                    
+                        ))
+                      ):searchUserName.trim() === ""?"": (
+                        "No results found"
+                      )}
                     </>
                   )}
                 </div>
               </div>
-
               <div id="search-icon">
-                <i
-                  class="fa-solid fa-magnifying-glass"
-                  onClick={handleSearch}
-                ></i>
+                <i className="fa-solid fa-magnifying-glass"></i>
               </div>
             </div>
             <div id="container-personal">
               <div id="container-personal-menu">
                 <Link to="/">
                   <i
-                    class="fa-solid fa-house fa-lg"
+                    className="fa-solid fa-house fa-lg"
                     style={{ marginBottom: "5px" }}
                   ></i>
                 </Link>
@@ -68,7 +72,7 @@ function NavBar() {
 
               <div id="container-personal-menu">
                 <Link to="/user-chat-page">
-                  <i class="fa-solid fa-message fa-lg">
+                  <i className="fa-solid fa-message fa-lg">
                     <div id="msg"></div>
                   </i>
                 </Link>
@@ -76,7 +80,7 @@ function NavBar() {
 
               <div id="container-personal-menu">
                 <Link to="/">
-                  <i class="fa-solid fa-bell fa-lg">
+                  <i className="fa-solid fa-bell fa-lg">
                     <div id="notification"></div>
                   </i>
                 </Link>

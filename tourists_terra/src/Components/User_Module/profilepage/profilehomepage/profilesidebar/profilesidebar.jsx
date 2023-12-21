@@ -3,16 +3,19 @@ import "./profilesidebar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../../Context/authcontext";
 import axios from "axios";
+
 const ProfileSideBar = ({ user }) => {
-  const { user: currentUser, dispatch } = useContext(AuthContext);
-  const { followedUser, setFollowedUser } = useState();
-  const { followingUser, setFollowingUser } = useState();
+  const { user: currentUser, dispatch, setUser } = useContext(AuthContext);
+  const [followedUser, setFollowedUser] = useState();
+  const [followingUser, setFollowingUser] = useState();
+
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem("token");
     dispatch({ type: "LOGOUT" });
     navigate("/login-user");
   };
+
   useEffect(() => {
     const fetchFollowCounts = async () => {
       try {
@@ -25,26 +28,16 @@ const ProfileSideBar = ({ user }) => {
 
     fetchFollowCounts();
   }, [user._id]);
+
   const followUser = async () => {
     try {
-      if (!currentUser.followers.includes(user._id)) {
+      if (!currentUser.following.includes(user._id)) {
         await axios.put(`http://localhost:3001/api/user/${user._id}/follow`, {
           userId: currentUser._id,
         });
-        window.location.reload();
-      } else {
-        console.log("You Already UnFollow this user");
-      }
-    } catch (err) {
-      console.error("Error following user:", err);
-    }
-  };
-  const unFollowUser = async () => {
-    try {
-      if (!currentUser.followers.includes(user._id)) {
-        await axios.put(`http://localhost:3001/api/user/${user._id}/unfollow`, {
-          userId: currentUser._id,
-        });
+
+        // Update local storage after follow operation
+        setUser({ ...currentUser, following: [...currentUser.following, user._id] });
         window.location.reload();
       } else {
         console.log("You Already Follow this user");
@@ -53,6 +46,28 @@ const ProfileSideBar = ({ user }) => {
       console.error("Error following user:", err);
     }
   };
+
+  const unFollowUser = async () => {
+    try {
+      if (currentUser.following.includes(user._id)) {
+        await axios.put(`http://localhost:3001/api/user/${user._id}/unfollow`, {
+          userId: currentUser._id,
+        });
+  
+        // Update local storage after unfollow operation
+        setUser({
+          ...currentUser,
+          following: currentUser.following.filter((id) => id !== user._id),
+        });
+        window.location.reload();
+      } else {
+        console.log("You are not following this user");
+      }
+    } catch (err) {
+      console.error("Error unfollowing user:", err);
+    }
+  };
+  
   return (
     <>
       <div id="leftbar-main-container">
@@ -60,7 +75,7 @@ const ProfileSideBar = ({ user }) => {
           <></>
         ) : (
           <>
-            {currentUser.followers.includes(user._id) ? (
+            {currentUser.following.includes(user._id) ? (
               <div>
                 <button id="follow-user-btn" onClick={unFollowUser}>
                   UnFollow

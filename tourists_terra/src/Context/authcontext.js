@@ -1,3 +1,5 @@
+// AuthContext.js
+
 import React, { createContext, useEffect, useReducer } from "react";
 
 const INITIAL_STATE = {
@@ -5,7 +7,9 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
 };
+
 export const AuthContext = createContext(INITIAL_STATE);
+
 const AuthReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN_START":
@@ -48,11 +52,15 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(state.user));
   }, [state.user]);
+
   const setUser = (updatedUser) => {
     dispatch({
       type: "UPDATE_USER",
       payload: updatedUser,
     });
+
+    // Update localStorage after updating user
+    localStorage.setItem("user", JSON.stringify(updatedUser));
   };
 
   return (
@@ -62,7 +70,7 @@ export const AuthContextProvider = ({ children }) => {
         loading: state.loading,
         error: state.error,
         dispatch,
-        setUser, // Add setUser to the context value
+        setUser,
       }}
     >
       {children}
