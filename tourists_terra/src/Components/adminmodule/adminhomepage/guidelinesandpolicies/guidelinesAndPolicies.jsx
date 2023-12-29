@@ -3,7 +3,7 @@ import "./guidelinesandpolicies.css";
 import axios from "axios";
 
 const GuidelinesAndPolicies = () => {
-  const [guidelines, setGuidelines] = useState("");
+  const [guideline, setGuidelines] = useState(null);
   const [isPrevGuidelines, setIsPrevGuidelines] = useState(false);
 
   useEffect(() => {
@@ -25,26 +25,26 @@ const GuidelinesAndPolicies = () => {
   const updateGuidelines = async () => {
     isPrevGuidelines
       ? await axios.put(
-          `http://localhost:3001/api/admin/guidelines-and-policies/${guidelines._id}`,
-          { guidelines: guidelines }
+          `http://localhost:3001/api/admin/guidelines-and-policies/${guideline._id}`,
+          { guidelines: guideline }
         )
       : await axios.post(
           `http://localhost:3001/api/admin/guidelines-and-policies/`,
-          { guidelines: guidelines }
+          { guidelines: guideline }
         );
     window.location.reload();
   };
-  
+  console.log(guideline);
 
   return (
     <div id="guidelines-main">
       <h1>GUIDELINES AND POLICIES</h1>
       <div id="guidelines-container">
         <textarea
-          name="guidelines"
-          value={guidelines}
+          name="guideline"
+          defaultValue={guideline}
           cols="80"
-          rows="16"
+          rows="14.5"
           onChange={(e) => setGuidelines(e.target.value)}
         ></textarea>
       </div>

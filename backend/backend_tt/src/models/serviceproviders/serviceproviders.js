@@ -7,13 +7,17 @@ const ServiceProviderSchema = new mongoose.Schema(
     lastName: String,
     email: String,
     contact: String,
-    cnic:String,
+    cnic: String,
     city: String,
     experience: String,
     language: String,
     requestFor: String,
     idCardFrontImg: String,
     idCardBackImg: String,
+    status: {
+      type: String,
+      default: "Pending",
+    },
   },
   { timestamps: true }
 );

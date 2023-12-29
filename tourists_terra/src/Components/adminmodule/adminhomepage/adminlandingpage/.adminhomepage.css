@@ -60,7 +60,7 @@ color: white;
     border-bottom: 1px solid #0F4157;
     border-top: 1px solid #0F4157;
     border-radius: 10px;
-    gap: 20px;
+    gap: 10px;
 }
 .admin-left-bar-main-options-div>h3:hover{
     background-color: #0F4157;
@@ -74,7 +74,7 @@ color: white;
     padding: 3px 12px;
 }
 .admin-left-bar-main-options-div>div{
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 #admin-hp-right-bar{
     padding: 20px 10px;
