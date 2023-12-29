@@ -1,0 +1,24 @@
+#conversation-container{
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 8px;
+    border-radius: 5px;
+}
+#conversation-container:hover{
+    background-color: rgb(241, 241, 241);
+    transition: 0.3s;
+}
+#conversation-container>img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+#conversation-container>span{
+    font-weight: 600;
+    font-size: 18px;
+    margin-left: 15px;
+}

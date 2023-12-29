@@ -36,7 +36,7 @@ router.delete("/:id", deleteUser);
 router.get("/", getUser);
 
 // Get All
-router.get("/", getAllUsers);
+router.get("/all", getAllUsers);
 
 // Get friends
 router.get("/friends/:userId", getFriends);

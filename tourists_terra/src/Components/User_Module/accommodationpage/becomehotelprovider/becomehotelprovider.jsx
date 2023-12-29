@@ -11,6 +11,7 @@ const BecomeHotelProvider = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const initialValuesCustomer = {
+    userId: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -19,6 +20,7 @@ const BecomeHotelProvider = () => {
     city: "",
     experience: "",
     language: "",
+    requestFor: "",
     idCardFrontImg: null,
     idCardBackImg: null,
   };
@@ -105,7 +107,6 @@ const BecomeHotelProvider = () => {
           );
         } catch (err) {
           alert("Formatting Error in Id Card Front Image");
-          navigate("/accommodation");
         }
       }
 
@@ -127,10 +128,13 @@ const BecomeHotelProvider = () => {
 
       try {
         await axios.post("http://localhost:3001/api/serviceProvider/", newPost);
-
+        await axios.put(`http://localhost:3001/api/user/${user._id}`, {
+          isAccomodationAdmin: "Pending",
+        });
         alert(
           "Your request has been successfully sent to our team. We'll respond to you soon."
         );
+        navigate("/accommodation");
       } catch (err) {
         alert(err);
       }

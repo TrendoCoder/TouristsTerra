@@ -11,29 +11,35 @@ const FeedSection = ({ username }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = username ? await axios.get(`http://localhost:3001/api/post/profile/${username}`)
-          : await axios.get("http://localhost:3001/api/post/timeline/" + user?._id )
-        setPosts(
-          res.data.sort((p1, p2) => {
-            return new Date(p2.createdAt) - new Date(p1.createdAt);
-          })
-        );
+        if (username !== user.userName) {
+          const res = await axios.get(`http://localhost:3001/api/post/profile/${username}`);
+          setPosts(
+            res.data.sort((p1, p2) => new Date(p2.createdAt) - new Date(p1.createdAt))
+          );
+        } else  {
+          const timelineRes = await axios.get(`http://localhost:3001/api/post/timeline/${user._id}`);
+          setPosts(
+            timelineRes.data.sort((p1, p2) => new Date(p2.createdAt) - new Date(p1.createdAt))
+          );
+        }
+        
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
+
     fetchPosts();
-  }, [username, user?._id]);
+  }, [username, user.userName, user._id]);
 
   if (!posts) {
-    return <div>Loading....</div>;
+    return <div>No Posts to show....</div>;
   }
   return (
     <div id="big-container-feed">
       <div id="big-container-feed-wrapper">
         <UploadSection />
         {posts.length === 0 ? (
-          <div>Posts Loading....</div>
+          <div>No Posts to show....</div>
         ) : (
           posts.map((p) => <DisplayPost key={p._id} posts={p} />)
         )}

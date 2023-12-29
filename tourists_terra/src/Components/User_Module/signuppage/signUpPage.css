@@ -2,6 +2,40 @@
     width: 100%;
     height: 100vh;
 }
+#otp-container{
+    position:fixed;
+    top: 0;
+    right: 0;
+    background-color: #0e415746;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#otp-wrapper{
+    width: 400px;
+    padding: 20px 40px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+#otp-wrapper>label{
+    color: grey;
+}
+#otp-wrapper>input{
+    width: 100%;
+    border: 1px solid #0E4157;
+    padding: 5px 10px;
+}
+#otp-wrapper>button{
+    border: none;
+    border-radius: 5px;
+    background-color: #0E4157;
+    color: white;
+    padding: 10px 15px;
+}
 #signup-container-lite{
     padding: 10px 60px;
 }

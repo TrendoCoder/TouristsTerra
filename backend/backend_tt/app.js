@@ -25,9 +25,7 @@ var roomRouter = require("./src/routes/api/hotelapi/rooms");
 var authRouter = require("./src/routes/api/userloginapi/auth");
 var userRouter = require("./src/routes/api/userloginapi/user");
 var blogRouter = require("./src/routes/api/blogapi/blogapi");
-var exploreRouter = require("./src/routes/api/exploreapi/exploreapi");
 var serviceProviderRouter = require("./src/routes/api/serviceproviderapi/serviceproviderapi");
-// var adminRouter = require("./src/routes/api/adminapi/adminapi");
 
 // stripe
 const stripeRouter = require("./src/routes/api/stripe/checkoutRoute");
@@ -177,6 +175,24 @@ app.post("/api/upload/hotelimgs", uploadHotelImg.single("file"), (req, res) => {
     console.error(error);
   }
 });
+
+// store Room Image
+const storageRoomImage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/hotelimgs/roomimgs");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+const uploadRoomImg = multer({ storage: storageRoomImage });
+app.post("/api/upload/hotelimgs/roomimgs", uploadRoomImg.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File uploded successfully");
+  } catch (error) {
+    console.error(error);
+  }
+});
 app.use("/", indexRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
@@ -190,6 +206,11 @@ app.use("/api/details", guideRouter);
 app.use("/api/bloguser", blogRouter);
 app.use("/api/explore", exploreRouter);
 app.use("/api/serviceProvider", serviceProviderRouter);
+app.use("/api/user-conversation",conversationRouter);
+app.use("/api/user-message",messageRouter);
+
+//admin Routers
+app.use("/api/admin/guidelines-and-policies", guidelinesRouter);
 app.use("/", indexRouter);
 
 app.use(function (req, res, next) {

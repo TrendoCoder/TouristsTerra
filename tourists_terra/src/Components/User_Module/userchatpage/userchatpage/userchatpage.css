@@ -1,0 +1,89 @@
+#u-chat-container{
+    height: calc(100vh - 60px);
+    display: flex;
+    margin-top: 60px;
+}
+#u-chat-menu{
+    flex: 3.5;
+    padding: 10px 20px;
+}
+#u-chat-menu-input{
+    width: 100%;
+    padding: 10px 20px;
+}
+#u-chat-menu-input>input{
+    width: 100%;
+    padding: 5px 10px;
+    border: none;
+    border-bottom: 1px solid #0F4157;
+    outline: none;
+}
+#u-chat-box{
+    flex: 5.5;
+}
+#u-chat-online{
+    flex: 3;
+    padding: 10px 20px;
+}
+#u-chat-menu-wrapper, #u-chat-box-wrapper, #u-chat-online-wrapper{
+    padding: 10px;
+    height: 100%;
+}
+#u-chat-box-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+#u-chat-box-top, #u-chat-online-wrapper, #u-chat-menu-wrapper {
+    overflow-y: scroll;
+    box-shadow: 0 0 50px 1px rgba(211, 211, 211, 0.4);
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.4s;
+}
+
+#u-chat-box-top::-webkit-scrollbar, #u-chat-online-wrapper::-webkit-scrollbar, #u-chat-menu-wrapper::-webkit-scrollbar {
+    width: 10px;
+}
+
+#u-chat-box-top::-webkit-scrollbar-track, #u-chat-online-wrapper::-webkit-scrollbar-track, #u-chat-menu-wrapper::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius:10px;
+}
+
+#u-chat-box-top::-webkit-scrollbar-thumb, #u-chat-online-wrapper::-webkit-scrollbar-thumb,#u-chat-menu-wrapper::-webkit-scrollbar-thumb {
+    background-color: #0F4157;
+    border-radius: 6px; 
+}
+
+#u-chat-box-bottom{
+    margin-top: 20px;
+}
+#u-msg-input{
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 50px 2px rgba(128, 128, 128, 0.4);
+}
+#u-msg-send-btn{
+    background-color: #0F4157;
+    color: white;
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: none;
+    float: right;
+}
+#u-chat-online{
+    padding: 10px 20px;
+}
+#no-conversation{
+    width:100%;
+    height: 100%;
+    color: rgba(128, 128, 128, 0.637);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 42px;
+    font-weight: 800;
+}

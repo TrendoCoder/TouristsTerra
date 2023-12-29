@@ -90,7 +90,7 @@ router.get("/timeline/:userId", async (req, res) => {
     const currentUser = await User.findById(req.params.userId);
     const userPosts = await Post.find({ userId: currentUser._id });
     const friendPosts = await Promise.all(
-      currentUser.followers.map((friendId) => {
+      currentUser.following.map((friendId) => {
         return Post.find({ userId: friendId });
       })
     );
@@ -103,9 +103,15 @@ router.get("/timeline/:userId", async (req, res) => {
 // Get user's all posts by username
 router.get("/profile/:username", async (req, res) => {
   try {
-    const user = await User.findOne({ userName: req.params.username });
-    const posts = await Post.find({ userId: user._id });
-    res.status(200).json(posts);
+    // Use a case-insensitive regular expression for the query
+    const user = await User.findOne({ userName: new RegExp(req.params.username, 'i') });
+
+    if (user) {
+      const posts = await Post.find({ userId: user._id });
+      res.status(200).json(posts);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
   } catch (err) {
     res.status(500).json(err);
   }

@@ -1,6 +1,5 @@
 import React from 'react'
 import "./searchedaccomodationitems.css"
-import pic from "../../../../images/h_ad1.jfif"
 import { Link } from 'react-router-dom'
 const SearchedAccomodationItems = ({item}) => {
 

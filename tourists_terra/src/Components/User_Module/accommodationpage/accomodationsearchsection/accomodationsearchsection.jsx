@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import "./accomodationsearchsection.css";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import "react-date-range/dist/styles.css"; 
+import "react-date-range/dist/theme/default.css"; 
 import { format } from "date-fns";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../../../Context/searchcontext";

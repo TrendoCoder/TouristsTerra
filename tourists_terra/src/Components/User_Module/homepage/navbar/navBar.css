@@ -40,16 +40,49 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 50px;
+    min-height: 50px;
+    max-height: max-content;
   }
-  
-  #search-section>input {
+  #search-user-section{
     width: 80%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  #search-user-section>input {
+    width: 100%;
     padding: 10px;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+    text-transform: capitalize;
+  }
+  #searched-user-list {
+    z-index: 9999;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    top: 45px;
+    border-top :none;
+    border-bottom :1px solid #0F4157;
+    border-right :1px solid #0F4157;
+    border-left :1px solid #0F4157;
+    transition: 0.3s;
+    max-height: 350px;
+    overflow-y: auto;
+  }
+  
+  #searched-user-list>div{
+    border-bottom: 1px solid rgba(128, 128, 128, 0.288);
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  #searched-user-list>div:hover{
+    background-color: #0F4157;
+    color: white;
+    transition: 0.2s;
   }
  #search-icon
   {

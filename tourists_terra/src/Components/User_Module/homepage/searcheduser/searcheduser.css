@@ -1,0 +1,22 @@
+#searchedUser-container{
+    width: 100%;
+    z-index: 999;
+}
+#searchedUser-wrapper{
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap:15px;
+    cursor: pointer;
+}
+#searchedUser-wrapper>span{
+    font-size: 18px;
+}
+#searchedUser-wrapper>img{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}

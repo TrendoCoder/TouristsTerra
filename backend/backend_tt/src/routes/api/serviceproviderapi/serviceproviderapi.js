@@ -1,16 +1,28 @@
-const express = require("express");
-const { ServiceProvider } = require("../../../models/serviceproviders/serviceproviders");
-const router= express.Router();
+// routes/serviceproviders/serviceProviders.js
 
-//post a request for serviceProvider
-router.post("/",async(req,res,next)=>{
-    const newRequest = new ServiceProvider(req.body);
-    try{
-        const savedRequest = await newRequest.save();
-        res.status(200).json(savedRequest);
-    }catch(err){
-        next(err);
-    }
-})
+const express = require("express");
+const {
+  createServiceProvider,
+  getServiceProvider,
+  getAllServiceProvider,
+  updateServiceProvider,
+  deleteServiceProvider,
+} = require("../../../controllers/serviceproviders/serviceProviders");
+const router = express.Router();
+
+// Post a request for serviceProvider
+router.post("/", createServiceProvider);
+
+// Get all serviceProviders
+router.get("/all", getAllServiceProvider);
+
+// Get a specific serviceProvider by ID
+router.get("/:id", getServiceProvider);
+
+// Update a serviceProvider by ID
+router.put("/:id", updateServiceProvider);
+
+// Delete a serviceProvider by ID
+router.delete("/:id", deleteServiceProvider);
 
 module.exports = router;

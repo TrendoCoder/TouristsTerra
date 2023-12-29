@@ -12,7 +12,7 @@ const MiniNavBar = ({username}) => {
     <div id="mini-nav-opt" className={active===0?'div-active':"" }onClick={()=>{isActive(0)}}>
         <Link to="" >Feed</Link>
     </div>
-    <div id="mini-nav-opt" className={active===1?'div-active':"" } onClick={()=>{isActive(1)}}>
+    {/* <div id="mini-nav-opt" className={active===1?'div-active':"" } onClick={()=>{isActive(1)}}>
         <Link to="">Friends</Link>
     </div>
     <div id="mini-nav-opt" className={active===2?'div-active':"" } onClick={()=>{isActive(2)}}>
@@ -23,7 +23,7 @@ const MiniNavBar = ({username}) => {
     </div>
     <div id="mini-nav-opt" className={active===4?'div-active':"" } onClick={()=>{isActive(4)}}>
         <Link to="">About</Link>
-    </div>
+    </div> */}
     </div>
     {active===0?(
     <div id="mini-nav-opt-rendering" >

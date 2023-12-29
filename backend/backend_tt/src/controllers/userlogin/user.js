@@ -59,13 +59,13 @@ const followAUser = async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
       const currentUser = await User.findById(req.body.userId);
-      if (!user.followers.includes(req.body.userId)) {
+      if (!user.following.includes(req.body.userId)) {
         await user.updateOne({
           $push: { followers: req.body.userId },
         });
         await currentUser.updateOne({
           $push: {
-            following: req.params.userId,
+            following: req.params.id,
           },
         });
         return res.status(200).json("User has been Followed");
@@ -114,14 +114,14 @@ const getFriends = async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     const friends = await Promise.all(
-      user.followings.map((friendId) => {
+      user.followers.map((friendId) => {
         return User.findById(friendId);
       })
     );
     let friendList = [];
     friends.map((friend) => {
-      const { _id, username, profilePicture } = friend;
-      friendList.push({ _id, username, profilePicture });
+      const { _id, userName, userProfilePicture } = friend;
+      friendList.push({ _id, userName, userProfilePicture });
     });
     res.status(200).json(friendList);
   } catch (err) {

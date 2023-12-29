@@ -1,0 +1,75 @@
+#preview-room{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: #24262bf5;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+}
+#preview-room-big-container{
+    padding: 20px 80px;
+    display: flex;
+    flex-direction: column;
+}
+#preview-close-btn{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+#preview-room-details{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+}
+#preview-room-details-img{
+    width: 48%;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#preview-room-details-img>img{
+    max-width: 100%;
+    min-width: max-content;
+    max-height: 100%;
+    min-height: max-content;
+    object-fit: cover;
+}
+#preview-room-all-details{
+    width: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#preview-room-all-details>div{
+    width: 100%;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#preview-room-all-details-row{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #0F4157;
+    padding: 5px 5px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+#preview-room-all-details-row:hover{
+    background-color: #0F4157;
+    transition: 0.2s;
+}
+#preview-room-details-extras{
+    width: 100%;
+    color: white;
+    padding: 10px 40px;
+    font-size: 14px;
+}
