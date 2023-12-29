@@ -27,10 +27,11 @@ import ProductDetail from "./Components/User_Module/shoppage/shophomepage/Produc
 import GuideDetails from "./Components/User_Module/localguidepage/localguidehome/guidedetail";
 import Cart from "./Components/User_Module/shoppage/shophomepage/Cart";
 import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider";
-
 import AdminHomePage from "./Components/adminmodule/adminhomepage/adminhomepage";
 import { AuthContext } from "./Context/authcontext";
 import Success from "./Components/User_Module/shoppage/shophomepage/Success";
+import CityDetails from "./Components/User_Module/explorepage/explorehomepage/citydetails";
+import PlaceDetails from "./Components/User_Module/explorepage/explorehomepage/placedetails";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -87,10 +88,12 @@ function App() {
               path="edit-profile-page"
               element={<EditProfilePage />}
             ></Route> */}
-            <Route
-              path="explore-home-page"
-              element={<ExploreHomepage />}
-            ></Route>
+
+            <Route path="explore-home-page" element={<ExploreHomepage />}></Route>
+            <Route path="/citydetails/:cityName"   element =  {<CityDetails />}></Route>
+            <Route path="/placedetails/:placeId"   element =  {<PlaceDetails />}></Route>
+    
+
             <Route
               path="edit-user-profile/:id"
               element={<EditUserProfile />}

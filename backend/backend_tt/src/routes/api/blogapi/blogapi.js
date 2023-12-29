@@ -16,4 +16,8 @@ router.post('/blogs/:id/report', blogpostcontroller.reportBlog);
 router.post("/createblogs", blogpostcontroller.createBlog);
 router.delete("/:id", blogpostcontroller.deleteBlog);
 router.put('/blog/:id', blogpostcontroller.updateBlog);
+
+// router.get("/places/:cityName",blogpostcontroller.getAllPlaceData);
+// router.get("/places/details/:placeId", blogpostcontroller.getPlaceDetails);
+
 module.exports = router;

@@ -7,13 +7,15 @@ import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
 import { AuthContext } from "../../../../Context/authcontext";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BackgroundImage from "../../../../images/image.jpg";
 
 const AddBlogPost = () => {
   const { user } = useContext(AuthContext);
   const [image, setImage] = useState("");
+  const navigate = useNavigate();
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -26,7 +28,6 @@ const AddBlogPost = () => {
     description: yup.string().required("Description is required").min(20),
   });
 
-  const navigate = useNavigate();
 
   const onSubmit = async (values, { resetForm }) => {
     try {
@@ -81,8 +82,8 @@ const AddBlogPost = () => {
   ];
 
   const quillStyles = {
-    maxHeight: '400px', // Set the max height as needed
-    overflowY: 'auto', // Add vertical scroll if needed
+    maxHeight: '400px', // Set the max height 
+    overflowY: 'auto', // Add vertical scroll 
   };
 
   return (
