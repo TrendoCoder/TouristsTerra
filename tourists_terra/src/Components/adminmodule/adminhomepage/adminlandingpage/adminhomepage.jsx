@@ -23,7 +23,9 @@ const AdminHomePage = () => {
   const [pendingServiceProviders, setPendingServiceProviders] = useState(null);
   const [suspendedServiceProviders, setSuspendedServiceProviders] = useState(null);
   const [disapprovedProviders, setDisapprovedServiceProviders] = useState(null);
+  const [guideline, setGuidelines] = useState(null);
   const [clickNumber, setClickNumber] = useState(0);
+
   useEffect(() => {
     const getUsers = async () => {
       const users = await axios.get("http://localhost:3001/api/user/all");
@@ -65,7 +67,20 @@ const AdminHomePage = () => {
     getServiceProviders();
   }, []);
 
-  console.log(allServiceProviders);
+  useEffect(() => {
+    const getGuidelinesAndPolicies = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:3001/api/admin/guidelines-and-policies/"
+        );
+        setGuidelines(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getGuidelinesAndPolicies();
+  }, []);
+  
   return (
     <div id="admin-hp-big-container">
       <AdminTopBar />
@@ -274,7 +289,7 @@ const AdminHomePage = () => {
             </div>
           ) : clickNumber === 4 ? (
             <div id="admin-hp-right-bar-divs">
-              <GuidelinesAndPolicies />
+              <GuidelinesAndPolicies guidelines={guideline} />
             </div>
           ) : clickNumber === 5 ? (
             <div id="admin-hp-right-bar-divs">
