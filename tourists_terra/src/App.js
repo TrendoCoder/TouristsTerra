@@ -11,6 +11,8 @@ import ProfilePage from "./Components/User_Module/profilepage/profilehomepage/pr
 import BecomeABlogger from "./Components/User_Module/blogpage/becomeablogger/becomeablogger";
 import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpost";
 import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepage/explorehomepage";
+import CityDetails from "./Components/User_Module/explorepage/explorehomepage/citydetails";
+import PlaceDetails from "./Components/User_Module/explorepage/explorehomepage/placedetails";
 import EditUserProfile from "./Components/User_Module/profilepage/edituserprofile/edituserprofile";
 import ShopHomePage from "./Components/User_Module/shoppage/shophomepage/shophomepage";
 import AccomodationListPage from "./Components/User_Module/accommodationpage/accomodationlistpage/accomodationlistpage";
@@ -94,6 +96,17 @@ function App() {
               path="explore-home-page"
               element={<ExploreHomepage />}
             ></Route>
+
+            <Route
+              path="citydetails/:cityName"
+              element={<CityDetails />}
+            ></Route>
+
+            <Route
+              path="placedetails/:placeId"
+              element={<PlaceDetails />}
+            ></Route>
+
             <Route
               path="edit-user-profile/:id"
               element={<EditUserProfile />}
