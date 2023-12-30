@@ -1,6 +1,7 @@
 const express = require("express");
 const { User } = require("../../models/userlogin/user");
 const bcrypt = require("bcryptjs");
+
 const updateUser = async (req, res, next) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, {
@@ -39,7 +40,6 @@ const getUser = async (req, res, next) => {
     next(err);
   }
 };
-
 module.exports.getUser = getUser;
 
 const getAllUsers = async (req, res, next) => {
@@ -50,7 +50,6 @@ const getAllUsers = async (req, res, next) => {
     next(err);
   }
 };
-
 module.exports.getAllUsers = getAllUsers;
 
 //follow a user

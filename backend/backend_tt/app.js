@@ -25,7 +25,11 @@ var roomRouter = require("./src/routes/api/hotelapi/rooms");
 var authRouter = require("./src/routes/api/userloginapi/auth");
 var userRouter = require("./src/routes/api/userloginapi/user");
 var blogRouter = require("./src/routes/api/blogapi/blogapi");
+var exploreRouter = require("./src/routes/api/exploreapi/exploreapi");
 var serviceProviderRouter = require("./src/routes/api/serviceproviderapi/serviceproviderapi");
+var conversationRouter = require("./src/routes/api/usermessengerapi/conversation");
+var messageRouter = require("./src/routes/api/usermessengerapi/message");
+var guidelinesRouter = require("./src/routes/api/adminApi/guidelinesandpoliciesapi/guidelines");
 
 // stripe
 const stripeRouter = require("./src/routes/api/stripe/checkoutRoute");
@@ -186,13 +190,17 @@ const storageRoomImage = multer.diskStorage({
   },
 });
 const uploadRoomImg = multer({ storage: storageRoomImage });
-app.post("/api/upload/hotelimgs/roomimgs", uploadRoomImg.single("file"), (req, res) => {
-  try {
-    return res.status(200).json("File uploded successfully");
-  } catch (error) {
-    console.error(error);
+app.post(
+  "/api/upload/hotelimgs/roomimgs",
+  uploadRoomImg.single("file"),
+  (req, res) => {
+    try {
+      return res.status(200).json("File uploded successfully");
+    } catch (error) {
+      console.error(error);
+    }
   }
-});
+);
 app.use("/", indexRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
@@ -206,8 +214,8 @@ app.use("/api/details", guideRouter);
 app.use("/api/bloguser", blogRouter);
 app.use("/api/explore", exploreRouter);
 app.use("/api/serviceProvider", serviceProviderRouter);
-app.use("/api/user-conversation",conversationRouter);
-app.use("/api/user-message",messageRouter);
+app.use("/api/user-conversation", conversationRouter);
+app.use("/api/user-message", messageRouter);
 
 //admin Routers
 app.use("/api/admin/guidelines-and-policies", guidelinesRouter);
