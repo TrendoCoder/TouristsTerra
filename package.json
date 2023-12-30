@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@react-google-maps/api": "^2.19.2",
     "moment": "^2.29.4",
     "react-moment": "^1.1.3"
   }

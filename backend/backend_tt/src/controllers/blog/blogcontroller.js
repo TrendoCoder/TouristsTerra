@@ -3,6 +3,7 @@ const _=require('lodash')
 const ObjectId = require('mongoose').Types.ObjectId;
 const cloudinary = require('cloudinary').v2;
 const {User} = require("../../models/userlogin/user")
+const axios = require("axios")
 
 //GET all blogs from database
 exports.getAllBlogs=async(req,res)=>{
@@ -239,6 +240,5 @@ exports.updateBlog = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 

@@ -21,7 +21,7 @@ const MenuBar = (props) => {
           </Link>
         </div>
         <div id="ind-div">
-          <Link to="/">
+          <Link to="/explore-home-page">
             <h4>Explore</h4>
           </Link>
         </div>

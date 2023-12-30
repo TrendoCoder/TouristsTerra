@@ -25,10 +25,7 @@ var roomRouter = require("./src/routes/api/hotelapi/rooms");
 var authRouter = require("./src/routes/api/userloginapi/auth");
 var userRouter = require("./src/routes/api/userloginapi/user");
 var blogRouter = require("./src/routes/api/blogapi/blogapi");
-var guidelinesRouter = require("./src/routes/api/adminApi/guidelinesandpoliciesapi/guidelines")
 var serviceProviderRouter = require("./src/routes/api/serviceproviderapi/serviceproviderapi");
-var messageRouter = require("./src/routes/api/usermessengerapi/message");
-var conversationRouter = require("./src/routes/api/usermessengerapi/conversation");
 
 // stripe
 const stripeRouter = require("./src/routes/api/stripe/checkoutRoute");
@@ -207,6 +204,7 @@ app.use("/api/product", productRouter);
 app.use("/api/city", cityRouter);
 app.use("/api/details", guideRouter);
 app.use("/api/bloguser", blogRouter);
+app.use("/api/explore", exploreRouter);
 app.use("/api/serviceProvider", serviceProviderRouter);
 app.use("/api/user-conversation",conversationRouter);
 app.use("/api/user-message",messageRouter);

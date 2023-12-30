@@ -27,10 +27,10 @@ import ProductDetail from "./Components/User_Module/shoppage/shophomepage/Produc
 import GuideDetails from "./Components/User_Module/localguidepage/localguidehome/guidedetail";
 import Cart from "./Components/User_Module/shoppage/shophomepage/Cart";
 import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider";
-import UserChatPage from "./Components/User_Module/userchatpage/userchatpage/userchatpage";
+
+import AdminHomePage from "./Components/adminmodule/adminhomepage/adminhomepage";
 import { AuthContext } from "./Context/authcontext";
 import Success from "./Components/User_Module/shoppage/shophomepage/Success";
-import AdminHomePage from "./Components/adminmodule/adminhomepage/adminlandingpage/adminhomepage";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -86,7 +86,10 @@ function App() {
               path="profile-page/:userName"
               element={<ProfilePage />}
             ></Route>
-
+            {/* <Route
+              path="edit-profile-page"
+              element={<EditProfilePage />}
+            ></Route> */}
             <Route
               path="explore-home-page"
               element={<ExploreHomepage />}
