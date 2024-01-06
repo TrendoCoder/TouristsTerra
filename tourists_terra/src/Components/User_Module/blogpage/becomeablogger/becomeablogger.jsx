@@ -129,7 +129,7 @@ const BecomeABlogger = () => {
       try {
         await axios.post("http://localhost:3001/api/serviceProvider/", newPost);
         await axios.put(`http://localhost:3001/api/user/${user._id}`, {
-          isAccomodationAdmin: "Pending",
+          isBlogAdmin: "Pending",
         });
         alert(
           "Your request has been successfully sent to our team. We'll respond to you soon."

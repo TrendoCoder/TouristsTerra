@@ -27,12 +27,12 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
     isBlogAdmin: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "Pending",
     },
     isAccomodationAdmin: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "Pending",
     },
     isTrasportAdmin: {
       type: Boolean,
