@@ -1,0 +1,142 @@
+#accomo-pkg-detail-main-container{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    right: 0;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.90);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    position: fixed;
+}
+#pkg-close-btn{
+    width: 55%;
+    padding: 20px 0px;
+    font-size: 30px;
+    color: white;
+    border-radius: 50px;
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+#accomo-pkg-detail-big-container{
+    width: 50%;
+    height: 70%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 0 50px 1px #0F4157;
+    border-radius: 5px;
+}
+#accomo-pkg-detail-big-container>h1{
+    font-size: 30px;
+    font-weight: 900;
+    color:#0F4157;
+    letter-spacing: 2px;
+}
+#accomo-pkg-detail-big-container>span{
+    font-size: 22px;
+    font-weight: 500;
+    color:#0F4157;
+    letter-spacing: 2px;
+}
+#accomo-pkg-detail-big-container>p{
+    width: 70%;
+    font-size: 12px;
+    font-style: italic;
+}
+#accomo-pkg-detail-big-container>button, #accomo-payment-btns>button{
+    padding: 15px 20px;
+    background-color: #0F4157;
+    color: white;
+    transition: 0.2s;
+    border-radius: 25px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+#accomo-pkg-detail-big-container>button:hover, #accomo-payment-btns>button:hover{
+    background-color: white;
+    color: #0F4157;
+    box-shadow: 0 0 20px 2px #0F4157;
+
+}
+#accomo-pkg-detail-container{
+    max-width: max-content;
+    padding: 15px 20px;
+    background-color: #0F4157;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 25px;
+}
+#accomo-pkg-detail-container:hover{
+    background-color: white;
+    color: #0F4157;
+    transition: 0.2s;
+    box-shadow: 0 0 10px 1px #0F4157;
+}
+#accomo-pkg-detail-container>h1{
+    text-align: center;
+    font-weight: bold;
+    font-size: 26px;
+}
+#accomo-pkg-detail-container>h3{
+    color: yellowgreen;
+}
+#accomo-pkg-detail-container>div{
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    box-shadow: 0 0 5px 1px white;
+    border-radius: 25px;
+    text-align: center;
+}
+#accomo-payment-method-container{
+    width: 98%;
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+}
+#accomo-payment-method-l-container{
+    width: 50%;
+    height: 140px;
+    background-color: rgb(91, 207, 13);
+    color: white;
+    border-radius: 25px;
+    box-shadow: 0 0 5px 1px black;
+    padding: 30px 25px;
+    transition: 0.2s;
+}
+#accomo-payment-method-l-container>h1{
+    text-align: center;
+}
+#accomo-payment-method-r-container{
+    width: 50%;
+    height: 140px;
+    background-color: rgb(233, 23, 23);
+    color: white;
+    border-radius: 25px;
+    box-shadow: 0 0 5px 1px black;
+    padding: 30px 25px;
+    transition: 0.2s;
+}
+#accomo-payment-method-r-container>h1{
+    text-align: center;
+}
+#accomo-payment-method-l-container:hover,#accomo-payment-method-r-container:hover{
+    box-shadow: 0 0 20px 1px #0F4157;
+}
+#accomo-payment-btns{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
