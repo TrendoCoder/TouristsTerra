@@ -22,6 +22,26 @@ const PreviewServiceProvider = ({ serviceProvider, onClose }) => {
           isBlogAdmin: true,
         }
       ):
+      serviceProvider.requestFor==='Shop Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isShopAdmin: true,
+        }
+      ):serviceProvider.requestFor==='Transport Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isTrasportAdmin: true,
+        }
+      ):serviceProvider.requestFor==='Localguide Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isLocalGuideAdmin: true,
+        }
+      ):alert("Network Issue");
+
       alert("Successfully Approved");
       window.location.reload();
     } catch (err) {
@@ -34,12 +54,38 @@ const PreviewServiceProvider = ({ serviceProvider, onClose }) => {
         `http://localhost:3001/api/serviceProvider/${serviceProvider._id}`,
         { status: "Disapproved" }
       );
+      serviceProvider.requestFor==='Accommodation Provider'?
       await axios.put(
         `http://localhost:3001/api/user/${serviceProvider.userId}`,
         {
           isAccomodationAdmin: false,
         }
-      );
+      ):serviceProvider.requestFor==='Blog Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isBlogAdmin: false,
+        }
+      ):
+      serviceProvider.requestFor==='Shop Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isShopAdmin: false,
+        }
+      ):serviceProvider.requestFor==='Transport Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isTrasportAdmin: false,
+        }
+      ):serviceProvider.requestFor==='Localguide Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isLocalGuideAdmin: false,
+        }
+      ):alert("Network Issue");
       alert("Successfully Disapproved");
       window.location.reload();
     } catch (err) {
@@ -52,12 +98,38 @@ const PreviewServiceProvider = ({ serviceProvider, onClose }) => {
         `http://localhost:3001/api/serviceProvider/${serviceProvider._id}`,
         { status: "Suspend" }
       );
+      serviceProvider.requestFor==='Accommodation Provider'?
       await axios.put(
         `http://localhost:3001/api/user/${serviceProvider.userId}`,
         {
           isAccomodationAdmin: false,
         }
-      );
+      ):serviceProvider.requestFor==='Blog Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isBlogAdmin: false,
+        }
+      ):
+      serviceProvider.requestFor==='Shop Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isShopAdmin: false,
+        }
+      ):serviceProvider.requestFor==='Transport Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isTrasportAdmin: false,
+        }
+      ):serviceProvider.requestFor==='Localguide Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isLocalGuideAdmin: false,
+        }
+      ):alert("Network Issue");
       alert("Suspend this user");
       window.location.reload();
     } catch (err) {

@@ -17,12 +17,14 @@ const ListOfUsers = ({ users }) => {
     setFollowedUser(followedUserCounts);
     setFollowingUser(followingUserCounts);
   }, [users]);
-  
+
   const editUser = async (userId) => {
     try {
-      await axios.put(`http://localhost:3001/api/user/${userId}`,
-      {isverifiedUser: isverifiedUser});
+      await axios.put(`http://localhost:3001/api/user/${userId}`, {
+        isverifiedUser: isverifiedUser,
+      });
       alert("Successfully Edited..");
+      setOpenEdit(false);
     } catch (err) {
       alert("Some connectivity error occurs.. try again later");
     }
@@ -30,6 +32,9 @@ const ListOfUsers = ({ users }) => {
   const deleteUser = async (userId) => {
     try {
       await axios.delete(`http://localhost:3001/api/user/${userId}`);
+      console.log("Idher bhi aaya");
+      alert("Successfully Deleted");
+      setOpenDelete(false);
     } catch (err) {
       alert("Some connectivity error occurs.. try again later");
     }
@@ -102,14 +107,16 @@ const ListOfUsers = ({ users }) => {
                   <td>{user.gender}</td>
                   <td>{user.city}</td>
                   <td>{user.country}</td>
-                  <td><select
-    value={user.isVerifiedUser ? "true" : "false"}
-    onChange={(e) => setIsVerifiedUser(e.target.value)}
-    disabled={!openEdit}
-  >
-    <option value="true">Yes</option>
-    <option value="false">No</option>
-  </select></td>
+                  <td>
+                    <select
+                      value={user.isVerifiedUser ? "true" : "false"}
+                      onChange={(e) => setIsVerifiedUser(e.target.value)}
+                      disabled={!openEdit}
+                    >
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    </select>
+                  </td>
                   <td>{user.isAccomodationAdmin ? "Yes" : "No"}</td>
                   <td>{user.isTransportAdmin ? "Yes" : "No"}</td>
                   <td>{user.isLocalGuideAdmin ? "Yes" : "No"}</td>
@@ -117,11 +124,20 @@ const ListOfUsers = ({ users }) => {
                   <td>{user.isBlogAdmin ? "Yes" : "No"}</td>
                   <td
                     style={{ color: "skyBlue", cursor: "pointer" }}
-                    onClick={()=>{setOpenEdit(true)}}
+                    onClick={() => {
+                      setOpenEdit(true);
+                    }}
                   >
                     <i class="fa-solid fa-pen"></i>
                   </td>
-                  <td onClick={()=>{editUser(user._id)}}   disabled={!openEdit}>Edit</td>
+                  <td
+                    onClick={() => {
+                      editUser(user._id);
+                    }}
+                    disabled={!openEdit}
+                  >
+                    Edit
+                  </td>
                   <td
                     style={{ color: "tomato", cursor: "pointer" }}
                     onClick={() => {
@@ -131,41 +147,43 @@ const ListOfUsers = ({ users }) => {
                     <i class="fa-solid fa-trash"></i>
                   </td>
                   {openDelete && (
-                    <div id="Open-report">
-                      <div id="rep-post-container">
-                        <div id="del-post-wrapper">
-                          <div id="del-post-wrapper-sec-one">
-                            <i
-                              class="fa-solid fa-circle-xmark fa-beat"
-                              style={{ color: "#ff1900" }}
-                              onClick={() => {
-                                setOpenDelete(false);
-                              }}
-                            ></i>
-                          </div>
-                          <div id="del-post-wrapper-sec-two">
-                            <span style={{color:"#0F4157"}}>
-                              Are you sure you want to delete this post?
-                            </span>
-                            <button
-                              id="del-post-wrapper-sec-two-btn1"
-                              onClick={deleteUser(user._id)}
-                            >
-                              Yes
-                            </button>
-                            <button
-                              onClick={() => {
-                                setOpenDelete(false);
-                              }}
-                              id="del-post-wrapper-sec-two-btn2"
-                            >
-                              No
-                            </button>
+                      <div id="Open-report">
+                        <div id="rep-post-container">
+                          <div id="del-post-wrapper">
+                            <div id="del-post-wrapper-sec-one">
+                              <i
+                                class="fa-solid fa-circle-xmark fa-beat"
+                                style={{ color: "#ff1900" }}
+                                onClick={() => {
+                                  setOpenDelete(false);
+                                }}
+                              ></i>
+                            </div>
+                            <div id="del-post-wrapper-sec-two">
+                              <span style={{ color: "#0F4157" }}>
+                                Are you sure you want to delete this User?
+                              </span>
+                              <button
+                                id="del-post-wrapper-sec-two-btn1"
+                                onClick={() => {
+                                  deleteUser(user._id);
+                                }}
+                              >
+                                Yes
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setOpenDelete(false);
+                                }}
+                                id="del-post-wrapper-sec-two-btn2"
+                              >
+                                No
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </tr>
               ))
           ) : (

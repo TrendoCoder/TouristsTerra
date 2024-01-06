@@ -30,6 +30,7 @@ var serviceProviderRouter = require("./src/routes/api/serviceproviderapi/service
 var conversationRouter = require("./src/routes/api/usermessengerapi/conversation");
 var messageRouter = require("./src/routes/api/usermessengerapi/message");
 var guidelinesRouter = require("./src/routes/api/adminApi/guidelinesandpoliciesapi/guidelines");
+var reportRouter = require("./src/routes/api/reportApi/reportApi");
 
 // stripe
 const stripeRouter = require("./src/routes/api/stripe/checkoutRoute");
@@ -216,6 +217,7 @@ app.use("/api/explore", exploreRouter);
 app.use("/api/serviceProvider", serviceProviderRouter);
 app.use("/api/user-conversation", conversationRouter);
 app.use("/api/user-message", messageRouter);
+app.use("/api/report",reportRouter);
 
 //admin Routers
 app.use("/api/admin/guidelines-and-policies", guidelinesRouter);

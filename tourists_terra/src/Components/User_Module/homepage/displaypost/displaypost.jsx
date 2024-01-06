@@ -80,7 +80,19 @@ const DisplayPost = ({ posts }) => {
     }
     
   };
-  
+  const handleReport = async () => {
+    try{
+      await axios.post(`http://localhost:3001/api/report/`,{
+        reporterId: currentUser._id,
+        authorId: posts._id, 
+        type:"User Post",
+        message:report,
+      });
+      alert("Successfully reported this post..");
+    }catch(err){
+      alert("err"+ "try again later");
+    }
+  }
   return (
     <div id="main-container-feed">
       <div id="u-info">
@@ -193,7 +205,7 @@ const DisplayPost = ({ posts }) => {
               </div>
 
               <div id="rep-post-wrapper-sec-three">
-                <button>Submit</button>
+                <button onClick={handleReport}>Submit</button>
               </div>
             </div>
           </div>

@@ -1,7 +1,5 @@
 var mongoose = require("mongoose");
-
 const {Schema} = mongoose;
-
 const HotelSchema = new mongoose.Schema({
     userId:{
         type:String,  
@@ -49,7 +47,8 @@ const HotelSchema = new mongoose.Schema({
         type: Boolean,
         default:false
     },
-});
+},
+{ timestamps: true });
 
 var Hotel =  mongoose.model("Hotel", HotelSchema);
 
