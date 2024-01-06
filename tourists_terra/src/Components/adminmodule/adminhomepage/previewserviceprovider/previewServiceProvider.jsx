@@ -9,12 +9,19 @@ const PreviewServiceProvider = ({ serviceProvider, onClose }) => {
         `http://localhost:3001/api/serviceProvider/${serviceProvider._id}`,
         { status: "Approved" }
       );
+      serviceProvider.requestFor==='Accommodation Provider'?
       await axios.put(
         `http://localhost:3001/api/user/${serviceProvider.userId}`,
         {
           isAccomodationAdmin: true,
         }
-      );
+      ):serviceProvider.requestFor==='Blog Provider'?
+      await axios.put(
+        `http://localhost:3001/api/user/${serviceProvider.userId}`,
+        {
+          isBlogAdmin: true,
+        }
+      ):
       alert("Successfully Approved");
       window.location.reload();
     } catch (err) {

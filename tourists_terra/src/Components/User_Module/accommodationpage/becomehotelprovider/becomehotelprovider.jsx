@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./becomehotelprovider.css";
 import { Link } from "react-router-dom";
 import Footer from "../../accommodationpage/footer/footer";
@@ -131,7 +131,7 @@ const BecomeHotelProvider = () => {
         alert(
           "Your request has been successfully sent to our team. We'll respond to you soon."
         );
-        navigate("/accommodation");
+        navigate("/blog-home-page");
       } catch (err) {
         alert(err);
       }
@@ -175,12 +175,6 @@ const BecomeHotelProvider = () => {
     }
     return errors;
   };
-
-  useEffect(() => {
-    if (Object.keys(formErrorsCustomer).length === 0 && isSubmit) {
-      console.log(formValuesCustomer);
-    }
-  }, [formErrorsCustomer]);
 
   return (
     <>

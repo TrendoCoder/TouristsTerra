@@ -45,7 +45,7 @@ const ServiceProviders = ({ serviceProvider }) => {
           <option style={{backgroundColor:"#0F4157", color:"white"}}  value="">Request For</option>
           <option style={{backgroundColor:"#0F4157", color:"white"}} value="Accommodation Provider">Accommodation</option>
           <option style={{backgroundColor:"#0F4157", color:"white"}} value="Transport">Transport</option>
-          <option style={{backgroundColor:"#0F4157", color:"white"}} value="Blog">Blog</option>
+          <option style={{backgroundColor:"#0F4157", color:"white"}} value="Blog Provider">Bloggers</option>
         </select></th>
             <th>Id Card front Pic</th>
             <th>Id Card Back Pic</th>
