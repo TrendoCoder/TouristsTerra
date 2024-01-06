@@ -136,9 +136,9 @@ function SinglePost() {
       <div className="mt-6 bg-gray-50">
         <div className="px-10 py-6 mx-auto">
           <div className="max-w-6xl px-10 py-6 mx-auto bg-gray-50">
-            <a href="#_" className="block transition ease-out transform">
+            <a href="#_" className=" flex justify-center transition ease-out transform">
               <img
-                className="object-contain w-full h-50 mx-4 shadow-sm"
+                className="object-contain w-[76%] rounded-md mx-4 shadow-sm "
                 src={data.imageURL}
                 alt={data.title}
               />
