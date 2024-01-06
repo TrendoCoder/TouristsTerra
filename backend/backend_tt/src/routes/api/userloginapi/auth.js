@@ -7,12 +7,14 @@ const {
   createResetSession,
   verifyOtp,
   alreadyRegister,
+  existUser,
 } = require("../../../controllers/userlogin/auth");
 const {registerMail} = require("../../../controllers/userlogin/maller")
 const { localVeriables, verifyUser } = require("../../../utils/verifytoken");
 
 let router = express.Router();
 router.get("/alreadyRegister", alreadyRegister);
+router.get("/existUser",existUser);
 router.post("/register", register);
 router.post("/loginUser", login);
 router.get("/otpGenerator", localVeriables, generateOtp);

@@ -22,6 +22,20 @@ const alreadyRegister = async (req, res, next) => {
 };
 module.exports.alreadyRegister = alreadyRegister;
 
+const existUser = async (req, res, next) => {
+  try {
+    const { email } = req.query;
+    const existingEmail = await User.findOne({ email: email });
+    if (existingEmail) {
+      return res.status(200).send("Existig");
+    }
+    return res.status(900).send("Invalid user");
+  } catch (err) {
+    next(err);
+  }
+};
+module.exports.existUser = existUser;
+
 const register = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
