@@ -68,21 +68,27 @@ const CityDetails = () => {
         <div>
           <br />
           <h1 className="text-center mt-9 font-bold text-2xl text-[#182f3a] bg-gradient-to-r from-[#13252e] to-[#182f3a] text-transparent bg-clip-text tracking-wide leading-relaxed shadow-sm">
-            Explore City 
+            Explore City
           </h1>
           <br />
           <h1 className="text-3xl text-[#182f3a] font-bold mb-4 inline-block border-b-2 border-gray-300 pb-2">
             Tourist Attractions in {cityData?.address_components?.[0]?.long_name || cityName}
           </h1>
-          <br /> 
+          <br />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {placesData.map((place) => (
               <Link key={place.place_id} to={`/placedetails/${place.place_id}`}>
                 <div className="bg-gray-100 p-4 rounded-md shadow-md cursor-pointer">
                   <h3 className="text-xl font-bold mb-2">{place.name}</h3>
-                  <p className="text-gray-600">Address: {place.formatted_address}</p>
-                  <p className="text-gray-700">Average Rating: {place.rating}</p>
-                  <p className="text-gray-700">Total Ratings: {place.user_ratings_total}</p>
+                  <p className="text-gray-700">
+                    <span className="font-bold">Address:</span> {place.formatted_address}
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-bold">Average Rating:</span> {place.rating}
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-bold">Total Ratings:</span> {place.user_ratings_total}
+                  </p>
 
                   {place.photos && place.photos.length > 0 && (
                     <img

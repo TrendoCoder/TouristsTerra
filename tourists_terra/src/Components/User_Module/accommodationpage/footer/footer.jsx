@@ -1,45 +1,37 @@
 import React from "react";
-import "./footer.css";
 import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
-    <div id="big-container-footer">
-      <div id="main-container-footer">
-        <div>
-          <h3>About Us</h3>
+    <div className="bg-[#0E4157] text-white py-8">
+      <div className="container mx-auto flex justify-around">
+        <div className="w-1/3 text-center">
+          <h3 className="text-lg font-semibold mb-4">About Us</h3>
           <span>
             The concept of "Tourist's Terra" is centered around the development
             of a social touring application that fosters socialization among
             travelers.
           </span>
         </div>
-        <div id="b-style" >
-          <h3>Share</h3>
-          <Link to="">
-            <i class="fa-brands fa-facebook"></i>{" "}
-          </Link>
-          <Link to="">
-            <i class="fa-brands fa-square-instagram"></i>{" "}
-          </Link>
-          <Link to="">
-            <i class="fa-brands fa-square-whatsapp"></i>{" "}
-          </Link>
-          <Link to="">
-            <i class="fa-brands fa-facebook-messenger"></i>{" "}
-          </Link>
-<br />
-<br />
-          <span>@copyright Tourist's Terra</span>
+
+        <div className="w-1/3 border-l border-r border-white pl-8 pr-8 text-center">
+          <h3 className="text-lg font-semibold mb-4">Share</h3>
+          <div className="flex items-center justify-center space-x-4">
+            <Link to=""><i className="fab fa-facebook text-2xl"></i></Link>
+            <Link to=""><i className="fab fa-instagram text-2xl"></i></Link>
+            <Link to=""><i className="fab fa-whatsapp-square text-2xl"></i></Link>
+            <Link to=""><i className="fab fa-facebook-messenger text-2xl"></i></Link>
+          </div>
+          <div className="mt-4">
+            <span>@copyright Tourist's Terra</span>
+          </div>
         </div>
-        <div>
-          <h3>Contact Us</h3>
-          <form action="">
-            <input type="email" placeholder="Enter your email" />
-            <br />
-            <textarea name="message" placeholder="Enter your message" id="" cols="42" rows="3"></textarea>
-            <br />
-            <button>Send</button>
-          </form>
+
+        <div className="w-1/3 text-center">
+        <Link to="/contact-us">
+        <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+      </Link>
+
         </div>
       </div>
     </div>

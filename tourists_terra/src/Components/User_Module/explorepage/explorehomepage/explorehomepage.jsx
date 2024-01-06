@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { createBrowserHistory } from 'history';
-import { Link } from 'react-router-dom';
 import NavBar from '../../homepage/navbar/navBar';
 import MenuBar from '../../homepage/menubar/menuBar';
 import Footer from '../../accommodationpage/footer/footer';
 import BackgroundImage from "../../../../images/maldives3.jpg";
-
 
 const history = createBrowserHistory();
 
@@ -20,13 +18,12 @@ const ExploreHomepage = () => {
 
   const searchCity = async () => {
     // try {
-    //   // Assuming you have a route named '/destinations/:cityName' in your App component
     //   history.push("/citydetails");
     // } catch (error) {
     //   console.error(error);
     // }
-   
-    
+
+
   };
 
   return (
@@ -37,7 +34,7 @@ const ExploreHomepage = () => {
       <div
         style={{
           backgroundImage: `url(${BackgroundImage})`,
-          backgroundPosition: "center",
+          backgroundPosition: "cover",
           backgroundSize: "cover",
           backgroundAttachment: "fixed",
           height: "85vh",
@@ -60,21 +57,21 @@ const ExploreHomepage = () => {
                 Get Information from Tourist Terra about the Cities:
               </h2>
               <form onSubmit={
-                ()=>{ try {
-                  // Assuming you have a route named '/citydetails/:cityName' in your application
-                  // const cityName = "desiredCityName"; // Replace this with the actual city name or retrieve it dynamically
-                  history.push(`/citydetails/${cityName}`);
-                } catch (error) {
-                  console.error(error);
-                }}
+                () => {
+                  try {
+                    history.push(`/citydetails/${cityName}`);
+                  } catch (error) {
+                    console.error(error);
+                  }
+                }
               } className="text-center">
                 <div className="flex items-center justify-center mb-8">
                   <p className="text-xl font-semibold mr-5 text-[#0e212b]">
-                    I want to visit near
+                    I want to Explore
                   </p>
                   <input
                     type="text"
-                    placeholder="City"
+                    placeholder="Enter City Name"
                     className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
                     value={cityName}
                     onChange={handleInputChange}
@@ -85,7 +82,7 @@ const ExploreHomepage = () => {
                     o
                     nClick={searchCity}
                   >
-                    Search City!
+                    Explore City!
                   </button>
                 </div>
               </form>

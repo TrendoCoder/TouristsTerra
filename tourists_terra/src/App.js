@@ -33,6 +33,7 @@ import UserChatPage from "./Components/User_Module/userchatpage/userchatpage/use
 import AdminHomePage from "./Components/adminmodule/adminhomepage/adminlandingpage/adminhomepage";
 import { AuthContext } from "./Context/authcontext";
 import Success from "./Components/User_Module/shoppage/shophomepage/Success";
+import ContactUs from "./Components/User_Module/contactus/contactus";
 
 
 function App() {
@@ -76,15 +77,12 @@ function App() {
             <Route path="recent-blogs" element={<RecentBlogs />}></Route>
             <Route path="my-blogs" element={<MyBlogs />}></Route>
             <Route path="/update-blog/:id" element={<UpdateBlogPost />} />
-            {/*<Route path="my-blogs/:id" element={<MyBlogs />}></Route>*/}
-            <Route path="single-post/:id" element={<SinglePost />}>
-              {" "}
-            </Route>
-            <Route path="blog-menu" element={<BlogMenu />}></Route>
-            <Route
-              path="booking-transport-form"
+            <Route path="single-post/:id" element={<SinglePost />}/>
+            <Route path="blog-menu" element={<BlogMenu />}/>
+            <Route path="contact-us" element={<ContactUs />}/>
+            <Route path="booking-transport-form"
               element={<BookingTransportForm />}
-            ></Route>
+            />
             <Route
               path="profile-page/:userName"
               element={<ProfilePage />}

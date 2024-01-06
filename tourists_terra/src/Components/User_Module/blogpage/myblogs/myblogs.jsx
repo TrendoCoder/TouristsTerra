@@ -9,8 +9,7 @@ import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { AuthContext } from '../../../../Context/authcontext';
 import { Dialog, Transition } from '@headlessui/react';
-
-import './myblogs.css'; // Import your CSS file
+import './myblogs.css'; 
 
 const MyBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);

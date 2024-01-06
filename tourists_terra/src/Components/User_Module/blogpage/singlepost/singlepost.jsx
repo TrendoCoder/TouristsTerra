@@ -9,6 +9,8 @@ import moment from "moment";
 import { AuthContext } from "../../../../Context/authcontext";
 
 function SinglePost() {
+
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
@@ -136,7 +138,7 @@ function SinglePost() {
           <div className="max-w-6xl px-10 py-6 mx-auto bg-gray-50">
             <a href="#_" className="block transition ease-out transform">
               <img
-                className="object-contain w-full h-90 mx-4 shadow-sm"
+                className="object-contain w-full h-50 mx-4 shadow-sm"
                 src={data.imageURL}
                 alt={data.title}
               />
@@ -157,10 +159,17 @@ function SinglePost() {
                     className="flex items-center mt-2 mb-2"
                   >
                     <img
-                      src="https://avatars.githubusercontent.com/u/71964085?v=4"
-                      alt="avatar"
+                      src={
+                        user.userProfilePicture
+                          ? PF + `/profilePicture/${user.userProfilePicture}`
+                          : PF + "/profileUpload.png"
+                      }
+                      alt=""
+                      id="profile"
+                      crossOrigin="anonymous"
                       className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
                     />
+
                     <h1 className="font-semibold text-gray-700 hover:underline pr-4 border-r border-gray-500">
                       Written by {data?.authorName}
                     </h1>
@@ -263,11 +272,17 @@ function SinglePost() {
                   href="#"
                   className="flex items-center mt-6 mb-6 mr-6"
                 >
-                  <img
-                    src="https://avatars.githubusercontent.com/u/71964085?v=4"
-                    alt="avatar"
-                    className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
-                  />
+                <img
+                src={
+                  user.userProfilePicture
+                    ? PF + `/profilePicture/${user.userProfilePicture}`
+                    : PF + "/profileUpload.png"
+                }
+                alt=""
+                id="profile"
+                crossOrigin="anonymous"
+                className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
+              />
                 </a>
                 <div>
                   <h5 className="text-lg font-bold text-blue-800 sm:text-xs md:text-xl">
