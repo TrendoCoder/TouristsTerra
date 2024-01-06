@@ -7,11 +7,11 @@ import { AuthContext } from "../../../../Context/authcontext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import uploadImage from "../../../../images/gallery.png";
-
 const BecomeABlogger = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const initialValuesCustomer = {
+    userId: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -20,6 +20,7 @@ const BecomeABlogger = () => {
     city: "",
     experience: "",
     language: "",
+    requestFor: "",
     idCardFrontImg: null,
     idCardBackImg: null,
   };
@@ -90,7 +91,7 @@ const BecomeABlogger = () => {
         cnic: formValuesCustomer.cnic,
         experience: formValuesCustomer.experience,
         language: formValuesCustomer.language,
-        requestFor: "Accommodation Provider",
+        requestFor: "Blog Provider",
       };
 
       if (formValuesCustomer.idCardFrontImg) {
@@ -106,7 +107,6 @@ const BecomeABlogger = () => {
           );
         } catch (err) {
           alert("Formatting Error in Id Card Front Image");
-          navigate("/accommodation");
         }
       }
 
@@ -128,10 +128,13 @@ const BecomeABlogger = () => {
 
       try {
         await axios.post("http://localhost:3001/api/serviceProvider/", newPost);
-
+        await axios.put(`http://localhost:3001/api/user/${user._id}`, {
+          isAccomodationAdmin: "Pending",
+        });
         alert(
           "Your request has been successfully sent to our team. We'll respond to you soon."
         );
+        navigate("/accommodation");
       } catch (err) {
         alert(err);
       }
@@ -185,7 +188,6 @@ const BecomeABlogger = () => {
   return (
     <>
       <MainNavBar />
-      <br/>
 
       <div
         id="big-main-container"

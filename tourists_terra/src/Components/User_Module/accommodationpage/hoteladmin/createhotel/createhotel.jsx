@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import "./createhotel.css";
 import axios from "axios";
 import { AuthContext } from "../../../../../Context/authcontext";
+import PackageDetails from "../packagedetails/packagedetails";
 
 const CreateHotel = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -22,6 +23,7 @@ const CreateHotel = () => {
   const [hotelDescriptionError, setHotelDescriptionError] = useState("");
   const [cheapestPriceError, setCheapestPriceError] = useState();
   const [imageClicked, setImageClicked] = useState(false);
+  const [showPackage, setShowPackage] = useState(false);
   const validateFields = () => {
     let isValid = true;
 
@@ -148,6 +150,7 @@ const CreateHotel = () => {
               type="text"
               value={hotelDescription}
               onChange={(e) => setHotelDescription(e.target.value)}
+              rows={8}    
             />
             <p id="error-message">{hotelDescriptionError}</p>
           </div>
@@ -219,12 +222,22 @@ const CreateHotel = () => {
 
           <div id="add-hotel-container-rs-inputs">
             <label>Featured:</label>
-            <select onChange={(e) => setFeatured(e.target.value)}>
+            <select value={featured} onChange={(e) => setFeatured(e.target.value)}>
               <option value="false">No</option>
               <option value="true">Yes</option>
             </select>
           </div>
-
+          {
+            featured && (
+              <PackageDetails onClose={() => 
+              {
+                setShowPackage(false);
+                setFeatured(false)
+              }
+              }
+              />
+            )
+          }
           <div id="add-hotel-container-rs-inputs">
             <button onClick={handleAddHotelSubmit}>Upload Post</button>
           </div>

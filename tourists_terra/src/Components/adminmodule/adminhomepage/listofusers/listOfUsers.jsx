@@ -6,7 +6,9 @@ const ListOfUsers = ({ users }) => {
   const [followingUser, setFollowingUser] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [isverifiedUser, setIsVerifiedUser] = useState(false);
   const [search, setSearch] = useState("");
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
@@ -18,7 +20,9 @@ const ListOfUsers = ({ users }) => {
   
   const editUser = async (userId) => {
     try {
-      await axios.put(`http://localhost:3001/api/user/${userId}`);
+      await axios.put(`http://localhost:3001/api/user/${userId}`,
+      {isverifiedUser: isverifiedUser});
+      alert("Successfully Edited..");
     } catch (err) {
       alert("Some connectivity error occurs.. try again later");
     }
@@ -62,6 +66,7 @@ const ListOfUsers = ({ users }) => {
             <th>Blog Admin</th>
             <th></th>
             <th></th>
+            <th></th>
           </tr>
           {users ? (
             users
@@ -97,7 +102,14 @@ const ListOfUsers = ({ users }) => {
                   <td>{user.gender}</td>
                   <td>{user.city}</td>
                   <td>{user.country}</td>
-                  <td>{user.isVerifiedUser ? "Yes" : "No"}</td>
+                  <td><select
+    value={user.isVerifiedUser ? "true" : "false"}
+    onChange={(e) => setIsVerifiedUser(e.target.value)}
+    disabled={!openEdit}
+  >
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+  </select></td>
                   <td>{user.isAccomodationAdmin ? "Yes" : "No"}</td>
                   <td>{user.isTransportAdmin ? "Yes" : "No"}</td>
                   <td>{user.isLocalGuideAdmin ? "Yes" : "No"}</td>
@@ -105,10 +117,11 @@ const ListOfUsers = ({ users }) => {
                   <td>{user.isBlogAdmin ? "Yes" : "No"}</td>
                   <td
                     style={{ color: "skyBlue", cursor: "pointer" }}
-                    onClick={editUser(user._id)}
+                    onClick={()=>{setOpenEdit(true)}}
                   >
                     <i class="fa-solid fa-pen"></i>
                   </td>
+                  <td onClick={()=>{editUser(user._id)}}   disabled={!openEdit}>Edit</td>
                   <td
                     style={{ color: "tomato", cursor: "pointer" }}
                     onClick={() => {
