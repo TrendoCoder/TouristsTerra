@@ -28,11 +28,9 @@ const EditUserProfile = () => {
     if (!city) fieldErrors.city = "City is required";
     if (!country) fieldErrors.country = "Country is required";
     setErrors(fieldErrors);
-
     if (Object.keys(fieldErrors).length > 0) {
       return;
     }
-
     const updateUser = {
       contact: contact,
       city: city,
@@ -40,7 +38,6 @@ const EditUserProfile = () => {
       gender: gender,
       about: about,
     };
-
     if (userProfilePicture) {
       const data = new FormData();
       const fileName = Date.now() + userProfilePicture.name;

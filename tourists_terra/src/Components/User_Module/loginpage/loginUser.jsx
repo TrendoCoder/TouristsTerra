@@ -96,7 +96,7 @@ const LoginUser = () => {
                 </div>
                 <br />
                 {error && <p className="error-message">{error}</p>}
-                <Link to="">Forgot Password?</Link>
+                <Link to="/forget-password">Forgot Password?</Link>
                 <br />
                 <button
                   id="login-button"

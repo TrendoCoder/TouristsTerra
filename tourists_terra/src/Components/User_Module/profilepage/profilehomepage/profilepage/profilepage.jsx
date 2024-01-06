@@ -4,26 +4,25 @@ import ProfileInfo from "../profileinfo/profileinfo";
 import NavBar from "../../../homepage/navbar/navBar";
 import ProfileSideBar from "../profilesidebar/profilesidebar";
 import MiniNavBar from "../mininavbar/mininavbar";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 const ProfilePage = () => {
-  const { userName } = useParams();
+  const { username } = useParams();
   const [user, setUser] = useState({});
-  console.log(userName);
+  console.log(username);
   const fetchUsers = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3001/api/user/?userName=${userName}`
+        `http://localhost:3001/api/user/?userName=${username}`
       );
       setUser(res.data);
-      console.log(user);
     } catch (error) {
       console.error("Error fetching user:", error);
     }
   };
   useEffect(() => {
     fetchUsers();
-  }, [userName]);
+  }, [username]);
 
   return (
     <div>

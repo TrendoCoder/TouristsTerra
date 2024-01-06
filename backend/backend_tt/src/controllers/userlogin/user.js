@@ -15,6 +15,25 @@ const updateUser = async (req, res, next) => {
 };
 module.exports.updateUser = updateUser;
 
+const updateUserPassword = async (req,res, next) => {
+  try{
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: { password: hashedPassword },
+      },
+      { new: true } 
+    );
+    res.status(200).json(user);
+    console.log(user);
+  }
+  catch(err){
+    next(err);
+  }
+}
+module.exports.updateUserPassword = updateUserPassword;
 const deleteUser = async (req, res, next) => {
   if (req.body.userId === req.params.id) {
     try {
@@ -30,17 +49,24 @@ module.exports.deleteUser = deleteUser;
 const getUser = async (req, res, next) => {
   const userId = req.query.userId;
   const username = req.query.userName;
+  const email = req.query.email;
+
   try {
     const user = userId
       ? await User.findById(userId)
-      : await User.findOne({ userName: username });
+      : username
+      ? await User.findOne({ userName: username })
+      : await User.findOne({ email: email });
+
     const { password, updatedAt, ...other } = user._doc;
     res.status(200).json(other);
   } catch (err) {
     next(err);
   }
 };
+
 module.exports.getUser = getUser;
+
 
 const getAllUsers = async (req, res, next) => {
   try {

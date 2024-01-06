@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./Components/User_Module/homepage/landingpage/landingPage";
 import AccommodationHome from "./Components/User_Module/accommodationpage/accommodationhome/accommodationhome";
@@ -6,6 +6,8 @@ import TransportHomePage from "./Components/User_Module/transportpage/transporth
 import LocalGuideHome from "./Components/User_Module/localguidepage/localguidehome/localguidehome";
 import SignUpPage from "./Components/User_Module/signuppage/signUpPage";
 import LoginUser from "./Components/User_Module/loginpage/loginUser";
+import ForgetPassword from "./Components/User_Module/loginpage/forgetpassword/forgetpassword";
+import ResetPassword from "./Components/User_Module/loginpage/resetpassword/resetPassword";
 import BookingTransportForm from "./Components/User_Module/forms/bookingtransportform/bookingtransportform";
 import ProfilePage from "./Components/User_Module/profilepage/profilehomepage/profilepage/profilepage";
 import BecomeABlogger from "./Components/User_Module/blogpage/becomeablogger/becomeablogger";
@@ -31,12 +33,9 @@ import Cart from "./Components/User_Module/shoppage/shophomepage/Cart";
 import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider";
 import UserChatPage from "./Components/User_Module/userchatpage/userchatpage/userchatpage";
 import AdminHomePage from "./Components/adminmodule/adminhomepage/adminlandingpage/adminhomepage";
-import { AuthContext } from "./Context/authcontext";
 import Success from "./Components/User_Module/shoppage/shophomepage/Success";
 
-
 function App() {
-  const { user } = useContext(AuthContext);
   return (
     <div>
       <Router>
@@ -44,11 +43,14 @@ function App() {
           <Routes>
             <Route path="sign-up" element={<SignUpPage />}></Route>
             <Route path="login-user" element={<LoginUser />}></Route>
-            <Route path="/" element={<LandingPage />}></Route>
+            <Route path="forget-password" element={<ForgetPassword />}></Route>
             <Route
-              path="user-chat-page"
-              element={<UserChatPage />}
+              path="reset-user-password/:userId"
+              element={<ResetPassword />}
             ></Route>
+
+            <Route path="/" element={<LandingPage />}></Route>
+            <Route path="user-chat-page" element={<UserChatPage />}></Route>
             <Route path="accommodation" element={<AccommodationHome />}></Route>
             <Route
               path="accomodation-list"
@@ -86,13 +88,9 @@ function App() {
               element={<BookingTransportForm />}
             ></Route>
             <Route
-              path="profile-page/:userName"
+              path="profile-page/:username"
               element={<ProfilePage />}
             ></Route>
-            {/* <Route
-              path="edit-profile-page"
-              element={<EditProfilePage />}
-            ></Route> */}
             <Route
               path="explore-home-page"
               element={<ExploreHomepage />}

@@ -7,15 +7,14 @@ const {
   followAUser,
   unFollowUser,
   getFriends,
+  updateUserPassword,
 } = require("../../../controllers/userlogin/user");
 const {
   verifyToken,
   verifyUser,
   verifyAdmin,
 } = require("../../../utils/verifytoken");
-
-const router = express.Router();``
-
+const router = express.Router();
 router.get("/checkAuthentication", verifyToken, (req, res, next) => {
   res.send("Hello user, you are logged in");
 });
@@ -28,7 +27,8 @@ router.get("/checkAdmin/:id", verifyAdmin, (req, res, next) => {
 
 // Update
 router.put("/:id",updateUser);
-
+//update Password
+router.put("/pass/:id",updateUserPassword);
 // Delete
 router.delete("/:id", deleteUser);
 
