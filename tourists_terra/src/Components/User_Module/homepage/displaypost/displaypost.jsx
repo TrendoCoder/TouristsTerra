@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import "./displaypost.css";
 import { useContext, useEffect } from "react";
 import axios from "axios";
@@ -88,9 +88,11 @@ const DisplayPost = ({ posts }) => {
         type:"User Post",
         message:report,
       });
+      setReport("");
+      setOpenReport(false);
       alert("Successfully reported this post..");
     }catch(err){
-      alert("err"+ "try again later");
+      alert(err+ "try again later");
     }
   }
   return (

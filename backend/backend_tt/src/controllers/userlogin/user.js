@@ -34,15 +34,15 @@ const updateUserPassword = async (req,res, next) => {
   }
 }
 module.exports.updateUserPassword = updateUserPassword;
+
+
 const deleteUser = async (req, res, next) => {
-  if (req.body.userId === req.params.id) {
     try {
-      await User.findByIdAndDelete(req.params.id);
+      await User.findByIdAndDelete(req.params.userId);
       res.status(200).json("User has been deleted");
     } catch (err) {
       next(err);
     }
-  }
 };
 module.exports.deleteUser = deleteUser;
 
