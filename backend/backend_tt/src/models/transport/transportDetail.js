@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const detailsSchema = new Schema(
+const transportDetailSchema = new Schema(
   {
     name: {
       type: String,
@@ -11,24 +11,27 @@ const detailsSchema = new Schema(
       type: Number,
       required: true,
     },
-    about: {
+    description: {
+      type: String,
+      default: "",
+    },
+    vehicleNo: {
       type: String,
       default: "",
     },
     quantity: {
       type: Number,
-      required: true,
-      min: [0, "Quantity can not be less then 0."],
+      default: 1,
     },
     ratings: {
       type: Number,
-      default: 3,
+      default: 5,
       min: [0, "Rating must be between 0 and 5."],
       max: [5, "Rating must be between 0 and 5."],
     },
-    city: {
+    category: {
       type: Schema.Types.ObjectId,
-      ref: "City",
+      ref: "Transportcategory",
       required: true,
     },
     seller: {
@@ -36,23 +39,20 @@ const detailsSchema = new Schema(
       ref: "User",
       required: true,
     },
-    status: {
+    inStock: {
       type: Boolean,
       default: true,
     },
     image: {
       type: String,
     },
-    languages: [
-      {
-        type: String,
-        trim: true,
-      },
-    ],
   },
   { timestamps: true }
 );
 
-const Details = mongoose.model("Details", detailsSchema);
+const Transportdetail = mongoose.model(
+  "Transportdetail",
+  transportDetailSchema
+);
 
-module.exports = Details;
+module.exports = Transportdetail;

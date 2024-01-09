@@ -1,0 +1,38 @@
+#trans-ad-container {
+    margin-top: 70px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  #trans-ad {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(3, 3, 3, 0.651);
+    z-index: 2;
+    color: white;
+    text-align: center;
+  }
+  #opacity-ad a h1 
+  {
+    color: white;
+    margin-top: 170px;
+  }
+  
+  #menu-acc {
+    margin-top: -60px;
+  }
+  #main-container-trans
+  {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  #main-container-trans #container-filter-trans
+  {
+    margin-top: 20px;
+    width: 20%;
+    padding: 20px 60px;
+  }
