@@ -14,6 +14,7 @@ const dotenv = require("dotenv");
 const helmet = require("helmet");
 const multer = require("multer");
 const cors = require("cors");
+var adminRouter = require("./src/routes/api/adminApi/adminLoginApi/auth");
 var productRouter = require("./src/routes/api/shopapi/product");
 var categoryRouter = require("./src/routes/api/shopapi/category");
 var guideRouter = require("./src/routes/api/localguideapi/details");
@@ -217,9 +218,10 @@ app.use("/api/explore", exploreRouter);
 app.use("/api/serviceProvider", serviceProviderRouter);
 app.use("/api/user-conversation", conversationRouter);
 app.use("/api/user-message", messageRouter);
-app.use("/api/report",reportRouter);
+app.use("/api/report", reportRouter);
 
 //admin Routers
+app.use("/api/admin", adminRouter);
 app.use("/api/admin/guidelines-and-policies", guidelinesRouter);
 app.use("/", indexRouter);
 
