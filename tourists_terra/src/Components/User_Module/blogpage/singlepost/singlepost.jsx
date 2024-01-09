@@ -54,8 +54,8 @@ function SinglePost() {
           type: "Blog Post",
           message: report,
         });
-        setReport("");
-        setOpenReport(false);
+      setReport("");
+      setOpenReport(false);
       alert("Successfully reported this blog..");
     } catch (err) {
       alert("err" + "try again later");
@@ -206,14 +206,18 @@ function SinglePost() {
 
                 {/* report */}
 
-                <div onClick={() => setOpenReport(true)} id="u-like" className="flex justify-around ml-4 pr-4 border-r border-gray-500">
-                  <i class="fa-regular fa-flag fa-4xs mt-1">
+                <div
+                  onClick={() => setOpenReport(true)}
+                  id="u-like"
+                  className="flex justify-around ml-4 pr-4 border-r border-gray-500 hover:bg-blue-200 cursor-pointer"
+                >
+                  <i className="fa-regular fa-flag fa-4xs mt-1 ">
                   </i>
-                  <p
-                    className="text-m text-gray-700 ml-2 mr-03 ">
+                  <p className="text-m text-gray-700 ml-2 mr-03">
                     Report
                   </p>
                 </div>
+
 
                 <div id="u-like" className="flex justify-around ml-4 ">
                   <div>

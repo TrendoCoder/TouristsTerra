@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import "./becomeablogger.css";
 import { Link } from "react-router-dom";
 import Footer from "../../accommodationpage/footer/footer";
-import MainNavBar from "../../forms/mainnavbar/mainnavbar";
+import NavBar from "../../homepage/navbar/navBar";
 import { AuthContext } from "../../../../Context/authcontext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -184,11 +184,11 @@ const BecomeABlogger = () => {
 
   return (
     <>
-      <MainNavBar />
-
+    <NavBar />
+    <br/>
       <div
         id="big-main-container"
-        style={{ marginTop: "10px", marginBottom: "10px" }}
+        style={{ marginTop: "50px", marginBottom: "10px" }}
       >
         <div id="main-container">
           <div id="right-container">

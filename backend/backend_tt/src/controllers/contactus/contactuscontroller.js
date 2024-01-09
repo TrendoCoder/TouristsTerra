@@ -1,18 +1,17 @@
+const express = require("express");
 const ContactUs = require('../../models/contactus/contactus');
-const saveContact = async (req, res) => {
+
+const createContactUs = async (req, res, next) => {
+  const newContactUs = new ContactUs(req.body);
   try {
-    const { name, email, message } = req.body;
-
-    const newContact = new ContactUs({ name, email, message });
-    await newContact.save();
-
-    res.status(201).json({ message: 'Data saved successfully!' });
-  } catch (error) {
-    console.error(error);
+    const savedContactUs = await newContactUs.save();
+    res.status(200).json(savedContactUs);
+  } catch (err) {
+    console.error('Error saving contact us:', err);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
-module.exports = {
-  saveContact,
-};
+module.exports.createContactUs = createContactUs;
+
+
