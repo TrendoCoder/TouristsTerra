@@ -220,6 +220,7 @@ app.use("/api/serviceProvider", serviceProviderRouter);
 app.use("/api/user-conversation", conversationRouter);
 app.use("/api/user-message", messageRouter);
 app.use("/api/report",reportRouter);
+app.use("/api/contactus",contactUsRouter);
 
 //admin Routers
 app.use("/api/admin", adminRouter);
