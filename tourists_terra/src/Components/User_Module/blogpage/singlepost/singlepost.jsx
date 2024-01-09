@@ -5,6 +5,7 @@ import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
 import useFetch from "../../../../Hooks/usefetch";
+import axios from "axios";
 import moment from "moment";
 import { AuthContext } from "../../../../Context/authcontext";
 
@@ -18,6 +19,8 @@ function SinglePost() {
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
   const [commentSubmitted, setCommentSubmitted] = useState(false);
+  const [openReport, setOpenReport] = useState(false);
+  const [report, setReport] = useState();
   const { id } = useParams();
   const { user } = useContext(AuthContext);
 
@@ -41,6 +44,23 @@ function SinglePost() {
         console.error("Error fetching data:", error);
       });
   };
+
+  const handleReport = async () => {
+    try {
+      await axios.post(`http://localhost:3001/api/report/`,
+        {
+          reporterId: user?._id,
+          authorId: id,
+          type: "Blog Post",
+          message: report,
+        });
+        setReport("");
+        setOpenReport(false);
+      alert("Successfully reported this blog..");
+    } catch (err) {
+      alert("err" + "try again later");
+    }
+  }
 
   useEffect(() => {
     fetchData();
@@ -138,7 +158,7 @@ function SinglePost() {
           <div className="max-w-6xl px-10 py-6 mx-auto bg-gray-50">
             <a href="#_" className=" flex justify-center transition ease-out transform">
               <img
-                className="object-contain w-[76%] rounded-md mx-4 shadow-sm "
+                className="object-contain w-[70%] rounded-md mx-4 shadow-sm "
                 src={data.imageURL}
                 alt={data.title}
               />
@@ -184,13 +204,16 @@ function SinglePost() {
                   </p>
                 </div>
 
-                {/* <div id="u-like" className="flex justify-around ml-4 pr-4 border-r border-gray-500">
+                {/* report */}
+
+                <div onClick={() => setOpenReport(true)} id="u-like" className="flex justify-around ml-4 pr-4 border-r border-gray-500">
                   <i class="fa-regular fa-flag fa-4xs mt-1">
                   </i>
-                  <p className="text-m text-gray-700 ml-2 mr-03 ">
+                  <p
+                    className="text-m text-gray-700 ml-2 mr-03 ">
                     Report
-                  </p>  
-  </div> */}
+                  </p>
+                </div>
 
                 <div id="u-like" className="flex justify-around ml-4 ">
                   <div>
@@ -272,17 +295,17 @@ function SinglePost() {
                   href="#"
                   className="flex items-center mt-6 mb-6 mr-6"
                 >
-                <img
-                src={
-                  user.userProfilePicture
-                    ? PF + `/profilePicture/${user.userProfilePicture}`
-                    : PF + "/profileUpload.png"
-                }
-                alt=""
-                id="profile"
-                crossOrigin="anonymous"
-                className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
-              />
+                  <img
+                    src={
+                      user.userProfilePicture
+                        ? PF + `/profilePicture/${user.userProfilePicture}`
+                        : PF + "/profileUpload.png"
+                    }
+                    alt=""
+                    id="profile"
+                    crossOrigin="anonymous"
+                    className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"
+                  />
                 </a>
                 <div>
                   <h5 className="text-lg font-bold text-blue-800 sm:text-xs md:text-xl">
@@ -298,6 +321,43 @@ function SinglePost() {
           </div>
         </div>
       </div>
+      {openReport && (
+        <div id="Open-report">
+          <div id="rep-post-container">
+            <div id="rep-post-wrapper">
+              <div id="rep-post-wrapper-sec-one">
+                <span>Want to submit a report?</span>
+                <i
+                  class="fa-solid fa-circle-xmark fa-beat"
+                  style={{ color: "#ff1900" }}
+                  onClick={() => {
+                    setOpenReport(false);
+                  }}
+                ></i>
+              </div>
+              <hr />
+              <div id="rep-post-wrapper-sec-two">
+                <label htmlFor="reportInput">
+                  Why are you reporting this post?
+                </label>
+                <textarea
+                  id="reportInput"
+                  placeholder="Enter your opinions here..."
+                  value={report}
+                  onChange={(e) => setReport(e.target.value)}
+                  maxLength={250}
+                  rows={5}
+                />
+                <span>You can write up to 250 characters</span>
+              </div>
+
+              <div id="rep-post-wrapper-sec-three">
+                <button onClick={handleReport}>Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );
