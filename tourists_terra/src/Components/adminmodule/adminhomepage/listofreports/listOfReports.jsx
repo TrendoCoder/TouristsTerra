@@ -3,7 +3,6 @@ import './listofreports.css';
 
 const ListOfReports = ({ reports }) => {
   const [search,setSearch] = useState("");
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
     <div id='admin-list-of-user-container'>
@@ -15,55 +14,21 @@ const ListOfReports = ({ reports }) => {
         <table>
           <tr>
             <th>#</th>
-            <th>Pic.</th>
-            <th>User Name</th>
-            <th>Email</th>
-            <th>Followers</th>
-            <th>Followings</th>
-            <th>Gender</th>
-            <th>City</th>
-            <th>Country</th>
-            <th>Verified User</th>
-            <th>Accomodation Admin</th>
-            <th>Transport Admin</th>
-            <th>Local Guide Admin</th>
-            <th>Shop Admin</th>
-            <th>Blog Admin</th>
+            <th>Reporter Id</th>
+            <th>Reported Id</th>
+            <th>Type</th>
+            <th>Message</th>
           </tr>
           {
             reports ? reports.filter((item) => {
-        return search.toLowerCase() === '' ? item : item.userName.toLowerCase().includes(search.toLowerCase());
-      }).map((user, i) => (
+        return search.toLowerCase() === '' ? item : item.type.toLowerCase().includes(search.toLowerCase());
+      }).map((report, i) => (
             <tr key={i}>
               <td>{i + 1}</td>
-              <td>
-                <img
-                  src={
-                    user.userProfilePicture
-                      ? PF + `/profilePicture/${user.userProfilePicture}`
-                      : PF + '/profileUpload.png'
-                  }
-                  alt={PF + '/profileUpload.png'}
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    margin: 'auto',
-                  }}
-                  crossOrigin='anonymous'
-                />
-              </td>
-              <td>{user.userName}</td>
-              <td>{user.email}</td>
-              <td>{user.gender}</td>
-              <td>{user.city}</td>
-              <td>{user.country}</td>
-              <td>{user.isVerifiedUser ? 'Yes' : 'No'}</td>
-              <td>{user.isAccomodationAdmin ? 'Yes' : 'No'}</td>
-              <td>{user.isTransportAdmin ? 'Yes' : 'No'}</td>
-              <td>{user.isLocalGuideAdmin ? 'Yes' : 'No'}</td>
-              <td>{user.isShopAdmin ? 'Yes' : 'No'}</td>
-              <td>{user.isBlogAdmin ? 'Yes' : 'No'}</td>
+              <td>{report.reporterId}</td>
+              <td>{report.authorId}</td>
+              <td>{report.type}</td>
+              <td>{report.message}</td>
             </tr>
           )):(<div>No Data is found.. Try again later</div>)}
         </table>

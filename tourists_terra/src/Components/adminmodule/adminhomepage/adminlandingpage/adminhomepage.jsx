@@ -7,11 +7,13 @@ import DashBoard from "../dashboard/dashboard";
 import ListOfHotels from "../listofhotels/listofhotels";
 import GuidelinesAndPolicies from "../guidelinesandpolicies/guidelinesAndPolicies";
 import ServiceProviders from "../serviceproviders/serviceProviders";
+import ListOfReports from "../listofreports/listOfReports";
+import ListOfBloggers from "../listofbloggers/listOfBloggers";
+import ListOfLocalGuide from "../listoflocalguide/listOfLocalGuide";
 const AdminHomePage = () => {
   const [openUserOptions, setOpenUserOptions] = useState(false);
   const [openAccomodationOptions, setOpenAccomodationOptions] = useState(false);
-  const [openTransportationOptions, setOpenTransportationOptions] =
-    useState(false);
+  const [openTransportationOptions, setOpenTransportationOptions] =useState(false);
   const [openLocalGuideOptions, setOpenLocalGuideOptions] = useState(false);
   const [openShopOptions, setOpenShopOptions] = useState(false);
   const [openBlogOptions, setOpenBlogOptions] = useState(false);
@@ -24,6 +26,7 @@ const AdminHomePage = () => {
   const [suspendedServiceProviders, setSuspendedServiceProviders] = useState(null);
   const [disapprovedProviders, setDisapprovedServiceProviders] = useState(null);
   const [guideline, setGuidelines] = useState(null);
+  const [allReports, setAllReports] = useState(null);
   const [clickNumber, setClickNumber] = useState(0);
 
   useEffect(() => {
@@ -61,8 +64,6 @@ const AdminHomePage = () => {
         "http://localhost:3001/api/serviceProvider/all?status=Suspend"
       );
       setSuspendedServiceProviders(suspendServiceProviders.data);
-
-
     };
     getServiceProviders();
   }, []);
@@ -80,7 +81,19 @@ const AdminHomePage = () => {
     };
     getGuidelinesAndPolicies();
   }, []);
-  
+  useEffect(()=>{
+    const getReports = async()=>{
+      try{
+        const res = await axios.get(
+          "http://localhost:3001/api/report/"
+        );
+        setAllReports(res.data);
+      }catch(err){
+        console.log(err);
+      }
+    };
+    getReports();
+  },[]);
   return (
     <div id="admin-hp-big-container">
       <AdminTopBar />
@@ -103,7 +116,6 @@ const AdminHomePage = () => {
               {openUserOptions ? (
                 <div style={{ marginLeft: "20px" }}>
                   <div onClick={() => setClickNumber(1)}>List of Users</div>
-                  <div onClick={() => setClickNumber(1)}>Add New User</div>
                 </div>
               ) : (
                 <></>
@@ -147,9 +159,7 @@ const AdminHomePage = () => {
               {openTransportationOptions ? (
                 <div style={{ marginLeft: "20px" }}>
                   <div onClick={() => setClickNumber(1)}>List of Drivers</div>
-                  <div>Add New Driver</div>
-                  <div>Update Driver</div>
-                  <div>Remove Driver</div>
+                  
                 </div>
               ) : (
                 <></>
@@ -167,10 +177,8 @@ const AdminHomePage = () => {
               </h3>
               {openLocalGuideOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(2)}>List of Hotels</div>
-                  <div>Add New Hotel</div>
-                  <div>Update Hotel</div>
-                  <div>Remove Hotel</div>
+                  <div onClick={() => setClickNumber(18)}>List of Local Guides</div>
+                  
                 </div>
               ) : (
                 <></>
@@ -186,10 +194,7 @@ const AdminHomePage = () => {
               </h3>
               {openShopOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(2)}>List of Hotels</div>
-                  <div>Add New Hotel</div>
-                  <div>Update Hotel</div>
-                  <div>Remove Hotel</div>
+                  <div onClick={() => setClickNumber(2)}>List of Shops</div>
                 </div>
               ) : (
                 <></>
@@ -204,8 +209,7 @@ const AdminHomePage = () => {
               </h3>
               {openBlogOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(1)}>List of Bloggers</div>
-                  <div>Add New Blogger</div>
+                  <div onClick={() => setClickNumber(17)}>List of Bloggers</div>
                 </div>
               ) : (
                 <></>
@@ -262,7 +266,7 @@ const AdminHomePage = () => {
               </h3>
               {openReportOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(6)}>List Of reports</div>
+                  <div onClick={() => setClickNumber(16)}>List Of reports</div>
                 </div>
               ) : (
                 <></>
@@ -294,6 +298,18 @@ const AdminHomePage = () => {
           ) : clickNumber === 5 ? (
             <div id="admin-hp-right-bar-divs">
               <ListOfUsers users={allUsers} />
+            </div>
+          ) : clickNumber === 17 ? (
+            <div id="admin-hp-right-bar-divs">
+              <ListOfBloggers />
+            </div>
+          ) : clickNumber === 16 ? (
+            <div id="admin-hp-right-bar-divs">
+              <ListOfReports reports={allReports} />
+            </div>
+          ) : clickNumber === 18 ? (
+            <div id="admin-hp-right-bar-divs">
+              <ListOfLocalGuide />
             </div>
           ) : clickNumber === 10 ? (
             <div id="admin-hp-right-bar-divs">

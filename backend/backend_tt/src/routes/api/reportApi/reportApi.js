@@ -8,6 +8,6 @@ const {
 const router = express.Router();
 router.post("/", createReport);
 router.get("/:id", getReport);
-router.get("/all", getAllReports);
+router.get("/", getAllReports);
 router.get("/:id", deleteReport);
 module.exports = router;

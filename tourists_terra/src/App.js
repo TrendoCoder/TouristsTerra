@@ -35,13 +35,17 @@ import UserChatPage from "./Components/User_Module/userchatpage/userchatpage/use
 import AdminHomePage from "./Components/adminmodule/adminhomepage/adminlandingpage/adminhomepage";
 import Success from "./Components/User_Module/shoppage/shophomepage/Success";
 import ContactUs from "./Components/User_Module/contactus/contactus";
-
+import AdminLoginPage from "./Components/adminmodule/adminloginpage/adminLoginPage";
+import Adminforgetpassword from "./Components/adminmodule/adminforgetpassword/adminforgetpassword";
 function App() {
   return (
     <div>
       <Router>
         <div>
           <Routes>
+          <Route path="admin-login" element={<AdminLoginPage/>}></Route>
+          <Route path="admin-forget-password" element={<Adminforgetpassword/>}></Route>
+
             <Route path="sign-up" element={<SignUpPage />}></Route>
             <Route path="login-user" element={<LoginUser />}></Route>
             <Route path="forget-password" element={<ForgetPassword />}></Route>
