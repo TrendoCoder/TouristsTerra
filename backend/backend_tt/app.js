@@ -5,7 +5,6 @@ var path = require("path");
 const stripe = require("stripe")(
   "sk_test_51OFAzLHNYB7xRUttx13GbXadMp57xuuxhCoDWelr1cNz9DJZdg96PevapuTssYvQ5mIdd34UfCyzZIyyt8CppBDd00R3ViuhYz"
 );
-
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
@@ -16,9 +15,12 @@ const multer = require("multer");
 const cors = require("cors");
 var adminRouter = require("./src/routes/api/adminApi/adminLoginApi/auth");
 var productRouter = require("./src/routes/api/shopapi/product");
+var productRatingRouter = require("./src/routes/api/shopapi/rating");
 var categoryRouter = require("./src/routes/api/shopapi/category");
 var guideRouter = require("./src/routes/api/localguideapi/details");
 var cityRouter = require("./src/routes/api/localguideapi/city");
+var transportDetailRouter = require("./src/routes/api/transportapi/transportDetail");
+var transportCategoryRouter = require("./src/routes/api/transportapi/transportCategory");
 var indexRouter = require("./src/routes/index");
 var postsRouter = require("./src/routes/api/userpostapi/posts");
 var hotelRouter = require("./src/routes/api/hotelapi/hotels");
@@ -35,7 +37,11 @@ var reportRouter = require("./src/routes/api/reportApi/reportApi");
 var contactUsRouter = require("./src/routes/api/contactusapi/contactusapi");
 
 // stripe
+const cartRoutes = require("./src/routes/api/shopapi/cartRoutes");
+// stripe
 const stripeRouter = require("./src/routes/api/stripe/checkoutRoute");
+// stripeLG
+const stripeLGRouter = require("./src/routes/api/stripeLG/checkoutLGRoute");
 dotenv.config();
 
 var app = express();
@@ -211,7 +217,13 @@ app.use("/api/rooms", roomRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);
+app.use("/api/product-rating", productRatingRouter);
 app.use("/api/product", productRouter);
+app.use("/api/transportCategory", transportCategoryRouter);
+app.use("/api/transportDetail", transportDetailRouter);
+app.use("/api/cart", cartRoutes);
+app.use("/api/city", cityRouter);
+app.use("/api/details", guideRouter);
 app.use("/api/city", cityRouter);
 app.use("/api/details", guideRouter);
 app.use("/api/bloguser", blogRouter);
@@ -221,7 +233,10 @@ app.use("/api/user-conversation", conversationRouter);
 app.use("/api/user-message", messageRouter);
 app.use("/api/report",reportRouter);
 app.use("/api/contactus",contactUsRouter);
-
+// stripe
+app.use("/api/stripe", stripeRouter);
+// LGstripe
+app.use("/api/stripe1", stripeLGRouter)
 //admin Routers
 app.use("/api/admin", adminRouter);
 app.use("/api/admin/guidelines-and-policies", guidelinesRouter);

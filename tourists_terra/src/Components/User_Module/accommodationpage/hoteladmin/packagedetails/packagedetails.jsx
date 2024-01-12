@@ -3,6 +3,7 @@ import "./packagedetails.css"
 const PackageDetails = ({onClose}) => {
     const [displayPackage, setDisplayPackage] = useState(true);
     const [displayPaymentDetails, setDisplayPaymentDetails] = useState(false);
+    const [displayUploadScreenShot, setDisplayUploadScreenShot] = useState(false);
   return (
  <>
     {
@@ -63,6 +64,9 @@ const PackageDetails = ({onClose}) => {
    
     </div>
         )
+    }
+    {
+
     }
  </>
   )

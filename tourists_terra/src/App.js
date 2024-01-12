@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./Components/User_Module/homepage/landingpage/landingPage";
+import About from "./Components/User_Module/about/About";
 import AccommodationHome from "./Components/User_Module/accommodationpage/accommodationhome/accommodationhome";
 import TransportHomePage from "./Components/User_Module/transportpage/transporthomepage/transporthomepage";
 import LocalGuideHome from "./Components/User_Module/localguidepage/localguidehome/localguidehome";
@@ -27,7 +28,6 @@ import MyBlogs from "./Components/User_Module/blogpage/myblogs/myblogs";
 import BlogMenu from "./Components/User_Module/blogpage/blogmenu/blogmenu";
 import UpdateBlogPost from "./Components/User_Module/blogpage/updateblogpost/updateblogpost";
 import SinglePost from "./Components/User_Module/blogpage/singlepost/singlepost";
-import ProductDetail from "./Components/User_Module/shoppage/shophomepage/ProductDetail";
 import GuideDetails from "./Components/User_Module/localguidepage/localguidehome/guidedetail";
 import Cart from "./Components/User_Module/shoppage/shophomepage/Cart";
 import BecomeHotelProvider from "./Components/User_Module/accommodationpage/becomehotelprovider/becomehotelprovider";
@@ -35,6 +35,10 @@ import UserChatPage from "./Components/User_Module/userchatpage/userchatpage/use
 import AdminHomePage from "./Components/adminmodule/adminhomepage/adminlandingpage/adminhomepage";
 import Success from "./Components/User_Module/shoppage/shophomepage/Success";
 import ContactUs from "./Components/User_Module/contactus/contactus";
+import ProductDetail from "./Components/User_Module/shoppage/shophomepage/ProductDetail";
+import TransportDetails from "./Components/User_Module/transportpage/transporthomepage/transportdetailpage";
+import SuccessLg from "./Components/User_Module/localguidepage/localguidehome/successLg";
+
 import AdminLoginPage from "./Components/adminmodule/adminloginpage/adminLoginPage";
 import Adminforgetpassword from "./Components/adminmodule/adminforgetpassword/adminforgetpassword";
 function App() {
@@ -116,7 +120,21 @@ function App() {
             <Route path="/success" element={<Success />}></Route>
             <Route path="/product/:productId" element={<ProductDetail />} />
             <Route path="/cart/:productId" element={<Cart />} />
+            <Route path="transport" element={<TransportHomePage />}></Route>
+            <Route
+              path="/transportDetail/:transportDetailId"
+              element={<TransportDetails />}
+            />
+            <Route path="localguide" element={<LocalGuideHome />}></Route>
+            <Route path="/details/:detailsId" element={<GuideDetails />} />
+            {/* <Route path="/chat" element={<Chat />} /> */}
+            <Route path="/successlg" element={<SuccessLg />}></Route>
             <Route path="admin-home-page" element={<AdminHomePage />}></Route>
+            <Route path="/about" element={<About />}></Route>
+            <Route path="shop-home-page" element={<ShopHomePage />}></Route>
+            <Route path="/success" element={<Success />}></Route>
+            <Route path="/product/:productId" element={<ProductDetail />} />
+            <Route path="/cart/:productId" element={<Cart />} />
           </Routes>
         </div>
       </Router>

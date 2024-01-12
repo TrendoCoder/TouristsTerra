@@ -1,86 +1,37 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
 import MenuBar from "../../homepage/menubar/menuBar";
 import AccommodationAdSection from "../../accommodationpage/accomoadsection/accomoadsection";
 import { loadStripe } from "@stripe/stripe-js";
-import { AuthContext } from "../../../../Context/authcontext";
-import axios from "axios";
+import { DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
-const ProductDetail = () => {
-  const [product, setProduct] = useState(null);
-  const [quantity, setQuantity] = useState(1); // Initialize quantity to 1
-  const { productId } = useParams();
-  const { user } = useContext(AuthContext);
+const TransportDetails = () => {
+  const [details, setDetails] = useState(null);
+  const [days, setDays] = useState(1); // Initialize quantity to 1
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+
+  const { transportDetailId } = useParams();
+
+  console.log("Params", transportDetailId);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/product/${productId}`)
+    fetch(`http://localhost:3001/api/transportDetail/${transportDetailId}`)
       .then((response) => response.json())
-      .then((data) => setProduct(data))
+      .then((data) => setDetails(data))
       .catch((error) => console.error("Error fetching product:", error));
-  }, [productId]);
-  // const handleClick = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:3001/api/cart/add-to-cart",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
+  }, [transportDetailId]);
 
-  //           Authorization: `Bearer ${user?.accessToken}`,
-  //           // 'Authorization': `Bearer ${currentUser?.accessToken}`,
-  //         },
-
-  //         body: JSON.stringify({
-  //           user_id: user._id, // Include the user_id in the request body
-  //           product: {
-  //             id: product.id,
-  //             name: product.name,
-  //             description: product.description,
-  //             image: product.image,
-  //             price: product.price,
-  //             quantity: quantity,
-  //           },
-  //         }),
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.error("Error adding product to cart:", error);
-  //   }
-  // };
-
-  console.log(user);
-
-  const handleAddToCart = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/cart/add-to-cart",
-        {
-          userId: user?._id,
-          productId: productId, // Assuming _id is the correct field
-          quantity,
-          image: product.image,
-          name: product.name,
-          price: product.price,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log(response.data);
-      // Optionally, you can show a success message or update the UI accordingly
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      // Handle error (show error message to the user, etc.)
-    }
-  };
-
-  //payment integration
+  // payment integration
   const makePayment = async () => {
     const stripe = await loadStripe(
       "pk_test_51OFAzLHNYB7xRUtt828R4itFeJaCXKxqwqnzeaJpfhrjXmn3Ptb3dGbFRA6FatC1ClmXEhzwXqmpF4C3PaIOgv4Y002iRHUwKW"
@@ -88,12 +39,11 @@ const ProductDetail = () => {
 
     const body = {
       product: {
-        id: product.id, // Assuming your product object has an 'id' property
-        name: product.name,
-        description: product.description,
-        image: product.image,
-        price: product.price,
-        quantity: quantity,
+        id: details.id, // Assuming your product object has an 'id' property
+        name: details.name,
+        image: details.image,
+        price: details.price,
+        days: days,
         // tax: tax,
         // Send the incremented quantity
       },
@@ -104,7 +54,7 @@ const ProductDetail = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3001/api/stripe/create-checkout-session",
+        "http://localhost:3001/api/stripe1/create-checkout-session1",
         {
           method: "POST",
           headers: headers,
@@ -126,7 +76,22 @@ const ProductDetail = () => {
     }
   };
 
-  if (!product) {
+  const handleDateChange = (ranges) => {
+    // Update the state with the selected date range
+    setDateRange([ranges.selection]);
+
+    // Calculate the number of days between the selected dates
+    const startDate = ranges.selection.startDate;
+    const endDate = ranges.selection.endDate;
+    const daysDifference = Math.ceil(
+      (endDate - startDate) / (1000 * 60 * 60 * 24)
+    );
+
+    // Update the 'days' state with the calculated difference
+    setDays(daysDifference);
+  };
+
+  if (!details) {
     return (
       <div className="h-screen flex justify-center items-center">
         Loading...
@@ -134,13 +99,13 @@ const ProductDetail = () => {
     );
   }
 
-  const incrementQuantity = () => {
-    setQuantity(quantity + 1);
+  const incrementDays = () => {
+    setDays(days + 1);
   };
 
-  const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+  const decrementDays = () => {
+    if (days > 1) {
+      setDays(days - 1);
     }
   };
 
@@ -164,20 +129,19 @@ const ProductDetail = () => {
           {/* Main Image */}
           <div className="overflow-hidden rounded-lg bg-gray-100">
             <img
-              src={product.image}
-              alt={product.name}
+              src={details.image}
+              alt={details.name}
               className="h-full w-full object-cover object-center"
+              style={{ objectFit: "cover" }}
             />
           </div>
 
           {/* Product Details */}
           <div className="md:py-8">
             <div className="mb-2 md:mb-3">
-              <span className="mb-0.5 inline-block text-gray-500">
-                Product Name
-              </span>
+              <span className="mb-0.5 inline-block text-gray-500">Name</span>
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
-                {product.name}
+                {details.name}
               </h2>
             </div>
 
@@ -186,7 +150,7 @@ const ProductDetail = () => {
                 className="flex h-7 items-center gap-1 rounded-full  px-2 text-white"
                 style={{ backgroundColor: "#0F4157" }}
               >
-                <span className="text-sm">{product.ratings}</span>
+                <span className="text-sm">{details.ratings}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -198,13 +162,13 @@ const ProductDetail = () => {
                 </svg>
               </div>
               <span className="text-sm text-gray-500 transition duration-100">
-                {product.ratingCount} ratings
+                {details.ratingCount} ratings
               </span>
             </div>
 
             <div className="mb-4 md:mb-6">
               <span className="mb-3 inline-block text-sm font-semibold text-gray-500 md:text-base">
-                Description
+                About
               </span>
               <div className="flex flex-wrap gap-2">
                 {/* {product.colors?.map((color, index) => (
@@ -215,34 +179,46 @@ const ProductDetail = () => {
                   ></button>
                 ))} */}
 
-                {product.description}
+                {details.about}
               </div>
             </div>
 
             {/* Quantity */}
             <div className="mb-8 md:mb-10">
               <span className="mb-3 inline-block text-sm font-semibold text-gray-500 md:text-base">
-                Quantity
+                Days
               </span>
 
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  onClick={decrementQuantity}
+                  onClick={decrementDays}
                   className="h-8 w-8 flex items-center justify-center rounded-md border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200"
                 >
                   -
                 </button>
                 <span className="flex h-8 w-12 items-center justify-center rounded-md border bg-white text-center text-sm font-semibold text-gray-800">
-                  {quantity}
+                  {days}
                 </span>
                 <button
                   type="button"
-                  onClick={incrementQuantity}
+                  onClick={incrementDays}
                   className="h-8 w-8 flex items-center justify-center rounded-md border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200"
                 >
                   +
                 </button>
+              </div>
+
+              <div className="mb-8 md:mb-10">
+                <span className="mb-3 inline-block text-sm font-semibold text-gray-500 md:text-base">
+                  Select Dates
+                </span>
+
+                <DateRangePicker
+                  ranges={dateRange}
+                  onChange={handleDateChange}
+                  showSelectionPreview={true}
+                />
               </div>
             </div>
 
@@ -251,7 +227,7 @@ const ProductDetail = () => {
             <div className="mb-4">
               <div className="flex items-end gap-2">
                 <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                  Rs:{product.price.toFixed(2)}
+                  Rs:{details.price.toFixed(2) * days}
                 </span>
                 {/* Add original price with strike-through if applicable */}
               </div>
@@ -263,31 +239,21 @@ const ProductDetail = () => {
             {/* Add shipping notice and other details as needed */}
 
             <div className="flex gap-2.5">
+              <Link to={`/chat`}>
+                <button
+                  className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
+                  style={{ backgroundColor: "#0F4157" }}
+                >
+                  chat
+                </button>
+              </Link>
               <button
-                onClick={handleAddToCart}
-                className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
+                onClick={makePayment}
+                className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
                 style={{ backgroundColor: "#0F4157" }}
               >
-                Add to cart
+               Rent Now
               </button>
-              <Link to={`/cart/${product._id}`} key={product._id}>
-                <button
-                  onClick={handleAddToCart}
-                  className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
-                  style={{ backgroundColor: "#0F4157" }}
-                >
-                  Buy Now
-                </button>
-              </Link>
-
-              <Link to={`/cart/${product._id}`} key={product._id}>
-                <button
-                  className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
-                  style={{ backgroundColor: "#0F4157" }}
-                >
-                  View cart
-                </button>
-              </Link>
             </div>
           </div>
         </div>
@@ -297,4 +263,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default TransportDetails;

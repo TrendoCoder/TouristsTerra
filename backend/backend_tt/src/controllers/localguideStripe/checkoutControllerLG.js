@@ -2,31 +2,29 @@ const stripe = require("stripe")(
   "sk_test_51OFAzLHNYB7xRUttx13GbXadMp57xuuxhCoDWelr1cNz9DJZdg96PevapuTssYvQ5mIdd34UfCyzZIyyt8CppBDd00R3ViuhYz"
 );
 
-const createCheckoutSession = async (req, res) => {
+const createCheckout_1Session = async (req, res) => {
   try {
-    const { products } = req.body;
+    const { product } = req.body;
 
-    console.log("Products are", products);
+    console.log(product);
 
-    const lineItems = products.map((product) => ({
+    const lineItems = {
       price_data: {
         currency: "pkr",
         product_data: {
           name: product.name,
-          images: Array.isArray(product.image)
-            ? product.image
-            : [product.image],
+          images: [product.image],
         },
         unit_amount: product.price * 100,
       },
-      quantity: product.quantity,
-    }));
+      quantity: product.days, // Move days outside price_data
+    };
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      line_items: lineItems,
+      line_items: [lineItems],
       mode: "payment",
-      success_url: "http://localhost:3000/success",
+      success_url: "http://localhost:3000/successlg",
       cancel_url: "http://localhost:3000/cancel",
     });
 
@@ -38,5 +36,5 @@ const createCheckoutSession = async (req, res) => {
 };
 
 module.exports = {
-  createCheckoutSession,
+  createCheckout_1Session,
 };
