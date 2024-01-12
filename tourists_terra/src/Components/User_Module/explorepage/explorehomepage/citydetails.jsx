@@ -79,7 +79,16 @@ const CityDetails = () => {
             {placesData.map((place) => (
               <Link key={place.place_id} to={`/placedetails/${place.place_id}`}>
                 <div className="bg-gray-100 p-4 rounded-md shadow-md cursor-pointer">
-                  <h3 className="text-xl font-bold mb-2">{place.name}</h3>
+                  <div className="flex items-center mb-2">
+                    {place.icon && (
+                      <img
+                        src={place.icon}
+                        alt="Place Icon"
+                        className="mr-2 w-6 h-6 object-cover"
+                      />
+                    )}
+                    <h3 className="text-xl font-bold">{place.name}</h3>
+                  </div>
                   <p className="text-gray-700">
                     <span className="font-bold">Address:</span> {place.formatted_address}
                   </p>
@@ -101,6 +110,7 @@ const CityDetails = () => {
               </Link>
             ))}
           </div>
+
         </div>
         <br />
 
@@ -115,7 +125,7 @@ const CityDetails = () => {
                     lat: latitude,
                     lng: longitude,
                   }}
-                  zoom={8}
+                  zoom={12} // Set your desired default zoom level 
                   onLoad={onLoad}
                   onUnmount={onUnmount}
                 >

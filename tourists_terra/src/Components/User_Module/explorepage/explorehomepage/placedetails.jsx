@@ -33,34 +33,42 @@ const PlaceDetails = () => {
       <br /><br /><br />
 
       {placeDetails && (
-        <div className="container mx-auto p-4 flex justify-between w-full  ">
+        <div className="container mx-auto p-2 flex justify-between w-full  ">
 
-          <div className=' '>
-            <h2 className="text-3xl font-bold mb-4 inline-block border-b-2 border-gray-300 pb-2">{placeDetails.name}</h2>
-
-            <div className="mb-4">
-              <p className="text-gray-600 font-bold">Address:</p>
-              <p className="text-gray-700">{placeDetails.formatted_address}</p>
-            </div>
-
-            <div className="mb-4">
-              <p className="text-gray-600 font-bold">Average Rating:</p>
-              <p className="text-gray-700">{placeDetails.rating}</p>
-            </div>
-
-            <div className="mb-4">
-              <p className="text-gray-600 font-bold">Total Ratings:</p>
-              <p className="text-gray-700">{placeDetails.user_ratings_total}</p>
-            </div>
-            {placeDetails.opening_hours && (
-              <div className="mb-4">
-                <h3 className="text-xl font-bold mb-2 inline-block border-b-2 border-gray-300 pb-2">Opening Hours:</h3>
-                {placeDetails.opening_hours.weekday_text.map((day, index) => (
-                  <p key={index}>{day}</p>
-                ))}
-              </div>
+          <div className='flex items-start'> 
+            {placeDetails.icon && (
+              <img
+                src={placeDetails.icon}
+                alt="Place Icon"
+                className="mt-2 mr-3 w-6 h-6 object-cover"
+              />
             )}
+            <div>
+              <h2 className="text-3xl font-bold mb-4 inline-block border-b-2 border-gray-300 pb-2">{placeDetails.name}</h2>
 
+              <div className="mb-4">
+                <p className="text-gray-600 font-bold">Address:</p>
+                <p className="text-gray-700">{placeDetails.formatted_address}</p>
+              </div>
+
+              <div className="mb-4">
+                <p className="text-gray-600 font-bold">Average Rating:</p>
+                <p className="text-gray-700">{placeDetails.rating}</p>
+              </div>
+
+              <div className="mb-4">
+                <p className="text-gray-600 font-bold">Total Ratings:</p>
+                <p className="text-gray-700">{placeDetails.user_ratings_total}</p>
+              </div>
+              {placeDetails.opening_hours && (
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold mb-2 inline-block border-b-2 border-gray-300 pb-2">Opening Hours:</h3>
+                  {placeDetails.opening_hours.weekday_text.map((day, index) => (
+                    <p key={index}>{day}</p>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
 
@@ -68,7 +76,7 @@ const PlaceDetails = () => {
 
             {/* Display carousel for images */}
             {placeDetails.photos && placeDetails.photos.length > 0 && (
-              <div className="mt-4">
+              <div className="mt-12">
                 <h3 className="text-xl font-bold mb-2 inline-block border-b-2 border-gray-300 pb-2">Images:</h3>
                 <Carousel
                   className='w-full h-[600px] '
