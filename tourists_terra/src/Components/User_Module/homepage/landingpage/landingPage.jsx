@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import Sidebar from "../sidebar/sideBar";
-import FeedSection from "../feedsection/feedSection";
 import RightBar from "../rightbar/rightBar";
 import "./landingPage.css";
 import MenuBar from "../menubar/menuBar";
 import NavBar from "../navbar/navBar";
-import { AuthContext } from "../../../../Context/authcontext";
+import Timeline from "../feedsection/timeline";
 
 const LandingPage = () => {
-const {user} = useContext(AuthContext)
   return (
     <>
       <NavBar />
@@ -25,7 +23,7 @@ const {user} = useContext(AuthContext)
           </div>
           <div id="feed-section-landing">
             <div id="uploading-section">
-                <FeedSection username={user.userName} />
+                <Timeline />
             </div>
           </div>
           <div id="rightBar-landing">
