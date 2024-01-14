@@ -1,0 +1,29 @@
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px; /* Adjust the margin-top as needed */
+  }
+  
+  .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .pagination li {
+    margin-right: 10px;
+  }
+  
+  .pagination a {
+    display: block;
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .pagination a:hover {
+    background-color: #f2f2f2;
+  }

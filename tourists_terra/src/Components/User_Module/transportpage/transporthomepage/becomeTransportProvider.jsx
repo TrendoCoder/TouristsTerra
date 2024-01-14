@@ -6,7 +6,7 @@ import { AuthContext } from "../../../../Context/authcontext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import uploadImage from "../../../../images/gallery.png";
-const BecomeLocalGuideProvider = () => {
+const BecomeTransportProvider = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const initialValuesCustomer = {
@@ -90,7 +90,7 @@ const BecomeLocalGuideProvider = () => {
         cnic: formValuesCustomer.cnic,
         experience: formValuesCustomer.experience,
         language: formValuesCustomer.language,
-        requestFor: "LocalGuide Provider",
+        requestFor: "Transport Provider",
       };
 
       if (formValuesCustomer.idCardFrontImg) {
@@ -130,7 +130,7 @@ const BecomeLocalGuideProvider = () => {
         alert(
           "Your request has been successfully sent to our team. We'll respond to you soon."
         );
-        navigate("/localguide");
+        navigate("/transport");
       } catch (err) {
         alert(err);
       }
@@ -187,7 +187,7 @@ const BecomeLocalGuideProvider = () => {
           <div id="right-container">
             <div id="right-container-top">
               <div id="cust-info">
-                <span>Local-Guide Verification Form</span>
+                <span>Transport-Provider Verification Form</span>
               </div>
               <form onSubmit={onSubmitCust}>
                 <div id="inputs-row">
@@ -388,4 +388,4 @@ const BecomeLocalGuideProvider = () => {
   );
 };
 
-export default BecomeLocalGuideProvider;
+export default BecomeTransportProvider;

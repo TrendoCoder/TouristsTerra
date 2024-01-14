@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "./transporthomepage.css";
+import "../../shoppage/shophomepage/shophomepage.css";
 // import Navbar from "../../homepage/navbar/navBar";
 import AccommodationAdSection from "../../accommodationpage/accomoadsection/accomoadsection";
 import Footer from "../../accommodationpage/footer/footer";
@@ -9,6 +9,7 @@ import MenuBar from "../../homepage/menubar/menuBar";
 import RenterModal from "./renterModal";
 import axios from "axios";
 import { AuthContext } from "../../../../Context/authcontext";
+import ReactPaginate from "react-paginate";
 
 // Helper function to group products by category name
 const groupByCategory = (transDetails) => {
@@ -27,15 +28,13 @@ const TransportHomePage = () => {
   const [temp, setTemp] = useState([]);
   const [groupedtransDetails, setGroupedTransDetails] = useState({});
   const { user } = useContext(AuthContext);
-
+  const productsPerPage = 3;
+  const [currentPage, setCurrentPage] = useState(0);
+  const navigate = useNavigate();
   console.log(user);
 
   // check
-  const [isShopAdmin, setIsShopAdmin] = useState(user.isShopAdmin);
-  console.log(user);
-  console.log(user.isShopAdmin);
-  // const navigate = useNavigate();
-
+  const [isTrasportAdmin, setIsTrasportAdmin] = useState(user.isTrasportAdmin);
   useEffect(() => {
     fetchTransDetails();
   }, []);
@@ -51,6 +50,19 @@ const TransportHomePage = () => {
         console.error("Error fetching products:", error);
       });
   };
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+  const paginatedProducts = Object.fromEntries(
+    Object.entries(groupedtransDetails).map(([key, value]) => [
+      key,
+      value.slice(
+        currentPage * productsPerPage,
+        (currentPage + 1) * productsPerPage
+      ),
+    ])
+  );
 
   const [filter, setFilter] = useState({
     quantity: [],
@@ -191,7 +203,7 @@ const TransportHomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+    navigate(`/become-transport-provider/${user._id}`);
   };
   useEffect(() => {
     if (isModalOpen) {
@@ -303,26 +315,34 @@ const TransportHomePage = () => {
                 </button>
               </div>
               <div className="w-full flex justify-end">
-                <button
-                  className=" hover:bg-blue-700  text-white font-bold py-2 px-4 rounded"
-                  onClick={toggleModal}
-                  style={{ backgroundColor: "#0F4157" }}
-                >
-                  Become A TransportProvider?
-                </button>
-
-                {isShopAdmin && (
+                {user.isTrasportAdmin ? (
                   <Link
-                    className={`ml-6 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
-                      !isShopAdmin && "cursor-not-allowed opacity-50"
+                    className={` hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 ${
+                      !isTrasportAdmin && "cursor-not-allowed opacity-50"
                     }`}
                     to="http://localhost:3002/transport"
                     style={{ backgroundColor: "#0F4157" }}
-                    disabled={!isShopAdmin}
+                    disabled={!isTrasportAdmin}
                   >
                     Transport Provider account
                   </Link>
+                ) : (
+                  <button
+                    className=" hover:bg-blue-700  text-white font-bold py-2 px-4 rounded ml-2"
+                    onClick={toggleModal}
+                    style={{ backgroundColor: "#0F4157" }}
+                  >
+                    Become A TransportProvider?
+                  </button>
                 )}
+                <Link to="/bookinghistory-1">
+                  <button
+                    className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                    style={{ backgroundColor: "#0F4157" }}
+                  >
+                    Booking History
+                  </button>
+                </Link>
               </div>
 
               <div class="mt-4 lg:mt-8 lg:grid lg:grid-cols-4 lg:items-start lg:gap-8 ">
@@ -530,7 +550,7 @@ const TransportHomePage = () => {
                 </div>
 
                 <div className="lg:col-span-3 w-auto">
-                  {Object.entries(groupedtransDetails).map(
+                  {Object.entries(paginatedProducts).map(
                     ([categoryName, transDetails]) => (
                       <div key={categoryName} className="mb-8">
                         <h2 className="text-2xl font-bold my-6">
@@ -593,6 +613,23 @@ const TransportHomePage = () => {
                       </div>
                     )
                   )}
+                  <div className="pagination-container">
+                    <ReactPaginate
+                      previousLabel={"Previous"}
+                      nextLabel={"Next"}
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={Math.ceil(
+                        transDetails.length / productsPerPage
+                      )}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={handlePageClick}
+                      containerClassName={"pagination"}
+                      subContainerClassName={"pages pagination"}
+                      activeClassName={"active"}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

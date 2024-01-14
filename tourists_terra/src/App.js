@@ -38,6 +38,10 @@ import Success from "./Components/User_Module/shoppage/shophomepage/Success";
 import ContactUs from "./Components/User_Module/contactus/contactus";
 import ProductDetail from "./Components/User_Module/shoppage/shophomepage/ProductDetail";
 import TransportDetails from "./Components/User_Module/transportpage/transporthomepage/transportdetailpage";
+import BookingHistory from "./Components/User_Module/localguidepage/localguidehome/bookingHistory";
+import BookingHistoryTransport from "./Components/User_Module/transportpage/transporthomepage/bookingHistory";
+import BecomeShopProvider from "./Components/User_Module/shoppage/shophomepage/becomeShopProvider";
+import BecomeTransportProvider from "./Components/User_Module/transportpage/transporthomepage/becomeTransportProvider";
 import SuccessLg from "./Components/User_Module/localguidepage/localguidehome/successLg";
 import Chat from "./Components/User_Module/localguidepage/localguidehome/guidechat";
 import AdminLoginPage from "./Components/adminmodule/adminloginpage/adminLoginPage";
@@ -83,7 +87,18 @@ function App() {
             ></Route>
             <Route path="transport" element={<TransportHomePage />}></Route>
             <Route path="localguide" element={<LocalGuideHome />}></Route>
-            <Route path="become-local-guide-provider/:userId" element={<BecomeLocalGuideProvider />}></Route>
+            <Route
+              path="become-local-guide-provider/:userId"
+              element={<BecomeLocalGuideProvider />}
+            ></Route>
+              <Route
+              path="become-shop-provider/:userId"
+              element={<BecomeShopProvider />}
+            ></Route>
+              <Route
+              path="become-transport-provider/:userId"
+              element={<BecomeTransportProvider />}
+            ></Route>
             <Route path="/details/:detailsId" element={<GuideDetails />} />
             <Route path="blog-home-page" element={<BlogHomePage />}></Route>
             <Route path="add-blog-post" element={<AddBlogPost />}></Route>
@@ -112,12 +127,10 @@ function App() {
               path="citydetails/:cityName"
               element={<CityDetails />}
             ></Route>
-
             <Route
               path="placedetails/:placeId"
               element={<PlaceDetails />}
             ></Route>
-
             <Route
               path="edit-user-profile/:id"
               element={<EditUserProfile />}
@@ -130,7 +143,12 @@ function App() {
             <Route
               path="/transportDetail/:transportDetailId"
               element={<TransportDetails />}
-            />
+            ></Route>
+            <Route path="/bookinghistory" element={<BookingHistory />}></Route>
+            <Route
+              path="/bookinghistory-1"
+              element={<BookingHistoryTransport />}
+            ></Route>
             <Route path="localguide" element={<LocalGuideHome />}></Route>
             <Route path="/details/:detailsId" element={<GuideDetails />} />
             <Route path="/chat" element={<Chat />} />
