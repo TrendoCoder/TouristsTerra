@@ -210,6 +210,27 @@ app.post(
     }
   }
 );
+//store paymentScreenShot
+const storagePaymentScreenShot = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/paymentScreenShot");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+const paymentScreenShot = multer({ storage: storagePaymentScreenShot });
+app.post(
+  "/api/upload/paymentScreenShot",
+  paymentScreenShot.single("file"),
+  (req, res) => {
+    try {
+      return res.status(200).json("File uploded successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
 app.use("/", indexRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);

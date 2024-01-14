@@ -30,15 +30,12 @@ router.get("/checkAdmin/:id", verifyAdmin, (req, res, next) => {
 router.put("/:id",updateUser);
 //update Password
 router.put("/pass/:id",updateUserPassword);
-
 // Delete
 router.delete("/delete/:userId", deleteUser);
 // Get
 router.get("/", getUser);
-
 // Get All
 router.get("/all", getAllUsers);
-
 // Get friends
 router.get("/friends/:idOfUser", getFriends);
 //follow a user
@@ -47,6 +44,4 @@ router.put("/:id/follow", followAUser);
 router.put("/:id/unfollow", unFollowUser);
 // get random suggessions
 router.get("/randomUsers/:idOfUser/:count?", getRandomUsersWithPreference);
-
-
 module.exports = router;
