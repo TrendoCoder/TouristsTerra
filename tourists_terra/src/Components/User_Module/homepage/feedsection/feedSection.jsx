@@ -11,7 +11,7 @@ const FeedSection = ({ username }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        if (username !== user.userName) {
+        if (username === user.userName) {
           const res = await axios.get(`http://localhost:3001/api/post/profile/${username}`);
           setPosts(
             res.data.sort((p1, p2) => new Date(p2.createdAt) - new Date(p1.createdAt))

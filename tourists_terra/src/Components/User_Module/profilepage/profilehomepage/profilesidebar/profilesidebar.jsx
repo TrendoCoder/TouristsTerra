@@ -99,7 +99,7 @@ const ProfileSideBar = ({ user }) => {
             <span>{followedUser ? `${followedUser}` : "-"}</span>
           </div>
           <div id="leftbar-options">
-            <Link to="/">Chats</Link>
+            <Link to="/user-chat-page">Chats</Link>
             <span>2</span>
           </div>
           <div id="leftbar-options">

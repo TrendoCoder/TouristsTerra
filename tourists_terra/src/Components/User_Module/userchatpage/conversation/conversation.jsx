@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './conversation.css'
-import pic from "../../../../images/profile.jpeg"
 import axios from 'axios';
 const Conversation = ({conversation, currentUser}) => {
   const [user, setUser] = useState();
@@ -22,10 +21,10 @@ const Conversation = ({conversation, currentUser}) => {
     <>
     {loading?
     <div id='conversation-container'>
-    <img src={user.userProfilePicture?PF+`/${user.userProfilePicture}`:PF+"/profileUpload.png"} alt="ProfilePic" crossOrigin='anonymous'/>
+    <img src={user.userProfilePicture ?PF+`/profilePicture/${user.userProfilePicture}`:PF+"/profileUpload.png"} alt={PF+"/profileUpload.png"} crossOrigin='anonymous'/>
     <span>{user.userName}</span>
     </div>:
-    "No chats are found"}
+    <i class="fa-solid fa-circle-notch fa-spin"></i>}
     </>
   )
 }

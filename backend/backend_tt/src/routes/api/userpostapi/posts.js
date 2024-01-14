@@ -103,7 +103,6 @@ router.get("/timeline/:userId", async (req, res) => {
 // Get user's all posts by username
 router.get("/profile/:username", async (req, res) => {
   try {
-    // Use a case-insensitive regular expression for the query
     const user = await User.findOne({ userName: new RegExp(req.params.username, 'i') });
 
     if (user) {

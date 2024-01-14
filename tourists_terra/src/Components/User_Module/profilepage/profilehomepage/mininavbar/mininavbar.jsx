@@ -5,6 +5,7 @@ import FeedSection from "../../../homepage/feedsection/feedSection"
 import FriendListCard from '../friendlistcard/friendlistcard'
 
 const MiniNavBar = ({username}) => {
+    console.log(username);
     const [active, isActive] = useState(0);
   return (
     <div id="main-mini-nav-container">

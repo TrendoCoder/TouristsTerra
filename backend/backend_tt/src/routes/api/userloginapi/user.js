@@ -8,6 +8,7 @@ const {
   unFollowUser,
   getFriends,
   updateUserPassword,
+  getRandomUsersWithPreference,
 } = require("../../../controllers/userlogin/user");
 const {
   verifyToken,
@@ -39,12 +40,13 @@ router.get("/", getUser);
 router.get("/all", getAllUsers);
 
 // Get friends
-router.get("/friends/:userId", getFriends);
+router.get("/friends/:idOfUser", getFriends);
 //follow a user
 router.put("/:id/follow", followAUser);
 // unfollow a user
 router.put("/:id/unfollow", unFollowUser);
-
+// get random suggessions
+router.get("/randomUsers/:idOfUser/:count?", getRandomUsersWithPreference);
 
 
 module.exports = router;

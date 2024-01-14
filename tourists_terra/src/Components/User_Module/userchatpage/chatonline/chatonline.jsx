@@ -5,7 +5,7 @@ import axios from 'axios';
 const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
   const [friends, setFriends] = useState([]);
   const [onlineFriends, setOnlineFriends] = useState([]);
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [loading, setLoading] = useState(true); 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false); // Set loading to false regardless of success or failure
+        setLoading(false); 
       }
     };
 

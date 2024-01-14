@@ -104,6 +104,8 @@
 #u-likes
 {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
 }
 #u-likes i
@@ -111,9 +113,23 @@
     font-size: 25px;
     color: #0F4157;
 }
+#u-likes>div>span{
+    font-size: 15px;
+    cursor: pointer;
+    font-style: italic;
+    color: grey;
+}
 #u-likes i:hover
 {
     cursor: pointer;
+}
+#chat-div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#chat-div>i{
+    font-size: 18px;
 }
 #Open-report{
     width: 100vw;

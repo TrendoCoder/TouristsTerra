@@ -44,8 +44,6 @@ const UserChatPage = () => {
       );
     });
   }, [user]);
-
-  console.log(onlineUsers);
   useEffect(() => {
     const getConversation = async () => {
       try {
@@ -124,7 +122,6 @@ const UserChatPage = () => {
                 ))
               ) : (
                 <>
-                  <p>No Chat is found</p>
                 </>
               )}
             </div>
@@ -136,7 +133,7 @@ const UserChatPage = () => {
               <div id="u-chat-box-top">
                 {messages.map((m) => (
                   <div ref={scrollRef}>
-                    <UserMessage message={m} own={m.sender === user._id} />
+                    <UserMessage message={m} own={m.sender === user._id} user={user} />
                   </div>
                 ))}
               </div>

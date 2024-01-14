@@ -3,7 +3,7 @@ import "./displaypost.css";
 import { useContext, useEffect } from "react";
 import axios from "axios";
 import { format } from "timeago.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../Context/authcontext";
 
 const DisplayPost = ({ posts }) => {
@@ -19,7 +19,7 @@ const DisplayPost = ({ posts }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [editedDesc, setEditedDesc] = useState(posts.desc);
   const { user: currentUser } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   useEffect(() => {
     setIsLiked(posts.likes.includes(currentUser._id));
   }, [currentUser._id, posts.likes]);
@@ -45,7 +45,7 @@ const DisplayPost = ({ posts }) => {
   const handleEllipsisClick = () => {
     setShowOptions(!showOptions);
   };
-  const handleEditSubmit= async (e) => {
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
     const updatedPost = {
       desc: editedDesc,
@@ -59,42 +59,66 @@ const DisplayPost = ({ posts }) => {
       try {
         await axios.post("http://localhost:3001/api/upload", data);
       } catch (err) {}
-    }else{
+    } else {
       updatedPost.img = posts.img;
     }
     try {
-      await axios.put(`http://localhost:3001/api/post/${posts._id}?userId=${currentUser._id}`, updatedPost);
-      alert("Succesfully Edited")
+      await axios.put(
+        `http://localhost:3001/api/post/${posts._id}?userId=${currentUser._id}`,
+        updatedPost
+      );
+      alert("Succesfully Edited");
       window.location.reload();
     } catch (err) {
-      alert("Some issue is facing try again later....")
+      alert("Some issue is facing try again later....");
     }
   };
   const handleDeletePost = async () => {
-    try{
-      await axios.delete(`http://localhost:3001/api/post/${posts._id}?userId=${currentUser._id}`);
+    try {
+      await axios.delete(
+        `http://localhost:3001/api/post/${posts._id}?userId=${currentUser._id}`
+      );
       alert("Deleted successfully");
       window.location.reload();
-    }catch(err){
-      alert(err)
+    } catch (err) {
+      alert(err);
     }
-    
   };
   const handleReport = async () => {
-    try{
-      await axios.post(`http://localhost:3001/api/report/`,{
+    try {
+      await axios.post(`http://localhost:3001/api/report/`, {
         reporterId: currentUser._id,
-        authorId: posts._id, 
-        type:"User Post",
-        message:report,
+        authorId: posts._id,
+        type: "User Post",
+        message: report,
       });
       setReport("");
       setOpenReport(false);
       alert("Successfully reported this post..");
-    }catch(err){
-      alert(err+ "try again later");
+    } catch (err) {
+      alert(err + "try again later");
     }
-  }
+  };
+  const startChat = async () => {
+    try {
+      const existingConversation = await axios.get(
+        `http://localhost:3001/api/user-conversation/find/${currentUser._id}/${posts.userId}`
+      );
+
+      if (existingConversation.data) {
+        navigate("/user-chat-page");
+      } else {
+        await axios.post(`http://localhost:3001/api/user-conversation/`, {
+          senderId: currentUser._id,
+          receiverId: posts.userId,
+        });
+        navigate("/user-chat-page");
+      }
+    } catch (err) {
+      alert("Chat is currently unavailable...");
+    }
+  };
+
   return (
     <div id="main-container-feed">
       <div id="u-info">
@@ -109,7 +133,19 @@ const DisplayPost = ({ posts }) => {
               crossOrigin="anonymous"
               alt={PF + "/profileUpload.png"}
             />
-            <h3>{user.userName}</h3>
+            <h3>
+              {user.userName}{" "}
+              {user.isVerifiedUser ? (
+                <>
+                  <i
+                    class="fa-solid fa-circle-check"
+                    style={{ color: "green" }}
+                  ></i>
+                </>
+              ) : (
+                " "
+              )}
+            </h3>
             <span>{format(posts.createdAt)}</span>
           </Link>
         </div>
@@ -119,33 +155,43 @@ const DisplayPost = ({ posts }) => {
           </div>
           {showOptions && (
             <div id="post-report-dropdown">
-              {currentUser._id !== posts.userId?<><div
-                onClick={() => {
-                  setOpenReport(true);
-                }}
-              >
-                <span>Report{"  "}</span>
-                <i class="fa-solid fa-flag"></i>
-              </div></>:<></>
-              }
-{currentUser._id === posts.userId?
-              <><div
-                onClick={() => {
-                  setOpenEdit(true);
-                }}
-              >
-                <span>Edit{"  "}</span>
-                <i class="fa-solid fa-pen"></i>
-              </div>
+              {currentUser._id !== posts.userId ? (
+                <>
+                  <div
+                    onClick={() => {
+                      setOpenReport(true);
+                    }}
+                  >
+                    <span>Report{"  "}</span>
+                    <i class="fa-solid fa-flag"></i>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+              {currentUser._id === posts.userId ? (
+                <>
+                  <div
+                    onClick={() => {
+                      setOpenEdit(true);
+                    }}
+                  >
+                    <span>Edit{"  "}</span>
+                    <i class="fa-solid fa-pen"></i>
+                  </div>
 
-              <div
-                onClick={() => {
-                  setOpenDelete(true);
-                }}
-              >
-                <span>Delete{"  "}</span>
-                <i class="fa-solid fa-trash"></i>
-              </div></>:<></>}
+                  <div
+                    onClick={() => {
+                      setOpenDelete(true);
+                    }}
+                  >
+                    <span>Delete{"  "}</span>
+                    <i class="fa-solid fa-trash"></i>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           )}
         </div>
@@ -174,6 +220,20 @@ const DisplayPost = ({ posts }) => {
             <i className="fa-regular fa-heart" onClick={likeHandler}></i>
           )}{" "}
           <span>{likes}</span>
+        </div>
+        <div id="chat-div">
+          {currentUser._id !== posts.userId ? (
+            <>
+              <i class="fa-regular fa-message"></i>
+              <span onClick={startChat}>
+                <u>
+                  <b>Chat Now</b> {"   "}
+                </u>
+              </span>
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       {openReport && (
@@ -217,7 +277,6 @@ const DisplayPost = ({ posts }) => {
         <div id="Open-report">
           <div id="rep-post-container">
             <div id="rep-edit-wrapper">
-             
               <div id="rep-edit-wrapper-sec-one">
                 <i
                   className="fa-solid fa-circle-xmark fa-beat"
@@ -227,7 +286,7 @@ const DisplayPost = ({ posts }) => {
                   }}
                 ></i>
               </div>
-              <h2 style={{fontWeight:"600"}}>Edit Your Post</h2>
+              <h2 style={{ fontWeight: "600" }}>Edit Your Post</h2>
               <div id="rep-edit-wrapper-sec-two">
                 <label>Post Description:</label>
                 <input
