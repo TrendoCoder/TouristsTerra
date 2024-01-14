@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 // import "./shophomepage.css";
 import Navbar from "../../homepage/navbar/navBar";
 import AccommodationAdSection from "../../accommodationpage/accomoadsection/accomoadsection";
 import Footer from "../../accommodationpage/footer/footer";
 import MenuBar from "../../homepage/menubar/menuBar";
 import GuideModal from "./guidemodal";
+import { AuthContext } from "../../../../Context/authcontext";
 
 // Helper function to group products by category name
 const groupByCity = (details) => {
@@ -23,7 +24,8 @@ const LocalGuideHomePage = () => {
   const [details, setDetails] = useState([]);
   const [temp, setTemp] = useState([]);
   const [groupedDetails, setGroupedDetails] = useState({});
-
+  const {user} = useContext(AuthContext);
+  const navigate = useNavigate();
   useEffect(() => {
     fetchDetails();
   }, []);
@@ -174,7 +176,7 @@ const LocalGuideHomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+   navigate(`/become-local-guide-provider/${user._id}`);
   };
   useEffect(() => {
     if (isModalOpen) {

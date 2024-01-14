@@ -9,6 +9,7 @@
     "@heroicons/react": "^2.0.18",
     "@material-tailwind/react": "^2.1.4",
     "@mui/material": "^5.14.18",
+    "@sendbird/uikit-react": "^3.9.0",
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.2.0",
     "@testing-library/jest-dom": "^5.16.5",
