@@ -22,7 +22,7 @@
 #custom-dot:active {
   background-color: #0F4157; 
 }
-/* #opacity-ad1 {
+#opacity-ad1 {
   position: absolute;
   width: 100%;
   text-align: center;
@@ -31,7 +31,7 @@
   text-align: center;
   font-size: 42px;
   font-weight: 700;
-} */
+}
 @media (max-width: 768px) {
     #main-container-accomo-ad {
       width: 80%;

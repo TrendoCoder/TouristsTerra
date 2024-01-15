@@ -56,7 +56,7 @@ const AccommodationAdSection = () => {
               alt={PF + "/profileUpload.png"}
               crossOrigin="anonymous"
             />
-            <h1 id="opacity-ad1">Hiiiiiiiiiiiii</h1>
+            <h1 id="opacity-ad1">{hotel.title}</h1>
             </>
           ))}
         </Slider>
