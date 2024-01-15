@@ -111,12 +111,13 @@ function SinglePost() {
         comment: commentText,
         userId: user?._id || '',
         name: user?.userName || '',
+        pic:user?.userProfilePicture || '',
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data === "This blog has been commented") {
-          setComments([...comments, { comment: commentText, author: user?._id, date: moment() }]);
+          setComments([...comments, { comment: commentText, author: user?._id, pic:user?.userProfilePicture, date: moment() }]);
           e.target.elements.comment.value = "";
           setCommentSubmitted(true);
           setTimeout(() => {
@@ -301,11 +302,11 @@ function SinglePost() {
                 >
                   <img
                     src={
-                      user.userProfilePicture
-                        ? PF + `/profilePicture/${user.userProfilePicture}`
+                      comment.pic
+                        ? PF + `/profilePicture/${comment.pic}`
                         : PF + "/profileUpload.png"
                     }
-                    alt=""
+                    alt={PF + "/profileUpload.png"}
                     id="profile"
                     crossOrigin="anonymous"
                     className="hidden object-cover w-14 h-14 mx-4 rounded-full sm:block"

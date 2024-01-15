@@ -101,7 +101,8 @@ exports.postCommentBlog=async(req,res)=>{
           comments:{
            comment:req.body.comment,
            author:req.body.userId,
-           name: req.body.name
+           name: req.body.name,
+           pic:req.body.pic,
           }          
         },
       });
