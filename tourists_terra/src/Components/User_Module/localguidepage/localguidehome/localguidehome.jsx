@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-// import "./shophomepage.css";
-import Navbar from "../../homepage/navbar/navBar";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../../shoppage/shophomepage/shophomepage.css"
 import AccommodationAdSection from "../../accommodationpage/accomoadsection/accomoadsection";
 import Footer from "../../accommodationpage/footer/footer";
 import MenuBar from "../../homepage/menubar/menuBar";
 import GuideModal from "./guidemodal";
-
+import { AuthContext } from "../../../../Context/authcontext";
+import ReactPaginate from "react-paginate";
 // Helper function to group products by category name
 const groupByCity = (details) => {
   return details.reduce((acc, detail) => {
@@ -23,10 +23,15 @@ const LocalGuideHomePage = () => {
   const [details, setDetails] = useState([]);
   const [temp, setTemp] = useState([]);
   const [groupedDetails, setGroupedDetails] = useState({});
-
+  const { user } = useContext(AuthContext);
+  const productsPerPage = 3;
+  const [currentPage, setCurrentPage] = useState(0);
+  const [isLocalGuideAdmin, setIsLocalGuideAdmin] = useState(user.isLocalGuideAdmin);
+  const navigate = useNavigate();
   useEffect(() => {
     fetchDetails();
   }, []);
+
   const fetchDetails = () => {
     fetch("http://localhost:3001/api/details")
       .then((response) => response.json())
@@ -40,6 +45,18 @@ const LocalGuideHomePage = () => {
       });
   };
 
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+  const paginatedProducts = Object.fromEntries(
+    Object.entries(groupedDetails).map(([key, value]) => [
+      key,
+      value.slice(
+        currentPage * productsPerPage,
+        (currentPage + 1) * productsPerPage
+      ),
+    ])
+  );
   const [filter, setFilter] = useState({
     quantity: [],
     price: { from: "", to: 10000 },
@@ -174,7 +191,7 @@ const LocalGuideHomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+    navigate(`/become-local-guide-provider/${user._id}`)
   };
   useEffect(() => {
     if (isModalOpen) {
@@ -188,6 +205,7 @@ const LocalGuideHomePage = () => {
       document.body.style.overflow = "unset";
     };
   }, [isModalOpen]);
+
   if (!details) {
     return (
       <div className="h-screen flex justify-center items-center">
@@ -286,13 +304,31 @@ const LocalGuideHomePage = () => {
                 </button>
               </div>
               <div className="w-full flex justify-end">
-                <button
-                  className=" hover:bg-blue-700  text-white font-bold py-2 px-4 rounded"
+                {user.isLocalGuideAdmin?<Link
+                    className={`hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 ${
+                      !isLocalGuideAdmin && "cursor-not-allowed opacity-50"
+                    }`}
+                    to={`http://localhost:3002/newguide?userId=${user._id}`}
+                    style={{ backgroundColor: "#0F4157" }}
+                    disabled={!isLocalGuideAdmin}
+                  >
+                    Switch To Local Guide account
+                  </Link>:<button
+                  className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
                   onClick={toggleModal}
                   style={{ backgroundColor: "#0F4157" }}
                 >
                   Want to Become A Local Guide?
-                </button>
+                </button>}
+
+                <Link to="/bookinghistory">
+                  <button
+                    className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                    style={{ backgroundColor: "#0F4157" }}
+                  >
+                    Booking History
+                  </button>
+                </Link>
               </div>
 
               <div class="mt-4 lg:mt-8 lg:grid lg:grid-cols-4 lg:items-start lg:gap-8 ">
@@ -500,62 +536,79 @@ const LocalGuideHomePage = () => {
                 </div>
 
                 <div className="lg:col-span-3 w-auto">
-                  {Object.entries(groupedDetails).map(([cityName, details]) => (
-                    <div key={cityName} className="mb-8">
-                      <h2 className="text-2xl font-bold my-6">{cityName}</h2>
-                      <div className="flex flex-wrap mx-3">
-                        {details.map((detail) => (
-                          <Link
-                            to={`/details/${detail._id}`}
-                            key={detail._id}
-                            className="p-4 w-full sm:w-1/2 lg:w-1/3"
-                          >
-                            <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
-                              <img
-                                className="w-full h-48 object-cover"
-                                src={detail.image}
-                                alt={detail.name}
-                              />
-                              <div className="px-6 py-4">
-                                <div className="font-bold text-xl mb-2">
-                                  {detail.name}
+                  {Object.entries(paginatedProducts).map(
+                    ([cityName, details]) => (
+                      <div key={cityName} className="mb-8">
+                        <h2 className="text-2xl font-bold my-6">{cityName}</h2>
+                        <div className="flex flex-wrap mx-3">
+                          {details.map((detail) => (
+                            <Link
+                              to={`/details/${detail._id}`}
+                              key={detail._id}
+                              className="p-4 w-full sm:w-1/2 lg:w-1/3"
+                            >
+                              <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+                                <img
+                                  className="w-full h-48 object-cover"
+                                  src={detail.image}
+                                  alt={detail.name}
+                                />
+                                <div className="px-6 py-4">
+                                  <div className="font-bold text-xl mb-2">
+                                    {detail.name}
+                                  </div>
+                                  <p className="text-gray-700 text-base">
+                                    Price per Day: RS{detail.price.toFixed(2)}
+                                  </p>
+                                  <p className="text-gray-700 text-base">
+                                    About:{" "}
+                                    {detail.about.length > 3
+                                      ? `${detail.about.slice(0, 10)}...`
+                                      : detail.about}
+                                  </p>
+                                  <p className="text-gray-700 text-base">
+                                    City: {detail.city.name}
+                                  </p>
+                                  <p className="text-gray-700 text-base flex items-center">
+                                    Rating:{" "}
+                                    <span className="ml-2 text-yellow-400">
+                                      {detail.ratings}{" "}
+                                      <i className="fas fa-star"></i>
+                                    </span>
+                                  </p>
+                                  <p
+                                    className={`text-gray-700 text-base ${
+                                      detail.status
+                                        ? "text-green-500"
+                                        : "text-red-500"
+                                    }`}
+                                  >
+                                    Avalible Status:{" "}
+                                    {detail.status ? "Yes" : "No"}
+                                  </p>
                                 </div>
-                                <p className="text-gray-700 text-base">
-                                  Price per Day: RS{detail.price.toFixed(2)}
-                                </p>
-                                <p className="text-gray-700 text-base">
-                                  About:{" "}
-                                  {detail.about.length > 3
-                                    ? `${detail.about.slice(0, 10)}...`
-                                    : detail.about}
-                                </p>
-                                <p className="text-gray-700 text-base">
-                                  City: {detail.city.name}
-                                </p>
-                                <p className="text-gray-700 text-base flex items-center">
-                                  Rating:{" "}
-                                  <span className="ml-2 text-yellow-400">
-                                    {detail.ratings}{" "}
-                                    <i className="fas fa-star"></i>
-                                  </span>
-                                </p>
-                                <p
-                                  className={`text-gray-700 text-base ${
-                                    detail.status
-                                      ? "text-green-500"
-                                      : "text-red-500"
-                                  }`}
-                                >
-                                  Avalible Status:{" "}
-                                  {detail.status ? "Yes" : "No"}
-                                </p>
                               </div>
-                            </div>
-                          </Link>
-                        ))}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
+                  <div className="pagination-container">
+                    <ReactPaginate
+                      previousLabel={"Previous"}
+                      nextLabel={"Next"}
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={Math.ceil(details.length / productsPerPage)}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={handlePageClick}
+                      containerClassName={"pagination"}
+                      subContainerClassName={"pages pagination"}
+                      activeClassName={"active"}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

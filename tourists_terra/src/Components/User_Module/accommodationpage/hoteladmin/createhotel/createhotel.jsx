@@ -88,7 +88,7 @@ const CreateHotel = () => {
       type: type,
       hotelDescription: hotelDescription,
       cheapestPrice: cheapestPrice,
-      featured: featured,
+      featured: false,
     };
 
     if (file) {

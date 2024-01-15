@@ -16,9 +16,7 @@ const AccommodationHome = () => {
         <div id="accomo-ad-container">
           <AccommodationAdSection />
           <div id="opacity-ad">
-            <Link to="">
-              <h1>Wana Accommodation?</h1>
-            </Link>
+       
           </div>
         </div>
 

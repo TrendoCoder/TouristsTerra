@@ -485,7 +485,7 @@
 
 // export default GuideDetails;
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
@@ -495,9 +495,12 @@ import { loadStripe } from "@stripe/stripe-js";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import axios from "axios";
+import { AuthContext } from "../../../../Context/authcontext";
 
 const GuideDetails = () => {
   const [details, setDetails] = useState(null);
+  const { user } = useContext(AuthContext);
   const [days, setDays] = useState(1); // Initialize quantity to 1
   const [dateRange, setDateRange] = useState([
     {
@@ -506,8 +509,34 @@ const GuideDetails = () => {
       key: "selection",
     },
   ]);
-
+  console.log("startDate: ", dateRange[0].endDate);
   const { detailsId } = useParams();
+
+  const handleAddToBookingHistory = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/booking-history/add-booking",
+        {
+          userId: user?._id,
+          guideId: detailsId, // Assuming _id is the correct field
+          startDate: dateRange[0].startDate,
+          endDate: dateRange[0].endDate,
+          price: details.price.toFixed(2) * days,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response.data);
+      // Optionally, you can show a success message or update the UI accordingly
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      // Handle error (show error message to the user, etc.)
+    }
+  };
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/details/${detailsId}`)
@@ -733,7 +762,10 @@ const GuideDetails = () => {
                 </button>
               </Link>
               <button
-                onClick={makePayment}
+                onClick={() => {
+                  makePayment();
+                  handleAddToBookingHistory();
+                }}
                 className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
                 style={{ backgroundColor: "#0F4157" }}
               >

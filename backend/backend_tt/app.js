@@ -35,7 +35,8 @@ var messageRouter = require("./src/routes/api/usermessengerapi/message");
 var guidelinesRouter = require("./src/routes/api/adminApi/guidelinesandpoliciesapi/guidelines");
 var reportRouter = require("./src/routes/api/reportApi/reportApi");
 var contactUsRouter = require("./src/routes/api/contactusapi/contactusapi");
-
+const bookingHistoryRoutes = require("./src/routes/api/localguideapi/bookingHistory");
+const bookingHistory_1Routes = require("./src/routes/api/transportapi/bookingHistory");
 // stripe
 const cartRoutes = require("./src/routes/api/shopapi/cartRoutes");
 // stripe
@@ -210,6 +211,27 @@ app.post(
     }
   }
 );
+//store paymentScreenShot
+const storagePaymentScreenShot = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/paymentScreenShot");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+const paymentScreenShot = multer({ storage: storagePaymentScreenShot });
+app.post(
+  "/api/upload/paymentScreenShot",
+  paymentScreenShot.single("file"),
+  (req, res) => {
+    try {
+      return res.status(200).json("File uploded successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
 app.use("/", indexRouter);
 app.use("/api/post", postsRouter);
 app.use("/api/hotels", hotelRouter);
@@ -221,6 +243,8 @@ app.use("/api/product-rating", productRatingRouter);
 app.use("/api/product", productRouter);
 app.use("/api/transportCategory", transportCategoryRouter);
 app.use("/api/transportDetail", transportDetailRouter);
+app.use("/api/booking-history", bookingHistoryRoutes);
+app.use("/api/booking-history-1", bookingHistory_1Routes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/city", cityRouter);
 app.use("/api/details", guideRouter);
@@ -231,12 +255,12 @@ app.use("/api/explore", exploreRouter);
 app.use("/api/serviceProvider", serviceProviderRouter);
 app.use("/api/user-conversation", conversationRouter);
 app.use("/api/user-message", messageRouter);
-app.use("/api/report",reportRouter);
-app.use("/api/contactus",contactUsRouter);
+app.use("/api/report", reportRouter);
+app.use("/api/contactus", contactUsRouter);
 // stripe
 app.use("/api/stripe", stripeRouter);
 // LGstripe
-app.use("/api/stripe1", stripeLGRouter)
+app.use("/api/stripe1", stripeLGRouter);
 //admin Routers
 app.use("/api/admin", adminRouter);
 app.use("/api/admin/guidelines-and-policies", guidelinesRouter);

@@ -9,7 +9,7 @@ import MenuBar from "../../homepage/menubar/menuBar";
 import SellerModal from "./sellerModal";
 import axios from "axios";
 import { AuthContext } from "../../../../Context/authcontext";
-
+import ReactPaginate from "react-paginate";
 // Helper function to group products by category name
 const groupByCategory = (products) => {
   return products.reduce((acc, product) => {
@@ -27,11 +27,11 @@ const ShopHomePage = () => {
   const [temp, setTemp] = useState([]);
   const [groupedProducts, setGroupedProducts] = useState({});
   const { user } = useContext(AuthContext);
-
+  const productsPerPage = 3;
+  const [currentPage, setCurrentPage] = useState(0);
   // check
   const [isShopAdmin, setIsShopAdmin] = useState(user.isShopAdmin);
-
-  // const navigate = useNavigate();
+   const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
@@ -73,7 +73,18 @@ const ShopHomePage = () => {
       console.error("Error fetching products:", error);
     }
   };
-
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+  const paginatedProducts = Object.fromEntries(
+    Object.entries(groupedProducts).map(([key, value]) => [
+      key,
+      value.slice(
+        currentPage * productsPerPage,
+        (currentPage + 1) * productsPerPage
+      ),
+    ])
+  );
   const [filter, setFilter] = useState({
     quantity: [],
     price: { from: "", to: 10000 },
@@ -212,7 +223,7 @@ const ShopHomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+    navigate(`/become-shop-provider/${user._id}`)
   };
   useEffect(() => {
     if (isModalOpen) {
@@ -324,26 +335,22 @@ const ShopHomePage = () => {
                 </button>
               </div>
               <div className="w-full flex justify-end">
-                <button
+               {isShopAdmin?<Link
+                    className={`ml-6 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+                      !isShopAdmin && "cursor-not-allowed opacity-50"
+                    }`}
+                    to={`http://localhost:3002/products?userId=${user._id}`}
+                    style={{ backgroundColor: "#0F4157" }}
+                    disabled={!isShopAdmin}
+                  >
+                    Switch To seller account
+                  </Link>:<button
                   className=" hover:bg-blue-700  text-white font-bold py-2 px-4 rounded"
                   onClick={toggleModal}
                   style={{ backgroundColor: "#0F4157" }}
                 >
                   Want to Become A Seller?
-                </button>
-
-                {isShopAdmin && (
-                  <Link
-                    className={`ml-6 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
-                      !isShopAdmin && "cursor-not-allowed opacity-50"
-                    }`}
-                    to="http://localhost:3002/products"
-                    style={{ backgroundColor: "#0F4157" }}
-                    disabled={!isShopAdmin}
-                  >
-                    Switch To seller account
-                  </Link>
-                )}
+                </button>}
               </div>
 
               <div class="mt-4 lg:mt-8 lg:grid lg:grid-cols-4 lg:items-start lg:gap-8 ">
@@ -549,9 +556,8 @@ const ShopHomePage = () => {
                     </div>
                   </div>
                 </div>
-
                 <div className="lg:col-span-3 w-auto">
-                  {Object.entries(groupedProducts).map(
+                  {Object.entries(paginatedProducts).map(
                     ([categoryName, products]) => (
                       <div key={categoryName} className="mb-8">
                         <h2 className="text-2xl font-bold my-6">
@@ -613,6 +619,21 @@ const ShopHomePage = () => {
                       </div>
                     )
                   )}
+                  <div className="pagination-container">
+                    <ReactPaginate
+                      previousLabel={"Previous"}
+                      nextLabel={"Next"}
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={Math.ceil(products.length / productsPerPage)}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={handlePageClick}
+                      containerClassName={"pagination"}
+                      subContainerClassName={"pages pagination"}
+                      activeClassName={"active"}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
