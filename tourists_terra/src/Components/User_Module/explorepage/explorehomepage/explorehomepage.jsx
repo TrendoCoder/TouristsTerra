@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { createBrowserHistory } from 'history';
-import { Link } from 'react-router-dom';
 import NavBar from '../../homepage/navbar/navBar';
 import MenuBar from '../../homepage/menubar/menuBar';
 import Footer from '../../accommodationpage/footer/footer';
 import BackgroundImage from '../../../../images/maldives3.jpg';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const history = createBrowserHistory();
 
@@ -12,6 +13,8 @@ const ExploreHomepage = () => {
   const [exploreType, setExploreType] = useState('explore');
   const [fromCity, setFromCity] = useState('');
   const [toCity, setToCity] = useState('');
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const handleExploreTypeChange = (e) => {
     setExploreType(e.target.value);
@@ -28,6 +31,28 @@ const ExploreHomepage = () => {
   const searchCity = async () => {
     try {
       history.push(`/citydetails/${fromCity}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const askTouristTerra = async () => {
+    try {
+      setLoading(false);
+
+      const response = await axios.post('http://localhost:3001/api/explore/travelCities', {
+        city1: fromCity,
+        city2: toCity,
+      });
+
+      // console.log(response.data);
+
+      if (response.status === 200) {
+        setLoading(true);
+        navigate(`/suggestplaces/${fromCity}/${toCity}`);
+      } else {
+        console.error('Failed to get suggestions from Tourist Terra');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -115,14 +140,14 @@ const ExploreHomepage = () => {
                         value={toCity}
                         onChange={(e) => handleInputChange(e, 'to')}
                       />
-                      <Link to="/suggestplaces">
-                        <button
-                          type="button"
-                          className="ml-4 inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-bold shadow-md"
-                        >
-                          Ask Tourist Terra!
-                        </button>
-                      </Link>
+                      <button
+                        type="button"
+                        className="ml-4 inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-bold shadow-md"
+                        onClick={askTouristTerra}
+                        disabled={!loading}
+                      >
+                        {loading ? "Ask Tourist Terra!" : <i className="fa-solid fa-circle-notch fa-spin"></i>}
+                      </button>
                     </>
                   )}
                 </div>

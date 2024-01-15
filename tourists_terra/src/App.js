@@ -16,6 +16,7 @@ import AddBlogPost from "./Components/User_Module/blogpage/addblogpost/addblogpo
 import ExploreHomepage from "./Components/User_Module/explorepage/explorehomepage/explorehomepage";
 import CityDetails from "./Components/User_Module/explorepage/explorehomepage/citydetails";
 import PlaceDetails from "./Components/User_Module/explorepage/explorehomepage/placedetails";
+import SuggestPlaces from "./Components/User_Module/explorepage/explorehomepage/suggestplaces";
 import EditUserProfile from "./Components/User_Module/profilepage/edituserprofile/edituserprofile";
 import ShopHomePage from "./Components/User_Module/shoppage/shophomepage/shophomepage";
 import AccomodationListPage from "./Components/User_Module/accommodationpage/accomodationlistpage/accomodationlistpage";
@@ -111,6 +112,11 @@ function App() {
               path="placedetails/:placeId"
               element={<PlaceDetails />}
             ></Route>
+
+            <Route
+            path="suggestplaces/:city1/:city2"
+            element={<SuggestPlaces />}
+          ></Route>
 
             <Route
               path="edit-user-profile/:id"
