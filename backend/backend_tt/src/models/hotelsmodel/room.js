@@ -12,6 +12,9 @@ const RoomSchema = new mongoose.Schema(
       type:String,
       required:true,
     },
+    hotelContact:{
+      type:String,
+    },
     title: {
       type: String,
       required: true,

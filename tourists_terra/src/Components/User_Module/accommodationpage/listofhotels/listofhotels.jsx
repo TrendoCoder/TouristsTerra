@@ -1,7 +1,10 @@
-import React from 'react'
-import "./searchedaccomodationitems.css"
-import { Link } from 'react-router-dom'
-const SearchedAccomodationItems = ({item}) => {
+// ListOfHotels component
+import React from "react";
+import "./listofhotels.css";
+import { Link } from "react-router-dom";
+
+const ListOfHotels = ({ item }) => {
+    
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div id="hi-container">
@@ -24,8 +27,6 @@ const SearchedAccomodationItems = ({item}) => {
         <span id="hi-cancle-opt">Total Rooms: {item.rooms ? item.rooms.length : 0}</span>
       </div>
       <div id="hi-details">
-        <div id="hi-rating">
-        </div>
         <div id="hi-detail-text">
           <span id="hi-price">{item.cheapestPrice}Rs</span>
           <span id="hi-tax-detail">Includes tax</span>
@@ -38,7 +39,7 @@ const SearchedAccomodationItems = ({item}) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SearchedAccomodationItems
+export default ListOfHotels;
