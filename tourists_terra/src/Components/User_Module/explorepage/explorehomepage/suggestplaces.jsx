@@ -49,7 +49,7 @@ const SuggestPlaces = () => {
   };
 
   return (
-    <div>
+    <div >
       <NavBar />
       <MenuBar />
       <br /><br />
@@ -67,7 +67,7 @@ const SuggestPlaces = () => {
         }}
       >
         <br /><br /><br /><br />
-        <div className="container mt-10 bg-[#000000c2] text-white p-4 rounded-md">
+        <div className="container mt-10 bg-[#000000c2] text-white p-4 rounded-md mb-10">
           <h1 className="text-3xl font-bold mb-4 inline-block border-b-2 border-gray-400 pb-2">
             <FaCar className="mr-2" /> Suggestions for Road Trip between {city1} and {city2}
           </h1>
