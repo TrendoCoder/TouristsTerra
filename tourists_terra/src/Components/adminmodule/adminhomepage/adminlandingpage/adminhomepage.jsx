@@ -10,6 +10,9 @@ import ServiceProviders from "../serviceproviders/serviceProviders";
 import ListOfReports from "../listofreports/listOfReports";
 import ListOfBloggers from "../listofbloggers/listOfBloggers";
 import ListOfLocalGuide from "../listoflocalguide/listOfLocalGuide";
+import ListOfTransporter from "../listoftransporter/listOfTransporter";
+import ListOfShopAdmin from "../listofshopadmin/listOfShopAdmin";
+import CustomerSupport from "../customersupport/customersupport";
 const AdminHomePage = () => {
   const [openUserOptions, setOpenUserOptions] = useState(false);
   const [openAccomodationOptions, setOpenAccomodationOptions] = useState(false);
@@ -17,8 +20,10 @@ const AdminHomePage = () => {
   const [openLocalGuideOptions, setOpenLocalGuideOptions] = useState(false);
   const [openShopOptions, setOpenShopOptions] = useState(false);
   const [openBlogOptions, setOpenBlogOptions] = useState(false);
+  const [openServiceProviderOptions, setOpenServiceProviderOptions] = useState(false);
   const [openGuidelinesOptions, setOpenGuidelinesOptions] = useState(false);
   const [openReportOptions, setOpenReportOptions] = useState(false);
+  const [openCustomerSupportOptions, setOpenCustomerSupportOptions] = useState(false);
   const [allUsers, setAllUsers] = useState(null);
   const [allHotels, setAllHotels] = useState(null);
   const [allServiceProviders, setAllServiceProviders] = useState(null);
@@ -27,6 +32,7 @@ const AdminHomePage = () => {
   const [disapprovedProviders, setDisapprovedServiceProviders] = useState(null);
   const [guideline, setGuidelines] = useState(null);
   const [allReports, setAllReports] = useState(null);
+  const [customerSupport, setCustomerSupport] = useState(null);
   const [clickNumber, setClickNumber] = useState(0);
 
   useEffect(() => {
@@ -94,6 +100,18 @@ const AdminHomePage = () => {
     };
     getReports();
   },[]);
+  useEffect(() => {
+    const getQueries = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/api/contactus/");
+        setCustomerSupport(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getQueries();
+  }, []);
+  
   return (
     <div id="admin-hp-big-container">
       <AdminTopBar />
@@ -136,7 +154,6 @@ const AdminHomePage = () => {
               {openAccomodationOptions ? (
                 <div style={{ marginLeft: "20px" }}>
                   <div onClick={() => setClickNumber(2)}>List of Hotels</div>
-                  <div>Add New Hotel</div>
                 </div>
               ) : (
                 <></>
@@ -158,7 +175,7 @@ const AdminHomePage = () => {
               </h3>
               {openTransportationOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(1)}>List of Drivers</div>
+                  <div onClick={() => setClickNumber(3)}>List of Drivers</div>
                   
                 </div>
               ) : (
@@ -177,7 +194,7 @@ const AdminHomePage = () => {
               </h3>
               {openLocalGuideOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(18)}>List of Local Guides</div>
+                  <div onClick={() => setClickNumber(4)}>List of Local Guides</div>
                   
                 </div>
               ) : (
@@ -194,7 +211,7 @@ const AdminHomePage = () => {
               </h3>
               {openShopOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(2)}>List of Shops</div>
+                  <div onClick={() => setClickNumber(5)}>List of Shops</div>
                 </div>
               ) : (
                 <></>
@@ -209,7 +226,7 @@ const AdminHomePage = () => {
               </h3>
               {openBlogOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(17)}>List of Bloggers</div>
+                  <div onClick={() => setClickNumber(6)}>List of Bloggers</div>
                 </div>
               ) : (
                 <></>
@@ -218,21 +235,21 @@ const AdminHomePage = () => {
 
             <div className="admin-left-bar-main-options-div">
               <h3
-                onClick={() => setOpenGuidelinesOptions(!openGuidelinesOptions)}
+                onClick={() => setOpenServiceProviderOptions(!openServiceProviderOptions)}
                 style={
-                  openGuidelinesOptions ? { backgroundColor: "#0F4157" } : {}
+                  openServiceProviderOptions ? { backgroundColor: "#0F4157" } : {}
                 }
               >
                 Service Providers
               </h3>
-              {openGuidelinesOptions ? (
+              {openServiceProviderOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(10)}>
+                  <div onClick={() => setClickNumber(7)}>
                     List of SP
                   </div>
-                  <div onClick={() => setClickNumber(11)}>Pending Requests</div>
-                  <div onClick={() => setClickNumber(12)}>Disapproved</div>
-                  <div onClick={() => setClickNumber(13)}>Suspended</div>
+                  <div onClick={() => setClickNumber(8)}>Pending Requests</div>
+                  <div onClick={() => setClickNumber(9)}>Disapproved</div>
+                  <div onClick={() => setClickNumber(10)}>Suspended</div>
                 </div>
               ) : (
                 <></>
@@ -249,8 +266,7 @@ const AdminHomePage = () => {
               </h3>
               {openGuidelinesOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(4)}>Preview</div>
-                  <div>Edit</div>
+                  <div onClick={() => setClickNumber(11)}>Preview</div>
                 </div>
               ) : (
                 <></>
@@ -266,11 +282,29 @@ const AdminHomePage = () => {
               </h3>
               {openReportOptions ? (
                 <div style={{ marginLeft: "20px" }}>
-                  <div onClick={() => setClickNumber(16)}>List Of reports</div>
+                  <div onClick={() => setClickNumber(12)}>List Of reports</div>
+                </div>
+              ) : (
+                <></>
+              )} 
+           <div className="admin-left-bar-main-options-div">
+              <h3
+                onClick={() => setOpenCustomerSupportOptions(!openCustomerSupportOptions)}
+                style={
+                  openCustomerSupportOptions ? { backgroundColor: "#0F4157" } : {}
+                }
+              >
+                Customer Support
+              </h3>
+              {openCustomerSupportOptions ? (
+                <div style={{ marginLeft: "20px" }}>
+                  <div onClick={() => setClickNumber(13)}>List of Queries</div>
                 </div>
               ) : (
                 <></>
               )}
+            </div>
+            
             </div>
           </div>
         </div>
@@ -289,44 +323,48 @@ const AdminHomePage = () => {
             </div>
           ) : clickNumber === 3 ? (
             <div id="admin-hp-right-bar-divs">
-              <ListOfUsers users={allUsers} />
+              <ListOfTransporter />
             </div>
           ) : clickNumber === 4 ? (
             <div id="admin-hp-right-bar-divs">
-              <GuidelinesAndPolicies guidelines={guideline} />
+              <ListOfLocalGuide />
             </div>
+            
           ) : clickNumber === 5 ? (
             <div id="admin-hp-right-bar-divs">
-              <ListOfUsers users={allUsers} />
+              <ListOfShopAdmin />
             </div>
-          ) : clickNumber === 17 ? (
+          ) : clickNumber === 6 ? (
             <div id="admin-hp-right-bar-divs">
               <ListOfBloggers />
             </div>
-          ) : clickNumber === 16 ? (
-            <div id="admin-hp-right-bar-divs">
-              <ListOfReports reports={allReports} />
-            </div>
-          ) : clickNumber === 18 ? (
-            <div id="admin-hp-right-bar-divs">
-              <ListOfLocalGuide />
-            </div>
-          ) : clickNumber === 10 ? (
+          ) : clickNumber === 7 ? (
             <div id="admin-hp-right-bar-divs">
               <ServiceProviders serviceProvider={allServiceProviders} />
             </div>
-          ) : clickNumber === 11 ? (
+           
+          ) : clickNumber === 8 ? (
             <div id="admin-hp-right-bar-divs">
               <ServiceProviders serviceProvider={pendingServiceProviders} />
             </div>
-          ) : clickNumber === 12 ? (
+          ): clickNumber === 9 ? (
             <div id="admin-hp-right-bar-divs">
               <ServiceProviders serviceProvider={disapprovedProviders} />
             </div>
-          ) : clickNumber === 13 ? (
+          ) : clickNumber === 10 ? (
             <div id="admin-hp-right-bar-divs">
               <ServiceProviders serviceProvider={suspendedServiceProviders} />
             </div>
+          ) : clickNumber === 11 ? (
+            <div id="admin-hp-right-bar-divs">
+              <GuidelinesAndPolicies guidelines={guideline} />
+            </div>
+          ) : clickNumber === 12 ? (
+            <div id="admin-hp-right-bar-divs">
+              <ListOfReports reports={allReports} />
+            </div>
+          ) : clickNumber === 13 ? (
+            <CustomerSupport/>
           ) : (
             <div></div>
           )}

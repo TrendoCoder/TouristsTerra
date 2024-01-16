@@ -1,16 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import './listofreports.css';
+import axios from 'axios';
+const ListOfReports = () => {
 
-const ListOfReports = ({ reports }) => {
   const [search,setSearch] = useState("");
+  const [loading,setLoading] = useState(true);
+  const [reports, setReports]= useState(null);
 
+  useEffect(()=>{
+    setLoading(false);
+    getReports();
+  },[]);
+  const getReports = async()=>{
+    try{
+      const res = await axios.get(
+        "http://localhost:3001/api/report/"
+      );
+      setReports(res.data);
+      setLoading(true);
+    }catch(err){
+      console.log(err);
+    }
+  };
   return (
     <div id='admin-list-of-user-container'>
       <div id='admin-list-of-user-container-top'>
       <h2>All Reports</h2>
         <input type='text' placeholder='search' value={search} onChange={(e)=>setSearch(e.target.value)}/>
       </div>
-      <div id='admin-list-of-user-container-list'>
+    {loading?<div id='admin-list-of-user-container-list'>
         <table>
           <tr>
             <th>#</th>
@@ -32,7 +50,7 @@ const ListOfReports = ({ reports }) => {
             </tr>
           )):(<div>No Data is found.. Try again later</div>)}
         </table>
-      </div>
+      </div>:""}
     </div>
   );
 };
