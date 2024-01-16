@@ -5,6 +5,8 @@ import NavBar from '../../homepage/navbar/navBar';
 import MenuBar from '../../homepage/menubar/menuBar';
 import Footer from '../../accommodationpage/footer/footer';
 import { Carousel } from 'react-responsive-carousel';
+import { IoLocationSharp } from "react-icons/io5";
+import { MdStarRate } from "react-icons/md";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const PlaceDetails = () => {
@@ -46,20 +48,31 @@ const PlaceDetails = () => {
             <div>
               <h2 className="text-3xl font-bold mb-4 inline-block border-b-2 border-gray-300 pb-2">{placeDetails.name}</h2>
 
-              <div className="mb-4">
-                <p className="text-gray-600 font-bold">Address:</p>
+              <div className="mb-4 flex items-center">
+              <IoLocationSharp className="mr-1 mb-11 text-gray-600" />
+              <div>
+                <p className="text-gray-600 font-bold">Location:</p>
                 <p className="text-gray-700">{placeDetails.formatted_address}</p>
               </div>
+            </div>            
+            
 
-              <div className="mb-4">
-                <p className="text-gray-600 font-bold">Average Rating:</p>
+              <div className="mb-4 flex items-center">
+              <MdStarRate className="mr-1 mb-6 text-gray-600" />
+              <div>
+              <p className="text-gray-600 font-bold">Average Rating:</p>
                 <p className="text-gray-700">{placeDetails.rating}</p>
+              </div>                
               </div>
 
-              <div className="mb-4">
-                <p className="text-gray-600 font-bold">Total Ratings:</p>
+              <div className="mb-4 flex items-center">
+              <MdStarRate className="mr-1 mb-6 text-gray-600" />
+              <div>
+              <p className="text-gray-600 font-bold">Total Users Rating:</p>
                 <p className="text-gray-700">{placeDetails.user_ratings_total}</p>
+              </div>                
               </div>
+
               {placeDetails.opening_hours && (
                 <div className="mb-4">
                   <h3 className="text-xl font-bold mb-2 inline-block border-b-2 border-gray-300 pb-2">Opening Hours:</h3>

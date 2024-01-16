@@ -57,7 +57,7 @@ async function travelCities(city1, city2) {
       throw new Error('Failed to create ChatGPTAPI instance');
     }
 
-    const prompt = `i am planning to do a road trip between ${city1} and ${city2}. suggest me some attraction points and activities that i can perform on my way and suggest me what precautions do i have to take. Also give me estimate drive time between ${city1} and ${city2}. Give me whole result in bullet points `;
+    const prompt = `i am planning to do a road trip between ${city1} and ${city2}. suggest me some attraction points and activities that i can perform on my way and suggest me what precautions do i have to take. Give me whole result in bullet points `;
 
     const response = await api.sendMessage(prompt);
     return response;
