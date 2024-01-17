@@ -11,6 +11,7 @@ const CreateHotel = () => {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("Hotel");
   const [city, setCity] = useState("");
+  const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
   const [hotelDescription, setHotelDescription] = useState("");
   const [cheapestPrice, setCheapestPrice] = useState("");
@@ -20,10 +21,12 @@ const CreateHotel = () => {
   const [titleError, setTitleError] = useState("");
   const [cityError, setCityError] = useState("");
   const [addressError, setAddressError] = useState("");
+  const [contactError, setContactError] = useState("");
   const [hotelDescriptionError, setHotelDescriptionError] = useState("");
-  const [cheapestPriceError, setCheapestPriceError] = useState();
+  const [cheapestPriceError, setCheapestPriceError] = useState("");
   const [imageClicked, setImageClicked] = useState(false);
   const [showPackage, setShowPackage] = useState(false);
+
   const validateFields = () => {
     let isValid = true;
 
@@ -69,6 +72,13 @@ const CreateHotel = () => {
       setCheapestPriceError("");
     }
 
+    if (!contact || !/^\d{4}-\d{7}$/.test(contact)) {
+      setContactError("Invalid contact. Must be 11 characters");
+      isValid = false;
+    } else {
+      setContactError("");
+    }
+
     return isValid;
   };
 
@@ -85,6 +95,7 @@ const CreateHotel = () => {
       title: title,
       city: city,
       address: address,
+      contact: contact,
       type: type,
       hotelDescription: hotelDescription,
       cheapestPrice: cheapestPrice,
@@ -114,6 +125,13 @@ const CreateHotel = () => {
       alert("Wait and try again");
     }
   };
+
+  const handleContactChange = (e) => {
+    const cleanedContact = e.target.value.replace(/\D/g, '').replace(/(\d{4})/, '$1-');
+    setContact(cleanedContact);
+    setContactError("");
+  };
+
   return (
     <>
       <div id="h-admin-add-hotel-container">
@@ -194,6 +212,16 @@ const CreateHotel = () => {
               onChange={(e) => setAddress(e.target.value)}
             />
             <p id="error-message">{addressError}</p>
+          </div>
+
+          <div id="add-hotel-container-rs-inputs">
+            <label>Contact:</label>
+            <input
+              type="text"
+              value={contact}
+              onChange={handleContactChange}
+            />
+            <p id="error-message">{contactError}</p>
           </div>
 
           <div id="add-hotel-container-rs-inputs">
