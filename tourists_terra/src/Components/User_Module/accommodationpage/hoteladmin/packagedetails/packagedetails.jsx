@@ -142,16 +142,17 @@ const PackageDetails = ({ onClose }) => {
                 }}
               />
 
-              <input
-                type="file"
-                id="file"
-                onChange={(e) => {
-                  setrecipt(e.target.files[0]);
-                  setImageClicked(true);
-                }}
-                accept=".png, .jpeg, .jpg"
-                style={{ display: "none" }}
-              />
+<input
+  type="file"
+  id="recipt"  
+  onChange={(e) => {
+    setrecipt(e.target.files[0]);
+    setImageClicked(true);
+  }}
+  accept=".png, .jpeg, .jpg"
+  style={{ display: "none" }}
+/>
+
             </div>
             <p>
               Note: Pay your featured ads charges and take a screen shot of it
