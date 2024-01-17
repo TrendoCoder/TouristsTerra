@@ -35,10 +35,11 @@ const AdminResetPassword = () => {
       setPasswordError("");
       setConfirmPasswordError("");
       const updateUser = {
+        _id: userId,
         password:password
       }
       try{
-        await axios.put(`http://localhost:3001/api/admin//${userId}`, updateUser);
+        await axios.put(`http://localhost:3001/api/admin/resetPassword`, updateUser);
         toast.success("Password successfully set!", {
           onClose: () => {
             alert("Suceesfully Updated...");

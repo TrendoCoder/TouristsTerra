@@ -47,6 +47,7 @@ import SuccessLg from "./Components/User_Module/localguidepage/localguidehome/su
 import Chat from "./Components/User_Module/localguidepage/localguidehome/guidechat";
 import AdminLoginPage from "./Components/adminmodule/adminloginpage/adminLoginPage";
 import Adminforgetpassword from "./Components/adminmodule/adminforgetpassword/adminforgetpassword";
+import AdminResetPassword from "./Components/adminmodule/adminresetpassword/adminresetpassword";
 function App() {
   return (
     <div>
@@ -58,6 +59,7 @@ function App() {
               path="admin-forget-password"
               element={<Adminforgetpassword />}
             ></Route>
+            <Route path="reset-admin-password/:id" element={<AdminResetPassword/>}></Route>
 
             <Route path="sign-up" element={<SignUpPage />}></Route>
             <Route path="login-user" element={<LoginUser />}></Route>

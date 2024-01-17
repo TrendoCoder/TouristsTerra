@@ -4,6 +4,49 @@ let otpGenerator = require("otp-generator");
 const { Admin } = require("../../../models/admin/adminLogin/auth");
 const { createError } = require("../../../utils/error");
 
+const getAdminByEmail = async (req, res, next) => {
+  try {
+    const { email } = req.params; 
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(404).send({ error: "Admin not found" });
+    }
+    const { password, ...adminDetails } = admin._doc;
+    res.status(200).json(adminDetails);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.getAdminByEmail = getAdminByEmail;
+
+const updateAdmin = async (req, res, next) => {
+  try {
+    const { email } = req.params;
+    const { newPassword, ...otherUpdates } = req.body;
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(404).send({ error: "Admin not found" });
+    }
+    if (newPassword) {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(newPassword, salt);
+      admin.password = hash;
+    }
+    for (const key in otherUpdates) {
+      if (Object.hasOwnProperty.call(otherUpdates, key)) {
+        admin[key] = otherUpdates[key];
+      }
+    }
+    await admin.save();
+    res.status(200).json({ message: "Admin updated successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.updateAdmin = updateAdmin;
+
 const register = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
@@ -19,6 +62,20 @@ const register = async (req, res, next) => {
   }
 };
 module.exports.register = register;
+
+const existAdmin = async (req, res, next) => {
+  try {
+    const { email } = req.query;
+    const existingEmail = await Admin.findOne({ email: email });
+    if (existingEmail) {
+      return res.status(200).send("Existig");
+    }
+    return res.status(900).send("Invalid user");
+  } catch (err) {
+    next(err);
+  }
+};
+module.exports.existAdmin = existAdmin;
 
 const login = async (req, res, next) => {
   try {
@@ -89,15 +146,15 @@ const resetPassword = async (req, res) => {
   try {
     if (!req.app.locals.resetSession)
       return res.status(440).send({ error: "Session Expired" });
-    const { email, password } = req.body;
+    const { _id, password } = req.body;
     try {
-      Admin.findOne({ email })
+      Admin.findOne({ _id })
         .then((admin) => {
           bcrypt
             .hash(password, 10)
             .then((hashedPassword) => {
               Admin.updateOne(
-                { email: admin.email },
+                { _id: admin._id },
                 { password: hashedPassword },
                 function (err, data) {
                   if (err) throw err;

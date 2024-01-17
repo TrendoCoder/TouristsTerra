@@ -147,11 +147,12 @@ const SignUpPage = () => {
       const res = await axios.get(
         `http://localhost:3001/api/auth/verifyOtp?code=${enteredOtp}`
       );
-
+  
       if (res.status === 200) {
         toast.success("Correct Otp");
         setVerification(true);
-        if (verification) {
+  
+        if (res.status === 200) {        
           const resp = await axios.post(
             "http://localhost:3001/api/auth/register",
             {
@@ -162,6 +163,7 @@ const SignUpPage = () => {
               isAdmin,
             }
           );
+  
           if (resp.status === 200) {
             localStorage.setItem("token", JSON.stringify(resp.data.token));
             toast.success("Successfully Account Created", {
@@ -182,6 +184,7 @@ const SignUpPage = () => {
       toast.error(err);
     }
   };
+  
 
   return (
     <div id="signup-container">

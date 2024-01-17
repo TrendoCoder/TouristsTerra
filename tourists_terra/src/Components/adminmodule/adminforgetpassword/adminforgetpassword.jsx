@@ -19,11 +19,11 @@ const Adminforgetpassword = () => {
       }
       try {
         const validateUser = await axios.get(
-          `http://localhost:3001/api/auth/existUser?email=${email}`
+          `http://localhost:3001/api/admin/existAdmin?email=${email}`
         );
         if (validateUser.status === 200) {
           const user = await axios.get(
-            `http://localhost:3001/api/user/?email=${email}`
+            `http://localhost:3001/api/admin/${email}`
           );
           setUserId(user.data);
           setError("");
@@ -31,7 +31,7 @@ const Adminforgetpassword = () => {
         }
       } catch (err) {
         if (err.response && err.response.status === 900) {
-          setError("User doesn't exist");
+          setError("Admin doesn't exist");
         } else {
           toast.error(err.message);
         }
@@ -40,14 +40,14 @@ const Adminforgetpassword = () => {
     const otpGenerated = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/auth/otpGenerator"
+          "http://localhost:3001/api/admin/otpGenerator"
         );
         setDisplay(true);
         toast.success("OTP SENT TO YOUR MAIL", {
           position: toast.POSITION.TOP_LEFT,
         });
   
-        await axios.post("http://localhost:3001/api/auth/registerMail", {
+        await axios.post("http://localhost:3001/api/admin/registerMail", {
           userEmail: email,
           text: response.data.code,
           subject: "OTP For Verification",
@@ -64,14 +64,15 @@ const Adminforgetpassword = () => {
         setDisplay(false);
       }
     };
+    
     const verifyOtp = async (enteredOtp) => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/auth/verifyOtp?code=${enteredOtp}`
+          `http://localhost:3001/api/admin/verifyOtp?code=${enteredOtp}`
         );
         if(res.status === 200) {
           toast.success("Correct Otp");
-            navigate(`/reset-user-password/${userId._id}`);
+            navigate(`/reset-admin-password/${userId._id}`);
           setDisplay(false);
         } else {
           toast.error("Oops..Wrong Otp");
@@ -81,7 +82,6 @@ const Adminforgetpassword = () => {
         toast.error(err);
       }
     };
-    console.log(userId._id);
     return (
       <div id="forget-user-pass-big-container">
         <div id="forget-user-pass-main-container">
