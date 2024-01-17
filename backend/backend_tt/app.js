@@ -37,6 +37,8 @@ var reportRouter = require("./src/routes/api/reportApi/reportApi");
 var contactUsRouter = require("./src/routes/api/contactusapi/contactusapi");
 const bookingHistoryRoutes = require("./src/routes/api/localguideapi/bookingHistory");
 const bookingHistory_1Routes = require("./src/routes/api/transportapi/bookingHistory");
+var guideRatingRouter = require("./src/routes/api/localguideapi/rating");
+var transportRatingRouter = require("./src/routes/api/transportapi/rating")
 // stripe
 const cartRoutes = require("./src/routes/api/shopapi/cartRoutes");
 // stripe
@@ -245,6 +247,8 @@ app.use("/api/transportCategory", transportCategoryRouter);
 app.use("/api/transportDetail", transportDetailRouter);
 app.use("/api/booking-history", bookingHistoryRoutes);
 app.use("/api/booking-history-1", bookingHistory_1Routes);
+app.use("/api/guide-rating", guideRatingRouter);
+app.use("/api/transport-rating", transportRatingRouter);
 app.use("/api/cart", cartRoutes);
 app.use("/api/city", cityRouter);
 app.use("/api/details", guideRouter);

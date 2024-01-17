@@ -11,7 +11,8 @@ exports.createDetails = async (req, res) => {
       city: req.body.city,
       seller: req.body.seller,
       status: req.body.status,
-      languages: req.body.languages, // Corrected field assignment
+      languages: req.body.languages,
+      image: req.body.image, // Corrected field assignment
     });
 
     // Validate the details before saving

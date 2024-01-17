@@ -4,7 +4,7 @@ const stripe = require("stripe")(
 
 const createCheckoutSession = async (req, res) => {
   try {
-    const { products } = req.body;
+    const { products, customerAddress } = req.body;
 
     console.log("Products are", products);
 
@@ -26,6 +26,7 @@ const createCheckoutSession = async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
+      billing_address_collection: 'required', // Specify 'required' or 'auto' based on your needs
       success_url: "http://localhost:3000/success",
       cancel_url: "http://localhost:3000/cancel",
     });

@@ -102,7 +102,8 @@ const updateCart = async (req, res) => {
 
 const addToCart = async (req, res) => {
   try {
-    const { userId, productId, quantity, image, name, price } = req.body;
+    const { userId, productId, sellerId, quantity, image, name, price } =
+      req.body;
     let user = await User.findOne({ _id: userId });
 
     const product = await Product.findById(productId);
@@ -115,7 +116,7 @@ const addToCart = async (req, res) => {
     if (!cart) {
       cart = new Cart({
         user: user,
-        products: [{ productId, quantity, image, name, price }], // Ensure this matches your schema
+        products: [{ productId, sellerId, quantity, image, name, price }], // Ensure this matches your schema
       });
       cart.totalPrice = price * quantity;
       await cart.save();
@@ -129,7 +130,14 @@ const addToCart = async (req, res) => {
         cart.products[existingProductIndex].quantity += quantity;
       } else {
         // Product does not exist, add as a new product
-        cart.products.push({ productId, quantity, image, name, price });
+        cart.products.push({
+          productId,
+          sellerId,
+          quantity,
+          image,
+          name,
+          price,
+        });
       }
       // Calculate the totalPrice
       cart.totalPrice = cart.products.reduce((total, item) => {

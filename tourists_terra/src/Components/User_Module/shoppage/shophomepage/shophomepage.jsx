@@ -31,7 +31,8 @@ const ShopHomePage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   // check
   const [isShopAdmin, setIsShopAdmin] = useState(user.isShopAdmin);
-   const navigate = useNavigate();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
@@ -43,7 +44,7 @@ const ShopHomePage = () => {
       );
       const data = await response.json();
       console.log("data : ", data);
-      const avgRating = data.length > 0 ? data[0].avgRating : 0;
+      const avgRating = data.length > 0 ? data[0].avgRating : null;
       return avgRating;
     } catch (error) {
       console.error("Error fetching average rating:", error);
@@ -223,7 +224,7 @@ const ShopHomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
-    navigate(`/become-shop-provider/${user._id}`)
+    navigate(`/become-shop-provider/${user._id}`);
   };
   useEffect(() => {
     if (isModalOpen) {
@@ -275,17 +276,12 @@ const ShopHomePage = () => {
                     <i class="fa-solid fa-house" id="small-menu-icon"></i>
                   </Link>
                   <Link
-                    to="/"
+                    to="/user-chat-page"
                     style={{ marginRight: "15px", color: "#0F4157" }}
                   >
                     <i class="fa-solid fa-message" id="small-menu-icon"></i>
                   </Link>
-                  <Link
-                    to="/"
-                    style={{ marginRight: "15px", color: "#0F4157" }}
-                  >
-                    <i class="fa-solid fa-bell" id="small-menu-icon"></i>
-                  </Link>
+                 
                   <Link
                     to="/sign-up"
                     style={{ marginRight: "15px", color: "#0F4157" }}
@@ -335,7 +331,8 @@ const ShopHomePage = () => {
                 </button>
               </div>
               <div className="w-full flex justify-end">
-               {isShopAdmin?<Link
+                {isShopAdmin ? (
+                  <Link
                     className={`ml-6 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
                       !isShopAdmin && "cursor-not-allowed opacity-50"
                     }`}
@@ -344,13 +341,16 @@ const ShopHomePage = () => {
                     disabled={!isShopAdmin}
                   >
                     Switch To seller account
-                  </Link>:<button
-                  className=" hover:bg-blue-700  text-white font-bold py-2 px-4 rounded"
-                  onClick={toggleModal}
-                  style={{ backgroundColor: "#0F4157" }}
-                >
-                  Want to Become A Seller?
-                </button>}
+                  </Link>
+                ) : (
+                  <button
+                    className=" hover:bg-blue-700  text-white font-bold py-2 px-4 rounded"
+                    onClick={toggleModal}
+                    style={{ backgroundColor: "#0F4157" }}
+                  >
+                    Want to Become A Seller?
+                  </button>
+                )}
               </div>
 
               <div class="mt-4 lg:mt-8 lg:grid lg:grid-cols-4 lg:items-start lg:gap-8 ">
@@ -595,8 +595,8 @@ const ShopHomePage = () => {
                                   <p className="text-gray-700 text-base flex items-center">
                                     Rating:{" "}
                                     <span className="ml-2 text-yellow-400">
-                                      {product.avgRating == 0
-                                        ? 0
+                                      {product.avgRating !== null
+                                        ? product.ratings
                                         : product.avgRating}{" "}
                                       <i className="fas fa-star"></i>
                                     </span>

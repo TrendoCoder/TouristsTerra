@@ -14,7 +14,7 @@ const RatingModal = (props) => {
       quantity: rating,
       userId: user?._id, // Ensure you have user ID available here or pass it accordingly
     };
-   console.log(user?._id);
+    console.log(user?._id);
     try {
       // Make Axios POST request
       const response = await axios.post(
@@ -41,7 +41,7 @@ const RatingModal = (props) => {
         <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
           <div className="mt-3 text-center">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
-              Rating for Product: {productName}
+              Rating for Guide {productName}
             </h3>
 
             <div className="mt-2 px-7 py-3">

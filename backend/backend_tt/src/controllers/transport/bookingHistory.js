@@ -7,8 +7,25 @@ const addBookingToHistory_1 = async (req, res) => {
   try {
     const { userId, transportId, startDate, endDate, price } = req.body;
 
-    console.log(req.body);
-    const booking = new BookingHistory({
+    // Check for overlapping bookings
+    const overlappingBooking = await TransportBookingHistory.findOne({
+      transportId,
+      $or: [
+        {
+          startDate: { $lt: endDate },
+          endDate: { $gt: startDate },
+        },
+      ],
+    });
+
+    if (overlappingBooking) {
+      return res
+        .status(400)
+        .json({ message: "Transport is already booked for selected dates." });
+    }
+
+    // Proceed with adding to booking history if there is no overlap
+    const booking = new TransportBookingHistory({
       userId,
       transportId,
       startDate,

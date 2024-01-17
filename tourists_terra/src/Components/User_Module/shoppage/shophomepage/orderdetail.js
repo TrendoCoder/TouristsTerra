@@ -8,7 +8,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { AuthContext } from "../../../../Context/authcontext"; // Import AuthContext
 import axios from "axios";
 
-const Cart = () => {
+const OrderDetails = () => {
   const [cart, setCart] = useState(null);
 
   const [product, setProduct] = useState(null);
@@ -17,10 +17,25 @@ const Cart = () => {
   const { user } = useContext(AuthContext); // Use AuthContext to access the user info
 
   const fetchCart = async () => {
-    axios
-      .get(`http://localhost:3001/api/cart/get-cart/${user._id}`)
-      .then((response) => setCart(response.data))
-      .catch((error) => console.error("Error fetching cart:", error));
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/api/cart/get-cart/${user._id}`
+      );
+      const cartData = response.data;
+
+      // Extract products where sellerId matches user._id
+      const sellerProducts = cartData.products.filter(
+        (product) => String(product.sellerId) === String(user._id)
+      );
+
+      // Update the cart state with the filtered products
+      setCart({
+        ...cartData,
+        products: sellerProducts,
+      });
+    } catch (error) {
+      console.error("Error fetching cart:", error);
+    }
   };
 
   useEffect(() => {
@@ -88,6 +103,7 @@ const Cart = () => {
 
   console.log(cart);
 
+  // payment integration
   const makePayment = async () => {
     const stripe = await loadStripe(
       "pk_test_51OFAzLHNYB7xRUtt828R4itFeJaCXKxqwqnzeaJpfhrjXmn3Ptb3dGbFRA6FatC1ClmXEhzwXqmpF4C3PaIOgv4Y002iRHUwKW"
@@ -102,18 +118,8 @@ const Cart = () => {
       quantity: product.quantity,
     }));
 
-    // Add customer address information
-    const customerAddress = {
-      line1: "123 Main Street",
-      city: "City",
-      state: "State",
-      postal_code: "12345",
-      country: "US",
-    };
-
     const body = {
       products: products,
-      customerAddress: customerAddress,
     };
     const headers = {
       "Content-Type": "application/json",
@@ -149,20 +155,11 @@ const Cart = () => {
     <div>
       <Navbar />
 
-      <div id="accomo-ad-container">
-        <AccommodationAdSection />
-        <div id="opacity-ad">
-          <Link to="">
-            <h1>Wana Shop?</h1>
-          </Link>
-        </div>
-      </div>
+      <h1 class="mt-20  text-center text-2xl font-bold text-gray-800 md:text-3xl">
+        Orders to Deliver
+      </h1>
 
-      <div id="menu-acc">
-        <MenuBar />
-      </div>
-
-      <div className="bg-white mt-24 py-6 sm:py-8 lg:py-12">
+      <div className="bg-white mt-8 py-6 sm:py-8 lg:py-12">
         <div className="mx-auto max-w-screen-lg px-4 md:px-8">
           <div className="space-y-4">
             {cart.products.map((product, index) => (
@@ -190,46 +187,15 @@ const Cart = () => {
 
                   <div className="flex items-start justify-between gap-6 text-gray-800">
                     <div className="flex flex-col items-start gap-2">
-                      <div className="flex h-12 w-20 overflow-hidden rounded border">
-                        <input
-                          type="text"
-                          value={product?.quantity}
-                          className="w-full px-4 py-2 outline-none ring-inset ring-indigo-300 transition duration-100 focus:ring"
-                        />
-                        <div className="flex flex-col divide-y border-l">
-                          <button
-                            onClick={() => {
-                              const newQuantity = product?.quantity + 1;
-                              updateCartQuantity(
-                                product?.productId,
-                                newQuantity >= 0 ? newQuantity : 0
-                              );
-                            }}
-                            className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
-                          >
-                            +
-                          </button>
-                          <button
-                            onClick={() => {
-                              const newQuantity = product?.quantity - 1;
-                              updateCartQuantity(
-                                product?.productId,
-                                newQuantity >= 0 ? newQuantity : 0
-                              );
-                            }}
-                            className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
-                          >
-                            -
-                          </button>
+                      <div className="flex h-8 w-32 overflow-hidden rounded">
+                        <div className="flex flex-col divide-y">
+                          <div className="flex items-center gap-2">
+                            <span className="block font-bold text-gray-700">
+                              Quantity: {product?.quantity}
+                            </span>
+                          </div>
                         </div>
                       </div>
-
-                      <button
-                        className="select-none text-sm font-semibold text-indigo-500 transition duration-100 hover:text-indigo-600 active:text-indigo-700"
-                        style={{ color: "#0F4157" }}
-                      >
-                        Delete
-                      </button>
                     </div>
 
                     <div className="ml-4 mr-4 pt-3 md:ml-6 md:pt-2 lg:ml-16">
@@ -243,40 +209,14 @@ const Cart = () => {
             ))}
           </div>
           <div className="flex flex-col items-end gap-4 mt-8">
-            <div className="w-full rounded-lg bg-gray-100 p-4 sm:max-w-xs">
-              <div className="space-y-1">
-                <div className="flex justify-between gap-4 text-gray-500">
-                  <span>Subtotal</span>
-                  <span>Rs. {calculateTotal()}</span>
-                </div>
-
-                {/* <div className="flex justify-between gap-4 text-gray-500">
-                  <span>Shipping</span>
-                  <span>$4.99</span>
-                </div> */}
-              </div>
-
-              <div className="mt-4 border-t pt-4">
-                <div className="flex items-start justify-between gap-4 text-gray-800">
-                  <span className="text-lg font-bold">Total</span>
-
-                  <span className="flex flex-col items-end">
-                    <span className="text-lg font-bold">
-                      Rs. {calculateTotal()} Pkr
-                    </span>
-                    <span className="text-sm text-gray-500">including VAT</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <button
-              onClick={makePayment}
-              className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
+            <Link
+              className={`ml-6 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded 
+                    }`}
+              to={`http://localhost:3002/products?userId=${user._id}`}
               style={{ backgroundColor: "#0F4157" }}
             >
-              Check out
-            </button>
+              Product Lists
+            </Link>
           </div>
         </div>
       </div>
@@ -286,4 +226,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default OrderDetails;

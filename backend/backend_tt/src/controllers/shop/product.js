@@ -13,6 +13,7 @@ exports.createProduct = async (req, res) => {
       category: req.body.category,
       seller: req.body.seller,
       inStock: req.body.inStock,
+      image: req.body.image,
     });
     await product.save();
     res.status(201).json(product);
@@ -97,6 +98,36 @@ exports.getProducts = async (req, res) => {
     if (req.query.rating) {
       queryObject.ratings = parseFloat(req.query.rating);
     }
+
+    // You can keep the sorting logic if it is required
+    let sort = {};
+    if (req.query.sort) {
+      const sortFields = req.query.sort.split(",");
+      sortFields.forEach((field) => {
+        const [key, order] = field.startsWith("-")
+          ? [field.substring(1), -1]
+          : [field, 1];
+        sort[key] = order;
+      });
+    }
+
+    const products = await Product.find(queryObject)
+      .populate("category")
+      .sort(sort);
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getProductsBySeller = async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+
+    let queryObject = { seller: sellerId };
+
+    // Filter by exact price, quantity, stock availability, etc.
+    // ... (You can add more filters if needed)
 
     // You can keep the sorting logic if it is required
     let sort = {};

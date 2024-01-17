@@ -77,15 +77,6 @@ function NavBar() {
                   </i>
                 </Link>
               </div>
-
-              <div id="container-personal-menu">
-                <Link to="/">
-                  <i className="fa-solid fa-bell fa-lg">
-                    <div id="notification"></div>
-                  </i>
-                </Link>
-              </div>
-
               <div id="container-personal-menu">
                 <Link to={`/profile-page/${user.userName}`}>
                   <img

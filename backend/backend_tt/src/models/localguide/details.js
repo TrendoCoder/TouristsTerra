@@ -17,12 +17,12 @@ const detailsSchema = new Schema(
     },
     quantity: {
       type: Number,
-      required: true,
+      default: 3,
       min: [0, "Quantity can not be less then 0."],
     },
     ratings: {
       type: Number,
-      default: 3,
+      default: 5,
       min: [0, "Rating must be between 0 and 5."],
       max: [5, "Rating must be between 0 and 5."],
     },

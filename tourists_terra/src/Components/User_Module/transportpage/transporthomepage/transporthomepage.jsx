@@ -10,7 +10,6 @@ import RenterModal from "./renterModal";
 import axios from "axios";
 import { AuthContext } from "../../../../Context/authcontext";
 import ReactPaginate from "react-paginate";
-
 // Helper function to group products by category name
 const groupByCategory = (transDetails) => {
   return transDetails.reduce((acc, transDetail) => {
@@ -35,6 +34,10 @@ const TransportHomePage = () => {
 
   // check
   const [isTrasportAdmin, setIsTrasportAdmin] = useState(user.isTrasportAdmin);
+  console.log(user);
+  console.log(user.isTrasportAdmin);
+  // const navigate = useNavigate();
+
   useEffect(() => {
     fetchTransDetails();
   }, []);
@@ -201,9 +204,8 @@ const TransportHomePage = () => {
     }
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const toggleModal = () => {
-    navigate(`/become-transport-provider/${user._id}`);
+    navigate("/become-transport-provider/${user._id}");
   };
   useEffect(() => {
     if (isModalOpen) {

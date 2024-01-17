@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../../shoppage/shophomepage/shophomepage.css"
+import "../../shoppage/shophomepage/shophomepage.css";
+import Navbar from "../../homepage/navbar/navBar";
 import AccommodationAdSection from "../../accommodationpage/accomoadsection/accomoadsection";
 import Footer from "../../accommodationpage/footer/footer";
 import MenuBar from "../../homepage/menubar/menuBar";
@@ -26,7 +27,9 @@ const LocalGuideHomePage = () => {
   const { user } = useContext(AuthContext);
   const productsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(0);
-  const [isLocalGuideAdmin, setIsLocalGuideAdmin] = useState(user.isLocalGuideAdmin);
+  const [isLocalGuideAdmin, setIsLocalGuideAdmin] = useState(
+    user.isLocalGuideAdmin
+  );
   const navigate = useNavigate();
   useEffect(() => {
     fetchDetails();
@@ -191,7 +194,7 @@ const LocalGuideHomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
-    navigate(`/become-local-guide-provider/${user._id}`)
+    navigate(`/become-local-guide-provider/${user._id}`);
   };
   useEffect(() => {
     if (isModalOpen) {
@@ -304,7 +307,8 @@ const LocalGuideHomePage = () => {
                 </button>
               </div>
               <div className="w-full flex justify-end">
-                {user.isLocalGuideAdmin?<Link
+                {user.isLocalGuideAdmin ? (
+                  <Link
                     className={`hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 ${
                       !isLocalGuideAdmin && "cursor-not-allowed opacity-50"
                     }`}
@@ -313,13 +317,16 @@ const LocalGuideHomePage = () => {
                     disabled={!isLocalGuideAdmin}
                   >
                     Switch To Local Guide account
-                  </Link>:<button
-                  className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
-                  onClick={toggleModal}
-                  style={{ backgroundColor: "#0F4157" }}
-                >
-                  Want to Become A Local Guide?
-                </button>}
+                  </Link>
+                ) : (
+                  <button
+                    className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                    onClick={toggleModal}
+                    style={{ backgroundColor: "#0F4157" }}
+                  >
+                    Want to Become A Local Guide?
+                  </button>
+                )}
 
                 <Link to="/bookinghistory">
                   <button

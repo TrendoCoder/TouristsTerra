@@ -44,6 +44,7 @@ import BookingHistoryTransport from "./Components/User_Module/transportpage/tran
 import BecomeShopProvider from "./Components/User_Module/shoppage/shophomepage/becomeShopProvider";
 import BecomeTransportProvider from "./Components/User_Module/transportpage/transporthomepage/becomeTransportProvider";
 import SuccessLg from "./Components/User_Module/localguidepage/localguidehome/successLg";
+import OrderDetails from "./Components/User_Module/shoppage/shophomepage/orderdetail";
 import Chat from "./Components/User_Module/localguidepage/localguidehome/guidechat";
 import AdminLoginPage from "./Components/adminmodule/adminloginpage/adminLoginPage";
 import Adminforgetpassword from "./Components/adminmodule/adminforgetpassword/adminforgetpassword";
@@ -59,7 +60,10 @@ function App() {
               path="admin-forget-password"
               element={<Adminforgetpassword />}
             ></Route>
-            <Route path="reset-admin-password/:id" element={<AdminResetPassword/>}></Route>
+            <Route
+              path="reset-admin-password/:id"
+              element={<AdminResetPassword />}
+            ></Route>
 
             <Route path="sign-up" element={<SignUpPage />}></Route>
             <Route path="login-user" element={<LoginUser />}></Route>
@@ -94,11 +98,11 @@ function App() {
               path="become-local-guide-provider/:userId"
               element={<BecomeLocalGuideProvider />}
             ></Route>
-              <Route
+            <Route
               path="become-shop-provider/:userId"
               element={<BecomeShopProvider />}
             ></Route>
-              <Route
+            <Route
               path="become-transport-provider/:userId"
               element={<BecomeTransportProvider />}
             ></Route>
@@ -135,9 +139,9 @@ function App() {
               element={<PlaceDetails />}
             ></Route>
             <Route
-            path="suggestplaces/:city1/:city2"
-            element={<SuggestPlaces />}
-          ></Route>
+              path="suggestplaces/:city1/:city2"
+              element={<SuggestPlaces />}
+            ></Route>
 
             <Route
               path="edit-user-profile/:id"
@@ -167,6 +171,10 @@ function App() {
             <Route path="/success" element={<Success />}></Route>
             <Route path="/product/:productId" element={<ProductDetail />} />
             <Route path="/cart/:productId" element={<Cart />} />
+            <Route
+              path="/order-details/:productId"
+              element={<OrderDetails />}
+            />
           </Routes>
         </div>
       </Router>

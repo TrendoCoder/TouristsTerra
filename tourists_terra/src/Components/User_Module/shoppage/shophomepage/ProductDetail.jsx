@@ -7,52 +7,24 @@ import AccommodationAdSection from "../../accommodationpage/accomoadsection/acco
 import { loadStripe } from "@stripe/stripe-js";
 import { AuthContext } from "../../../../Context/authcontext";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1); // Initialize quantity to 1
   const { productId } = useParams();
   const { user } = useContext(AuthContext);
-
+  console.log(productId);
   useEffect(() => {
     fetch(`http://localhost:3001/api/product/${productId}`)
       .then((response) => response.json())
       .then((data) => setProduct(data))
       .catch((error) => console.error("Error fetching product:", error));
   }, [productId]);
-  // const handleClick = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:3001/api/cart/add-to-cart",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
 
-  //           Authorization: `Bearer ${user?.accessToken}`,
-  //           // 'Authorization': `Bearer ${currentUser?.accessToken}`,
-  //         },
-
-  //         body: JSON.stringify({
-  //           user_id: user._id, // Include the user_id in the request body
-  //           product: {
-  //             id: product.id,
-  //             name: product.name,
-  //             description: product.description,
-  //             image: product.image,
-  //             price: product.price,
-  //             quantity: quantity,
-  //           },
-  //         }),
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.error("Error adding product to cart:", error);
-  //   }
-  // };
-
-  console.log(user);
-
+  console.log(product);
+  // console.log("sellerId ", product.seller);
   const handleAddToCart = async () => {
     try {
       const response = await axios.post(
@@ -61,6 +33,7 @@ const ProductDetail = () => {
           userId: user?._id,
           productId: productId, // Assuming _id is the correct field
           quantity,
+          sellerId: product.seller,
           image: product.image,
           name: product.name,
           price: product.price,
@@ -73,10 +46,14 @@ const ProductDetail = () => {
       );
 
       console.log(response.data);
-      // Optionally, you can show a success message or update the UI accordingly
+      toast.success("Product added to cart successfully!", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     } catch (error) {
       console.error("Error adding to cart:", error);
-      // Handle error (show error message to the user, etc.)
+      toast.error("Failed to add product to cart. Please try again.", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     }
   };
 
@@ -147,6 +124,7 @@ const ProductDetail = () => {
   return (
     <div>
       <Navbar />
+      <ToastContainer />
       <div id="accomo-ad-container">
         <AccommodationAdSection />
         <div id="opacity-ad">

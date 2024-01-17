@@ -7,8 +7,24 @@ const addBookingToHistory = async (req, res) => {
   try {
     const { userId, guideId, startDate, endDate, price } = req.body;
 
-    
-    console.log(req.body);
+    // Check for overlapping bookings
+    const overlappingBooking = await BookingHistory.findOne({
+      guideId,
+      $or: [
+        {
+          startDate: { $lt: endDate },
+          endDate: { $gt: startDate },
+        },
+      ],
+    });
+
+    if (overlappingBooking) {
+      return res
+        .status(400)
+        .json({ message: "Guide is already booked for selected dates." });
+    }
+
+    // Proceed with adding to booking history if there is no overlap
     const booking = new BookingHistory({
       userId,
       guideId,
@@ -18,6 +34,7 @@ const addBookingToHistory = async (req, res) => {
     });
 
     await booking.save();
+
     res.status(201).json(booking);
   } catch (error) {
     console.error(error);
@@ -59,5 +76,8 @@ const deleteBookingHistory = async (req, res) => {
   }
 };
 
-
-module.exports = { addBookingToHistory, getBookingHistoryByUserId, deleteBookingHistory };
+module.exports = {
+  addBookingToHistory,
+  getBookingHistoryByUserId,
+  deleteBookingHistory,
+};

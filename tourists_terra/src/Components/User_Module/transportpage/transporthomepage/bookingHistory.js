@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";
-import RatingModal from "./ratingModal";
+import RatingModal_1 from "./ratingModal";
 import { AuthContext } from "../../../../Context/authcontext";
 import axios from "axios";
 
@@ -44,8 +44,9 @@ const BookingHistoryTransport = () => {
   const toggleModal = (transportId) => {
     setIsModalOpen(!isModalOpen);
     setSelectedGuideId(transportId);
+    
   };
-
+  
   useEffect(() => {
     if (isModalOpen) {
       document
@@ -115,7 +116,7 @@ const BookingHistoryTransport = () => {
                   </button>
 
                   {isModalOpen && (
-                    <RatingModal
+                    <RatingModal_1
                       toggle={toggleModal}
                       guideId={selectedGuideId}
                       setIsModalOpen={setIsModalOpen}

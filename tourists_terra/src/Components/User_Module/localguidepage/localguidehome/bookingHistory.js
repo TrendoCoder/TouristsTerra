@@ -21,7 +21,7 @@ const BookingHistory = () => {
       console.error("Error fetching booking history:", error);
     }
   };
-
+  
   useEffect(() => {
     if (user) {
       fetchBookingHistory();
@@ -45,7 +45,7 @@ const BookingHistory = () => {
     setIsModalOpen(!isModalOpen);
     setSelectedGuideId(guideId);
   };
-
+  console.log("aaa1 ", selectedGuideId);
   useEffect(() => {
     if (isModalOpen) {
       document

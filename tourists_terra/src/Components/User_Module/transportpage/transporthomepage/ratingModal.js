@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios"; // Import Axios
 import { AuthContext } from "../../../../Context/authcontext"; // Import AuthContext
-const RatingModal = (props) => {
+const RatingModal_1 = (props) => {
   const { productId, setIsModalOpen, productName } = props;
   const [rating, setRating] = useState(0);
   const { user } = useContext(AuthContext);
@@ -14,11 +14,11 @@ const RatingModal = (props) => {
       quantity: rating,
       userId: user?._id, // Ensure you have user ID available here or pass it accordingly
     };
-   console.log(user?._id);
+    console.log("user", user?._id);
     try {
       // Make Axios POST request
       const response = await axios.post(
-        `http://localhost:3001/api/product-rating/${productId}`,
+        `http://localhost:3001/api/transport-rating/${productId}`,
         payload
       );
       console.log("Rating submitted: ", response.data);
@@ -41,7 +41,7 @@ const RatingModal = (props) => {
         <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
           <div className="mt-3 text-center">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
-              Rating for Product: {productName}
+              Rating for Transport: {productName}
             </h3>
 
             <div className="mt-2 px-7 py-3">
@@ -100,4 +100,4 @@ const RatingModal = (props) => {
   );
 };
 
-export default RatingModal;
+export default RatingModal_1;

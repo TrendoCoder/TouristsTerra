@@ -8,7 +8,23 @@ const ProfileSideBar = ({ user }) => {
   const { user: currentUser, dispatch, setUser } = useContext(AuthContext);
   const [followedUser, setFollowedUser] = useState();
   const [followingUser, setFollowingUser] = useState();
+  const [friends, setFriends] = useState();
+  const [loading, setLoading] = useState(true);
 
+  useEffect(()=>{
+    setLoading(false);
+    getFriends();
+  },[])
+  const getFriends = async()=>{
+    try{
+      const res = await axios.get(`http://localhost:3001/api/user/friends/${user._id}`);
+    setFriends(res.data);
+    setLoading(true);
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem("token");
@@ -95,12 +111,12 @@ const ProfileSideBar = ({ user }) => {
             <Link to="/">Profile</Link>
           </div>
           <div id="leftbar-options">
-            <Link to="/">Friends</Link>
-            <span>{followedUser ? `${followedUser}` : "-"}</span>
+            <Link to="#">Friends</Link>
+            <span>{loading?friends?friends.length:"":""}</span>
           </div>
           <div id="leftbar-options">
             <Link to="/user-chat-page">Chats</Link>
-            <span>2</span>
+            
           </div>
           <div id="leftbar-options">
             <Link to="/">Followers</Link>
@@ -117,10 +133,9 @@ const ProfileSideBar = ({ user }) => {
         <br />
         <br />
         <div id="leftbar-info-container">
-          <div id="leftbar-options">
-            <Link to="/">Photos</Link>
-            <span>10</span>
-          </div>
+          {/* <div id="leftbar-options">
+           
+          </div> */}
           {/* <div id="leftbar-options">
             <Link to="/">
                 Videos

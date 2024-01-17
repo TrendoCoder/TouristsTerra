@@ -9,6 +9,10 @@ const productItemSchema = new Schema(
       ref: "Product", // Assuming 'Product' is your product model
       required: true,
     },
+    sellerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // Assuming 'User' is your user model
+    },
     name: {
       type: String,
       required: true,

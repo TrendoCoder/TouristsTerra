@@ -12,6 +12,7 @@ import { AuthContext } from "../../../../Context/authcontext";
 import axios from "axios";
 const TransportDetails = () => {
   const [details, setDetails] = useState(null);
+  const [bookingError, setBookingError] = useState(null);
   const { user } = useContext(AuthContext);
   const [days, setDays] = useState(1); // Initialize quantity to 1
   const [dateRange, setDateRange] = useState([
@@ -27,10 +28,10 @@ const TransportDetails = () => {
   const handleAddToBookingHistory = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/booking-history-1/add-booking",
+        "http://localhost:3001/api/booking-history/add-booking",
         {
           userId: user?._id,
-          transportId: transportDetailId, // Assuming _id is the correct field
+          guideId: transportDetailId,
           startDate: dateRange[0].startDate,
           endDate: dateRange[0].endDate,
           price: details.price.toFixed(2) * days,
@@ -43,10 +44,10 @@ const TransportDetails = () => {
       );
 
       console.log(response.data);
-      // Optionally, you can show a success message or update the UI accordingly
+      return response.data; // Return the response
     } catch (error) {
       console.error("Error adding to cart:", error);
-      // Handle error (show error message to the user, etc.)
+      throw error; // Rethrow the error to be caught by the calling function
     }
   };
 
@@ -265,7 +266,9 @@ const TransportDetails = () => {
             </div>
 
             {/* Add shipping notice and other details as needed */}
-
+            {bookingError && (
+              <div className="text-red-500 mt-2">{bookingError}</div>
+            )}
             <div className="flex gap-2.5">
               <Link to={`/chat`}>
                 <button
@@ -275,16 +278,44 @@ const TransportDetails = () => {
                   chat
                 </button>
               </Link>
-              <button
-                onClick={() => {
-                  makePayment();
-                  handleAddToBookingHistory();
-                }}
-                className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
-                style={{ backgroundColor: "#0F4157" }}
-              >
-                Rent Now
-              </button>
+              {details.inStock ? (
+                <button
+                  onClick={async () => {
+                    setBookingError(null);
+
+                    try {
+                      const response = await handleAddToBookingHistory();
+
+                      if (!response.error) {
+                        makePayment();
+                      } else {
+                        setBookingError(
+                          response.message || "Error adding to booking history"
+                        );
+                      }
+                    } catch (error) {
+                      console.error("Error adding to cart:", error);
+                      setBookingError("Already booked on these Dates");
+                    }
+                  }}
+                  className={`inline-block rounded-lg ${
+                    bookingError ? "bg-red-500" : "bg-gray-200"
+                  } px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 ${
+                    bookingError ? "" : "hover:bg-gray-300 focus-visible:ring"
+                  } active:text-gray-700 md:text-base`}
+                  style={{ backgroundColor: "#0F4157" }}
+                  disabled={bookingError ? true : false}
+                >
+                  {bookingError ? "Booking Error" : "Hire Now"}
+                </button>
+              ) : (
+                <button
+                  className="inline-block rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:text-gray-700 md:text-base"
+                  disabled
+                >
+                  Unavailable
+                </button>
+              )}
             </div>
           </div>
         </div>

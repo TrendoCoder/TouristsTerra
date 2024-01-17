@@ -129,3 +129,32 @@ exports.getTransportDetails = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+exports.getTransportDetailsBySeller = async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+
+    let queryObject = { seller: sellerId };
+
+    // Filter by exact price, quantity, stock availability, etc.
+    // ... (You can add more filters if needed)
+
+    // You can keep the sorting logic if it is required
+    let sort = {};
+    if (req.query.sort) {
+      const sortFields = req.query.sort.split(",");
+      sortFields.forEach((field) => {
+        const [key, order] = field.startsWith("-")
+          ? [field.substring(1), -1]
+          : [field, 1];
+        sort[key] = order;
+      });
+    }
+
+    const transportDetails = await Transportdetail.find(queryObject)
+      .populate("category")
+      .sort(sort);
+    res.status(200).json(transportDetails);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

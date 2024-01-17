@@ -35,14 +35,14 @@ const ProfileInfo = ({ user }) => {
                 <div>
                   <i class="fa-solid fa-location-dot"></i>
                 </div>
-                <div>Lahore, Pakistan</div>
+                <div>{user.city}, {user.country}</div>
               </div>
               <div id="p-row">
                 <div id="p-row-left">
                   <span>Traveller</span>
                 </div>
                 <div id="p-row-right">
-                  <span>Not Verified</span>
+                  <span>{user.isVerifiedUser?"Verified":"Not Verified"}</span>
                 </div>
               </div>
             </div>
@@ -52,8 +52,8 @@ const ProfileInfo = ({ user }) => {
                 <span>Following</span>
               </div>
               <div id="p-pics">
-                <h3>142</h3>
-                <span>Photos</span>
+                <h3>.</h3>
+                <span>.</span>
               </div>
               <div id="p-followers">
                 <h3>{user.followers.length}</h3>
