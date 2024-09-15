@@ -13,6 +13,7 @@
 }
 #acc-reserve-container {
     /* Your existing styles */
+    width: 40%;
     background-color: #0f4157c2;
     padding: 20px;
     position: relative;

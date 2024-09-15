@@ -36,7 +36,7 @@ const ListOfRooms = ({ item }) => {
             to={`/accomodation-detail/${item._id}`}
             style={{ textDecoration: "none" }}
           >
-            <button id="hi-availability">View Details</button>
+            <button id="hi-availability">Contact us for Reservation</button>
           </Link>
         </div>
       </div>

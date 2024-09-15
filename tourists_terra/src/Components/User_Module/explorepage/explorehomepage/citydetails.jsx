@@ -1,15 +1,16 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
-import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
-import NavBar from '../../homepage/navbar/navBar';
-import MenuBar from '../../homepage/menubar/menuBar';
-import Footer from '../../accommodationpage/footer/footer';
+import React, { useEffect, useState, useCallback } from "react";
+import { useParams, Link } from "react-router-dom";
+import axios from "axios";
+import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
+import NavBar from "../../homepage/navbar/navBar";
+import MenuBar from "../../homepage/menubar/menuBar";
+import Footer from "../../accommodationpage/footer/footer";
+import UploadSection from "../../homepage/uploadsection/uploadSection";
 
 const containerStyle = {
-  width: '100%',
-  height: '250px',
-  borderRadius: '15px',
+  width: "100%",
+  height: "250px",
+  borderRadius: "15px",
 };
 
 const CityDetails = () => {
@@ -21,14 +22,17 @@ const CityDetails = () => {
   const latitude = cityData?.geometry?.location?.lat;
   const longitude = cityData?.geometry?.location?.lng;
 
-  const onLoad = useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds({
-      lat: latitude,
-      lng: longitude,
-    });
-    map.fitBounds(bounds);
-    setMap(map);
-  }, [latitude, longitude]);
+  const onLoad = useCallback(
+    function callback(map) {
+      const bounds = new window.google.maps.LatLngBounds({
+        lat: latitude,
+        lng: longitude,
+      });
+      map.fitBounds(bounds);
+      setMap(map);
+    },
+    [latitude, longitude]
+  );
 
   const onUnmount = useCallback(function callback() {
     setMap(null);
@@ -53,7 +57,7 @@ const CityDetails = () => {
 
         setPlacesData(sortedPlaces);
       } catch (error) {
-        console.error('Error fetching city data:', error);
+        console.error("Error fetching city data:", error);
       }
     };
 
@@ -72,7 +76,8 @@ const CityDetails = () => {
           </h1>
           <br />
           <h1 className="text-3xl text-[#182f3a] font-bold mb-4 inline-block border-b-2 border-gray-300 pb-2">
-            Tourist Attractions in {cityData?.address_components?.[0]?.long_name || cityName}
+            Tourist Attractions in{" "}
+            {cityData?.address_components?.[0]?.long_name || cityName}
           </h1>
           <br />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -90,13 +95,16 @@ const CityDetails = () => {
                     <h3 className="text-xl font-bold">{place.name}</h3>
                   </div>
                   <p className="text-gray-700">
-                    <span className="font-bold">Address:</span> {place.formatted_address}
+                    <span className="font-bold">Address:</span>{" "}
+                    {place.formatted_address}
                   </p>
                   <p className="text-gray-700">
-                    <span className="font-bold">Average Rating:</span> {place.rating}
+                    <span className="font-bold">Average Rating:</span>{" "}
+                    {place.rating}
                   </p>
                   <p className="text-gray-700">
-                    <span className="font-bold">Total Ratings:</span> {place.user_ratings_total}
+                    <span className="font-bold">Total Ratings:</span>{" "}
+                    {place.user_ratings_total}
                   </p>
 
                   {place.photos && place.photos.length > 0 && (
@@ -110,14 +118,15 @@ const CityDetails = () => {
               </Link>
             ))}
           </div>
-
         </div>
         <br />
 
         <div>
           {cityData && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold mb-4 border-t-2 border-gray-300 pt-7">{cityData.formatted_address}</h2>
+              <h2 className="text-2xl font-bold mb-4 border-t-2 border-gray-300 pt-7">
+                {cityData.formatted_address}
+              </h2>
               <LoadScript googleMapsApiKey="AIzaSyBAL2P8VPod87pnn5STC2V7uqWe8WxaZCM">
                 <GoogleMap
                   mapContainerStyle={containerStyle}
@@ -125,7 +134,7 @@ const CityDetails = () => {
                     lat: latitude,
                     lng: longitude,
                   }}
-                  zoom={12} // Set your desired default zoom level 
+                  zoom={12} // Set your desired default zoom level
                   onLoad={onLoad}
                   onUnmount={onUnmount}
                 >
@@ -138,6 +147,8 @@ const CityDetails = () => {
                   />
                 </GoogleMap>
               </LoadScript>
+              <button>Go</button>
+              <UploadSection data={cityData.formatted_address} />
             </div>
           )}
         </div>

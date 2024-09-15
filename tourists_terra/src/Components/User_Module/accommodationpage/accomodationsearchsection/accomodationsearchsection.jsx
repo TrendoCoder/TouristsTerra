@@ -52,7 +52,7 @@ const AccomodationSearchSection = () => {
       >
         <button id="switch-to-hp-btn">Switch to Hotel Provider</button>
       </Link>
-      <div id="acc-search-section-container">
+      {/* <div id="acc-search-section-container">
         <div id="acc-search-section-item">
           <i class="fa-solid fa-bed" id="acc-search-icons"></i>
           <input
@@ -153,7 +153,7 @@ const AccomodationSearchSection = () => {
             Search
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -5,10 +5,10 @@ import axios from "axios";
 import { AuthContext } from "../../../../Context/authcontext";
 
 
-const UploadSection = () => {
+const UploadSection = ({data}) => {
   const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const desc = useRef();
+  const desc = useRef(data);
   const [file, setFile] = useState(null);
 
   const submitHandler = async (e) => {

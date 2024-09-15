@@ -148,6 +148,7 @@ const ExploreHomepage = () => {
                       >
                         {loading ? "Ask Tourist Terra!" : <i className="fa-solid fa-circle-notch fa-spin"></i>}
                       </button>
+                      
                     </>
                   )}
                 </div>

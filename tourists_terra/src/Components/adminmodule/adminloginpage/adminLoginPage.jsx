@@ -96,7 +96,7 @@ const AdminLoginPage = () => {
                 </div>
                 <br />
                 {error && <p className="error-message">{error}</p>}
-                <Link to="/admin-forget-password">Forgot Password?</Link>
+                <Link to="/forget-password">Forgot Password?</Link>
                 <br />
                 <button
                   id="login-button"

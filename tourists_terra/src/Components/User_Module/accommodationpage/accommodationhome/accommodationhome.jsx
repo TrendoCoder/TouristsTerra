@@ -127,6 +127,7 @@ const handleLoadMoreRoom = () =>{
         <br />
         <AccomodationSearchSection />
         <div id="main-container-accomo">
+        <h2>Popular cities</h2>
           <FeaturedAccomodation />
           <h2>Browse by Property Type</h2>
           <PropertyList />
