@@ -64,6 +64,7 @@ const getUser = async (req, res, next) => {
 module.exports.getUser = getUser;
 
 const getAllUsers = async (req, res, next) => {
+  console.log("hello")
   try {
     const users = await User.find({}, "-password -updatedAt");
     res.status(200).json(users);

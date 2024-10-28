@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; 
+import 'react-quill/dist/quill.snow.css';
 import BlogMenu from "../blogmenu/blogmenu";
 import NavBar from "../../homepage/navbar/navBar";
 import Footer from "../../accommodationpage/footer/footer";

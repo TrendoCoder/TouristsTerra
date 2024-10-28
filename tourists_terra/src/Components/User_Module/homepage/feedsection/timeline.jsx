@@ -21,7 +21,7 @@ const Timeline = () => {
       }
     };
     fetchPosts();
-  }, [user._id]);
+  }, [user?._id]);
 
   if (!posts) {
     return <div>No Posts to show....</div>;

@@ -10,8 +10,8 @@ const UserInfoDisplay = () => {
       <div id="profile-pic">
         <img
           src={
-            user.userProfilePicture
-              ? PF + `/profilePicture/${user.userProfilePicture}`
+            user?.userProfilePicture
+              ? PF + `/profilePicture/${user?.userProfilePicture}`
               : PF + "/profileUpload.png"
           }
           crossOrigin="anonymous"
@@ -19,27 +19,27 @@ const UserInfoDisplay = () => {
         />
       </div>
       <div id="profile-name">
-        <h4>{user.userName}</h4>
+        <h4>{user?.userName}</h4>
       </div>
       <div id="profile-bio">
         <span>
-          {user.about}
+          {user?.about}
         </span>
       </div>
       <div id="user-f-detail">
         <div>
-          <span>{user.followers.length}</span>
+          <span>{user?.followers.length}</span>
           <br />
           <span>Followers</span>
         </div>
         <div>
-          <span>{user.following.length}</span>
+          <span>{user?.following.length}</span>
           <br />
           <span>Followings</span>
         </div>
       </div>
       <div id="edit-profilee">
-        <Link to={`/profile-page/${user.userName}`}>
+        <Link to={`/profile-page/${user?.userName}`}>
           <i class="fa-solid fa-pen"></i> Edit Profile
         </Link>
       </div>

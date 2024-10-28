@@ -14,7 +14,7 @@ const UploadSection = ({data}) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const newPost = {
-      userId: user._id,
+      userId: user?._id,
       desc: desc.current.value,
     };
     if (file) {
@@ -41,8 +41,8 @@ const UploadSection = ({data}) => {
           <img
             id="shareProfileImg"
             src={
-              user.userProfilePicture
-                ? PF + `/profilePicture/${user.userProfilePicture}`
+              user?.userProfilePicture
+                ? PF + `/profilePicture/${user?.userProfilePicture}`
                 : PF + "/profileUpload.png"
             }
             crossOrigin="anonymous"

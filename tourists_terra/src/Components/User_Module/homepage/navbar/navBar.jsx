@@ -15,12 +15,12 @@ function NavBar() {
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    const searchData = data.filter((item) =>
-      item.userName.toLowerCase().includes(searchUserName.toLowerCase())
+    const searchData = data && data.filter((item) =>
+      item?.userName?.toLowerCase().includes(searchUserName.toLowerCase())
     );
     setFilteredData(searchData);
   }, [data, searchUserName]);
-
+console.log("+++++++", data)
   return (
     <div>
       <center>
@@ -78,11 +78,11 @@ function NavBar() {
                 </Link>
               </div>
               <div id="container-personal-menu">
-                <Link to={`/profile-page/${user.userName}`}>
+                <Link to={`/profile-page/${user?.userName}`}>
                   <img
                     src={
-                      user.userProfilePicture
-                        ? PF + `/profilePicture/${user.userProfilePicture}`
+                      user?.userProfilePicture
+                        ? PF + `/profilePicture/${user?.userProfilePicture}`
                         : PF + "/profileUpload.png"
                     }
                     alt=""
